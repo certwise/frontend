@@ -10,49 +10,40 @@ function SignIn() {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                // The signed-in user info.
                 const user = result.user;
                 dispatch(signIntoStore(user))
                 console.log(user)
-                // ...
-
             }).catch((error) => {
-                // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // The email of the user's account used.
-                const email = error.email;
-                // The AuthCredential type that was used.
-                const credential = GoogleAuthProvider.credentialFromError(error);
-                // ...
-            });
+                console.log(error)
+            })
     }
     const signOutUser = () => {
         signOut(auth).then(() => {
             dispatch(signOutStore())
             alert("Signed Out")
-        }).catch((error) => {
+        }).catch(() => {
             alert("Signout failed")
         });
     }
-    console.log(store.user.uid)
-
+    const [img, setimg] = React.useState()
+    React.useEffect(() => {
+        if (store.user.id) {
+            setimg(store.user.photoURL)
+        }
+    }, [store.user])
     return (
         <>
-            <h2>User Section</h2>
 
             {store.user.isSignedIn ?
-                <div>
-                    <div>
+                <div className='p-3'>
+                    <div className='text-3xl text-primary font-bold'>
                         Hello {store.user.displayName}
                         <div style={{ marginTop: '15px' }}>
-                            <button onClick={signOutUser}>
-                                Sign Out
-                            </button>
+                            <img src={store.user.photoURL} />
                         </div>
+                        <button className='btn btn-primary mt-2' onClick={signOutUser}>
+                            Sign Out
+                        </button>
                     </div>
                 </div> :
                 <div>

@@ -2,7 +2,7 @@ import { getNewImage, getNewText } from "./elements"
 import * as types from "./types"
 import { getStorage, getDownloadURL, uploadBytes, deleteObject, ref } from "firebase/storage";
 
-export const createTextItem = type => {
+export const createTextItem = () => {
     return {
         type: types.CREATE_ITEM,
         payload: getNewText()
@@ -56,6 +56,13 @@ export const setCurrentTemplate = template => {
     return {
         type: types.SET_CURRENT_TEMPLATE,
         payload: template,
+        info: "description"
+    }
+}
+export const setCurrentTemplateNull = () => {
+    return {
+        type: types.SET_CURRENT_TEMPLATE,
+        payload: { id: null, canvas: { items: [], rev: [] } },
         info: "description"
     }
 }

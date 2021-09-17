@@ -4,12 +4,9 @@ import update from 'immutability-helper'
 import Context from '../../store/context'
 import { templateActions } from '../../store'
 const style = {
-    width: '80%',
-    margin: "3px",
     display: 'flex',
     flexDirection: 'column-reverse',
-
-
+    marginTop: '8px',
 }
 export const Container = () => {
     {

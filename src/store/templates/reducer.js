@@ -85,9 +85,6 @@ const reducer = (state, action) => {
                 ...state,
                 fonts: [...state.fonts, action.payload]
             }
-
-
-
         default: return state
     }
 }

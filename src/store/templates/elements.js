@@ -7,12 +7,14 @@ export const getNewText = (type) => {
         type: "text",
         name: "text",
         value: "Example text field",
-        color: "#fff",
+        fill: "#fff",
         x: 10,
         y: 10,
         attr: {
             fontSize: 75,
-        }
+        },
+        width: 200,
+        height: 100,
     }
     return text
 }
@@ -26,8 +28,6 @@ export const getNewImage = () => {
         src: "default",
         x: 10,
         y: 10,
-        height: 100,
-        width: 100,
         scale: 1,
         draggable: true,
     }

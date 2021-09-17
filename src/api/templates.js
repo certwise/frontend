@@ -25,7 +25,9 @@ export const createTemplate = async (info) => {
                     type: "base-image",
                     name: "Base template image",
                     alt: "Example image",
-                    storageRef: "default_template_images/base.png",
+                    storageRef: "default_template_images/base.jpg",
+                    height: "1080",
+                    width: "1920",
                 },
                 {
                     type: "text",
@@ -152,6 +154,20 @@ export const getCertificates = async (uid) => {
                 data: cert.data()
             }
             res.push(temp)
+        }
+    })
+    console.log(res)
+    return res
+}
+
+export const getCertificateNames = async (uid) => {
+    const db = getFirestore()
+    const result = await getDocs(collection(db, 'templates'), where('uid', '==', uid))
+    let res = []
+    result.forEach(template => {
+        if (template.data().uid === uid) {
+            let temp = template.data().name
+            res.push(template)
         }
     })
     console.log(res)

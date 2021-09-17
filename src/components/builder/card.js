@@ -6,14 +6,7 @@ import Context from '../../store/context'
 const ItemTypes = {
     CARD: 'card'
 }
-const style = {
-    border: '1px solid gray',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
-    backgroundColor: 'white',
-    cursor: 'pointer',
-    fontWeight: 'bold'
-}
+
 export const Card = ({ id, index, moveCard, item }) => {
 
     const { store, dispatch } = useContext(Context)
@@ -80,11 +73,12 @@ export const Card = ({ id, index, moveCard, item }) => {
     const opacity = isDragging ? 0 : 1
     drag(drop(ref))
     return (
-        <div ref={ref}
-            style={{ ...style, opacity, border: `2px solid ${store.templates.currentTemplate.canvas.activeItem.id === item.id ? '#e95' : 'grey'}` }}
+        <button ref={ref}
+            className={`card mt-1 mb-1 text-sm p-2 w-100 border-2 rounded-sm ${store.templates.currentTemplate.canvas.activeItem.id === item.id ? 'border-secondary' : 'border-gray-400'}`}
+            style={{ opacity }}
             data-handler-id={handlerId}
             onClick={() => setActiveItem(item)}>
             {item.value || item.name}
-        </div>
+        </button>
     )
 }

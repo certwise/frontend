@@ -1,12 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
 import Context from '../../store/context';
-import { templateActions } from '../../store'
-import FontPicker from "font-picker-react";
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { Container } from './cardContainer';
+import { setLoading, templateActions } from '../../store'
 import * as api from '../../api/templates';
-import { loadFirst100Fonts, loadFonts } from './fontLoader';
+import { loadFonts } from './fontLoader'
 
 
 function CanvasItems() {
@@ -16,7 +12,7 @@ function CanvasItems() {
     const [numberOfFonts, setNumberOfFonts] = useState(25)
     const items = store.templates.currentTemplate.canvas.items
     const activeItem = store.templates.currentTemplate.canvas.activeItem
-
+    const [isLoading, setIsLoading] = useState(true)
     const setImage = async src => {
         let im = new window.Image()
         im.src = src
@@ -64,18 +60,24 @@ function CanvasItems() {
         setImageState(null)
         setImageBlob(null)
     }
-
-    const addText = () => {
-        dispatch(templateActions.createTextItem('text'))
-
-    }
-
-    const addImg = async () => {
-        api.addImg().then(res => {
-            dispatch(templateActions.createImageItem(res))
+    useEffect(() => {
+        dispatch(setLoading(true))
+        loadFonts('popularity').then(fonts => {
+            for (let i in fonts) {
+                let apiUrl = [];
+                apiUrl.push('https://fonts.googleapis.com/css?family=');
+                apiUrl.push(fonts[i].family.replace(/ /g, '+'));
+                var url = apiUrl.join('');
+                let style = document.createElement('link');
+                style.href = url;
+                style.rel = 'stylesheet';
+                //console.log("Styleee:", style)
+                document.head.appendChild(style);
+            }
+            dispatch(templateActions.setFonts(fonts))
+            dispatch(setLoading(false))
         })
-    }
-
+    }, [])
     const editActiveItem = (e, val) => {
         switch (val) {
             case 'val':
@@ -137,16 +139,11 @@ function CanvasItems() {
         dispatch(templateActions.editCanvas(x))
         dispatch(templateActions.setActiveItem({ id: 'none' }))
     }
-    const saveCanvas = () => {
-        api.editTemplateItems(store.templates.currentTemplate.id, store.templates.currentTemplate.canvas.items).then(() =>
-            window.location.reload())
-    }
-    const deleteTemplate = () => {
-        api.deleteTemplate(store.templates.currentTemplate.id).then(() => window.location.reload())
-    }
+
 
     return (
         <div
+            className='text-black'
             onKeyDown={(e) => {
                 if (e.key == 'Delete') {
                     deleteActiveItem()
@@ -155,50 +152,49 @@ function CanvasItems() {
 
             style={{ margin: '8px' }}>
 
-            <h3>Canvas</h3>
-            <DndProvider backend={HTML5Backend}>
-                <Container />
-            </DndProvider>
-            <hr />
-            <div>Add Item </div>
-            <div style={{ marginTop: "5px" }}><button onClick={addText}>Add text</button></div>
-            <div style={{ marginTop: "5px" }}><button onClick={addImg} >Add Img</button></div>
-            <hr />
-            <h4>Edit Item: {activeItem.name}</h4>
-            {
-                activeItem.type !== 'base-image' ?
+            <div className='text-2xl mb-1 font-bold text-primary'>Layer</div>
+            <div className='text-primary font-bold mb-2'>
+                {activeItem.name}
+            </div>
+            <div className='border-b-2 pb-3 border-gray-400'>
+                {
+                    activeItem.type !== 'base-image' && activeItem.id !== 'none' &&
                     <div>
                         Is this field constant?
                         <input type='checkbox' defaultChecked={activeItem.isConstant || true} onChange={(e) => editActiveItem(e, 'check')} />
                     </div>
-                    : null
-            }
+                }
+            </div>
             {
                 activeItem.type === 'text' ?
-                    <div style={{ marginTop: "5px" }}>Name of field
-                        <div>
+                    <div style={{ marginTop: "5px" }}>
+                        <div className=' font-bold text-primary border-b-2 pb-3 border-gray-400'>
+                            <div>Name of field</div>
                             <input style={{ padding: "5px" }} defaultValue={activeItem.name}
                                 onChange={(e) => editActiveItem(e, 'val')}
                             />
                         </div>
-                        <div style={{ marginTop: "9px" }}>Text Color :
-                            <input type="color" defaultValue={activeItem.color}
-                                onChangeCapture={(e) => {
-                                    let p = [...items]
-                                    p.map(item => {
-                                        if (item.id === activeItem.id) {
-                                            item['fill'] = e.target.value
-                                            item['color'] = e.target.value
-                                        }
-                                        return item
-                                    })
-                                    dispatch(templateActions.editCanvas(p))
-                                }}
-                            //onChangeCapture
-                            />
+                        <div className=' font-bold border-b-2 pb-1 border-gray-400 text-primary' style={{ marginTop: "9px" }}>Font Color :
+                            <div className='m-2'>
+                                <input type="color" defaultValue={activeItem.color}
+                                    onChangeCapture={(e) => {
+                                        let p = [...items]
+                                        p.map(item => {
+                                            if (item.id === activeItem.id) {
+                                                item['fill'] = e.target.value
+                                                item['color'] = e.target.value
+                                            }
+                                            return item
+                                        })
+                                        dispatch(templateActions.editCanvas(p))
+                                    }}
+                                //onChangeCapture
+                                />
+                            </div>
+
                         </div>
-                        <div style={{ marginTop: "5px" }}>Font Size :
-                            <input type="number" defaultValue={activeItem.attr.fontSize || 25}
+                        <div className='font-bold text-primary border-b-2 pb-4 border-gray-400' style={{ marginTop: "5px" }}>Font Size :
+                            <input className='number' type='number' min='6' max='400' defaultValue={activeItem.attr.fontSize || 25}
                                 onChange={
                                     (e) => {
                                         let p = [...items]
@@ -212,8 +208,13 @@ function CanvasItems() {
                                     }}
                             />
                         </div>
-                        <div style={{ overflow: "hidden" }}>Font Family :
-                            <ul style={{ height: "200px", overflow: "auto", paddingRight: "16px" }}>
+                        <div className='text-primary mt-2 mb-2 ' style={{ overflow: "hidden" }}>
+                            <div className='font-bold'>Fonts</div>
+                            <ul
+                                tabindex="0"
+                                className="p-3 text-black shadow menu dropdown-content bg-gray-300  w-full"
+                                style={{ height: "200px", overflow: "auto", paddingRight: "16px" }}
+                            >
                                 {
                                     store.templates.fonts.slice(0, numberOfFonts).map((font, i) => {
                                         return <li
@@ -234,29 +235,28 @@ function CanvasItems() {
                                                 })
                                                 dispatch(templateActions.editCanvas(p))
 
-                                            }}
-
-                                        >
-                                            {font.family}
-                                        </li>
+                                            }}>{font.family} </li>
                                     })
                                 }
+                                <li>
+                                    <button className='btn-xs rounded m-2 btn-primary' onClick={() => setNumberOfFonts(prev => prev + 25)}>Load more fonts</button>
+                                </li>
                             </ul>
-                            <div>
-                                <button onClick={() => setNumberOfFonts(prev => prev + 25)}>Load more fonts</button>
-                            </div>
+
                         </div>
                     </div> : null
             }
 
             {
                 activeItem.type === 'base-image' ?
-                    <div style={{ border: "2px solid black", padding: "10px", marginTop: "5px", width: "90%" }}>
-                        <div>Change Image</div>
-                        <input type='file' onChange={(e) => onChangeImg(e.target.files[0])} />
-                        {image ? <img height='80' src={image} /> : null}
+                    <div >
+                        <div className='mb-2 text-primary font-bold'>Change Image</div>
+                        <div className='border-2 border-primary p-2'>
+                            <input className='mb-3 text-xs' type='file' onChange={(e) => onChangeImg(e.target.files[0])} />
+                            {image ? <img className='mb-3 border-2 border-secondary ' style={{ height: '100px' }} src={image} /> : null}
+                        </div>
                         <div>
-                            {image ? <button onClick={() => setBaseImage(image)}>Set image</button> : null}
+                            {image ? <button className='btn btn-primary mt-2 mb-3' onClick={() => setBaseImage(image)}>Set image</button> : null}
                         </div>
                     </div> : null
             }
@@ -264,38 +264,43 @@ function CanvasItems() {
                 activeItem.type === 'image' ?
 
                     <div>
-                        <div>Image name
+                        <div >Image name
                             <input style={{ padding: "5px" }} defaultValue={activeItem.name}
                                 onChange={(e) => editActiveItem(e, 'img')}
                             />
                         </div>
-                        <div style={{ border: "2px solid blue", padding: "5px", margin: "5px", width: "70%" }}>
-                            <input type='file' onChange={(e) => onChangeImg(e.target.files[0])} />
-                            {image ? <img height='80' src={image} /> : null}
+                        <div className='mb-2 text-primary font-bold'>Change Image</div>
+
+                        <div className='p-2 rounded w-full border-2 border-primary '>
+                            <input className='text-sm' type='file' onChange={(e) => onChangeImg(e.target.files[0])} />
+                            {image ? <img style={{ height: '100px' }} src={image} /> : null}
                             <div>
-                                <button onClick={() => setImage(image)}>Set image</button>
+                                <button className='btn btn-primary mt-2 mb-3' onClick={() => setImage(image)}>Set image</button>
                             </div>
                         </div>
                     </div> : null
             } {
-                activeItem.type !== 'base-image' ?
-                    <div><button onClick={deleteActiveItem}>Delete</button></div> : null
+                activeItem.type !== 'base-image' && activeItem.id !== 'none' ?
+                    <div><button className='btn btn-primary mt-2  w-1/2' onClick={deleteActiveItem}>Delete</button></div> : null
             }
             {
-                //deselect activeitem button
-                <div><button onClick={() => dispatch(templateActions.setActiveItem({ id: 'none' }))}>Deselect</button></div>
-            }
+                activeItem.id !== 'none' ?
+                    <div>
+                        <button
+                            className='btn btn-primary mt-2  w-1/2'
+                            onClick={() => {
+                                dispatch(templateActions.setActiveItem({ id: 'none' }))
+                                setImageState(null)
+                            }
+                            }>
+                            Deselect
+                        </button>
+                    </div>
+                    : <div className='text-red-400 font-bold'>
+                        No layer is selected
+                    </div>
 
-            <button
-                onClick={saveCanvas}
-            >
-                Save Template
-            </button>
-            <button
-                onClick={deleteTemplate}
-            >
-                Delete Template
-            </button>
+            }
 
         </div >
     )

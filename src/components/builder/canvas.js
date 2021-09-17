@@ -1,8 +1,8 @@
 import React, { useEffect, useContext, useRef, useState } from 'react'
-import { Stage, Layer, Image, Text, Group, Rect } from 'react-konva';
+import { Stage, Layer, Image, Text, Group, Rect, Transformer } from 'react-konva';
 import Context from '../../store/context';
 import { templateActions } from '../../store'
-import DynamicImage from './resizeable';
+import DynamicImage from './resizeableImage';
 
 function Canvas() {
 
@@ -11,8 +11,8 @@ function Canvas() {
     const textRef = useRef(null)
     const items = store.templates.currentTemplate.canvas.items
     const activeItem = store.templates.currentTemplate.canvas.activeItem
-    const width = items.find(item => item.type === 'base-image')['original-width']
-    const height = items.find(item => item.type === 'base-image')['original-height']
+    const width = items.find(item => item.type === 'base-image')['width']
+    const height = items.find(item => item.type === 'base-image')['height']
     const ratio = width / height
     const drag = (e, id) => {
         let items_ = [...items]
@@ -36,7 +36,19 @@ function Canvas() {
         console.log(items)
 
     }
-
+    const [dimensions, setDimensions] = React.useState({
+        height: window.innerHeight,
+        width: window.innerWidth
+    })
+    React.useEffect(() => {
+        function handleResize() {
+            setDimensions({
+                height: window.innerHeight,
+                width: window.innerWidth
+            })
+        }
+        window.addEventListener('resize', handleResize)
+    }, [])
     function downloadURI() {
         if (stageRef) {
             let uri = stageRef.current.toDataURL({
@@ -54,24 +66,18 @@ function Canvas() {
             alert("Please create a stageRef first")
         }
     }
+    const trRef = React.useRef()
+
 
     return (
-        <div style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "cemter",
-            alignItems: "center",
-            padding: "3px"
-        }}>
-            <button onClick={downloadURI}>Download</button>
-            <div style={{ border: "4px solid red" }}>
+        <div>
+            <div className="">
                 <Stage
                     ref={stageRef}
-                    width={window.innerHeight * 0.8 * ratio}
-                    height={window.innerHeight * 0.8}
-                    scaleX={window.innerHeight * 0.8 * ratio / width}
-                    scaleY={window.innerHeight * 0.8 / height}
-
+                    width={window.innerWidth * 0.56}
+                    height={window.innerWidth * 0.56 / ratio}
+                    scaleX={window.innerWidth * 0.56 / width}
+                    scaleY={window.innerWidth * 0.56 / ratio / height}
                 >
                     <Layer>
                         {items.map((item, i) => {
@@ -131,13 +137,9 @@ function Canvas() {
                                             text={item.value}
                                             {...item.attr}
                                             textDecoration={item.id === activeItem.id ? 'underline' : ''}
-                                        >
-                                        </Text>
-                                        {item.id === activeItem.id ?
-                                            <Rect
-
-                                            /> : null}
+                                        />
                                     </Group>
+
                                 default:
                                     return null
 
@@ -147,7 +149,7 @@ function Canvas() {
                     </Layer>
                 </Stage >
             </div>
-        </div>
+        </div >
     )
 }
 

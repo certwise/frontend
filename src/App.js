@@ -1,20 +1,22 @@
 import React, { useState, useEffect, useContext } from 'react'
 import './App.css'
 import SignIn from './components/auth'
-import Template from './components/template'
+import Template from './components/templates/template'
 import { getAuth, onAuthStateChanged } from "firebase/auth"
-import Certificate from './components/certificate.js'
+import Certificate from './components/certificates/certificate.js'
 import { BrowserRouter as Router, Switch, Route, Link, } from "react-router-dom"
-import CanvasContainer from './components/builder/canvasContainer.js'
+import { themeChange } from "theme-change"
 import Context from './store/context'
 import { signIn } from './store'
 import { setLoading } from './store'
+import Navbar from './components/Navbar'
 function App() {
   const { store, dispatch } = useContext(Context)
   const auth = getAuth()
   const [user, setUser] = useState(store.user || null)
 
   useEffect(() => {
+    themeChange(false)
     dispatch(setLoading(true))
   }, [])
 
@@ -35,23 +37,10 @@ function App() {
 
   return (
     <>
-      <div className='container'>
-        <h1>Certify</h1>
-      </div>
       <Router>
         <Switch>
           <>
-            <ul style={{ listStyle: 'none', display: "flex", flexDirection: "row" }}>
-              <li style={{ margin: '5px' }}>
-                <Link to={`/signin`}>SignIn</Link>
-              </li>
-              <li style={{ margin: '5px' }}>
-                <Link to={`/certificates`}>Certificates</Link>
-              </li>
-              <li style={{ margin: '5px' }}>
-                <Link to={`/templates`}>Templates</Link>
-              </li>
-            </ul>
+            {!store.templates.currentTemplate.id && <Navbar />}
             {store.user.uid ?
               <>
                 <Route path='/signin' exact>
@@ -63,7 +52,10 @@ function App() {
                 <Route path='/certificates' exact>
                   <Certificate />
                 </Route>
-              </> : <div>No user Signed in <SignIn /></div>
+                <Route path='/templates/:id' exact>
+                  <Template />
+                </Route>
+              </> : <SignIn />
             }
           </>
         </Switch>
