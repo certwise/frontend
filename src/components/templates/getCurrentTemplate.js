@@ -1,5 +1,5 @@
-import { getURL } from "../api/templates"
-import { getStorage, getDownloadURL, uploadBytes, deleteObject, ref } from "firebase/storage";
+import { getURL } from "../../api/templates"
+import { getStorage, ref } from "firebase/storage";
 
 const getCurrentTemplateImageItems = items => {
     let promises = []
@@ -25,8 +25,8 @@ const getImageItemWithSourceUrl = item => {
                     im.src = url
                     im.onload = () => {
                         item['src'] = im
-                        item['original-width'] = im.width
-                        item['original-height'] = im.height
+                        item['width'] = im.width
+                        item['height'] = im.height
                         resolve(item)
                     }
                 }).catch(err => {

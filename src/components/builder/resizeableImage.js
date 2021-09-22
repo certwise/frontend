@@ -25,11 +25,13 @@ const DynamicImage = ({ shapeProps, isSelected, onClick, onChange, item }) => {
                 {...shapeProps}
                 draggable
                 onDragEnd={(e) => {
-                    onChange({
-                        ...shapeProps,
-                        x: e.target.x(),
-                        y: e.target.y(),
-                    })
+                    if (e.target.x() > 0 && e.target.y() > 0) {
+                        onChange({
+                            ...shapeProps,
+                            x: e.target.x(),
+                            y: e.target.y(),
+                        })
+                    }
                 }}
                 onTransformEnd={(e) => {
                     // transformer is changing scale of the node

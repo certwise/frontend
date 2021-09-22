@@ -14,5 +14,6 @@ export const app = initializeApp(firebaseConfig);
 
 // TODO: change url to env var
 export const env = {
-    url: "https://rajasekar-certify-backend.herokuapp.com"
+    url: "http://localhost:5000"
+    //url: "https://rajasekar-certify-backend.herokuapp.com"
 }

@@ -85,6 +85,20 @@ const reducer = (state, action) => {
                 ...state,
                 fonts: [...state.fonts, action.payload]
             }
+
+        case types.SET_FONTS_LOADING:
+            return {
+                ...state,
+                fontsLoading: action.payload
+            }
+        case types.DOWLOAD_CURRENT_TEMPLATE:
+            return {
+                ...state,
+                currentTemplate: {
+                    ...state.currentTemplate,
+                    downloadCurrentTemplate: action.payload,
+                }
+            }
         default: return state
     }
 }

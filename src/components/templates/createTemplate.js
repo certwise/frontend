@@ -3,6 +3,7 @@ import * as api from '../../api/templates'
 function CreateTemplate(props) {
     const { names, uid } = props
     const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
     const [isValid, setIsvalid] = useState(false)
     const createTemplate = async () => {
         const names = await api.getCertificateNames(uid)
@@ -12,7 +13,7 @@ function CreateTemplate(props) {
             const info = {
                 uid,
                 name,
-                description: 'New Template test',
+                description,
             }
             const res = await api.createTemplate(info)
             console.log(res)
@@ -30,9 +31,13 @@ function CreateTemplate(props) {
         <div className='w-1/3 m-4 border-2 rounded-xl border-primary p-3'>
             <div class="form-control ">
                 <label class="label">
-                    <span class="label-text">Primary</span>
+                    <span class="label-text">Template Name</span>
                 </label>
-                <input type="text" onChange={e => setName(e.target.value)} placeholder="Template name" class="input input-primary input-bordered" />
+                <input type="textarea" onChange={e => setName(e.target.value)} placeholder="Template name" class="input input-primary input-bordered" />
+                <label class="label">
+                    <span class="label-text">Template Description</span>
+                </label>
+                <textarea type="text" onChange={e => setDescription(e.target.value)} placeholder="Template description" class="input input-primary input-bordered" />
             </div>
             <button onClick={() => createTemplate()} className="btn btn-primary mt-4" disabled={!isValid}>Create Template</button>
             {!isValid && <div class="text-sm text-red">Invalid template name.</div>}

@@ -1,12 +1,15 @@
 import React, { useEffect, useContext, useRef, useState } from 'react'
-import { Stage, Layer, Image, Text, Group, Rect, Transformer } from 'react-konva';
+import { Stage, Layer, Image, Text, Group, Rect, Transformer, Circle } from 'react-konva';
 import Context from '../../store/context';
 import { templateActions } from '../../store'
 import DynamicImage from './resizeableImage';
-
+import DynamicText from './dynamicText';
+import { getStorage, ref, uploadBytes } from '@firebase/storage';
+import * as api from '../../api/templates'
 function Canvas() {
 
     const { store, dispatch } = useContext(Context)
+    const [draggableText, setDraggableText] = useState(true)
     const stageRef = useRef(null)
     const textRef = useRef(null)
     const items = store.templates.currentTemplate.canvas.items
@@ -14,6 +17,10 @@ function Canvas() {
     const width = items.find(item => item.type === 'base-image')['width']
     const height = items.find(item => item.type === 'base-image')['height']
     const ratio = width / height
+    let stageWidth = window.innerWidth * 0.56
+    if (ratio < 1.1) {
+        stageWidth *= ratio * 0.8
+    }
     const drag = (e, id) => {
         let items_ = [...items]
         let x = e.target._lastPos.x
@@ -49,35 +56,39 @@ function Canvas() {
         }
         window.addEventListener('resize', handleResize)
     }, [])
-    function downloadURI() {
+    async function downloadURI() {
         if (stageRef) {
-            let uri = stageRef.current.toDataURL({
-                pixelRatio: 1,
-            })
-            let name = "ex.png"
-            let link = document.createElement('a');
-            link.download = name;
-            link.href = uri;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            link = null
+            let name = "template_image.jpeg"
+            let img = stageRef.current.toDataURL({ pixelRatio: 1, mimeType: 'image/jpeg' })
+            let data = img.replace(/^data:image\/\w+;base64,/, "")
+            let buffer = Buffer.from(data, 'base64')
+            let pathref = `${store.user.uid}/templates/${store.templates.currentTemplate.id}/example/${name}`
+            await uploadBytes(ref(getStorage(), pathref), buffer)
+            return "Success"
         } else {
             alert("Please create a stageRef first")
+            return 'Nope'
         }
     }
-    const trRef = React.useRef()
+    useEffect(async () => {
+        if (store.templates.currentTemplate.downloadCurrentTemplate) {
+            await downloadURI()
+            await api.editTemplateItems(store.templates.currentTemplate.id, store.templates.currentTemplate.canvas.items)
+            dispatch(templateActions.downloadCurrentTemplate(false))
+            window.location.reload()
+        }
+    }, [store.templates.currentTemplate.downloadCurrentTemplate])
 
 
     return (
         <div>
-            <div className="">
+            {store.templates.currentTemplate.fontLoading ? <div>Fonts loading</div> : <div className="">
                 <Stage
                     ref={stageRef}
-                    width={window.innerWidth * 0.56}
-                    height={window.innerWidth * 0.56 / ratio}
-                    scaleX={window.innerWidth * 0.56 / width}
-                    scaleY={window.innerWidth * 0.56 / ratio / height}
+                    width={stageWidth}
+                    height={stageWidth / ratio}
+                    scaleX={stageWidth / width}
+                    scaleY={stageWidth / ratio / height}
                 >
                     <Layer>
                         {items.map((item, i) => {
@@ -119,27 +130,39 @@ function Canvas() {
                                     />
 
                                 case 'text':
-                                    return <Group
+
+                                    return <DynamicText
+                                        key={i}
                                         x={item.x}
                                         y={item.y}
-                                        draggable
-                                        onDragEnd={e => drag(e, item.id)}
-                                        onDragMove={e => {
-                                            e.target.y(Math.max(e.target.y(), 0))
-                                            e.target.x(Math.max(e.target.x(), 0))
-                                        }}
+                                        width={item.width || 400}
+                                        height={item.height || 200}
+                                        text={item.value}
+                                        fill={item.color || item.fill}
+                                        align={item.attr.align || 'center'}
+                                        fontSize={item.attr.fontSize}
+                                        fontFamily={item.attr.fontFamily}
+                                        fontWeight={item.attr.fontWeight}
+                                        setCanvas={
+                                            obj => {
+                                                console.log("Object in canvas:", obj)
+                                                let p = items
+                                                p[i] = { ...p[i], ...obj }
+                                                console.log("Obj:", obj, "p[i] :", p[i])
+                                                dispatch(templateActions.editCanvas(p))
+                                            }
+                                        }
+                                        onDragEndGrp={
+                                            (position) => {
+                                                let p = items
+                                                p[i] = { ...p[i], x: position.x, y: position.y }
+                                                console.log("Change position Obj:", position, "p[i] :", p[i])
+                                                dispatch(templateActions.editCanvas(p))
+                                            }
+                                        }
                                         onClick={() => setActiveItem(item)}
-                                        key={i}
-                                        ref={textRef}
-                                    >
-                                        <Text
-                                            fill={item.color || item.fill}
-                                            text={item.value}
-                                            {...item.attr}
-                                            textDecoration={item.id === activeItem.id ? 'underline' : ''}
-                                        />
-                                    </Group>
-
+                                        isSelected={item.id === activeItem.id}
+                                    />
                                 default:
                                     return null
 
@@ -148,7 +171,7 @@ function Canvas() {
                         }
                     </Layer>
                 </Stage >
-            </div>
+            </div>}
         </div >
     )
 }

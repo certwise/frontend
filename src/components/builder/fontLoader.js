@@ -6,3 +6,20 @@ export const loadFonts = async (sort) => {
     let res = await axios.get(url)
     return res.data.items
 }
+
+export const loadFontIntoCSS = async (fontFamily) => {
+    try {
+        let url = `https://fonts.googleapis.com/css?family=${fontFamily}`
+        let style = document.createElement('link');
+        style.href = url;
+        style.rel = 'stylesheet';
+        let style1 = document.createElement('link')
+        style1.href = url
+        style1.rel = 'preload'
+        document.head.appendChild(style);
+        document.head.appendChild(style1);
+    }
+    catch {
+        console.log('font error')
+    }
+}

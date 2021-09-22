@@ -2,17 +2,18 @@ import React, { useEffect, useState, useContext } from 'react'
 import Context from '../../store/context';
 import { setLoading, templateActions } from '../../store'
 import * as api from '../../api/templates';
-import { loadFonts } from './fontLoader'
+import { loadFonts, loadFontFromCSS } from './fontLoader'
+import { setActiveItem } from '../../store/templates/actions';
 
 
 function CanvasItems() {
     const { store, dispatch } = useContext(Context)
     const [image, setImageState] = useState()
     const [imageBlob, setImageBlob] = useState()
-    const [numberOfFonts, setNumberOfFonts] = useState(25)
+    const [numberOfFonts, setNumberOfFonts] = useState(100)
     const items = store.templates.currentTemplate.canvas.items
     const activeItem = store.templates.currentTemplate.canvas.activeItem
-    const [isLoading, setIsLoading] = useState(true)
+    const [isFontsLoading, setIsFontsLoading] = useState(false)
     const setImage = async src => {
         let im = new window.Image()
         im.src = src
@@ -61,23 +62,29 @@ function CanvasItems() {
         setImageBlob(null)
     }
     useEffect(() => {
-        dispatch(setLoading(true))
+        dispatch(templateActions.setFontsLoading(true))
         loadFonts('popularity').then(fonts => {
+            fonts = fonts.slice(0, numberOfFonts)
             for (let i in fonts) {
-                let apiUrl = [];
-                apiUrl.push('https://fonts.googleapis.com/css?family=');
-                apiUrl.push(fonts[i].family.replace(/ /g, '+'));
-                var url = apiUrl.join('');
-                let style = document.createElement('link');
-                style.href = url;
-                style.rel = 'stylesheet';
-                //console.log("Styleee:", style)
-                document.head.appendChild(style);
+                try {
+                    let apiUrl = [];
+                    apiUrl.push('https://fonts.googleapis.com/css?family=');
+                    apiUrl.push(fonts[i].family.replace(/ /g, '+'));
+                    var url = apiUrl.join('');
+                    let style = document.createElement('link');
+                    style.href = url;
+                    style.rel = 'stylesheet';
+                    document.head.appendChild(style);
+                }
+                catch {
+                    console.log('font error')
+                }
             }
             dispatch(templateActions.setFonts(fonts))
-            dispatch(setLoading(false))
+            dispatch(templateActions.setFontsLoading(false))
         })
-    }, [])
+    }, [numberOfFonts])
+
     const editActiveItem = (e, val) => {
         switch (val) {
             case 'val':
@@ -86,6 +93,18 @@ function CanvasItems() {
                     p.map(item => {
                         if (item.id === activeItem.id) {
                             item.value = e.target.value
+                        }
+                        return null
+                    })
+                    dispatch(templateActions.editCanvas(p))
+
+                    break
+                }
+            case 'name':
+                {
+                    let p = items
+                    p.map(item => {
+                        if (item.id === activeItem.id) {
                             item.name = e.target.value
                         }
                         return null
@@ -161,22 +180,30 @@ function CanvasItems() {
                     activeItem.type !== 'base-image' && activeItem.id !== 'none' &&
                     <div>
                         Is this field constant?
-                        <input type='checkbox' defaultChecked={activeItem.isConstant || true} onChange={(e) => editActiveItem(e, 'check')} />
+                        <input type='checkbox' defaultChecked={items.find(i => i.id === activeItem.id).isConstant} onChange={(e) => editActiveItem(e, 'check')} />
                     </div>
                 }
             </div>
             {
                 activeItem.type === 'text' ?
                     <div style={{ marginTop: "5px" }}>
-                        <div className=' font-bold text-primary border-b-2 pb-3 border-gray-400'>
-                            <div>Name of field</div>
-                            <input style={{ padding: "5px" }} defaultValue={activeItem.name}
+                        <div className=' font-bold   border-b-2 pb-3 border-gray-400'>
+                            <div className='text-primary'>Name of field</div>
+                            <input className='input input-primary'
+                                value={items.find(item => item.id === activeItem.id).name}
+                                onChange={(e) => editActiveItem(e, 'name')}
+                            />
+                        </div>
+                        <div className='mt-3 font-bold border-b-2 pb-3 border-gray-400'>
+                            <div className='text-primary'>Text to display</div>
+                            <input className='input input-primary'
+                                value={items.find(item => item.id === activeItem.id).value}
                                 onChange={(e) => editActiveItem(e, 'val')}
                             />
                         </div>
                         <div className=' font-bold border-b-2 pb-1 border-gray-400 text-primary' style={{ marginTop: "9px" }}>Font Color :
                             <div className='m-2'>
-                                <input type="color" defaultValue={activeItem.color}
+                                <input type="color" defaultValue={activeItem.fill || activeItem.color}
                                     onChangeCapture={(e) => {
                                         let p = [...items]
                                         p.map(item => {
@@ -193,8 +220,8 @@ function CanvasItems() {
                             </div>
 
                         </div>
-                        <div className='font-bold text-primary border-b-2 pb-4 border-gray-400' style={{ marginTop: "5px" }}>Font Size :
-                            <input className='number' type='number' min='6' max='400' defaultValue={activeItem.attr.fontSize || 25}
+                        <div className='font-bold text-primary border-b-2 pb-4 border-gray-400' style={{ marginTop: "5px" }}>Font Size
+                            <input className='input input-sm input-primary' type='number' min='6' max='400' defaultValue={activeItem.attr.fontSize || 25}
                                 onChange={
                                     (e) => {
                                         let p = [...items]
@@ -208,10 +235,10 @@ function CanvasItems() {
                                     }}
                             />
                         </div>
-                        <div className='text-primary mt-2 mb-2 ' style={{ overflow: "hidden" }}>
-                            <div className='font-bold'>Fonts</div>
+                        <div className='text-primary mt-2 mb-2  border-b-2 pb-4 border-gray-400 ' style={{ overflow: "hidden" }}>
+                            <div className='font-bold'>Font families</div>
                             <ul
-                                tabindex="0"
+                                tabIndex="0"
                                 className="p-3 text-black shadow menu dropdown-content bg-gray-300  w-full"
                                 style={{ height: "200px", overflow: "auto", paddingRight: "16px" }}
                             >
@@ -244,6 +271,39 @@ function CanvasItems() {
                             </ul>
 
                         </div>
+
+                        <div className='font-bold text-primary border-b-2 pb-4 border-gray-400' style={{ marginTop: "5px" }}>
+                            <div>Align</div>
+                            <button
+                                className={`btn-xs rounded m-2 w-1/4 btn-${items.find(i => i.id === activeItem.id).attr.align === 'left' ? 'success' : 'primary'}`}
+                                onClick={() => {
+                                    let p = [...items]
+                                    p.find(item => item.id === activeItem.id).attr.align = 'left'
+
+                                    dispatch(templateActions.editCanvas(p))
+                                }}
+                            >Left</button>
+                            <button
+                                className={`btn-xs rounded m-2 w-1/4 btn-${items.find(i => i.id === activeItem.id).attr.align === 'center' || !activeItem.attr.align ? 'success' : 'primary'}`}
+                                onClick={() => {
+                                    let p = [...items]
+                                    p.find(item => item.id === activeItem.id).attr.align = 'center'
+
+                                    dispatch(templateActions.editCanvas(p))
+
+                                }}
+                            >Center</button>
+                            <button
+                                className={`btn-xs rounded m-2 w-1/4 btn-${items.find(i => i.id === activeItem.id).attr.align === 'right' ? 'success' : 'primary'}`}
+                                onClick={() => {
+                                    let p = [...items]
+                                    p.find(item => item.id === activeItem.id).attr.align = 'right'
+                                    dispatch(templateActions.editCanvas(p))
+
+                                }}
+                            >Right</button>
+                        </div>
+
                     </div> : null
             }
 
@@ -264,8 +324,9 @@ function CanvasItems() {
                 activeItem.type === 'image' ?
 
                     <div>
-                        <div >Image name
-                            <input style={{ padding: "5px" }} defaultValue={activeItem.name}
+                        <div className='mb-2 text-primary font-bold'>Image name:</div>
+                        <div >
+                            <input className='input input-primary mb-3' defaultValue={activeItem.name}
                                 onChange={(e) => editActiveItem(e, 'img')}
                             />
                         </div>
@@ -299,9 +360,7 @@ function CanvasItems() {
                     : <div className='text-red-400 font-bold'>
                         No layer is selected
                     </div>
-
             }
-
         </div >
     )
 }

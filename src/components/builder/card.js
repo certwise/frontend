@@ -78,7 +78,7 @@ export const Card = ({ id, index, moveCard, item }) => {
             style={{ opacity }}
             data-handler-id={handlerId}
             onClick={() => setActiveItem(item)}>
-            {item.value || item.name}
+            {item.name}
         </button>
     )
 }

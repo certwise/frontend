@@ -17,7 +17,9 @@ export const initialState = {
             stageRef: null,
             items: [baseImage, text],
             activeItem: text,
-        }
+            fontsLoading: false,
+        },
+        downloadCurrentTemplate: false,
     },
     fonts: [],
 }

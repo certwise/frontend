@@ -3,6 +3,8 @@ import axios from 'axios';
 import * as api from '../../api/templates'
 import { env } from '../../config.js'
 import Context from '../../store/context';
+import TemplateCard from '../templates/templateCard';
+import { useParams } from 'react-router';
 
 
 function CreateCertificate() {
@@ -11,36 +13,34 @@ function CreateCertificate() {
     const [fields, setfields] = useState({})
     const [receiverName, setReceiverName] = useState(null)
     const [email, setEmail] = useState(null)
-    const [templates, setTemplates] = useState([])
-    const [selectedTemplate, setSelectedTemplate] = useState(null)
-    const getTemplates = () => {
-        api.getTemplates(store.user.uid).then(res => {
-            setTemplates(res)
-        })
-    }
+    const [template, setTemplate] = useState()
+    const [templateFields, setTemplateFields] = useState([])
+    const { name } = useParams()
     useEffect(() => {
-        api.getTemplates(store.user.uid).then(res => {
-            setTemplates(res)
+        api.getTemplateByName(name).then(res => {
+            setTemplate(res)
+            console.log("Template:", res)
+            let url = `${env.url}/template/fields/${res.id}`
+            return axios.get(url)
+        }).then(fields => {
+            console.log("axios data:", fields.data)
+            setTemplateFields(fields.data)
+        }).catch(err => {
+            console.log(err)
         })
+
     }, [])
-    const setFieldsFromSelectedTemplate = template => {
-        let url = `${env.url}/template/fields/${template.id}`
-        axios.get(url).then(res => {
-            setSelectedTemplate({ fields: res.data, template: template })
-            console.log("axiosdata", selectedTemplate)
-        })
-    }
     const createCertificate = (e) => {
         e.preventDefault()
         let req = {
             uid: store.user.uid,
-            templateId: selectedTemplate.id,
+            templateId: template.id,
             receiverName,
             receiverEmail: email,
-            fields: fields
+            fields: fields,
         }
         let urls = `${env.url}/certificate/one`
-        console.log(urls)
+        console.log("create certificate:", urls, req)
         axios.post(urls, req)
             .then(res => {
                 console.log(res)
@@ -50,27 +50,10 @@ function CreateCertificate() {
     }
     return (
         <div>
-            {
-                templates &&
-                <div>
-                    {templates.map(template => {
-                        return (
-                            <div key={template.id}>
-                                <div className='text-3xl font-bold p-2 text-primary mt-4'>{template.data.name}</div>
-                                <button className='btn btn-primary' onClick={() => {
-                                    setFieldsFromSelectedTemplate(template)
-                                }}>Create certificate from {template.data.name}</button>
-                            </div>
-                        )
-                    }
-                    )}
-                </div>
-            }
-            {
-                selectedTemplate &&
+            {templateFields && template &&
                 <div>
                     <form className='mt-5 p-2 border-2 border-primary w-1/2'>
-                        <div className='text-3xl font-bold p-2 text-primary mt-4'>Fill fields of {selectedTemplate.template.data.name}:</div>
+                        <div className='text-3xl font-bold p-2 text-primary mt-4'>Fill fields of {template.data.name || name}:</div>
                         <div className='m-2  '>
                             <div className='text-xl font-bold ml-1 text-primary'>
                                 <label className='w-5'>Name of receiver</label>
@@ -90,7 +73,7 @@ function CreateCertificate() {
                             />
                         </div>
                         {
-                            selectedTemplate.fields.map(field => {
+                            templateFields.map(field => {
                                 return (
                                     <div
                                         className='m-2 '

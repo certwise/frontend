@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import * as api from '../../api/templates'
-import Context from '../../store/context.js';
-import { env } from '../../config.js'
 import Modal from 'react-modal'
 import CreatedCertedficates from './createdCerts';
-import CreateCertificate from './createCertificate';
+import UserTemplates from './userTemplates.js';
 function Certificate() {
     Modal.setAppElement(document.getElementById('root'))
     const [page, setPage] = useState(1)
@@ -14,21 +9,26 @@ function Certificate() {
     return (
         <div className='p-4'>
             {page && <div className=' flex flex-row'>
-                <div className="tabs tabs-boxed">
-                    <button
+                <div className="tabs">
+                    <div
                         onClick={() => setPage(1)}
-                        className={`tab  ${page == 1 ? 'tab-active' : ''}`}
+                        className={`tab tab-lg text-primary font-bold tab-lifted  ${page == 1 ? 'tab-active' : ''}`}
                     >
-                        Your Certificates</button>
-                    <button
+                        Your Certificates</div>
+                    <div
                         onClick={() => setPage(2)}
-                        className={`tab  ${page == 2 ? 'tab-active' : ''}`}
+                        className={`tab tab-lg text-primary font-bold tab-lifted  ${page == 2 ? 'tab-active' : ''}`}
                     >
-                        Create Certificates</button>
+                        Create Certificates</div>
+                    <div
+                        onClick={() => setPage(3)}
+                        className={`tab tab-lg text-primary font-bold tab-lifted  ${page == 3 ? 'tab-active' : ''}`}
+                    >
+                        View Certificates by template</div>
                 </div>
             </div>}
             {page === 1 && <CreatedCertedficates />}
-            {page === 2 && <CreateCertificate />}
+            {page === 2 && <UserTemplates />}
         </div>
     )
 }

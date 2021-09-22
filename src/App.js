@@ -10,6 +10,8 @@ import Context from './store/context'
 import { signIn } from './store'
 import { setLoading } from './store'
 import Navbar from './components/Navbar'
+import TemplateCanvas from './components/templateCanvas'
+import CreateCertificate from './components/certificates/createCertificate'
 function App() {
   const { store, dispatch } = useContext(Context)
   const auth = getAuth()
@@ -46,14 +48,17 @@ function App() {
                 <Route path='/signin' exact>
                   <SignIn />
                 </Route>
+                <Route path='/template/:templateId' exact>
+                  <TemplateCanvas />
+                </Route>
                 <Route path='/templates' exact>
                   <Template />
                 </Route>
                 <Route path='/certificates' exact>
                   <Certificate />
                 </Route>
-                <Route path='/templates/:id' exact>
-                  <Template />
+                <Route exact path='/certificate/create/:name'>
+                  <CreateCertificate />
                 </Route>
               </> : <SignIn />
             }

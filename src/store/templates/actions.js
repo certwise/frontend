@@ -87,3 +87,17 @@ export const createImageItem = img => {
         payload: img
     }
 }
+
+export const setFontsLoading = state => {
+    return {
+        type: types.SET_FONTS_LOADING,
+        payload: state
+    }
+}
+
+export const downloadCurrentTemplate = bool => {
+    return {
+        type: types.DOWLOAD_CURRENT_TEMPLATE,
+        payload: bool
+    }
+}

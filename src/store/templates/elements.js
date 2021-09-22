@@ -2,19 +2,20 @@
 
 export const getNewText = (type) => {
     let text = {
-        id: makeid(),
-        isConstant: false,
+        id: makeid(15),
+        isConstant: true,
         type: "text",
-        name: "text",
+        name: "Text field",
         value: "Example text field",
-        fill: "#fff",
-        x: 10,
-        y: 10,
+        fill: "#000",
+        x: 50,
+        y: 50,
         attr: {
             fontSize: 75,
+            fontFamily: 'Roboto',
         },
-        width: 200,
-        height: 100,
+        width: 800,
+        height: 120,
     }
     return text
 }
@@ -22,10 +23,9 @@ export const getNewText = (type) => {
 export const getNewImage = () => {
     let image = {
         isConstant: false,
-        id: makeid(),
+        id: makeid(15),
         type: "image",
         name: "image",
-        src: "default",
         x: 10,
         y: 10,
         scale: 1,
@@ -42,8 +42,7 @@ export const baseImage = {
 }
 
 
-const makeid = () => {
-    let length = 12
+const makeid = (length) => {
     let result = ''
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     let charactersLength = characters.length
