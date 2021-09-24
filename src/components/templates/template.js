@@ -112,10 +112,10 @@ function Template() {
                 {
                     store.app.isLoading ? <h1 className="text-xl">Loading...</h1> :
                         <>
-                            <div className='m-5 text-primary text-4xl font-bold'>Templates</div>
+                            <div className='m-5 text-4xl font-bold'>Templates</div>
                             <button className='btn btn-primary m-5' onClick={createTemplateForm}>Create New Template</button>
                             {createTemplate && <CreateTemplate uid={store.user.uid} names={templateNames} />}
-                            <div className='m-5 text-primary text-xl font-bold'>Your Templates</div>
+                            <div className='m-5  text-xl font-bold'>Your Templates</div>
                             <input type='text' placeholder='Search templates by name' className='w-1/5 m-4 input input-primary' onChange={(e) => setTemplateQuery(e.target.value)} />
                             <div className="m-4">
                                 {store.templates.userTemplates.map((template, i) => {

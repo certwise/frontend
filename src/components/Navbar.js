@@ -4,7 +4,7 @@ function Navbar() {
     return (
         <>
 
-            <div className="navbar mb-2 shadow-lg bg-neutral text-neutral-content ">
+            <div className="navbar pd-2 shadow-lg ">
                 <div className="flex-1 px-2 mx-2">
                     <span className="text-3xl">
                         Certify

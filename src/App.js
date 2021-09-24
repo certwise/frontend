@@ -12,6 +12,7 @@ import { setLoading } from './store'
 import Navbar from './components/Navbar'
 import TemplateCanvas from './components/templateCanvas'
 import CreateCertificate from './components/certificates/createCertificate'
+import Home from './components/home'
 function App() {
   const { store, dispatch } = useContext(Context)
   const auth = getAuth()
@@ -45,6 +46,9 @@ function App() {
             {!store.templates.currentTemplate.id && <Navbar />}
             {store.user.uid ?
               <>
+                <Route exact path="/">
+                  <Home />
+                </Route>
                 <Route path='/signin' exact>
                   <SignIn />
                 </Route>

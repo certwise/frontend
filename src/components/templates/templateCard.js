@@ -37,9 +37,9 @@ function TemplateCard({ template, uid, id, type }) {
                         <button className='btn-xs'
                             onClick={() => setisRenaming(true)}
                         >
-                            <img style={{ width: 20 }}
+                            {!type && <img style={{ width: 20 }}
                                 src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-edit-interface-kiranshastry-lineal-kiranshastry-2.png"
-                            />
+                            />}
                         </button>
                     </div>
                         :

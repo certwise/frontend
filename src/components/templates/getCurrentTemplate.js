@@ -25,8 +25,9 @@ const getImageItemWithSourceUrl = item => {
                     im.src = url
                     im.onload = () => {
                         item['src'] = im
-                        item['width'] = im.width
-                        item['height'] = im.height
+
+                        item['width'] = item.width || im.width
+                        item['height'] = item.height || im.height
                         resolve(item)
                     }
                 }).catch(err => {

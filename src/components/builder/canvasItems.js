@@ -4,6 +4,7 @@ import { setLoading, templateActions } from '../../store'
 import * as api from '../../api/templates';
 import { loadFonts, loadFontFromCSS } from './fontLoader'
 import { setActiveItem } from '../../store/templates/actions';
+import FontSelector from './fontSelector';
 
 
 function CanvasItems() {
@@ -13,7 +14,7 @@ function CanvasItems() {
     const [numberOfFonts, setNumberOfFonts] = useState(100)
     const items = store.templates.currentTemplate.canvas.items
     const activeItem = store.templates.currentTemplate.canvas.activeItem
-    const [isFontsLoading, setIsFontsLoading] = useState(false)
+    const [isFontsOpen, setIsFontsOpen] = useState(false)
     const setImage = async src => {
         let im = new window.Image()
         im.src = src
@@ -162,7 +163,7 @@ function CanvasItems() {
 
     return (
         <div
-            className='text-black'
+            className=''
             onKeyDown={(e) => {
                 if (e.key == 'Delete') {
                     deleteActiveItem()
@@ -171,39 +172,40 @@ function CanvasItems() {
 
             style={{ margin: '8px' }}>
 
-            <div className='text-2xl mb-1 font-bold text-primary'>Layer</div>
-            <div className='text-primary font-bold mb-2'>
+            <div className=' font-bold mb-2'>
                 {activeItem.name}
             </div>
-            <div className='border-b-2 pb-3 border-gray-400'>
+            <div className='border-b-2 pb-3 border-gray-300'>
                 {
                     activeItem.type !== 'base-image' && activeItem.id !== 'none' &&
-                    <div>
-                        Is this field constant?
-                        <input type='checkbox' defaultChecked={items.find(i => i.id === activeItem.id).isConstant} onChange={(e) => editActiveItem(e, 'check')} />
-                    </div>
+
+                    <label className="cursor-pointer label">
+                        <span className="label-text">Is this field constant?</span>
+                        <input className='checkbox checkbox-md checkbox-primary ml-2 mr-auto' type='checkbox' defaultChecked={items.find(i => i.id === activeItem.id).isConstant} onChange={(e) => editActiveItem(e, 'check')} />
+                    </label>
                 }
             </div>
             {
                 activeItem.type === 'text' ?
                     <div style={{ marginTop: "5px" }}>
-                        <div className=' font-bold   border-b-2 pb-3 border-gray-400'>
-                            <div className='text-primary'>Name of field</div>
-                            <input className='input input-primary'
+                        <div className=' font-bold   border-b-2 pb-3 border-gray-300'>
+                            <label className='mt-2'>Name of field</label>
+                            <input className='mt-2 input-sm input ml-2 input-primary'
                                 value={items.find(item => item.id === activeItem.id).name}
                                 onChange={(e) => editActiveItem(e, 'name')}
                             />
                         </div>
-                        <div className='mt-3 font-bold border-b-2 pb-3 border-gray-400'>
-                            <div className='text-primary'>Text to display</div>
-                            <input className='input input-primary'
+                        <div className='mt-3 font-bold border-b-2 pb-3 border-gray-300'>
+                            <label className='align-top'>Text to display</label>
+                            <textarea className='input-sm input ml-2 input-primary'
+                                type='textarea'
                                 value={items.find(item => item.id === activeItem.id).value}
                                 onChange={(e) => editActiveItem(e, 'val')}
                             />
                         </div>
-                        <div className=' font-bold border-b-2 pb-1 border-gray-400 text-primary' style={{ marginTop: "9px" }}>Font Color :
-                            <div className='m-2'>
-                                <input type="color" defaultValue={activeItem.fill || activeItem.color}
+                        <div className=' font-bold border-b-2 pb-1 border-gray-300 ' >
+                            <label className=' align-top'> Font Color
+                                <input className='align-middle m-2 mb-1' type="color" defaultValue={activeItem.fill || activeItem.color}
                                     onChangeCapture={(e) => {
                                         let p = [...items]
                                         p.map(item => {
@@ -217,11 +219,12 @@ function CanvasItems() {
                                     }}
                                 //onChangeCapture
                                 />
-                            </div>
+                            </label>
 
                         </div>
-                        <div className='font-bold text-primary border-b-2 pb-4 border-gray-400' style={{ marginTop: "5px" }}>Font Size
-                            <input className='input input-sm input-primary' type='number' min='6' max='400' defaultValue={activeItem.attr.fontSize || 25}
+                        <div className='font-bold  border-b-2 pb-3 border-gray-300' >Font Size
+                            <input className='input-sm input ml-2 mt-3 input-sm input-primary'
+                                type='number' min='6' max='400' defaultValue={activeItem.attr.fontSize || 25}
                                 onChange={
                                     (e) => {
                                         let p = [...items]
@@ -235,56 +238,33 @@ function CanvasItems() {
                                     }}
                             />
                         </div>
-                        <div className='text-primary mt-2 mb-2  border-b-2 pb-4 border-gray-400 ' style={{ overflow: "hidden" }}>
-                            <div className='font-bold'>Font families</div>
-                            <ul
-                                tabIndex="0"
-                                className="p-3 text-black shadow menu dropdown-content bg-gray-300  w-full"
-                                style={{ height: "200px", overflow: "auto", paddingRight: "16px" }}
-                            >
-                                {
-                                    store.templates.fonts.slice(0, numberOfFonts).map((font, i) => {
-                                        return <li
-                                            key={i}
-                                            style={{ fontFamily: font.family }}
-                                            onChange={(e) => { }}
-                                            onClick={() => {
-                                                let p = [...items]
-                                                p.map(item => {
-                                                    if (item.id === activeItem.id) {
-                                                        item['attr'] = {
-                                                            ...item.attr,
-                                                            fontFamily: font.family,
-                                                            fileLink: font.files.regular
-                                                        }
-                                                    }
-                                                    return item
-                                                })
-                                                dispatch(templateActions.editCanvas(p))
+                        <div className=' mt-2 mb-2 border-b-2 pb-2 border-gray-300 ' style={{ overflow: "hidden" }}>
+                            <button className='btn-sm btn-primary'
+                                onClick={() => { setIsFontsOpen(i => !i) }}>Font Families</button>
+                            <FontSelector
+                                isOpen={isFontsOpen}
+                                close={() => { setIsFontsOpen(false) }}
+                                fonts={store.templates.fonts}
+                                styles={{ width: '450px', height: window.innerHeight }}
+                                activeItem={activeItem}
+                                items={items}
+                                loadMoreFonts={() => setNumberOfFonts(prev => prev + 30)}
 
-                                            }}>{font.family} </li>
-                                    })
-                                }
-                                <li>
-                                    <button className='btn-xs rounded m-2 btn-primary' onClick={() => setNumberOfFonts(prev => prev + 25)}>Load more fonts</button>
-                                </li>
-                            </ul>
-
+                            />
                         </div>
 
-                        <div className='font-bold text-primary border-b-2 pb-4 border-gray-400' style={{ marginTop: "5px" }}>
-                            <div>Align</div>
+                        <div className='font-bold  border-b-2 pb-4 border-gray-300'>
+                            <label className='pb-2 mr-2 align-middle'>Align</label>
                             <button
-                                className={`btn-xs rounded m-2 w-1/4 btn-${items.find(i => i.id === activeItem.id).attr.align === 'left' ? 'success' : 'primary'}`}
+                                className={`btn-ghost rounded p-1 bg-gray-200 ${items.find(i => i.id === activeItem.id).attr.align === 'left' ? 'border-b-2 border-red-500' : ''}`}
                                 onClick={() => {
                                     let p = [...items]
                                     p.find(item => item.id === activeItem.id).attr.align = 'left'
-
                                     dispatch(templateActions.editCanvas(p))
                                 }}
-                            >Left</button>
+                            ><img style={{ height: "20px" }} src="https://img.icons8.com/material/48/000000/align-left--v2.png" /></button>
                             <button
-                                className={`btn-xs rounded m-2 w-1/4 btn-${items.find(i => i.id === activeItem.id).attr.align === 'center' || !activeItem.attr.align ? 'success' : 'primary'}`}
+                                className={`btn-ghost rounded p-1 bg-gray-200 ml-2 ${items.find(i => i.id === activeItem.id).attr.align === 'center' ? 'border-b-2 border-red-500' : ''}`}
                                 onClick={() => {
                                     let p = [...items]
                                     p.find(item => item.id === activeItem.id).attr.align = 'center'
@@ -292,16 +272,16 @@ function CanvasItems() {
                                     dispatch(templateActions.editCanvas(p))
 
                                 }}
-                            >Center</button>
+                            ><img style={{ height: "20px" }} src="https://img.icons8.com/material/48/000000/align-center--v1.png" /></button>
                             <button
-                                className={`btn-xs rounded m-2 w-1/4 btn-${items.find(i => i.id === activeItem.id).attr.align === 'right' ? 'success' : 'primary'}`}
+                                className={`btn-ghost rounded p-1 bg-gray-200 ml-2 ${items.find(i => i.id === activeItem.id).attr.align === 'right' ? 'border-b-2 border-red-500' : ''}`}
                                 onClick={() => {
                                     let p = [...items]
                                     p.find(item => item.id === activeItem.id).attr.align = 'right'
                                     dispatch(templateActions.editCanvas(p))
 
                                 }}
-                            >Right</button>
+                            ><img style={{ height: "20px" }} src="https://img.icons8.com/material/48/000000/align-right--v1.png" /></button>
                         </div>
 
                     </div> : null
@@ -310,7 +290,7 @@ function CanvasItems() {
             {
                 activeItem.type === 'base-image' ?
                     <div >
-                        <div className='mb-2 text-primary font-bold'>Change Image</div>
+                        <div className='mb-2  font-bold'>Change Image</div>
                         <div className='border-2 border-primary p-2'>
                             <input className='mb-3 text-xs' type='file' onChange={(e) => onChangeImg(e.target.files[0])} />
                             {image ? <img className='mb-3 border-2 border-secondary ' style={{ height: '100px' }} src={image} /> : null}
@@ -324,42 +304,41 @@ function CanvasItems() {
                 activeItem.type === 'image' ?
 
                     <div>
-                        <div className='mb-2 text-primary font-bold'>Image name:</div>
+                        <div className='mb-2  font-bold'>Image name:</div>
                         <div >
                             <input className='input input-primary mb-3' defaultValue={activeItem.name}
                                 onChange={(e) => editActiveItem(e, 'img')}
                             />
                         </div>
-                        <div className='mb-2 text-primary font-bold'>Change Image</div>
+                        <div className='mb-2  font-bold'>Change Image</div>
 
                         <div className='p-2 rounded w-full border-2 border-primary '>
                             <input className='text-sm' type='file' onChange={(e) => onChangeImg(e.target.files[0])} />
                             {image ? <img style={{ height: '100px' }} src={image} /> : null}
                             <div>
-                                <button className='btn btn-primary mt-2 mb-3' onClick={() => setImage(image)}>Set image</button>
+                                <button className='btn-sm rounded btn-primary mt-2 mb-3' onClick={() => setImage(image)}>Set image</button>
                             </div>
                         </div>
                     </div> : null
-            } {
-                activeItem.type !== 'base-image' && activeItem.id !== 'none' ?
-                    <div><button className='btn btn-primary mt-2  w-1/2' onClick={deleteActiveItem}>Delete</button></div> : null
             }
             {
                 activeItem.id !== 'none' ?
-                    <div>
-                        <button
-                            className='btn btn-primary mt-2  w-1/2'
-                            onClick={() => {
-                                dispatch(templateActions.setActiveItem({ id: 'none' }))
-                                setImageState(null)
-                            }
-                            }>
-                            Deselect
-                        </button>
-                    </div>
+                    <button
+                        className='btn-sm rounded btn-primary mt-2  w-1/3'
+                        onClick={() => {
+                            dispatch(templateActions.setActiveItem({ id: 'none' }))
+                            setImageState(null)
+                        }
+                        }>
+                        Deselect
+                    </button>
                     : <div className='text-red-400 font-bold'>
                         No layer is selected
                     </div>
+            }
+            {
+                activeItem.type !== 'base-image' && activeItem.id !== 'none' &&
+                <button className='btn-sm rounded btn-error mt-2 ml-3  w-1/3' onClick={deleteActiveItem}>Delete</button>
             }
         </div >
     )

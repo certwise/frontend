@@ -71,8 +71,8 @@ function UserTemplates() {
                 {
                     store.app.isLoading ? <h1 className="text-xl">Loading...</h1> :
                         <>
-                            <div className='m-5 text-primary text-4xl font-bold'>Templates</div>
-                            <div className='m-5 text-primary text-xl font-bold'>Your Templates</div>
+                            <div className='m-5  text-4xl font-bold'>Templates</div>
+                            <div className='m-5  text-xl font-bold'>Your Templates</div>
                             <div className="m-4">
                                 {store.templates.userTemplates.map((template, i) => {
                                     if (template.data.name.includes(templateQuery))

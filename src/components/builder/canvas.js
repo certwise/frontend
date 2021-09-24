@@ -17,9 +17,12 @@ function Canvas() {
     const width = items.find(item => item.type === 'base-image')['width']
     const height = items.find(item => item.type === 'base-image')['height']
     const ratio = width / height
-    let stageWidth = window.innerWidth * 0.56
-    if (ratio < 1.1) {
+    let stageWidth = window.innerWidth * 0.5
+    if (ratio < 1) {
         stageWidth *= ratio * 0.8
+    }
+    if (stageWidth / ratio > window.innerHeight * 0.8) {
+        stageWidth /= (stageWidth / ratio) / (window.innerHeight * 0.8)
     }
     const drag = (e, id) => {
         let items_ = [...items]
@@ -82,6 +85,7 @@ function Canvas() {
 
     return (
         <div>
+
             {store.templates.currentTemplate.fontLoading ? <div>Fonts loading</div> : <div className="">
                 <Stage
                     ref={stageRef}
@@ -106,8 +110,12 @@ function Canvas() {
                                     />
                                 case 'image':
                                     return <DynamicImage
+                                        id={item.id}
+                                        items={items}
                                         x={item.x}
                                         y={item.y}
+                                        height={item.height}
+                                        width={item.width}
                                         src={item.src}
                                         item={item}
                                         key={i}
@@ -118,7 +126,7 @@ function Canvas() {
                                         onClick={() => setActiveItem(item)}
                                         onChange={newAttrs => {
                                             let p = items
-                                            p[i] = { ...p[i], ...newAttrs, width: newAttrs.width, height: newAttrs.height }
+                                            p[i] = { ...p[i], ...newAttrs }
                                             dispatch(templateActions.editCanvas(p));
                                             console.log(p[i])
                                         }}

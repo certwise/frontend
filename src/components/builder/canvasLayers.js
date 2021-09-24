@@ -30,22 +30,25 @@ function CanvasLayers() {
     }
     return (
         <div className='p-2 overflow-y-auto' >
-            <div className='pt-2 pb-2
-             text-2xl text-primary font-bold'>
+            <div className='pt-2 pb-2 text-2xl font-bold'>
                 Layers
             </div>
             <DndProvider backend={HTML5Backend}>
                 <Container />
             </DndProvider>
             <div className='flex row'>
-                <button className='btn-sm btn-primary mt-1 mb-2 mr-1 w-full' onClick={addText}>Add text</button>
-                <button className='btn-sm btn-primary mt-1 mb-2 ml-1 w-full' onClick={addImg} >Add Img</button>
+                <button className='btn-sm btn-primary rounded mt-1 mb-2 mr-1 w-full' onClick={addText}>Add text</button>
+                <button className='btn-sm btn-primary rounded mt-1 mb-2 ml-1 w-full' onClick={addImg} >Add Img</button>
             </div>
-            <button className={`btn btn-primary m-2 w-11/12 ${state.saving ? 'loading' : ''}`} onClick={saveCanvas}>Save Template</button>
+            <div>
+                <button className={`btn btn-primary m-2 w-11/12  ${state.saving ? 'loading' : ''}`} onClick={saveCanvas}>Save Template</button>
+            </div>
             {
                 state.saved && alert("Templated successfully saved!")
             }
-            <button className="btn btn-warning mt-2 m-2 w-11/12" onClick={goBack}>Exit Editor</button>
+            <div>
+                <button className="btn btn-warning mt-2 m-2 w-11/12 " onClick={goBack}>Exit Editor</button>
+            </div>
 
 
         </div>
