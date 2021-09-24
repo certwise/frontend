@@ -256,7 +256,7 @@ function CanvasItems() {
                         <div className='font-bold  border-b-2 pb-4 border-gray-300'>
                             <label className='pb-2 mr-2 align-middle'>Align</label>
                             <button
-                                className={`btn-ghost rounded p-1 bg-gray-200 ${items.find(i => i.id === activeItem.id).attr.align === 'left' ? 'border-b-2 border-red-500' : ''}`}
+                                className={`btn-ghost rounded p-1 bg-gray-200 ${items.find(i => i.id === activeItem.id).attr.align === 'left' ? 'border-b-2' : ''}`}
                                 onClick={() => {
                                     let p = [...items]
                                     p.find(item => item.id === activeItem.id).attr.align = 'left'
@@ -264,7 +264,7 @@ function CanvasItems() {
                                 }}
                             ><img style={{ height: "20px" }} src="https://img.icons8.com/material/48/000000/align-left--v2.png" /></button>
                             <button
-                                className={`btn-ghost rounded p-1 bg-gray-200 ml-2 ${items.find(i => i.id === activeItem.id).attr.align === 'center' ? 'border-b-2 border-red-500' : ''}`}
+                                className={`btn-ghost rounded p-1 bg-gray-200 ml-2 ${items.find(i => i.id === activeItem.id).attr.align === 'center' ? 'border-b-2' : ''}`}
                                 onClick={() => {
                                     let p = [...items]
                                     p.find(item => item.id === activeItem.id).attr.align = 'center'
@@ -274,7 +274,7 @@ function CanvasItems() {
                                 }}
                             ><img style={{ height: "20px" }} src="https://img.icons8.com/material/48/000000/align-center--v1.png" /></button>
                             <button
-                                className={`btn-ghost rounded p-1 bg-gray-200 ml-2 ${items.find(i => i.id === activeItem.id).attr.align === 'right' ? 'border-b-2 border-red-500' : ''}`}
+                                className={`btn-ghost rounded p-1 bg-gray-200 ml-2 ${items.find(i => i.id === activeItem.id).attr.align === 'right' ? 'border-b-2' : ''}`}
                                 onClick={() => {
                                     let p = [...items]
                                     p.find(item => item.id === activeItem.id).attr.align = 'right'

@@ -7,6 +7,7 @@ import { initialState as templates } from "./templates/initialState"
 const initialState = {
   app: {
     isLoading: false,
+    isInHomePage: true,
   },
   user,
   templates,

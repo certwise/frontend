@@ -18,6 +18,11 @@ const app = (state = { isLoading: false }, action) => {
                 ...state,
                 isLoading: action.payload,
             }
+        case "IS_IN_HOME_PAGE":
+            return {
+                ...state,
+                isInHomePage: action.payload,
+            }
         default:
             return state
     }

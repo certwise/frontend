@@ -38,18 +38,18 @@ function CreatedCertificates() {
         <div>
 
             <div className="dropdown">
-                <div tabIndex="0" className="m-1 btn btn-primary">Filter by Template</div>
+                <div tabIndex="0" className="m-1 mt-5 bg-indigo-600 p-2 rounded-md hover:bg-indigo-700 text-white">Filter by Template</div>
                 <ul tabIndex="0" className="p-2 border-2 shadow-lg shadow menu dropdown-content bg-base-100 rounded-box w-52">
                     <li>
                         <div
-                            className={`btn m-1 ${templateQuery === '' ? 'btn-accent' : "btn-ghost"}`}
+                            className={`btn m-1 ${templateQuery === '' ? 'btn-secondary' : "btn-ghost"}`}
                             onClick={() => { setTemplateQuery('') }}
                         >All Certificates</div>
                     </li>
                     {templates ? templates.map((template, i) => {
                         return <li key={i}>
                             <div
-                                className={`btn m-1 ${templateQuery === template.data.name ? 'btn-accent' : "btn-ghost"}`}
+                                className={`btn m-1 ${templateQuery === template.data.name ? 'btn-secondary' : "btn-ghost"}`}
                                 onClick={() => { setTemplateQuery(template.data.name) }}
                             >{template.data.name}</div>
                         </li>
@@ -62,10 +62,10 @@ function CreatedCertificates() {
                 Created Certificates:
                 <div>
                     <div className="overflow-x-auto">
-                        <table className="table w-full ">
+                        <table className="table w-full bg-indigo-200 ">
                             <thead>
                                 <tr>
-                                    <th style={{ zIndex: -5 }} className=''>No</th>
+                                    <td >No</td>
                                     <th>Receiver Name</th>
                                     <th>Receiver Email</th>
                                     <th>Issued on</th>
@@ -82,21 +82,21 @@ function CreatedCertificates() {
                                                 key={i}
                                                 className={currentCertificate.id === cert.id ? 'active' : 'hover'}
                                             >
-                                                <th style={{ zIndex: -5 }}>{i + 1}</th>
+                                                <td >{i + 1}</td>
                                                 <td >
                                                     <div >
-                                                        <div
-                                                            className="p-3 btn btn-primary w-2/3  shadow "
+                                                        <button
+                                                            className="align-center text-sm font-sm justify-center m-1 bg-indigo-600 p-2 rounded-md hover:bg-indigo-700 text-white w-2/3 shadow "
                                                             onClick={() => {
                                                                 setCurrentCertificateFunc(cert)
                                                                 console.log(cert)
                                                             }}
-                                                        >{cert.data.receiverName}</div>
+                                                        >{cert.data.receiverName}</button>
                                                     </div>
                                                 </td>
-                                                <td className="text-md  text">{cert.data.receiverEmail}</td>
+                                                <td className="text-sm  text">{cert.data.receiverEmail}</td>
                                                 <td className="text-sm font-bold text-accent">{moment(cert.data.createdAt).format("DD MMM YYYY HH:mm:ss")}</td>
-                                                <td className="text-md font-bold ">
+                                                <td className="text-sm font-bold ">
                                                     {templates.length > 0 &&
                                                         templates.find(item => item.id === cert.data.templateId).data.name ||
                                                         <button className="btn btn-primary btn-lg btn-circle loading m-5"></button>
