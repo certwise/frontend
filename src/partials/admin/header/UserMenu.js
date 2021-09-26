@@ -1,12 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Transition from '../../../utils/admin/Transition';
 
 import UserAvatar from '../../../images/admin/user-avatar-32.png';
+import { getAuth, signOut } from '@firebase/auth';
+import Context from '../../../store/context';
+import { signOut as signOutStore } from '../../../store'
 
 function UserMenu() {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { dispatch } = useContext(Context)
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
@@ -27,8 +31,8 @@ function UserMenu() {
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    //document.addEventListener('keydown', keyHandler);
+    //return () => document.removeEventListener('keydown', keyHandler);
   });
 
   return (
@@ -65,27 +69,35 @@ function UserMenu() {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200">
-            <div className="font-medium text-gray-800">Acme Inc.</div>
-            <div className="text-xs text-gray-500 italic">Administrator</div>
+            <div className="font-medium text-xs text-gray-800">College of Technology</div>
+            <div className="text-sm text-gray-500 italic">Administrator</div>
           </div>
           <ul>
             <li>
               <Link
                 className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
-                to="/"
+                to="/settings"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 Settings
               </Link>
             </li>
             <li>
-              <Link
+              <button
                 className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
-                to="/"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                Sign Out
-              </Link>
+                onClick={
+                  () => {
+                    signOut(getAuth()).then(() => {
+                      dispatch(signOutStore())
+                      alert("Signed out successfully")
+                      window.location.href = '/'
+                    }).catch(err => {
+                      console.log(err)
+                    })
+                  }
+                }>
+                SignOut
+              </button>
             </li>
           </ul>
         </div>

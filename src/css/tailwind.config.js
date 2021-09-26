@@ -12,7 +12,6 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-
       colors: {
         gray: {
           100: '#FBFBFB',
@@ -153,8 +152,8 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          'primary': colors.indigo[600],
-          'primary-focus': colors.indigo[800],
+          'primary': colors.indigo[500],
+          'primary-focus': colors.indigo[700],
           'primary-content': '#ffffff',
           'secondary': colors.cyan[400],
           'secondary-focus': colors.cyan[500],

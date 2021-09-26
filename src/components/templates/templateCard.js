@@ -20,16 +20,8 @@ function TemplateCard({ template, uid, id, type }) {
     return (
         <>
             <div className="card shadow-lg border-2 border-gray-300 flex flex-row mt-5 mb-6">
-                <div className='w-1/3 m-2 object-cover'>
-                    {url ?
-                        <div className='flex align-center justify-center'>
-                            <img style={{ height: window.innerHeight / 3.2 }} className='object-scale-down shadow-lg' src={url} alt={template.name} />
-                        </div>
-                        :
-                        <div >
-                            <button className="btn btn-primary btn-lg btn-circle loading m-5"></button>
-                        </div>
-                    }
+                <div className='m-2 '>
+                    <Image url={url} name={template.name} />
                 </div>
                 <div className="w-3/12 card-body place-items-center place-content-center">
                     {!isRenaming ? <div className='card-title '>
@@ -107,3 +99,31 @@ function TemplateCard({ template, uid, id, type }) {
 }
 
 export default TemplateCard
+
+const Image = (props) => {
+    const [loaded, setLoaded] = useState(false)
+    const [ratio, setRatio] = useState()
+    let img = document.createElement('img')
+    img.src = props.url
+    img.onload = () => {
+        setTimeout(() => setLoaded(true), 700)
+        setRatio(img.width / img.height)
+    }
+    return <div >
+        {loaded && loaded ?
+            <div style={{ minHeight: window.innerHeight / 3.7 }} className="w-72 flex flex-row mt-5 mb-6">
+                <div className='flex align-center justify-center'>
+                    <img
+                        className='object-scale-down'
+                        src={props.url} alt={props.name} />
+                </div>
+            </div>
+            :
+            <div style={{ minHeight: window.innerHeight / 3.7 }} className="w-72 flex flex-row mt-5 mb-6">
+                <div className='flex align-center justify-center'>
+                    <button className="btn btn-primary btn-lg btn-circle loading m-5" />
+                </div>
+            </div>
+        }
+    </div>
+}

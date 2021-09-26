@@ -20,9 +20,6 @@ function Navbar() {
                         <Link to='/certificates' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium">
                             Certificates
                         </Link>
-                        <Link to='/admin' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium">
-                            Profile
-                        </Link>
                     </div>
                 </div>
             </div>

@@ -58,6 +58,7 @@ const DynamicImage = ({ shapeProps, isSelected, onClick, onChange, item }) => {
             />
             {isSelected && (
                 <Transformer
+                    rotateEnabled={false}
                     ref={trRef}
                     boundBoxFunc={(oldBox, newBox) => {
                         // limit resize

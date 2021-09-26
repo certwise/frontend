@@ -1,8 +1,8 @@
 import { useState, useCallback, useContext } from 'react'
 import { Card } from './card'
 import update from 'immutability-helper'
-import Context from '../../store/context'
-import { templateActions } from '../../store'
+import Context from '../../../store/context'
+import { templateActions } from '../../../store'
 const style = {
     display: 'flex',
     flexDirection: 'column-reverse',

@@ -3,9 +3,7 @@ import '../../App.css'
 import Context from '../../store/context.js'
 import * as api from '../../api/templates'
 import { templateActions, setLoading as setAppLoading } from '../../store'
-import getCurrentTemplate from './getCurrentTemplate'
 import CreateTemplate from './createTemplate'
-import { loadFontIntoCSS } from '../builder/fontLoader'
 import TemplateCard from './templateCard'
 function Template() {
     const { store, dispatch } = useContext(Context)
@@ -21,7 +19,6 @@ function Template() {
             dispatch(setAppLoading(true))
         else
             dispatch(setAppLoading(false))
-        console.log("Loadingxrw:", loading)
     }, [loading])
 
     useEffect(() => {
@@ -40,11 +37,9 @@ function Template() {
     const createTemplateForm = async () => {
         setCreateTemplate(prev => !prev)
     }
-
     const getUploadedTemplates = () => {
         setloading({ ...loading, templates: true })
         return new Promise((resolve, reject) => {
-            let templates = []
             console.log("UID in templates", store.user.uid)
             api.getTemplates(store.user.uid)
                 .then(res => {
@@ -66,56 +61,21 @@ function Template() {
                 })
         })
     }
-
-    const setCurrentTemplate = srcTemplate => {
-        dispatch(templateActions.setCurrentTemplateNull())
-        setloading({ ...loading, currentTemplate: true })
-        let { id, data } = srcTemplate
-        getCurrentTemplate(data.canvas.items).then(res => {
-            for (let i in res) {
-                let imgItem = res[i]
-                data.canvas.items.map(item => {
-                    if (item.id === imgItem.id)
-                        return imgItem
-                    else
-                        return item
-
-                })
-                data.canvas.items.forEach(item => {
-                    if (item.type === 'text') {
-                        if (item.attr.fontFamily) {
-                            loadFontIntoCSS(item.attr.fontFamily)
-                        }
-                    }
-                })
-            }
-            let template = {
-                id,
-                ...data,
-                canvas: {
-                    ...data.canvas,
-                    items: data.canvas.items,
-                    activeItem: data.canvas.items[0]
-                },
-            }
-            dispatch(templateActions.setCurrentTemplate(template))
-            console.log(store.templates)
-            setloading({ ...loading, currentTemplate: false })
-        })
-    }
-
-
     return (
         <>
 
             <div>
                 {
-                    store.app.isLoading ? <h1 className="text-xl">Loading...</h1> :
+                    store.app.isLoading ?
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center", alignItems: "center", height: window.innerHeight * 0.9 }}>
+                            <button style={{ width: "200", height: "200" }} class="btn btn-xl btn-circle loading"></button>
+                        </div>
+                        :
                         <>
-                            <div className='m-5 text-4xl font-bold'>Templates</div>
-                            <button className='btn btn-primary m-5' onClick={createTemplateForm}>Create New Template</button>
+                            {/* <div className='mt-5 ml-5 text-4xl font-bold'>Templates</div> */}
+                            <button className='btn btn-primary mt-5 ml-5' onClick={createTemplateForm}>Create New Template</button>
                             {createTemplate && <CreateTemplate uid={store.user.uid} names={templateNames} />}
-                            <div className='m-5  text-xl font-bold'>Your Templates</div>
+                            <div className='mt-5 ml-5 text-xl font-bold'>Your Templates</div>
                             <input type='text' placeholder='Search templates by name' className='w-1/5 m-4 input input-primary' onChange={(e) => setTemplateQuery(e.target.value)} />
                             <div className="m-4">
                                 {store.templates.userTemplates.map((template, i) => {

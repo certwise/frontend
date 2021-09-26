@@ -116,30 +116,29 @@ export const deleteTemplate = async id => {
     await deleteDoc(doc(getFirestore(), "templates", id))
 }
 
-export const addImg = async () => {
-    let url = await getDownloadURL(ref(getStorage(), 'default_template_images/image.jpg'))
+export const addImg = (width, height) => {
     return new Promise((resolve, reject) => {
-        let im = new window.Image()
-        im.crossOrigin = 'anonymous'
-        im.src = url
-        im.height = im.height
-        im.width = im.width
-        im.onload = () => {
-            const img = {
-                isConstant: false,
-                id: getNewImage().id,
-                name: "new image",
-                type: "image",
-                src: im,
-                draggable: true,
-                x: 100,
-                y: 100,
-                width: im.width,
-                height: im.height,
-                storageRef: "default_template_images/image.jpg",
+        getDownloadURL(ref(getStorage(), 'default_template_images/image.jpg')).then(url => {
+            let im = new window.Image()
+            im.crossOrigin = 'anonymous'
+            im.src = url
+            im.onload = () => {
+                const img = {
+                    isConstant: false,
+                    id: getNewImage().id,
+                    name: "new image",
+                    type: "image",
+                    src: im,
+                    draggable: true,
+                    x: 100,
+                    y: 100,
+                    width,
+                    height,
+                    storageRef: "default_template_images/image.jpg",
+                }
+                resolve(img)
             }
-            resolve(img)
-        }
+        })
     })
 
 }
