@@ -3,7 +3,7 @@ import SearchModal from './header/SearchModal';
 import Notifications from './header/Notifications';
 import Help from './header/Help';
 import UserMenu from './header/UserMenu';
-
+import { Link } from 'react-router-dom';
 function Header({
   sidebarOpen,
   setSidebarOpen
@@ -15,7 +15,6 @@ function Header({
 
           {/* Header: Left side */}
           <div className="flex">
-
             {/* Hamburger button */}
             <button
               className="text-gray-500 hover:text-gray-600 lg:hidden"
@@ -30,17 +29,29 @@ function Header({
                 <rect x="4" y="17" width="16" height="2" />
               </svg>
             </button>
-
           </div>
 
           {/* Header: Right side */}
-          <div className="flex items-center">
+          <div className="flex-none hidden px-2 mx-2 lg:flex">
 
+          </div>
+          <div className="flex items-center">
+            <Help />
             <SearchModal />
             <Notifications />
-            <Help />
             {/*  Divider */}
             <hr className="w-px h-6 bg-gray-200 mx-3" />
+            {/* <div className="flex">
+              <Link to='/' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium">
+                Home
+              </Link>
+              <Link to='/templates' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium">
+                Templates
+              </Link>
+              <Link to='/certificates' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium">
+                Certificates
+              </Link>
+            </div> */}
             <UserMenu />
 
           </div>

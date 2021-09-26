@@ -62,14 +62,14 @@ function CreatedCertificates() {
                 Created Certificates:
                 <div>
                     <div className="overflow-x-auto">
-                        <table className="table w-full bg-indigo-200 ">
-                            <thead>
+                        <table className="table w-full table-zebra ">
+                            <thead className=''>
                                 <tr>
-                                    <td >No</td>
-                                    <th>Receiver Name</th>
-                                    <th>Receiver Email</th>
-                                    <th>Issued on</th>
-                                    <th>Template Name</th>
+                                    <td className='text-gray-700'>No</td>
+                                    <th className='text-gray-700'>Receiver Name</th>
+                                    <th className='text-gray-700'>Receiver Email</th>
+                                    <th className='text-gray-700'>Issued on</th>
+                                    <th className='text-gray-700'>Template Name</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,13 +80,13 @@ function CreatedCertificates() {
                                         return (
                                             <tr
                                                 key={i}
-                                                className={currentCertificate.id === cert.id ? 'active' : 'hover'}
+                                                className={`${currentCertificate.id === cert.id ? 'active' : 'hover'}`}
                                             >
                                                 <td >{i + 1}</td>
                                                 <td >
                                                     <div >
                                                         <button
-                                                            className="align-center text-sm font-sm justify-center m-1 bg-indigo-600 p-2 rounded-md hover:bg-indigo-700 text-white w-2/3 shadow "
+                                                            className="btn btn-primary w-2/3"
                                                             onClick={() => {
                                                                 setCurrentCertificateFunc(cert)
                                                                 console.log(cert)

@@ -1,17 +1,18 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import * as api from '../api/templates'
 import Context from '../store/context'
 import { useParams } from 'react-router-dom'
 import CanvasContainer from './builder/canvasContainer.js'
 import { setLoading, templateActions } from '../store'
 import getCurrentTemplate from './templates/getCurrentTemplate'
-import { loadFontIntoCSS } from './builder/fontLoader'
+import { loadFontIntoCSS } from './builder/textComponent/fontLoader'
 function TemplateCanvas() {
-    const { store, dispatch } = React.useContext(Context)
+    const { store, dispatch } = useContext(Context)
     const { templateId } = useParams()
-    const [isLoading, setIsLoading] = React.useState(true)
-    const [isValidUrl, setIsValidUrl] = React.useState(true)
-    React.useEffect(() => {
+    const [isLoading, setIsLoading] = useState(true)
+    const [isValidUrl, setIsValidUrl] = useState(true)
+    useEffect(() => {
+        dispatch(templateActions.isEditingTemplate(true))
         setIsLoading(true)
         api.getTemplateByName(templateId, store.user.uid)
             .then(template => {
@@ -23,6 +24,9 @@ function TemplateCanvas() {
             }).then(() => {
                 setIsLoading(false)
             })
+        return () => {
+            dispatch(templateActions.isEditingTemplate(false))
+        }
     }, [])
     const setCurrentTemplate = srcTemplate => {
         console.log("setting current template")
@@ -62,7 +66,7 @@ function TemplateCanvas() {
         })
     }
     return (
-        <>  {isLoading && <div className='loading'>Loading</div>}
+        <>  {isLoading && <div className='w-screen h-screen loading'>Loading</div>}
             {!isLoading && isValidUrl && <CanvasContainer />}
         </>
     )

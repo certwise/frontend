@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import Context from '../../store/context'
-import { templateActions } from '../../store'
+import Context from '../../../store/context'
+import { templateActions } from '../../../store'
 import Modal from 'react-modal'
 
 function FontSelector({ isOpen, close, styles, fonts, items, activeItem, loadMoreFonts }) {
@@ -13,7 +13,7 @@ function FontSelector({ isOpen, close, styles, fonts, items, activeItem, loadMor
                 isOpen={isOpen}
                 style={{
                     overlay: {
-                        background: 'rgba(0, 0, 0, 0.1)',
+                        background: 'rgba(0, 0, 0, 0)',
                     },
                     content: {
                         background: 'none',
@@ -21,6 +21,7 @@ function FontSelector({ isOpen, close, styles, fonts, items, activeItem, loadMor
                     },
                 }}
                 className='flex'
+                appElement={document.getElementById('root')}
             >
                 <div className='w-11/12'></div>
                 <ul
@@ -31,7 +32,7 @@ function FontSelector({ isOpen, close, styles, fonts, items, activeItem, loadMor
                         ...styles
                     }}
                     className="p-2 border-2 shadow-lg shadow menu w-1/6">
-                    <div className='ml-auto mr-5'>
+                    <div className='ml-auto mr-5 pr-5'>
                         <div className='btn btn-error btn-circle mb-5'
                             style={{ position: 'absolute', marginLeft: 'auto' }}
                             onClick={close}

@@ -99,6 +99,15 @@ const reducer = (state, action) => {
                     downloadCurrentTemplate: action.payload,
                 }
             }
+        case types.IS_EDITING_TEMPLATE: {
+            return {
+                ...state,
+                currentTemplate: {
+                    ...state.currentTemplate,
+                    isEditingTemplate: action.payload,
+                }
+            }
+        }
         default: return state
     }
 }

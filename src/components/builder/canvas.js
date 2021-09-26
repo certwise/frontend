@@ -2,8 +2,8 @@ import React, { useEffect, useContext, useRef, useState } from 'react'
 import { Stage, Layer, Image, Text, Group, Rect, Transformer, Circle } from 'react-konva';
 import Context from '../../store/context';
 import { templateActions } from '../../store'
-import DynamicImage from './resizeableImage';
-import DynamicText from './dynamicText';
+import DynamicImage from './imageComponent/resizeableImage';
+import DynamicText from './textComponent/dynamicText';
 import { getStorage, ref, uploadBytes } from '@firebase/storage';
 import * as api from '../../api/templates'
 function Canvas() {
@@ -121,6 +121,7 @@ function Canvas() {
                                         key={i}
                                         image={item.src}
                                         shapeProps={item}
+                                        opacity={item.opacity || 1}
                                         draggable
                                         isSelected={item.id === activeItem.id}
                                         onClick={() => setActiveItem(item)}
@@ -135,11 +136,15 @@ function Canvas() {
                                             e.target.y(Math.max(e.target.y(), 0))
                                             e.target.x(Math.max(e.target.x(), 0))
                                         }}
+                                        rotation={item.rotation || 0}
+
                                     />
 
                                 case 'text':
 
                                     return <DynamicText
+                                        id={item.id}
+                                        item={item}
                                         key={i}
                                         x={item.x}
                                         y={item.y}
@@ -151,12 +156,17 @@ function Canvas() {
                                         fontSize={item.attr.fontSize}
                                         fontFamily={item.attr.fontFamily}
                                         fontWeight={item.attr.fontWeight}
+                                        opacity={item.attr.opacity || 100}
+                                        isSelected={item.id === activeItem.id}
+                                        items={items}
+                                        fontDisplaySize={item.attr.fontSizeDisplay}
+                                        baseWidth={width}
+                                        rotation={item.rotation || 0}
+                                        onClick={() => setActiveItem(item)}
                                         setCanvas={
                                             obj => {
-                                                console.log("Object in canvas:", obj)
                                                 let p = items
                                                 p[i] = { ...p[i], ...obj }
-                                                console.log("Obj:", obj, "p[i] :", p[i])
                                                 dispatch(templateActions.editCanvas(p))
                                             }
                                         }
@@ -164,16 +174,20 @@ function Canvas() {
                                             (position) => {
                                                 let p = items
                                                 p[i] = { ...p[i], x: position.x, y: position.y }
-                                                console.log("Change position Obj:", position, "p[i] :", p[i])
                                                 dispatch(templateActions.editCanvas(p))
                                             }
                                         }
-                                        onClick={() => setActiveItem(item)}
-                                        isSelected={item.id === activeItem.id}
+                                        setDisplayFontSizeInStore={
+                                            (fontSize) => {
+                                                let p = items
+                                                p[i] = { ...p[i], attr: { ...p[i].attr, fontDisplaySize: fontSize } }
+                                                dispatch(templateActions.editCanvas(p))
+                                            }
+                                        }
+                                        dispatch={dispatch}
                                     />
                                 default:
                                     return null
-
                             }
                         })
                         }

@@ -101,3 +101,10 @@ export const downloadCurrentTemplate = bool => {
         payload: bool
     }
 }
+
+export const isEditingTemplate = bool => {
+    return {
+        type: types.IS_EDITING_TEMPLATE,
+        payload: bool
+    }
+}

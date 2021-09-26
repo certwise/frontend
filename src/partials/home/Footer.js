@@ -49,7 +49,7 @@ function Footer() {
               </li>
               <li className="mb-2">
                 <Link to="#" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Command-line</Link>
-              </li>                            
+              </li>
             </ul>
           </div>
 
@@ -119,7 +119,7 @@ function Footer() {
                 </div>
               </div>
             </form>
-          </div>          
+          </div>
 
         </div>
 
@@ -152,7 +152,7 @@ function Footer() {
           </ul>
 
           {/* Copyrights note */}
-          <div className="text-sm text-gray-600 mr-4">Made by <a className="text-blue-600 hover:underline" href="https://cruip.com/">Cruip</a>. All rights reserved.</div>
+          <div className="text-sm text-gray-600 mr-4">Certify 2021 | All rights reserved.</div>
 
         </div>
 

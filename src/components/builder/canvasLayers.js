@@ -2,13 +2,14 @@ import React from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import Context from '../../store/context'
-import { Container } from './cardContainer'
+import { Container } from './layerStack/cardContainer'
 import { templateActions } from '../../store'
 import * as api from '../../api/templates'
 function CanvasLayers() {
     const { store, dispatch } = React.useContext(Context)
     const [state, setstate] = React.useState({ saved: false, isSaved: false, downloaded: false, saving: false })
     const goBack = () => {
+        dispatch(templateActions.isEditingTemplate(false))
         window.location.href = '/templates'
     }
     const saveCanvas = () => {
@@ -20,11 +21,12 @@ function CanvasLayers() {
 
     const addText = () => {
         dispatch(templateActions.createTextItem('text'))
-
     }
 
     const addImg = async () => {
-        api.addImg().then(res => {
+        let base = store.templates.currentTemplate.canvas.items.find(item => item.type === 'base-image')
+        api.addImg(base.width / 4, base.height / 4).then(res => {
+            console.log("Add image res:", res)
             dispatch(templateActions.createImageItem(res))
         })
     }

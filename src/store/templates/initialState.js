@@ -7,8 +7,6 @@ export const initialState = {
     currentTemplate: {
         id: null,
         canvas: {
-            isBaseImageLoaded: false,
-            otherImagesLoaded: false,
             ratio: "default",
             imageRef: {
                 baseImage: null,
@@ -20,6 +18,7 @@ export const initialState = {
             fontsLoading: false,
         },
         downloadCurrentTemplate: false,
+        isEditing: false,
     },
     fonts: [],
 }

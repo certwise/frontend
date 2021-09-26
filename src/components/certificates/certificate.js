@@ -7,8 +7,8 @@ function Certificate() {
     const [page, setPage] = useState(1)
 
     return (
-        <div className='p-4 bg-indigo-100'>
-            {page && <div className=' flex flex-row'>
+        <div className='p-4'>
+            {page && <div className='flex flex-row'>
                 <div className="tabs">
                     <div
                         onClick={() => setPage(1)}
