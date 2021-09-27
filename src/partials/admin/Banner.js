@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Banner() {
 
   const [bannerOpen, setBannerOpen] = useState(true);
-
+  useEffect(() => {
+    setBannerOpen(true)
+  }, [])
   return (
     <>
       {bannerOpen && (

@@ -7,7 +7,7 @@ import Header from '../../partials/home/Header';
 import Context from '../../store/context';
 
 function SignIn() {
-  const { store, dispatch } = useContext(Context)
+  const { dispatch } = useContext(Context)
   const auth = getAuth()
 
   const signInWithGoogle = (e) => {

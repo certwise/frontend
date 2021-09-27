@@ -121,7 +121,6 @@ function TextProperties() {
                                     p.map(item => {
                                         if (item.id === activeItem.id) {
                                             item.x = parseFloat(e.target.value)
-                                            console.log(item.x)
                                         }
                                         return item
 
@@ -139,12 +138,10 @@ function TextProperties() {
                                     p.map(item => {
                                         if (item.id === activeItem.id) {
                                             item.y = parseFloat(e.target.value)
-                                            console.log(item.y)
                                         }
                                         return item
                                     })
                                     dispatch(templateActions.editCanvas(p))
-                                    console.log(items)
                                 }}
                             />
                         </div>
@@ -158,7 +155,6 @@ function TextProperties() {
                                 max={100}
                                 className="range pt-1 range-xs range-primary ml-2 mt-1 w-2/3"
                                 onChange={(e) => {
-                                    console.log(e.target.value)
                                     let p = [...items]
                                     p.map(item => {
                                         if (item.id === activeItem.id) {
@@ -169,11 +165,11 @@ function TextProperties() {
                                     dispatch(templateActions.editCanvas(p))
                                 }} />
                         </div>
-                        <div className=' font-bold  border-b-2 pb-2 pt-1 border-gray-100'>
+                        {/* <div className=' font-bold  border-b-2 pb-2 pt-1 border-gray-100'>
                             <label className='mt-2 w-2/6 '>Rotation</label>
                             <input
                                 style={{ height: '80' }}
-                                defaultValue={items.find(item => item.id === activeItem.id).rotation * 100 || 100}
+                                value={items.find(item => item.id === activeItem.id).rotation || 0}
                                 type="range"
                                 min={0}
                                 max={360}
@@ -189,7 +185,7 @@ function TextProperties() {
                                     })
                                     dispatch(templateActions.editCanvas(p))
                                 }} />
-                        </div>
+                        </div> */}
                         <div className=' font-bold  border-b-2 pb-2 pt-1 border-gray-100'>
                             <label className='mt-1 w-2/6 '>Name</label>
                             <input className='mt-1 input-xs w-4/6 input ml-2 input-primary'

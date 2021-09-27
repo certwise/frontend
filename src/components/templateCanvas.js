@@ -3,7 +3,7 @@ import * as api from '../api/templates'
 import Context from '../store/context'
 import { useParams } from 'react-router-dom'
 import CanvasContainer from './builder/canvasContainer.js'
-import { setLoading, templateActions } from '../store'
+import { templateActions } from '../store'
 import getCurrentTemplate from './templates/getCurrentTemplate'
 import { loadFontIntoCSS } from './builder/textComponent/fontLoader'
 function TemplateCanvas() {
@@ -23,11 +23,12 @@ function TemplateCanvas() {
                 }
             }).then(() => {
                 setIsLoading(false)
+                dispatch({ type: "DONE_SAVING", payload: false })
             })
         return () => {
             dispatch(templateActions.isEditingTemplate(false))
         }
-    }, [])
+    }, [store.templates.doneSaving])
     const setCurrentTemplate = srcTemplate => {
         console.log("setting current template")
         return new Promise((resolve, reject) => {

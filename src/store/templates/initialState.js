@@ -21,4 +21,5 @@ export const initialState = {
         isEditing: false,
     },
     fonts: [],
+    doneSaving: false,
 }

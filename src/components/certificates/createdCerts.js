@@ -98,8 +98,8 @@ function CreatedCertificates() {
                                                 <td className="text-sm font-bold text-accent">{moment(cert.data.createdAt).format("DD MMM YYYY HH:mm:ss")}</td>
                                                 <td className="text-sm font-bold ">
                                                     {templates.length > 0 &&
-                                                        templates.find(item => item.id === cert.data.templateId).data.name ||
-                                                        <button className="btn btn-primary btn-lg btn-circle loading m-5"></button>
+                                                        (templates.find(item => item.id === cert.data.templateId).data.name ||
+                                                            <button className="btn btn-primary btn-lg btn-circle loading m-5"></button>)
                                                     }
                                                 </td>
                                             </tr>

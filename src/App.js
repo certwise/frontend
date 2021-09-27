@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react'
 import './App.css'
 import Template from './components/templates/template'
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 import Certificate from './components/certificates/certificate.js'
-import { BrowserRouter as Router, Switch, Route, Link, useLocation, Redirect } from "react-router-dom"
+import { Switch, Route, useLocation, Redirect } from "react-router-dom"
 import { themeChange } from "theme-change"
 import Context from './store/context'
 import { signIn } from './store'
 import { setLoading } from './store'
 import TemplateCanvas from './components/templateCanvas'
 import CreateCertificate from './components/certificates/createCertificate'
-import { signOut as signOutStore } from './store'
-
 import './css/style.scss';
 import AOS from 'aos';
 import { focusHandling } from 'cruip-js-toolkit';
@@ -19,10 +17,8 @@ import Home from './pages/home/Home';
 import SignIn from './pages/home/SignIn';
 import ResetPassword from './pages/home/ResetPassword';
 import Dashboard from './pages/admin/Dashboard'
-import SignInFireBase from './components/auth'
 import Sidebar from './partials/admin/Sidebar'
 import Header from './partials/admin/Header'
-import { createSelectorHook } from 'react-redux'
 import SignUp from './pages/home/SignUp'
 function App() {
   const { store, dispatch } = useContext(Context)
@@ -69,6 +65,10 @@ function App() {
     console.log("UserId from App.js", user.uid)
   }, [user])
 
+  // const memoTemplate = React.useMemo(
+  //   () => Template()
+  //   , []
+  // )
   return (
     <>
       <Switch>
@@ -88,9 +88,11 @@ function App() {
         <>
           {store.user.uid &&
             <>
-              <Route path='/template/:templateId' exact>
-                <TemplateCanvas />
-              </Route>
+              {
+                <Route path='/template/:templateId' exact>
+                  <TemplateCanvas />
+                </Route>
+              }
               {!store.templates.currentTemplate.isEditing && <div className="flex h-screen overflow-hidden">
                 <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
                 <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">

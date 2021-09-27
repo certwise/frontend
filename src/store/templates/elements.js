@@ -13,6 +13,8 @@ export const getNewText = (type) => {
         attr: {
             fontSize: 75,
             fontFamily: 'Roboto',
+            fontWeight: 'normal',
+            fontDisplaySize: 75,
         },
         width: 800,
         height: 120,

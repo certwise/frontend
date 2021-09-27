@@ -1,6 +1,5 @@
-import { getNewImage, getNewText } from "./elements"
+import { getNewText } from "./elements"
 import * as types from "./types"
-import { getStorage, getDownloadURL, uploadBytes, deleteObject, ref } from "firebase/storage";
 
 export const createTextItem = () => {
     return {

@@ -9,7 +9,7 @@ import Newsletter from '../../partials/home/Newsletter'
 import Footer from '../../partials/home/Footer'
 import Context from '../../store/context'
 function Home() {
-  const { store, dispatch } = React.useContext(Context)
+  const { dispatch } = React.useContext(Context)
   React.useEffect(() => {
     dispatch({ type: 'IS_IN_HOME_PAGE', payload: true })
     return () => {

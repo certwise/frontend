@@ -18,13 +18,12 @@ const DynamicText = (props) => {
     }, [isSelected])
 
     useEffect(() => {
-        console.log("DFS", props.fontDisplaySize)
+
         let node = textRef.current
         let textAll = ''
         node.textArr.forEach(text => {
             textAll += text.text
         })
-        console.log(textAll.replace(/\s/g, ''), text.replace(/\s/g, ''),)
         if (textAll.replace(' ', '') !== text.replace(' ', '')) {
             let f = fontsize
             setFontSize(prev => prev - 3)
@@ -44,7 +43,10 @@ const DynamicText = (props) => {
     useEffect(() => {
         setFontSize(parseInt(fontSize))
     }, [fontSize])
-
+    const [rotation, setrotation] = useState(props.rotation)
+    useEffect(() => {
+        setrotation(props.rotation)
+    }, [props.rotation])
     return (
         <>
             <Text
@@ -56,13 +58,14 @@ const DynamicText = (props) => {
                 onClick={onClick}
                 align={align}
                 text={text}
+                opacity={props.opacity || 1}
                 fontSize={parseInt(fontsize) || fontSize}
                 verticalAlign="middle"
                 fontFamily={fontFamily}
                 fontWeight={fontWeight}
                 fill={fill}
                 ref={textRef}
-                rotation={props.rotation || 0}
+                rotation={rotation}
                 onDragEnd={e => onDragEndGrp({ x: e.target.x(), y: e.target.y() })}
                 onTransform={e => {
                     let node = textRef.current
@@ -76,7 +79,8 @@ const DynamicText = (props) => {
                     })
                 }}
                 onTransformEnd={e => {
-                    setCanvas({ s: e.target.x(), y: e.target.y(), width: e.target.width(), height: e.target.height() })
+                    setCanvas({ x: e.target.x(), y: e.target.y(), width: e.target.width(), height: e.target.height(), rotation: e.target.rotation() })
+                    console.log(e.target.rotation())
                     let node = textRef.current
                     let textAll = ''
                     node.textArr.forEach(text => {
@@ -89,12 +93,16 @@ const DynamicText = (props) => {
                         setFontSize(fontSize)
                     }
                 }}
+                onDblClick={e => {
+                    setrotation(0)
+                    setCanvas({ rotation: 0 })
+                }}
             />
 
             {isSelected && <Transformer
                 ref={trRef}
                 keepRatio={false}
-                rotateEnabled={false}
+                //rotateEnabled={false}
                 boundBoxFunc={(oldBox, newBox) => {
                     if (newBox.width < 100 || newBox.height < 20) {
                         return oldBox

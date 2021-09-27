@@ -151,7 +151,7 @@ function ImageProperties() {
                         dispatch(templateActions.editCanvas(p))
                     }} />
             </div>
-            <div className=' font-bold  border-b-2 pb-2 pt-1 border-gray-300'>
+            {/* <div className=' font-bold  border-b-2 pb-2 pt-1 border-gray-300'>
                 <label className='mt-2 w-2/6 '>Rotation</label>
                 <input
                     style={{ height: '80' }}
@@ -170,17 +170,34 @@ function ImageProperties() {
                         })
                         dispatch(templateActions.editCanvas(p))
                     }} />
-            </div>
-            <div className='mb-2  font-bold'>Change Image</div>
+            </div> */}
+            <div className='my-2 font-bold'>Change Image</div>
 
-            <div className='p-2 rounded w-full border-2 border-primary '>
-                <input className='text-sm' type='file' onChange={(e) => onChangeImg(e.target.files[0])} />
-                {image ? <img style={{ height: '100px' }} src={image} /> : null}
-                <div>
-                    <button className='btn-sm rounded btn-primary mt-2 mb-3' onClick={() => setImage(image)}>Set image</button>
-                </div>
+            <div className='rounded w-full border-b-2 border-gray-300 pb-2 '>
+                <label className='btn-sm rounded btn-primary btn-outline'><img src="https://img.icons8.com/material-outlined/24/000000/add-image.png" />
+                    <span className='ml-2'>Select Image</span>
+                    <input
+                        className="hidden"
+                        type='file'
+                        accept='image/*'
+                        onChange={(e) => onChangeImg(e.target.files[0])}
+                    />
+                </label>
+                {image ?
+                    <div>
+                        <img className='border-2 border-secondary mt-2' style={{ height: '100px' }} src={image} />
+                        <div>{imageBlob.name}</div>
+                        <button className='btn-xs w-1/3 rounded btn-primary mt-2 mb-3'
+                            onClick={() => setImage(image)}>Set image</button>
+                        <button className='ml-1 btn-xs w-1/3 rounded btn-error mt-2 mb-3'
+                            onClick={() => setImageState(null)}>Cancel</button>
+                    </div>
+                    :
+                    <span className='font-bold text-md ml-2'>No image selected</span>
+                }
+
             </div>
-        </div>
+        </div >
     )
 }
 

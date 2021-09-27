@@ -3,7 +3,6 @@ import SearchModal from './header/SearchModal';
 import Notifications from './header/Notifications';
 import Help from './header/Help';
 import UserMenu from './header/UserMenu';
-import { Link } from 'react-router-dom';
 function Header({
   sidebarOpen,
   setSidebarOpen

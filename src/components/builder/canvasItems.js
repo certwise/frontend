@@ -11,31 +11,6 @@ function CanvasItems() {
     const [imageBlob, setImageBlob] = useState()
     const items = store.templates.currentTemplate.canvas.items
     const activeItem = store.templates.currentTemplate.canvas.activeItem
-    const setImage = async src => {
-        let im = new window.Image()
-        im.src = src
-        let oldWidth = im.width
-        let newWidth = window.innerHeight / 4
-        let ratio = oldWidth / newWidth
-        im.width = newWidth
-        im.height = im.height / ratio
-        const id = makeid()
-        const ref = `${store.user.uid}/${store.templates.currentTemplate.id}/${id}_${imageBlob.name}`
-        await api.uploadImage(imageBlob, ref)
-        let p = [...items]
-        p = p.map(item => {
-            if (item.id === activeItem.id) {
-                item['height'] = im.height
-                item['width'] = im.width
-                item['src'] = im
-                item['storageRef'] = ref
-            }
-            return item
-        })
-        dispatch(templateActions.editCanvas(p))
-        setImageState(null)
-        setImageBlob(null)
-    }
 
     const setBaseImage = async src => {
         let im = new window.Image()
@@ -56,64 +31,6 @@ function CanvasItems() {
         dispatch(templateActions.editCanvas(p))
         setImageState(null)
         setImageBlob(null)
-    }
-
-    const editActiveItem = (e, val) => {
-        switch (val) {
-            case 'val':
-                {
-                    let p = items
-                    p.map(item => {
-                        if (item.id === activeItem.id) {
-                            item.value = e.target.value
-                        }
-                        return null
-                    })
-                    dispatch(templateActions.editCanvas(p))
-
-                    break
-                }
-            case 'name':
-                {
-                    let p = items
-                    p.map(item => {
-                        if (item.id === activeItem.id) {
-                            item.name = e.target.value
-                        }
-                        return null
-                    })
-                    dispatch(templateActions.editCanvas(p))
-
-                    break
-                }
-            case 'img':
-                {
-                    let p = items
-                    p.map(item => {
-                        if (item.id === activeItem.id) {
-                            item.name = e.target.value
-                        }
-                        return null
-                    })
-                    dispatch(templateActions.editCanvas(p))
-                    break
-                }
-            case 'check':
-                {
-                    let p = items
-                    p.map(item => {
-                        if (item.id === activeItem.id) {
-                            item['isConstant'] = e.target.checked
-                        }
-                        return null
-                    })
-                    dispatch(templateActions.editCanvas(p))
-                    break;
-                }
-
-            default:
-                break
-        }
     }
 
     const onChangeImg = file => {
@@ -153,14 +70,43 @@ function CanvasItems() {
 
             {
                 activeItem.type === 'base-image' ?
-                    <div >
-                        <div className='mb-2  font-bold'>Change Image</div>
-                        <div className='border-2 border-primary p-2'>
-                            <input className='mb-3 text-xs' type='file' onChange={(e) => onChangeImg(e.target.files[0])} />
-                            {image ? <img className='mb-3 border-2 border-secondary ' style={{ height: '100px' }} src={image} /> : null}
+                    <div>
+                        <div className="border-b-2 border-gray-300 pb-2" />
+                        <div className='mt-2 border-b-2 border-gray-300 pb-2'>
+                            <div>
+                                <span className='font-bold'>Width:</span>
+                                <span className='font-bold text-primary'>{items.find(i => i.id === activeItem.id).width}</span>
+                            </div>
+                            <div>
+                                <span className='font-bold'>Height:</span>
+                                <span className='font-bold text-primary'>{items.find(i => i.id === activeItem.id).height}</span>
+                            </div>
                         </div>
-                        <div>
-                            {image ? <button className='btn btn-primary mt-2 mb-3' onClick={() => setBaseImage(image)}>Set image</button> : null}
+                        <div className='mb-2 mt-2 font-bold'>Change Image</div>
+
+                        <div className='rounded w-full border-b-2 border-gray-300 pb-2 '>
+                            <label className='btn-sm rounded btn-primary btn-outline'><img src="https://img.icons8.com/material-outlined/24/000000/add-image.png" />
+                                <span className='ml-2'>Select Image</span>
+                                <input
+                                    className="hidden"
+                                    type='file'
+                                    accept='image/*'
+                                    onChange={(e) => onChangeImg(e.target.files[0])}
+                                />
+                            </label>
+                            {image ?
+                                <div>
+                                    <img className='border-2 border-secondary mt-2' style={{ height: '100px' }} src={image} />
+                                    <div>{imageBlob.name}</div>
+                                    <button className='btn-xs w-1/3 rounded btn-primary mt-2 mb-3'
+                                        onClick={() => setBaseImage(image)}>Set image</button>
+                                    <button className='ml-1 btn-xs w-1/3 rounded btn-error mt-2 mb-3'
+                                        onClick={() => setImageState(null)}>Cancel</button>
+                                </div>
+                                :
+                                <span className='font-bold text-md ml-2'>No image selected</span>
+                            }
+
                         </div>
                     </div> : null
             }

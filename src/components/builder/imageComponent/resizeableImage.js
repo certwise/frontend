@@ -32,6 +32,13 @@ const DynamicImage = ({ shapeProps, isSelected, onClick, onChange, item }) => {
                         ...shapeProps,
                         x: e.target.x(),
                         y: e.target.y(),
+                        rotation: e.target.rotation(),
+                    })
+                }}
+                onDblClick={() => {
+                    onChange({
+                        ...shapeProps,
+                        rotation: 0,
                     })
                 }}
                 onTransformEnd={(e) => {
@@ -50,7 +57,7 @@ const DynamicImage = ({ shapeProps, isSelected, onClick, onChange, item }) => {
                         ...shapeProps,
                         x: node.x(),
                         y: node.y(),
-                        // set minimal value
+                        rotation: node.rotation(),
                         width: Math.max(5, node.width() * scaleX),
                         height: Math.max(node.height() * scaleY),
                     })
@@ -58,7 +65,7 @@ const DynamicImage = ({ shapeProps, isSelected, onClick, onChange, item }) => {
             />
             {isSelected && (
                 <Transformer
-                    rotateEnabled={false}
+                    //rotateEnabled={false}
                     ref={trRef}
                     boundBoxFunc={(oldBox, newBox) => {
                         // limit resize

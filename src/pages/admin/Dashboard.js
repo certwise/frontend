@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-
-import Sidebar from '../../partials/admin/Sidebar';
-import Header from '../../partials/admin/Header';
+import React from 'react';
 import WelcomeBanner from '../../partials/admin/dashboard/WelcomeBanner';
 import FilterButton from '../../partials/admin/actions/FilterButton';
 import DashboardCard01 from '../../partials/admin/dashboard/DashboardCard01';
@@ -9,11 +6,7 @@ import DashboardCard02 from '../../partials/admin/dashboard/DashboardCard02';
 import DashboardCard04 from '../../partials/admin/dashboard/DashboardCard04';
 import DashboardCard05 from '../../partials/admin/dashboard/DashboardCard05';
 
-import Banner from '../../partials/admin/Banner';
-
 function Dashboard() {
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden">

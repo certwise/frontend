@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useRef, useState } from 'react'
-import { Stage, Layer, Image, Text, Group, Rect, Transformer, Circle } from 'react-konva';
+import { Stage, Layer, Image } from 'react-konva';
 import Context from '../../store/context';
 import { templateActions } from '../../store'
 import DynamicImage from './imageComponent/resizeableImage';
@@ -9,15 +9,31 @@ import * as api from '../../api/templates'
 function Canvas() {
 
     const { store, dispatch } = useContext(Context)
-    const [draggableText, setDraggableText] = useState(true)
     const stageRef = useRef(null)
-    const textRef = useRef(null)
     const items = store.templates.currentTemplate.canvas.items
     const activeItem = store.templates.currentTemplate.canvas.activeItem
     const width = items.find(item => item.type === 'base-image')['width']
     const height = items.find(item => item.type === 'base-image')['height']
     const ratio = width / height
-    let stageWidth = window.innerWidth * 0.5
+    const [dimensions, setDimensions] = useState({
+        height: window.innerHeight,
+        width: window.innerWidth
+    })
+    useEffect(() => {
+        dispatch(templateActions.isEditingTemplate(true))
+        function handleResize() {
+            setDimensions({
+                height: window.innerHeight,
+                width: window.innerWidth
+            })
+        }
+        window.addEventListener('resize', handleResize)
+        return () => {
+            dispatch(templateActions.isEditingTemplate(false))
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+    let stageWidth = dimensions.width * 0.5
     if (ratio < 1) {
         stageWidth *= ratio * 0.8
     }
@@ -46,19 +62,6 @@ function Canvas() {
         console.log(items)
 
     }
-    const [dimensions, setDimensions] = React.useState({
-        height: window.innerHeight,
-        width: window.innerWidth
-    })
-    React.useEffect(() => {
-        function handleResize() {
-            setDimensions({
-                height: window.innerHeight,
-                width: window.innerWidth
-            })
-        }
-        window.addEventListener('resize', handleResize)
-    }, [])
     async function downloadURI() {
         if (stageRef) {
             let name = "template_image.jpeg"
@@ -148,6 +151,8 @@ function Canvas() {
                                         key={i}
                                         x={item.x}
                                         y={item.y}
+                                        offsetX={item.x + item.width / 2}
+                                        offsetY={item.y + item.height / 2}
                                         width={item.width || 400}
                                         height={item.height || 200}
                                         text={item.value}
@@ -159,14 +164,15 @@ function Canvas() {
                                         opacity={item.attr.opacity || 100}
                                         isSelected={item.id === activeItem.id}
                                         items={items}
-                                        fontDisplaySize={item.attr.fontSizeDisplay}
+                                        fontDisplaySize={item.attr.fontDisplaySize}
                                         baseWidth={width}
-                                        rotation={item.rotation || 0}
+                                        rotation={items.find(i => i.id === item.id).rotation || 0}
                                         onClick={() => setActiveItem(item)}
                                         setCanvas={
                                             obj => {
                                                 let p = items
                                                 p[i] = { ...p[i], ...obj }
+                                                console.log("p[i] :", p[i])
                                                 dispatch(templateActions.editCanvas(p))
                                             }
                                         }

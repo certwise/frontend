@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import '../../App.css'
 import Context from '../../store/context.js'
 import * as api from '../../api/templates'
-import { templateActions, setLoading as setAppLoading } from '../../store'
+import { templateActions, setLoading as setAppLoading, setLoading } from '../../store'
 import CreateTemplate from './createTemplate'
 import TemplateCard from './templateCard'
 function Template() {
@@ -22,21 +22,25 @@ function Template() {
     }, [loading])
 
     useEffect(() => {
-        getUploadedTemplates()
-            .then(() => {
-                setloading({ ...loading, templates: false })
-            })
-            .catch(err => {
-                setloading({ ...loading, templates: false })
-                console.log(err)
-            })
-
+        if (store.templates.userTemplates.length === 0) {
+            getUploadedTemplates()
+                .then(() => {
+                    setloading({ ...loading, templates: false })
+                })
+                .catch(err => {
+                    setloading({ ...loading, templates: false })
+                    console.log(err)
+                })
+        } else {
+            setloading({ ...loading, templates: false })
+        }
     }, [])
 
 
     const createTemplateForm = async () => {
         setCreateTemplate(prev => !prev)
     }
+
     const getUploadedTemplates = () => {
         setloading({ ...loading, templates: true })
         return new Promise((resolve, reject) => {
@@ -56,18 +60,16 @@ function Template() {
                     dispatch(templateActions.setUserTemplates(res))
                     console.log("Get templates():", res)
                     setloading({ ...loading, templates: false })
-
                     resolve()
                 })
         })
     }
     return (
         <>
-
             <div>
                 {
                     store.app.isLoading ?
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: "center", alignItems: "center", height: window.innerHeight * 0.9 }}>
+                        <div style={{ display: 'flex', justifyContent: "center", alignItems: "center", height: window.innerHeight * 0.9 }}>
                             <button style={{ width: "200", height: "200" }} class="btn btn-xl btn-circle loading"></button>
                         </div>
                         :

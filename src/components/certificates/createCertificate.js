@@ -22,7 +22,7 @@ function CreateCertificate() {
             let url = `${env.url}/template/fields/${res.id}`
             return axios.get(url)
         }).then(fields => {
-            console.log("axios data:", fields.data)
+            console.log("axios data:", fields)
             setTemplateFields(fields.data)
         }).catch(err => {
             console.log(err)

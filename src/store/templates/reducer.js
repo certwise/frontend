@@ -104,8 +104,14 @@ const reducer = (state, action) => {
                 ...state,
                 currentTemplate: {
                     ...state.currentTemplate,
-                    isEditingTemplate: action.payload,
+                    isEditing: action.payload,
                 }
+            }
+        }
+        case "DONE_SAVING": {
+            return {
+                ...state,
+                doneSaving: action.payload,
             }
         }
         default: return state

@@ -2,6 +2,7 @@ import { getDownloadURL, getStorage, ref } from '@firebase/storage'
 import React, { useState } from 'react'
 import moment from 'moment'
 import { deleteTemplate, renameTemplate } from '../../api/templates'
+import Context from '../../store/context'
 
 function TemplateCard({ template, uid, id, type }) {
     const [url, seturl] = React.useState('')
@@ -30,6 +31,7 @@ function TemplateCard({ template, uid, id, type }) {
                             onClick={() => setisRenaming(true)}
                         >
                             {!type && <img style={{ width: 20 }}
+                                alt='Rename'
                                 src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-edit-interface-kiranshastry-lineal-kiranshastry-2.png"
                             />}
                         </button>
@@ -58,7 +60,7 @@ function TemplateCard({ template, uid, id, type }) {
                                 <button
                                     className='btn-sm btn-primary m-1 mt-3 rounded w-full'
                                     onClick={
-                                        () => { window.location.href = '/certificate/' + 'create/' + template.name.toLowerCase().replace(/\s/g, '') }
+                                        () => { window.location.href = '/certificate/create/' + template.name.toLowerCase().replace(/\s/g, '') }
                                     }
                                 >Create Certificate
                                 </button>
@@ -102,12 +104,11 @@ export default TemplateCard
 
 const Image = (props) => {
     const [loaded, setLoaded] = useState(false)
-    const [ratio, setRatio] = useState()
+    const { store, dispatch } = React.useContext(Context)
     let img = document.createElement('img')
     img.src = props.url
     img.onload = () => {
         setTimeout(() => setLoaded(true), 700)
-        setRatio(img.width / img.height)
     }
     return <div >
         {loaded && loaded ?
