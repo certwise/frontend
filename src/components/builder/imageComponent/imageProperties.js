@@ -171,13 +171,15 @@ function ImageProperties() {
                         dispatch(templateActions.editCanvas(p))
                     }} />
             </div> */}
-            <div className='my-2 font-bold'>Change Image</div>
+            <div className='my-2 font-bold '>Change Image</div>
 
             <div className='rounded w-full border-b-2 border-gray-300 pb-2 '>
-                <label className='btn-sm rounded btn-primary btn-outline'><img src="https://img.icons8.com/material-outlined/24/000000/add-image.png" />
-                    <span className='ml-2'>Select Image</span>
+                <label style={{ '&:hover': { cursor: 'pointer' } }}
+                    className='btn-sm rounded btn-primary btn-outline hover:cursor-pointer'>
+                    <img src="https://img.icons8.com/material-outlined/24/000000/add-image.png" />
+                    <span className='ml-2  hover:cursor-pointer'>Select Image</span>
                     <input
-                        className="hidden"
+                        className="hidden  hover:cursor-pointer"
                         type='file'
                         accept='image/*'
                         onChange={(e) => onChangeImg(e.target.files[0])}

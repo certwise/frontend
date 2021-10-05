@@ -3,34 +3,27 @@ import React, { useState } from 'react'
 import moment from 'moment'
 import { deleteTemplate, renameTemplate } from '../../api/templates'
 import Context from '../../store/context'
+import { setLoading, templateActions } from '../../store'
+import { Link } from 'react-router-dom'
 
 function TemplateCard({ template, uid, id, type }) {
-    const [url, seturl] = React.useState('')
-    React.useEffect(() => {
-        getDownloadURL(ref(getStorage(), `${uid}/templates/${id}/example/template_image.jpeg`))
-            .then(
-                urls => seturl(urls)
-            ).catch(async () => {
-                let def = await getDownloadURL(ref(getStorage(), `default_template_images/base.jpg`))
-                seturl(def)
-            })
 
-    }, [])
     const [isRenaming, setisRenaming] = useState(false)
     const [name, setname] = useState(template.name)
     return (
         <>
             <div className="card shadow-lg border-2 border-gray-300 flex flex-row mt-5 mb-6">
                 <div className='m-2 '>
-                    <Image url={url} name={template.name} />
+                    <SavedImage uid={uid} template={id} name={template.name} />
                 </div>
                 <div className="w-3/12 card-body place-items-center place-content-center">
-                    {!isRenaming ? <div className='card-title '>
+                    {!isRenaming ? <div className='font-bold align-top text-md'>
                         {name}
                         <button className='btn-xs'
                             onClick={() => setisRenaming(true)}
                         >
-                            {!type && <img style={{ width: 20 }}
+                            {!type && <img uid={uid} style={{ width: 15 }}
+                                className='align-baseline'
                                 alt='Rename'
                                 src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-edit-interface-kiranshastry-lineal-kiranshastry-2.png"
                             />}
@@ -49,21 +42,17 @@ function TemplateCard({ template, uid, id, type }) {
                     <div className='place-items-center place-content-center'>
                         <div>
                             {type !== 'certificate' ?
-                                <button
+                                <Link
                                     className='btn-sm btn-primary m-1 mt-3 rounded w-full'
-                                    onClick={
-                                        () => { window.location.href = '/template/' + template.name.toLowerCase().replace(/\s/g, '') }
-                                    }
+                                    to={'/template/' + template.name.toLowerCase().replace(/\s/g, '')}
                                 >Edit
-                                </button>
+                                </Link>
                                 :
-                                <button
+                                <Link
                                     className='btn-sm btn-primary m-1 mt-3 rounded w-full'
-                                    onClick={
-                                        () => { window.location.href = '/certificate/create/' + template.name.toLowerCase().replace(/\s/g, '') }
-                                    }
+                                    to={'/certificate/create/' + template.name.toLowerCase().replace(/\s/g, '')}
                                 >Create Certificate
-                                </button>
+                                </Link>
                             }
                         </div>
                         <div data-tip={template.description} className="tooltip tooltip-right">
@@ -73,12 +62,13 @@ function TemplateCard({ template, uid, id, type }) {
                     </div>
                 </div>
 
-                <div className="w-full shadow stats">
+                <div className="shadow stats">
                     <div className="stat place-items-center place-content-center">
                         <div className="stat-title">Number of Certificates</div>
                         <div className="stat-value mb-5">{template.numberOfCertificates || 0}</div>
                         <div className="stat-desc font-bold">Created at: {moment(template.createdAt).format("DD MMM YYYY HH:mm:ss")}</div>
                     </div>
+
                     <div className="stat place-items-center place-content-center">
                         <div className="stat-title">Current Plan</div>
                         <div className="stat-value text-success">Free tier</div>
@@ -94,6 +84,7 @@ function TemplateCard({ template, uid, id, type }) {
                         <div className="stat-value text-error"></div>
                         <div className="stat-desc text-error"></div>
                     </div>}
+
                 </div>
             </div >
         </>
@@ -102,21 +93,59 @@ function TemplateCard({ template, uid, id, type }) {
 
 export default TemplateCard
 
-const Image = (props) => {
-    const [loaded, setLoaded] = useState(false)
+const SavedImage = (props) => {
+    const [loading, setLoading] = useState(true)
     const { store, dispatch } = React.useContext(Context)
-    let img = document.createElement('img')
-    img.src = props.url
-    img.onload = () => {
-        setTimeout(() => setLoaded(true), 700)
-    }
+    const imgDef = new Image()
+    const [img, setimg] = React.useState(imgDef)
+    React.useEffect(() => {
+        if (!store.templates.userTemplates.find(t => t.id === props.template).image) {
+            getDownloadURL(ref(getStorage(), `${props.uid}/templates/${props.template}/example/template_image.jpeg`))
+                .then(url => {
+                    img.src = url
+                    img.onload = () => {
+                        setTimeout(() => setLoading(false), 500)
+                        let userTemplates = store.templates.userTemplates
+                        userTemplates.map(template => {
+                            if (template.id === props.template) {
+                                template['image'] = img.src
+                            }
+                            return template
+                        })
+                        console.log("Then onLoad", store.templates.userTemplates)
+                        setimg(img)
+                        dispatch(templateActions.setUserTemplates(userTemplates))
+                    }
+                }).catch(async () => {
+                    let def = await getDownloadURL(ref(getStorage(), `default_template_images/base.jpg`))
+                    img.src = def
+                    img.onload = () => {
+                        setTimeout(() => setLoading(false), 500)
+                        let userTemplates = store.templates.userTemplates
+                        userTemplates.map(template => {
+                            if (template.id === props.template) {
+                                template['image'] = img.src
+                            }
+                            return template
+                        })
+                        console.log("Catch onLoad", store.templates.userTemplates)
+                        setimg(img)
+                        dispatch(templateActions.setUserTemplates(userTemplates))
+                    }
+                })
+        } else {
+            setLoading(false)
+            setimg(store.templates.userTemplates.find(t => t.id === props.template).image)
+        }
+
+    }, [])
     return <div >
-        {loaded && loaded ?
+        {store.templates.userTemplates.find(i => i.id == props.template).image ?
             <div style={{ minHeight: window.innerHeight / 3.7 }} className="w-72 flex flex-row mt-5 mb-6">
                 <div className='flex align-center justify-center'>
                     <img
                         className='object-scale-down'
-                        src={props.url} alt={props.name} />
+                        src={store.templates.userTemplates.find(i => i.id == props.template).image} alt={props.name} />
                 </div>
             </div>
             :
@@ -124,7 +153,6 @@ const Image = (props) => {
                 <div className='flex align-center justify-center'>
                     <button className="btn btn-primary btn-lg btn-circle loading m-5" />
                 </div>
-            </div>
-        }
+            </div>}
     </div>
 }

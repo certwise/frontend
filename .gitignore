@@ -5,3 +5,4 @@ coverage
 build
 .firebase
 firebase.json
+todo.md

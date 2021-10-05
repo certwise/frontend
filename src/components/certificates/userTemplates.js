@@ -14,24 +14,20 @@ function UserTemplates() {
         currentTemplate: false
     })
     const [templateQuery, setTemplateQuery] = useState('')
-    useEffect(() => {
-        if (loading.templates || loading.currentTemplate)
-            dispatch(setAppLoading(true))
-        else
-            dispatch(setAppLoading(false))
-        console.log("Loadingxrw:", loading)
-    }, [loading])
 
     useEffect(() => {
-        getUploadedTemplates()
-            .then(() => {
-                setloading({ ...loading, templates: false })
-            })
-            .catch(err => {
-                setloading({ ...loading, templates: false })
-                console.log(err)
-            })
-
+        if (store.templates.userTemplates.length === 0) {
+            getUploadedTemplates()
+                .then(() => {
+                    setloading({ ...loading, templates: false })
+                })
+                .catch(err => {
+                    setloading({ ...loading, templates: false })
+                    console.log(err)
+                })
+        } else {
+            setloading({ ...loading, templates: false })
+        }
     }, [])
 
     const getUploadedTemplates = () => {
@@ -65,33 +61,27 @@ function UserTemplates() {
         <>
 
             <div>
-                <Route exact path='/certificate/create/:name'>
-                    <CreateCertificate />
-                </Route>
-                {
-                    store.app.isLoading ? <h1 className="text-xl">Loading...</h1> :
-                        <>
-                            <div className='m-5  text-4xl font-bold'>Templates</div>
-                            <div className='m-5  text-xl font-bold'>Your Templates</div>
-                            <div className="m-4">
-                                {store.templates.userTemplates.map((template, i) => {
-                                    if (template.data.name.includes(templateQuery))
-                                        return (
-                                            <TemplateCard
-                                                key={i}
-                                                template={template.data}
-                                                id={template.id}
-                                                url={''}
-                                                uid={store.user.uid}
-                                                type='certificate'
-                                            />
-                                        )
-                                    else return null
-                                })
-                                }
-                            </div>
-                        </>
-                }
+
+                <div className='m-5  text-4xl font-bold'>Templates</div>
+                <div className='m-5  text-xl font-bold'>Your Templates</div>
+                <div className="m-4">
+                    {store.templates.userTemplates.map((template, i) => {
+                        if (template.data.name.includes(templateQuery))
+                            return (
+                                <TemplateCard
+                                    key={i}
+                                    template={template.data}
+                                    id={template.id}
+                                    url={''}
+                                    uid={store.user.uid}
+                                    type='certificate'
+                                />
+                            )
+                        else return null
+                    })
+                    }
+                </div>
+
             </div>
 
         </>

@@ -73,11 +73,12 @@ export const Card = ({ id, index, moveCard, item }) => {
     const opacity = isDragging ? 0 : 1
     drag(drop(ref))
     return (
-        <div ref={ref}
+        <div
+            ref={ref}
             className=
-            {`card mt-1 mb-1 text-sm p-2 w-100 border-2 rounded-sm justify-center text-center
+            {`btn-sm rounded btn-ghost my-1 text-sm p-2 w-100 border-1 shadow-none justify-center text-center
                     ${store.templates.currentTemplate.canvas.activeItem.id === item.id ?
-                    'border-secondary' : 'border-gray-400'}`}
+                    'border-secondary font-bold text-secondary-focus ' : 'border-gray-400'}`}
             style={{ opacity }}
             data-handler-id={handlerId}
             onClick={() => setActiveItem(item)}>

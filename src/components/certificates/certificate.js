@@ -9,7 +9,7 @@ function Certificate() {
     return (
         <div className='p-4'>
             {page && <div className='flex flex-row'>
-                <div className="tabs">
+                <div style={{ zIndex: 0 }} className="tabs">
                     <div
                         onClick={() => setPage(1)}
                         className={`tab tab-lg  font-bold tab-lifted  ${page == 1 ? 'tab-active' : ''}`}

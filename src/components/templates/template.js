@@ -78,10 +78,11 @@ function Template() {
                             <button className='btn btn-primary mt-5 ml-5' onClick={createTemplateForm}>Create New Template</button>
                             {createTemplate && <CreateTemplate uid={store.user.uid} names={templateNames} />}
                             <div className='mt-5 ml-5 text-xl font-bold'>Your Templates</div>
-                            <input type='text' placeholder='Search templates by name' className='w-1/5 m-4 input input-primary' onChange={(e) => setTemplateQuery(e.target.value)} />
+                            <input type='text' placeholder='Search templates by name' className='lg:w-3/12 sm:w-3/5 xs:w-full m-4 input input-primary'
+                                onChange={(e) => setTemplateQuery(e.target.value)} />
                             <div className="m-4">
                                 {store.templates.userTemplates.map((template, i) => {
-                                    if (template.data.name.includes(templateQuery))
+                                    if (template.data.name.toLowerCase().includes(templateQuery))
                                         return (
                                             <TemplateCard
                                                 key={i}

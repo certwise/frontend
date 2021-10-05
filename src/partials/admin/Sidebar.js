@@ -73,7 +73,7 @@ function Sidebar({
           </button>
           {/* Logo */}
           <NavLink exact to="/admin" className="block">
-            <span className='w-1/3 text-gray-100 font-bold text-3xl'>Certify</span>
+            <span className='w-1/3 text-gray-100 font-bold text-3xl'>Certwise</span>
           </NavLink>
         </div>
 

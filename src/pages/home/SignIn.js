@@ -20,6 +20,7 @@ function SignIn() {
         dispatch(signIntoStore(user))
         console.log(user)
         window.location.href = '/admin'
+
       }).catch((error) => {
         console.log(error)
       })

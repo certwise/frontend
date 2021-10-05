@@ -34,7 +34,7 @@ function HeroHome() {
           <div className="text-center pb-12 md:pb-16">
             <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out">
               Issue Certificates the
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400"> Certify Way!</span></h1>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400"> Certiwise Way!</span></h1>
             <div className="max-w-3xl mx-auto">
               <p className="text-xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150">
                 Create, store and issue certificates at fly with 100% immunity to tampering.

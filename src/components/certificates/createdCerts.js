@@ -7,7 +7,7 @@ import moment from 'moment'
 function CreatedCertificates() {
 
     Modal.setAppElement(document.getElementById('root'))
-    const { store } = React.useContext(Context)
+    const { store, dispatch } = React.useContext(Context)
     const [currentCertificate, setCurrentCertificate] = useState({ id: null })
     const [certificates, setCertificates] = useState([])
     const [templates, setTemplates] = useState([])
@@ -19,6 +19,7 @@ function CreatedCertificates() {
                 return b.data.templateId > a.data.templateId
             })
             setCertificates(res)
+            //dispatch()
         })
         api.getTemplates(store.user.uid).then(res => {
             console.log("RESS", res)
@@ -38,7 +39,7 @@ function CreatedCertificates() {
         <div>
 
             <div className="dropdown">
-                <div tabIndex="0" className="m-1 mt-5 bg-indigo-600 p-2 rounded-md hover:bg-indigo-700 text-white">Filter by Template</div>
+                <button className="btn btn-primary m-1 mt-4">Filter by Template</button>
                 <ul tabIndex="0" className="p-2 border-2 shadow-lg shadow menu dropdown-content bg-base-100 rounded-box w-52">
                     <li>
                         <div
@@ -65,8 +66,7 @@ function CreatedCertificates() {
                         <table className="table w-full table-zebra ">
                             <thead className=''>
                                 <tr>
-                                    <td className='text-gray-700'>No</td>
-                                    <th className='text-gray-700'>Receiver Name</th>
+                                    <th style={{ zIndex: -50 }} className='text-gray-700'>Receiver Name</th>
                                     <th className='text-gray-700'>Receiver Email</th>
                                     <th className='text-gray-700'>Issued on</th>
                                     <th className='text-gray-700'>Template Name</th>
@@ -82,11 +82,12 @@ function CreatedCertificates() {
                                                 key={i}
                                                 className={`${currentCertificate.id === cert.id ? 'active' : 'hover'}`}
                                             >
-                                                <td >{i + 1}</td>
+                                                {/* <td >{i + 1}</td> */}
                                                 <td >
                                                     <div >
                                                         <button
                                                             className="btn btn-primary w-2/3"
+
                                                             onClick={() => {
                                                                 setCurrentCertificateFunc(cert)
                                                                 console.log(cert)
@@ -115,7 +116,7 @@ function CreatedCertificates() {
                 <div>
 
                     <Modal
-                        style={{ zIndex: 101 }}
+                        style={{ zIndex: 100000 }}
                         onRequestClose={() => setCurrentCertificate({ id: null })}
                         onClick={() => setCurrentCertificate({ id: null })}
                         isOpen={currentCertificate.url ? true : false}
@@ -126,7 +127,9 @@ function CreatedCertificates() {
                             content: {
                                 background: 'none',
                                 border: 'none'
-                            }
+                            },
+                            width: window.innerWidth,
+                            height: window.innerHeight,
                         }}
                     >
                         {/* <button className='btn btn-error' onClick={() => {

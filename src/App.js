@@ -119,6 +119,9 @@ function App() {
                     <Route exact path="/home">
                       <Home />
                     </Route>
+                    <Route exact path='/certificate/create/:name'>
+                      <CreateCertificate />
+                    </Route>
                   </main>
                 </div>
               </div>
