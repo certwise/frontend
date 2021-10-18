@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Modal from '../../utils/Modal';
+import { useState } from 'react';
 
 function HeroHome() {
 
@@ -32,7 +31,7 @@ function HeroHome() {
 
           {/* Section header */}
           <div className="text-center pb-12 md:pb-16">
-            <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out">
+            <h1 className="text-5xl md:text-6xl font-extrabold text-black leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out">
               Issue Certificates the
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400"> Certiwise Way!</span></h1>
             <div className="max-w-3xl mx-auto">
@@ -92,18 +91,8 @@ function HeroHome() {
                 <span className="ml-3">Watch the full video (2 min)</span>
               </button>
             </div>
-
-            {/* Modal */}
-            <Modal id="modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={() => setVideoModalOpen(false)}>
-              <div className="relative pb-9/16">
-                <iframe className="absolute w-full h-full" src="https://player.vimeo.com/video/174002812" title="Video" allowFullScreen></iframe>
-              </div>
-            </Modal>
-
           </div>
-
         </div>
-
       </div>
     </section>
   );

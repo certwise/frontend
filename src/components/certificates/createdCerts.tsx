@@ -1,0 +1,193 @@
+import React, { useEffect, useState } from "react";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import * as api from "../../api/templates";
+import Context from "../../store/context.js";
+import Modal from "react-modal";
+import moment from "moment";
+function CreatedCertificates() {
+	Modal.setAppElement(document.getElementById("root") as any);
+	const { store, dispatch } = React.useContext<any>(Context);
+	const [currentCertificate, setCurrentCertificate] = useState<any>({
+		id: null,
+	});
+	const [certificates, setCertificates] = useState<any>([]);
+	const [templates, setTemplates] = useState<any>([]);
+	const [templateQuery, setTemplateQuery] = useState<any>("");
+
+	useEffect(() => {
+		api.getCertificates(store.user.uid).then((res) => {
+			res.sort((a, b): any => {
+				return b.data.templateId > a.data.templateId;
+			});
+			setCertificates(res);
+			//dispatch()
+		});
+		api.getTemplates(store.user.uid).then((res) => {
+			console.log("RESS", res);
+			setTemplates(res);
+		});
+		return () => setCurrentCertificate({ id: null });
+	}, []);
+
+	const setCurrentCertificateFunc = (cert: any) => {
+		let imgRef = ref(
+			getStorage(),
+			`${store.user.uid}/certificates/${cert.data.name}`
+		);
+		getDownloadURL(imgRef).then((url) => {
+			setCurrentCertificate({ cert, url });
+		});
+	};
+	return (
+		<div>
+			<div className="dropdown">
+				<button className="btn btn-primary m-1 mt-4">Filter by Template</button>
+				<ul className="p-2 border-2 shadow-lg shadow menu dropdown-content bg-base-100 rounded-box w-52">
+					<li>
+						<div
+							className={`btn m-1 ${
+								templateQuery === "" ? "btn-secondary" : "btn-ghost"
+							}`}
+							onClick={() => {
+								setTemplateQuery("");
+							}}
+						>
+							All Certificates
+						</div>
+					</li>
+					{templates
+						? templates.map((template: any, i: number) => {
+								return (
+									<li key={i}>
+										<div
+											className={`btn m-1 ${
+												templateQuery === template.data.name
+													? "btn-secondary"
+													: "btn-ghost"
+											}`}
+											onClick={() => {
+												setTemplateQuery(template.data.name);
+											}}
+										>
+											{template.data.name}
+										</div>
+									</li>
+								);
+						  })
+						: null}
+				</ul>
+			</div>
+			<div className="mt-3 text-2xl ">
+				Created Certificates:
+				<div>
+					<div className="overflow-x-auto">
+						<table className="table w-full table-zebra ">
+							<thead className="">
+								<tr>
+									<th style={{ zIndex: -50 }} className="text-gray-700">
+										Receiver Name
+									</th>
+									<th className="text-gray-700">Receiver Email</th>
+									<th className="text-gray-700">Issued on</th>
+									<th className="text-gray-700">Template Name</th>
+								</tr>
+							</thead>
+							<tbody>
+								{templates &&
+									certificates.map((cert: any, i: number) => {
+										if (
+											!templateQuery ||
+											templates.find(
+												(item: any) => item.data.name === templateQuery
+											).id === cert.data.templateId
+										)
+											return (
+												<tr
+													key={i}
+													className={`${
+														currentCertificate.id === cert.id
+															? "active"
+															: "hover"
+													}`}
+												>
+													{/* <td >{i + 1}</td> */}
+													<td>
+														<div>
+															<button
+																className="btn btn-primary w-2/3"
+																onClick={() => {
+																	setCurrentCertificateFunc(cert);
+																	console.log(cert);
+																}}
+															>
+																{cert.data.receiverName}
+															</button>
+														</div>
+													</td>
+													<td className="text-sm  text">
+														{cert.data.receiverEmail}
+													</td>
+													<td className="text-sm font-bold text-accent">
+														{moment(cert.data.createdAt).format(
+															"DD MMM YYYY HH:mm:ss"
+														)}
+													</td>
+													<td className="text-sm font-bold ">
+														{templates.length > 0 &&
+															(templates.find(
+																(item: any) => item.id === cert.data.templateId
+															).data.name || (
+																<button className="btn btn-primary btn-lg btn-circle loading m-5"></button>
+															))}
+													</td>
+												</tr>
+											);
+									})}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div>
+					<Modal
+						onRequestClose={() => setCurrentCertificate({ id: null })}
+						isOpen={currentCertificate.url ? true : false}
+						style={{
+							overlay: {
+								background: "rgba(0, 0, 0, 0.5)",
+							},
+							content: {
+								background: "none",
+								border: "none",
+							},
+						}}
+					>
+						{/* <button className='btn btn-error' onClick={() => {
+                            setCurrentCertificate({ id: null })
+                            console.log(currentCertificate)
+                        }
+                        }>Close</button> */}
+						<div
+							style={{
+								width: window.innerWidth,
+								height: window.innerHeight,
+							}}
+							onClick={() => {
+								setCurrentCertificate({ id: null });
+							}}
+							className="flex h-full flex-row justify-center"
+						>
+							<img
+								onClick={() => setCurrentCertificate({ id: null })}
+								style={{ height: window.innerHeight * 0.8 }}
+								src={currentCertificate.url}
+								alt="Certificate"
+							/>
+						</div>
+					</Modal>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+export default CreatedCertificates;
