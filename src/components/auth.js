@@ -46,9 +46,9 @@ function SignIn() {
                         </button>
                     </div>
                 </div> :
-                <div>
-                    <div>Sign in to continue</div>
-                    <button onClick={signIn}>SignIn</button>
+                <div className='m-3'>
+                    <div className='text-3xl '>Sign in to continue</div>
+                    <button className="btn btn-primary" onClick={signIn}>SignIn</button>
                 </div>}
         </>
     )

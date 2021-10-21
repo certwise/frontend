@@ -16,7 +16,7 @@ function TemplateCard({ template, uid, id, type }) {
                 <div className='m-2 '>
                     <SavedImage uid={uid} template={id} name={template.name} />
                 </div>
-                <div className="w-3/12 card-body place-items-center place-content-center">
+                <div className="card-body place-items-center place-content-center">
                     {!isRenaming ? <div className='font-bold align-top text-md'>
                         {name}
                         <button className='btn-xs'

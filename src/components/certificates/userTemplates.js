@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import '../../App.css'
 import Context from '../../store/context.js'
 import * as api from '../../api/templates'
 import { templateActions, setLoading as setAppLoading } from '../../store'
 import TemplateCard from '../templates/templateCard'
-import { Route } from 'react-router-dom'
-import CreateCertificate from './createCertificate'
+
 function UserTemplates() {
     const { store, dispatch } = useContext(Context)
     const [templateNames, setTemplateNames] = useState([])

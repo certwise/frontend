@@ -9,14 +9,11 @@ import { signIn } from "./store";
 import TemplateCanvas from "./components/templateCanvas";
 import CreateCertificate from "./components/certificates/createCertificate";
 import "./css/style.scss";
-import Home from "./pages/home/Home";
-import SignIn from "./pages/home/SignIn";
-import ResetPassword from "./pages/home/ResetPassword";
-import Dashboard from "./pages/admin/Dashboard";
-import Sidebar from "./partials/admin/Sidebar";
-import Header from "./partials/admin/Header";
-import SignUp from "./pages/home/SignUp";
 import AOS from "aos";
+import Navbar from "./components/Navbar";
+import Home from "./components/home";
+import SignIn from "./components/auth";
+import E404 from "./components/404";
 function App() {
 	const { store, dispatch }: any = useContext(Context);
 	const auth = getAuth();
@@ -55,7 +52,7 @@ function App() {
 							<LoadingHome />
 						</Route>
 						<Route path="/signup">
-							<SignUp />
+							<SignIn />
 						</Route>
 						<Route path="/signin" exact>
 							<SignIn />
@@ -65,50 +62,37 @@ function App() {
 				<>
 					{store.user.uid && (
 						<>
-							{
-								<Route path="/template/:templateId" exact>
-									<TemplateCanvas />
-								</Route>
-							}
+							<Route path="/template/:templateId" exact>
+								<TemplateCanvas />
+							</Route>
 							{!store.templates.currentTemplate.isEditing && (
-								<div className="flex h-screen overflow-hidden">
-									<Sidebar
-										sidebarOpen={sidebarOpen}
-										setSidebarOpen={setSidebarOpen}
-									/>
-									<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-										<Header
-											sidebarOpen={sidebarOpen}
-											setSidebarOpen={setSidebarOpen}
-										/>
-										<main>
-											<Route exact path="/">
-												<Redirect to="/admin" />
-											</Route>
-											<Route exact path="/admin">
-												<Dashboard />
-											</Route>
-											<Route path="/templates" exact>
-												<Template />
-											</Route>
-											<Route path="/certificates" exact>
-												<Certificate />
-											</Route>
-											<Route exact path="/certificate/create/:name">
-												<CreateCertificate />
-											</Route>
-											<Route exact path="/reset-password">
-												<ResetPassword />
-											</Route>
-											<Route exact path="/home">
-												<Home />
-											</Route>
-											<Route exact path="/certificate/create/:name">
-												<CreateCertificate />
-											</Route>
-										</main>
+								<>
+									<Navbar />
+									<div className="flex h-screen overflow-hidden">
+										<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+											<main>
+												<Route exact path="/">
+													<Redirect to="/admin" />
+												</Route>
+												<Route exact path="/admin">
+													<Home />
+												</Route>
+												<Route path="/templates" exact>
+													<Template />
+												</Route>
+												<Route path="/certificates" exact>
+													<Certificate />
+												</Route>
+												<Route exact path="/certificate/create/:name">
+													<CreateCertificate />
+												</Route>
+												<Route exact path="/user">
+													<SignIn />
+												</Route>
+											</main>
+										</div>
 									</div>
-								</div>
+								</>
 							)}
 						</>
 					)}

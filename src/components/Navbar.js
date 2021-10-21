@@ -11,14 +11,17 @@ function Navbar() {
                 </div>
                 <div className="flex-none hidden px-2 mx-2 lg:flex">
                     <div className="flex items-stretch">
-                        <Link to='/' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium">
+                        <Link to='/' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium transition-all duration-300">
                             Home
                         </Link>
-                        <Link to='/templates' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium">
+                        <Link to='/templates' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium transition-all duration-300">
                             Templates
                         </Link>
-                        <Link to='/certificates' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium">
+                        <Link to='/certificates' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium transition-all duration-300">
                             Certificates
+                        </Link>
+                        <Link to='/user' className="m-2 text-sm  uppercase hover:bg-gray-200 p-2 rounded-md font-medium transition-all duration-300">
+                            User
                         </Link>
                     </div>
                 </div>

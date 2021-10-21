@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "react-modal";
 import CreatedCertedficates from "./createdCerts";
 import UserTemplates from "./userTemplates.js";
