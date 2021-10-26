@@ -3,22 +3,21 @@ import "./App.css";
 import Template from "./components/templates/template";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Certificate from "./components/certificates/certificate";
-import { Switch, Route, useLocation, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Context from "./store/context";
 import { signIn } from "./store";
-import TemplateCanvas from "./components/templateCanvas";
+import TemplateCanvas from "./components/templates/templateCanvas";
 import CreateCertificate from "./components/certificates/createCertificate";
-import "./css/style.scss";
 import AOS from "aos";
 import Navbar from "./components/Navbar";
 import Home from "./components/home";
 import SignIn from "./components/auth";
-import E404 from "./components/404";
+//import E404 from "./components/404";
+
 function App() {
 	const { store, dispatch }: any = useContext(Context);
 	const auth = getAuth();
 	const [user, setUser] = useState(store.user || null);
-	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	useEffect(() => {
 		onAuthStateChanged(auth, (user_obj) => {

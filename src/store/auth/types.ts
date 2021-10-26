@@ -1,19 +1,19 @@
+import { User } from "@firebase/auth";
+
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
 export const SIGN_UP = "SIGN_UP";
 export const UPDATE_USER = "UPDATE_USER";
 export const UPDATE_USER_IMAGE = "UPDATE_USER_IMAGE";
 
-export interface IUser {
-	uid: string;
+export type user = {
 	email: string;
 	name: string;
 	avatar?: string;
 	certificates?: string[];
-}
+	photoURL?: string | any;
+};
 
-export interface IAuthState {
-	uid: string | null;
-	user?: any | IUser | null;
-	isSignedIN: boolean;
+export declare interface authState extends User {
+	isSignedIn: boolean;
 }

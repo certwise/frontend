@@ -1,8 +1,8 @@
-import { IAction } from "..";
-import { ITemplateState } from "./initialState";
+import { action } from "..";
+import { templatesState } from "./types";
 import * as types from "./types";
 
-const reducer = (state: ITemplateState, action: IAction) => {
+const reducer = (state: templatesState, action: action): templatesState => {
 	switch (action.type) {
 		case types.SET_CURRENT_TEMPLATE:
 			return {
@@ -80,11 +80,12 @@ const reducer = (state: ITemplateState, action: IAction) => {
 				fonts: action.payload,
 			};
 
-		case types.ADD_FONT:
+		case types.ADD_FONT: {
 			return {
 				...state,
 				fonts: [...state.fonts, action.payload],
 			};
+		}
 
 		case types.SET_FONTS_LOADING:
 			return {
@@ -112,6 +113,21 @@ const reducer = (state: ITemplateState, action: IAction) => {
 			return {
 				...state,
 				doneSaving: action.payload,
+			};
+		}
+		case types.SET_GRID: {
+			return {
+				...state,
+				currentTemplate: {
+					...state.currentTemplate,
+					grid: action.payload,
+				},
+			};
+		}
+		case types.SET_NUMBER_OF_FONTS: {
+			return {
+				...state,
+				numberOfFonts: action.payload,
 			};
 		}
 		default:

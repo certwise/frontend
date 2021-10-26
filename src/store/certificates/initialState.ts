@@ -1,27 +1,17 @@
-import { IUser } from "../auth/types";
+//import { IUser } from "../auth/types";
+import { certificate } from "./types";
 
-export const initialState = {
+export const initialState: certificatesState = {
 	certificates: [],
-	currentCertificate: {},
+	currentCertificate: null,
 };
 
-export interface ICertificatesState {
-	certificates: ICertificate[];
-	currentCertificate: ICertificate;
-}
+export type certificatesState = {
+	certificates: certificate[];
+	currentCertificate: certificate | null;
+};
 
-export interface ICertificate {
-	id: number;
-	name: string;
-	description: string;
-	image: string;
-	createdAt: string;
-	updatedAt?: string;
-	fields: ICertificateField[];
-	receiver: IUser | string;
-}
-
-export interface ICertificateField {
+export type certificateField = {
 	name: string;
 	value: string;
-}
+};

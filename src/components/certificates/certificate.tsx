@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import CreatedCertedficates from "./createdCerts";
-import UserTemplates from "./userTemplates.js";
+import UserTemplates from "./userTemplates";
 function Certificate() {
 	let rootElement: any = document.getElementById("root");
 	Modal.setAppElement(rootElement);

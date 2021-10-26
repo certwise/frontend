@@ -1,44 +1,59 @@
-export const getNewText = () => {
-	let text = {
+import { baseImage as baseImageType, image, text } from "./types";
+
+export const getNewText = (): text => {
+	let text: text = {
 		id: makeid(15),
 		isConstant: true,
 		type: "text",
 		name: "Text field",
-		value: "Example text field",
+		text: "Example text field",
 		fill: "#000",
 		x: 50,
 		y: 50,
-		attr: {
-			fontSize: 75,
-			fontFamily: "Roboto",
-			fontWeight: "normal",
-			fontDisplaySize: 75,
-		},
+		fontSize: 75,
+		fontFamily: "Roboto",
+		fontWeight: "normal",
+		fontDisplaySize: 75,
 		width: 800,
 		height: 120,
+		textAlign: "",
+		rotation: 0,
+		opacity: 0,
 	};
 	return text;
 };
 
-export const getNewImage = () => {
-	let image = {
+export const getNewImage = (): image => {
+	let image: image = {
 		isConstant: false,
 		id: makeid(15),
 		type: "image",
 		name: "image",
 		x: 10,
 		y: 10,
-		scale: 1,
-		draggable: true,
+		scaleX: 1,
+		scaleY: 1,
+		imageStorageRef: "",
+		height: 0,
+		width: 0,
+		opacity: 0,
+		rotation: 0,
 	};
 	return image;
 };
 
-export const baseImage = {
+export const baseImage: baseImageType = {
 	id: "baseImage",
 	type: "base-image",
 	name: "Base template image",
-	src: "default",
+	imageStorageRef: "",
+	height: 0,
+	width: 0,
+	x: 0,
+	y: 0,
+	opacity: 0,
+	rotation: 0,
+	isConstant: true,
 };
 
 const makeid = (length: number) => {

@@ -8,8 +8,8 @@ export const setLoading = (state: any) => {
 	};
 };
 
-export interface IAction {
+export type action = {
 	type: string;
-	payload?: any;
+	payload: any;
 	description?: string;
-}
+};

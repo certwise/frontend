@@ -1,16 +1,38 @@
-import { IAction } from "..";
-import { IAuthState, SIGN_IN, SIGN_OUT } from "./types";
+import { action } from "..";
+import { authState, SIGN_IN, SIGN_OUT } from "./types";
 
-export const initialState = {
+export const initialState: authState = {
+	uid: "",
 	isSignedIn: false,
-	name: null,
+	emailVerified: false,
+	isAnonymous: false,
+	metadata: undefined as any,
+	providerData: [],
+	refreshToken: "",
+	tenantId: null,
+	delete: function (): Promise<void> {
+		throw new Error("Function not implemented.");
+	},
+	getIdToken: function (forceRefresh?: boolean): Promise<string> {
+		throw new Error("Function not implemented.");
+	},
+	getIdTokenResult: function (forceRefresh?: boolean): any {
+		throw new Error("Function not implemented.");
+	},
+	reload: function (): Promise<void> {
+		throw new Error("Function not implemented.");
+	},
+	toJSON: function (): object {
+		throw new Error("Function not implemented.");
+	},
+	displayName: null,
 	email: null,
-	photo: null,
-	uid: null,
-	isVerified: null,
+	phoneNumber: null,
+	photoURL: null,
+	providerId: "",
 };
 
-const reducer = (state: IAuthState, action: IAction) => {
+const reducer = (state: authState, action: action) => {
 	switch (action.type) {
 		case SIGN_IN:
 			return {

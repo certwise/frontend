@@ -1,48 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import * as api from "../../api/templates";
-import Context from "../../store/context.js";
+import Context from "../../store/context";
 import Modal from "react-modal";
 import moment from "moment";
+import { template } from "../../store/templates/types";
+import { certificate } from "../../store/certificates/types";
+
 function CreatedCertificates() {
 	Modal.setAppElement(document.getElementById("root") as any);
-	const { store, dispatch } = React.useContext<any>(Context);
-	const [currentCertificate, setCurrentCertificate] = useState<any>({
-		id: null,
-	});
+	const { store } = React.useContext(Context);
+	const [currentCertificate, setCurrentCertificate] =
+		useState<{ certificate: certificate; url: string }>();
 	const [certificates, setCertificates] = useState<any>([]);
-	const [templates, setTemplates] = useState<any>([]);
+	const [templates, setTemplates] = useState<template[]>([]);
 	const [templateQuery, setTemplateQuery] = useState<any>("");
-
 	useEffect(() => {
+		console.log(templates);
+	});
+	useEffect(() => {
+		console.log("1100", store.user.uid);
 		api.getCertificates(store.user.uid).then((res) => {
-			res.sort((a, b): any => {
-				return b.data.templateId > a.data.templateId;
-			});
-			setCertificates(res);
-			//dispatch()
+			if (res !== false) {
+				res.sort((a: certificate, b: certificate) => {
+					return b.templateId > a.templateId ? 1 : -1;
+				});
+				setCertificates(res);
+				console.log("1100", res);
+			}
 		});
 		api.getTemplates(store.user.uid).then((res) => {
 			console.log("RESS", res);
 			setTemplates(res);
 		});
-		return () => setCurrentCertificate({ id: null });
+		return () => setCurrentCertificate(undefined);
 	}, []);
 
-	const setCurrentCertificateFunc = (cert: any) => {
-		let imgRef = ref(
-			getStorage(),
-			`${store.user.uid}/certificates/${cert.data.name}`
-		);
+	const setCurrentCertificateFunc = (cert: certificate) => {
+		let imgRef = ref(getStorage(), cert.storageRef);
 		getDownloadURL(imgRef).then((url) => {
-			setCurrentCertificate({ cert, url });
+			setCurrentCertificate({ certificate: cert, url: url });
+			console.log("1100 url", url);
 		});
 	};
 	return (
 		<div>
 			<div className="dropdown">
 				<button className="btn btn-primary m-1 mt-4">Filter by Template</button>
-				<ul className="p-2 border-2 shadow-lg shadow menu dropdown-content bg-base-100 rounded-box w-52">
+				<ul className="p-2 border-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
 					<li>
 						<div
 							className={`btn m-1 ${
@@ -61,15 +66,15 @@ function CreatedCertificates() {
 									<li key={i}>
 										<div
 											className={`btn m-1 ${
-												templateQuery === template.data.name
+												templateQuery === template.name
 													? "btn-secondary"
 													: "btn-ghost"
 											}`}
 											onClick={() => {
-												setTemplateQuery(template.data.name);
+												setTemplateQuery(template.name);
 											}}
 										>
-											{template.data.name}
+											{template.name}
 										</div>
 									</li>
 								);
@@ -94,18 +99,17 @@ function CreatedCertificates() {
 							</thead>
 							<tbody>
 								{templates &&
-									certificates.map((cert: any, i: number) => {
+									certificates.map((cert: certificate, i: number) => {
 										if (
 											!templateQuery ||
-											templates.find(
-												(item: any) => item.data.name === templateQuery
-											).id === cert.data.templateId
+											templates.find((item: any) => item.name === templateQuery)
+												?.id === cert.templateId
 										)
 											return (
 												<tr
 													key={i}
 													className={`${
-														currentCertificate.id === cert.id
+														currentCertificate?.certificate.id === cert.id
 															? "active"
 															: "hover"
 													}`}
@@ -120,28 +124,31 @@ function CreatedCertificates() {
 																	console.log(cert);
 																}}
 															>
-																{cert.data.receiverName}
+																{cert.recipient.name}
 															</button>
 														</div>
 													</td>
 													<td className="text-sm  text">
-														{cert.data.receiverEmail}
+														{cert.recipient.email}
 													</td>
 													<td className="text-sm font-bold text-accent">
-														{moment(cert.data.createdAt).format(
+														{moment(cert.createdAt).format(
 															"DD MMM YYYY HH:mm:ss"
 														)}
 													</td>
 													<td className="text-sm font-bold ">
-														{templates.length > 0 &&
-															(templates.find(
-																(item: any) => item.id === cert.data.templateId
-															).data.name || (
-																<button className="btn btn-primary btn-lg btn-circle loading m-5"></button>
-															))}
+														{
+															templates.find(
+																(item) => item.id === cert.templateId
+															)?.name
+															//  || (
+															// 	<button className="btn btn-primary btn-lg btn-circle loading m-5"></button>
+															// )
+														}
 													</td>
 												</tr>
 											);
+										else return null;
 									})}
 							</tbody>
 						</table>
@@ -149,8 +156,8 @@ function CreatedCertificates() {
 				</div>
 				<div>
 					<Modal
-						onRequestClose={() => setCurrentCertificate({ id: null })}
-						isOpen={currentCertificate.url ? true : false}
+						onRequestClose={() => setCurrentCertificate(undefined)}
+						isOpen={currentCertificate !== undefined}
 						style={{
 							overlay: {
 								background: "rgba(0, 0, 0, 0.5)",
@@ -172,14 +179,14 @@ function CreatedCertificates() {
 								height: window.innerHeight,
 							}}
 							onClick={() => {
-								setCurrentCertificate({ id: null });
+								setCurrentCertificate(undefined);
 							}}
 							className="flex h-full flex-row justify-center"
 						>
 							<img
-								onClick={() => setCurrentCertificate({ id: null })}
+								onClick={() => setCurrentCertificate(undefined)}
 								style={{ height: window.innerHeight * 0.8 }}
-								src={currentCertificate.url}
+								src={currentCertificate?.url}
 								alt="Certificate"
 							/>
 						</div>

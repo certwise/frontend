@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import * as api from "../../api/templates";
-import { env } from "../../config.js";
+import { env } from "../../config";
 import Context from "../../store/context";
 import { useParams } from "react-router-dom";
+import { certificate, recipient } from "../../store/certificates/types";
+import { fields, template } from "../../store/templates/types";
 
 function CreateCertificate() {
 	const { store }: any = React.useContext(Context);
-	const [fields, setfields] = useState<any>({});
-	const [receiverName, setReceiverName] = useState<any>(null);
-	const [email, setEmail] = useState<any>(null);
-	const [template, setTemplate] = useState<any>({});
-	const [templateFields, setTemplateFields] = useState<Array<any>>();
+	const [fields, setfields] = useState<Array<fields>>([]);
+	const [receiver, setReceiver] = useState<recipient>();
+	const [template, setTemplate] = useState<template>();
+	const [templateFields, setTemplateFields] = useState<Array<string>>();
 	const { name } = useParams<any>();
 	useEffect(() => {
 		api
-			.getTemplateByName(name)
+			.getTemplateByName(name, store.user.uid)
 			.then((res: any) => {
 				setTemplate(res);
 				console.log("Template:", res);
@@ -32,36 +33,46 @@ function CreateCertificate() {
 	}, []);
 	const createCertificate = (e: any) => {
 		e.preventDefault();
-		let req = {
-			uid: store.user.uid,
-			templateId: template.id,
-			receiverName,
-			receiverEmail: email,
-			fields: fields,
-		};
-		let urls = `${env.url}/certificate/one`;
-		console.log("create certificate:", urls, req);
-		axios
-			.post(urls, req)
-			.then((res) => {
-				console.log(res);
-				alert("Certificate created");
-			})
-			.catch((err) => {
-				console.log("Error:", err);
-			});
+		if (template !== undefined && receiver !== undefined) {
+			let req: certificate = {
+				issuerId: store.user.uid,
+				templateId: template.id,
+				issueDate: false,
+				createdAt: new Date(),
+				lastUpdated: new Date(),
+				validTill: true,
+				recipient: {
+					name: receiver.name,
+					email: receiver.email,
+					certificates: [],
+				},
+				fields: fields,
+			};
+			console.log(req);
+			let urls = `${env.url}/certificate/one/`;
+			console.log("create certificate:", urls, req);
+			axios
+				.post(urls, req)
+				.then((res) => {
+					console.log(res);
+					alert("Certificate created");
+				})
+				.catch((err) => {
+					console.log("Error:", err);
+				});
+		}
 	};
 	return (
 		<div className="m-4">
 			{templateFields && template && (
 				<div>
 					<div className="text-3xl text-primary mb-4 font-bold">
-						{template.data.name}
+						{template.name}
 					</div>
 					<div className="text-xl font-bold">Create Single Certificate</div>
 					<form className="mt-5 p-2 border-2 border-primary ">
 						<div className="text-3xl font-bold p-2 mt-4">
-							Fill fields of {template.data.name || name}:
+							Fill fields of {template.name || name}:
 						</div>
 						<div className="m-2  ">
 							<div className="text-xl font-bold ml-1 text-primary">
@@ -72,7 +83,11 @@ function CreateCertificate() {
 								type="text"
 								placeholder="Name"
 								onChange={(e) => {
-									setReceiverName(e.target.value);
+									setReceiver(
+										receiver
+											? { ...receiver, name: e.target.value }
+											: { name: e.target.value, email: "" }
+									);
 								}}
 							/>
 						</div>
@@ -85,7 +100,11 @@ function CreateCertificate() {
 								type="email"
 								placeholder="Email"
 								onChange={(e) => {
-									setEmail(e.target.value);
+									setReceiver(
+										receiver
+											? { ...receiver, email: e.target.value }
+											: { name: "", email: e.target.value }
+									);
 								}}
 							/>
 						</div>
@@ -100,7 +119,10 @@ function CreateCertificate() {
 										type="text"
 										placeholder={field}
 										onChange={(e) => {
-											setfields({ ...fields, [field]: e.target.value });
+											setfields([
+												...fields,
+												{ name: field, value: e.target.value },
+											]);
 										}}
 									/>
 								</div>
@@ -110,7 +132,7 @@ function CreateCertificate() {
 							className="ml-2 mt-5 btn btn-primary"
 							onClick={(e) => createCertificate(e)}
 						>
-							Create Single certificate
+							Create Single certificate |
 						</button>
 					</form>
 					<div>
