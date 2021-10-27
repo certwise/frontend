@@ -18,6 +18,8 @@ export const IS_EDITING_TEMPLATE = "IS_EDITING_TEMPLATE";
 
 export const SET_GRID = "SET_GRID";
 
+export const SET_SNAP = "SET_SNAP";
+
 export type template = {
 	id: string;
 	name: string;
@@ -125,8 +127,6 @@ export type currentTemplate = {
 	name: string;
 	isEditing: boolean;
 	downloadCurrentTemplate: boolean;
-	grid: grid;
-	snapPoints: snapPoints;
 };
 export type templatesState = {
 	currentTemplate: currentTemplate;
@@ -136,6 +136,8 @@ export type templatesState = {
 	doneSaving: boolean;
 	fontsLoading: boolean;
 	numberOfFonts: number;
+	grid: grid;
+	snapPoints: snapPoints;
 };
 
 export type items = Array<image | text | baseImage>;
@@ -161,7 +163,10 @@ type point = {
 };
 
 export type snapPoints = {
+	isEnabled: boolean;
 	xLines: Array<number>;
 	yLines: Array<number>;
 	points: Array<point>;
+	activeX?: number;
+	activeY?: number;
 };

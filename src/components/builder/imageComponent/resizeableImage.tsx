@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Transformer } from "react-konva";
+import { Image, Rect, Transformer } from "react-konva";
 
 const DynamicImage = ({
 	shapeProps,
@@ -7,7 +7,12 @@ const DynamicImage = ({
 	onClick,
 	onChange,
 	item,
+	onDragStart,
+	snapPoints,
+	grid,
 }: any) => {
+	const [isDragging, setisDragging] = React.useState<boolean>();
+	const [draggingPos, setdraggingPos] = React.useState({ x: 0, y: 0 });
 	const shapeRef = React.useRef<any>();
 	const trRef = React.useRef<any>();
 
@@ -31,15 +36,23 @@ const DynamicImage = ({
 				ref={shapeRef}
 				{...shapeProps}
 				draggable
+				onDragStart={onDragStart}
 				onDragEnd={(e) => {
-					onChange({
-						...shapeProps,
-						x: Math.round(e.target.x() / 100) * 100,
-						y: Math.round(e.target.y() / 100) * 100,
-						rotation: e.target.rotation(),
-					});
-					e.target.x(Math.round(e.target.x() / 100) * 100);
-					e.target.y(Math.round(e.target.y() / 100) * 100);
+					setisDragging(false);
+
+					const pos = { x: e.target.x(), y: e.target.y() };
+					let newPos = pos;
+					if (snapPoints.isEnabled) {
+						newPos = {
+							x: Math.round(pos.x / grid.width) * grid.width,
+							y: Math.round(pos.y / grid.height) * grid.height,
+						};
+						e.target.x(newPos.x);
+						e.target.y(newPos.y);
+						console.log("newPos", newPos);
+					}
+					onChange({ ...shapeProps, ...newPos });
+
 					console.log(e.target.x(), e.target.y(), "onDragEnd");
 				}}
 				onDblClick={() => {
@@ -47,6 +60,10 @@ const DynamicImage = ({
 						...shapeProps,
 						rotation: 0,
 					});
+				}}
+				onDragMove={(e) => {
+					setdraggingPos({ x: e.target.x(), y: e.target.y() });
+					setisDragging(true);
 				}}
 				onTransformEnd={(e) => {
 					// transformer is changing scale of the node
@@ -81,6 +98,17 @@ const DynamicImage = ({
 						}
 						return newBox;
 					}}
+				/>
+			)}
+			{isDragging && snapPoints.isEnabled && (
+				<Rect
+					x={Math.round(draggingPos.x / grid.width) * grid.width}
+					y={Math.round(draggingPos.y / grid.height) * grid.height}
+					width={item.width}
+					height={item.height}
+					fill="transparent"
+					stroke="#999"
+					rotation={item.rotation}
 				/>
 			)}
 		</React.Fragment>

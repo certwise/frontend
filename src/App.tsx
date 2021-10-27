@@ -47,6 +47,7 @@ function App() {
 			<Switch>
 				{!store.user.uid && (
 					<>
+						<Navbar isSignedIn={false} />
 						<Route exact path="/">
 							<LoadingHome />
 						</Route>
@@ -66,7 +67,7 @@ function App() {
 							</Route>
 							{!store.templates.currentTemplate.isEditing && (
 								<>
-									<Navbar />
+									<Navbar isSignedIn />
 									<div className="flex h-screen overflow-hidden">
 										<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
 											<main>

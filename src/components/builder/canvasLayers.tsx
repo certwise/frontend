@@ -5,7 +5,7 @@ import Context from "../../store/context";
 import { Container } from "./layerStack/cardContainer";
 import { templateActions } from "../../store";
 import * as api from "../../api/templates";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 function CanvasLayers() {
 	const { store, dispatch } = React.useContext(Context);
 	const [state, setstate] = React.useState({
@@ -87,6 +87,72 @@ function CanvasLayers() {
 						>
 							Add Img
 						</button>
+					</div>
+					<div>
+						<label htmlFor="isEnabledGrid" className="mr-3">
+							Grid Lines
+						</label>
+						<input
+							id="isEnabledGrid"
+							type="checkbox"
+							className="checkbox checkbox-primary mt-2 align-bottom"
+							checked={store.templates.grid.isEnabled}
+							onChange={(e) => {
+								const grid = store.templates.grid;
+								grid.isEnabled = e.target.checked;
+								dispatch(templateActions.setGrid(grid));
+							}}
+						/>
+					</div>
+					{store.templates.grid.isEnabled && (
+						<div>
+							<div className="my-2 text-xs">
+								<label htmlFor="" className="mr-3">
+									Grid width
+								</label>
+								<input
+									type="number"
+									className="input input-primary input-xs w-1/4"
+									value={store.templates.grid.width}
+									onChange={(e) => {
+										const grid = store.templates.grid;
+										grid.width = parseInt(e.target.value);
+										dispatch(templateActions.setGrid(grid));
+									}}
+								/>
+							</div>
+							<div className="my-2 text-xs">
+								<label htmlFor="" className="mr-2">
+									Grid height
+								</label>
+								<input
+									type="number"
+									className="input input-primary input-xs w-1/4"
+									value={store.templates.grid.height}
+									onChange={(e) => {
+										const grid = store.templates.grid;
+										grid.height = parseInt(e.target.value);
+										dispatch(templateActions.setGrid(grid));
+									}}
+								/>
+							</div>
+						</div>
+					)}
+					<div>
+						<label htmlFor="isEnabledSnap" className="mr-3">
+							Snap
+						</label>
+						<input
+							id="isEnabledSnap"
+							type="checkbox"
+							className="checkbox checkbox-primary mt-2 align-bottom"
+							checked={store.templates.snapPoints.isEnabled}
+							onChange={(e) => {
+								const snapPoints = store.templates.snapPoints;
+								snapPoints.isEnabled = e.target.checked;
+								dispatch(templateActions.setSnap(snapPoints));
+							}}
+						/>
 					</div>
 				</div>
 			)

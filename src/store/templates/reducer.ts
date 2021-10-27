@@ -118,18 +118,23 @@ const reducer = (state: templatesState, action: action): templatesState => {
 		case types.SET_GRID: {
 			return {
 				...state,
-				currentTemplate: {
-					...state.currentTemplate,
-					grid: action.payload,
-				},
+				grid: action.payload,
 			};
 		}
 		case types.SET_NUMBER_OF_FONTS: {
+			console.log("SET NUMBER OF FONTS", action.payload);
 			return {
 				...state,
 				numberOfFonts: action.payload,
 			};
 		}
+		case types.SET_SNAP: {
+			return {
+				...state,
+				snapPoints: action.payload,
+			};
+		}
+
 		default:
 			return state;
 	}

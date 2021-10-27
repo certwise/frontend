@@ -1,29 +1,51 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Text, Transformer } from "react-konva";
+import { KonvaEventObject } from "konva/lib/Node";
+import { useState, useEffect, useRef } from "react";
+import { Rect, Text, Transformer } from "react-konva";
+import { grid, snapPoints, text } from "../../../store/templates/types";
 
-const DynamicText = (props: any) => {
+type dTProps = {
+	setDisplayFontSizeInStore: any;
+	setCanvas: any;
+	onClick: any;
+	isSelected: any;
+	onDragEndGrp: any;
+	onDragStart: any;
+	item: text;
+	grid: grid;
+	snapPoints: snapPoints;
+};
+const DynamicText = ({
+	setDisplayFontSizeInStore,
+	setCanvas,
+	onClick,
+	isSelected,
+	onDragEndGrp,
+	onDragStart,
+	item,
+	grid,
+	snapPoints,
+}: dTProps) => {
 	const {
-		setDisplayFontSizeInStore,
-		text,
 		x,
 		y,
 		width,
 		height,
-		setCanvas,
-		align,
-		fontFamily,
 		fontSize,
-		fontWeight,
+		text,
+		fontFamily,
 		fill,
-		onClick,
-		isSelected,
-		onDragEndGrp,
-	} = props;
+		fontWeight,
+		textAlign,
+		fontDisplaySize,
+		opacity,
+	} = item;
+	const [isDragging, setisDragging] = useState<boolean>();
+	const [draggingPos, setdraggingPos] = useState({ x: 0, y: 0 });
 	const trRef = useRef<any>();
 	const textRef = useRef<any>();
-	const [fontsize, setFontSize] = useState<number>(props.fontDisplaySize);
+	const [fontsize, setFontSize] = useState<number | undefined>(fontDisplaySize);
 	useEffect(() => {
-		console.log("Display font size", props.fontDisplaySize);
+		console.log("Display font size", fontDisplaySize);
 	}, []);
 	useEffect(() => {
 		if (isSelected) {
@@ -40,12 +62,12 @@ const DynamicText = (props: any) => {
 		});
 		if (textAll.replace(" ", "") !== text.replace(" ", "")) {
 			let f = fontsize;
-			setFontSize((prev) => prev - 3);
+			setFontSize((prev) => (prev as number) - 3);
 			if (textAll.replace(/\s/g, "") === text.replace(/\s/g, "")) {
 				setFontSize(f);
 				setDisplayFontSizeInStore(f);
 			}
-			if (fontsize < 15) {
+			if ((fontsize as number) < 15) {
 				setFontSize(15);
 				setDisplayFontSizeInStore(fontsize);
 			}
@@ -55,12 +77,12 @@ const DynamicText = (props: any) => {
 	}, [fontsize]);
 
 	useEffect(() => {
-		setFontSize(parseInt(fontSize));
+		setFontSize(fontSize);
 	}, [fontSize]);
-	const [rotation, setrotation] = useState(props.rotation);
+	const [rotation, setrotation] = useState(item.rotation);
 	useEffect(() => {
-		setrotation(props.rotation);
-	}, [props.rotation]);
+		setrotation(item.rotation);
+	}, [item.rotation]);
 	return (
 		<>
 			<Text
@@ -70,9 +92,9 @@ const DynamicText = (props: any) => {
 				width={width}
 				height={height}
 				onClick={onClick}
-				align={align}
+				align={textAlign}
 				text={text}
-				opacity={props.opacity || 1}
+				opacity={opacity || 1}
 				fontSize={fontsize || fontSize}
 				verticalAlign="middle"
 				fontFamily={fontFamily}
@@ -80,8 +102,22 @@ const DynamicText = (props: any) => {
 				fill={fill}
 				ref={textRef}
 				rotation={rotation}
-				onDragStart={props.onDragStart}
-				onDragEnd={(e) => onDragEndGrp({ x: e.target.x(), y: e.target.y() })}
+				onDragStart={onDragStart}
+				onDragEnd={(e) => {
+					setisDragging(false);
+					const pos = { x: e.target.x(), y: e.target.y() };
+					let newPos = pos;
+					if (snapPoints.isEnabled) {
+						newPos = {
+							x: Math.round(pos.x / grid.width) * grid.width,
+							y: Math.round(pos.y / grid.height) * grid.height,
+						};
+						e.target.x(newPos.x);
+						e.target.y(newPos.y);
+						console.log("newPos", newPos);
+					}
+					onDragEndGrp(newPos);
+				}}
 				onTransform={(e) => {
 					let node = textRef.current;
 					node.setAttrs({
@@ -111,7 +147,7 @@ const DynamicText = (props: any) => {
 						textAll.replace(" ", "") !==
 						textRef.current.attrs.text.replace(" ", "")
 					) {
-						setFontSize(props.fontDisplaySize * 1.1);
+						setFontSize((fontDisplaySize as number) * 1.1);
 					} else {
 						setFontSize(fontSize);
 					}
@@ -119,6 +155,11 @@ const DynamicText = (props: any) => {
 				onDblClick={(e) => {
 					setrotation(0);
 					setCanvas({ rotation: 0 });
+				}}
+				onDragMove={(e) => {
+					onDragMove_(e, snapPoints);
+					setdraggingPos({ x: e.target.x(), y: e.target.y() });
+					setisDragging(true);
 				}}
 			/>
 
@@ -135,7 +176,27 @@ const DynamicText = (props: any) => {
 					}}
 				/>
 			)}
+			{isDragging && snapPoints.isEnabled && (
+				<Rect
+					x={Math.round(draggingPos.x / grid.width) * grid.width}
+					y={Math.round(draggingPos.y / grid.height) * grid.height}
+					width={width}
+					height={height}
+					fill="transparent"
+					stroke="#999"
+					rotation={rotation}
+				/>
+			)}
 		</>
 	);
 };
 export default DynamicText;
+
+const onDragMove_ = (
+	e: KonvaEventObject<DragEvent>,
+	snapPoints: snapPoints
+) => {
+	//console.log("onDragMove", e);
+	const x = e.target.x();
+	const y = e.target.y();
+};
