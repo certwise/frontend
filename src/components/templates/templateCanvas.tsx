@@ -5,14 +5,42 @@ import { useParams } from "react-router-dom";
 import CanvasContainer from "../builder/canvasContainer";
 import { templateActions } from "../../store";
 import getCurrentTemplate from "./getCurrentTemplate";
-import { loadFontIntoCSS } from "../builder/textComponent/fontLoader";
+import {
+	loadFontIntoCSS,
+	loadFonts,
+} from "../builder/textComponent/fontLoader";
 import { template } from "../../store/templates/types";
 function TemplateCanvas() {
 	const { store, dispatch } = useContext(Context);
 	const { templateId }: any = useParams();
 	const [isLoading, setIsLoading] = useState(true);
 	const [isValidUrl, setIsValidUrl] = useState(true);
-
+	const numberOfFonts = store.templates.numberOfFonts;
+	useEffect(() => dispatch(templateActions.setNumberOfFonts(100)), []);
+	useEffect(() => {
+		console.log("TemplateCanvas", numberOfFonts);
+		dispatch(templateActions.setFontsLoading(true));
+		loadFonts("popularity").then((fonts) => {
+			console.log("loadFonts func then");
+			fonts = fonts.slice(0, numberOfFonts);
+			for (let i in fonts) {
+				try {
+					let apiUrl = [];
+					apiUrl.push("https://fonts.googleapis.com/css?family=");
+					apiUrl.push(fonts[i].family.replace(/ /g, "+"));
+					var url = apiUrl.join("");
+					let style = document.createElement("link");
+					style.href = url;
+					style.rel = "stylesheet";
+					document.head.appendChild(style);
+				} catch {
+					console.log("font error");
+				}
+			}
+			dispatch(templateActions.setFonts(fonts));
+			dispatch(templateActions.setFontsLoading(false));
+		});
+	}, [store.templates.numberOfFonts]);
 	useEffect(() => {
 		dispatch(templateActions.isEditingTemplate(true));
 		setIsLoading(true);

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useRef, useState } from "react";
-import { Stage, Layer, Image, Line } from "react-konva";
+import { Stage, Layer, Image, Line, Group } from "react-konva";
 import Context from "../../store/context";
 import { templateActions } from "../../store";
 import DynamicImage from "./imageComponent/resizeableImage";
@@ -110,33 +110,30 @@ function Canvas() {
 							switch (item.type) {
 								case "base-image":
 									return (
-										<Image
-											key={i}
-											image={item.src}
-											onClick={() => setActiveItem(item)}
-											x={0}
-											y={0}
-											width={width}
-											height={height}
-											src={item.src}
-										/>
+										<>
+											<Image
+												key={i}
+												image={item.src}
+												onClick={() => setActiveItem(item)}
+												x={0}
+												y={0}
+												width={width}
+												height={height}
+												src={item.src}
+											/>
+											{store.templates.grid.isEnabled && (
+												<Grid key={"dsfiklusdf97"} />
+											)}
+										</>
 									);
+
 								case "image":
 									return (
 										<DynamicImage
 											id={item.id}
-											items={items}
-											x={item.x}
-											y={item.y}
-											height={item.height}
-											width={item.width}
-											src={item.src}
 											item={item}
 											key={i}
-											image={item.src}
 											shapeProps={item}
-											opacity={item.opacity || 1}
-											draggable
 											isSelected={item.id === activeItem?.id}
 											onClick={() => setActiveItem(item)}
 											onChange={(newAttrs: any) => {
@@ -144,44 +141,23 @@ function Canvas() {
 												p[i] = { ...p[i], ...newAttrs };
 												dispatch(templateActions.editCanvas(p));
 											}}
-											onDragEnd={(e: any) => drag(e, item.id)}
-											onDragMove={(e: any) => {
-												e.target.y(Math.max(e.target.y(), 0));
-												e.target.x(Math.max(e.target.x(), 0));
+											onDragStart={() => {
+												setActiveItem(item);
 											}}
-											rotation={item.rotation || 0}
+											snapPoints={store.templates.snapPoints}
+											grid={store.templates.grid}
 										/>
 									);
 
 								case "text":
 									return (
 										<DynamicText
-											id={item.id}
 											item={item}
 											key={i}
-											x={item.x}
-											y={item.y}
-											offsetX={item.x + item.width / 2}
-											offsetY={item.y + item.height / 2}
-											width={item.width || 400}
-											height={item.height || 200}
-											text={item.text}
-											fill={item.fill}
-											align={item.textAlign || "center"}
-											fontSize={item.fontSize}
-											fontFamily={item.fontFamily}
-											fontWeight={item.fontWeight}
-											opacity={item.opacity || 100}
 											isSelected={item.id === activeItem?.id}
-											items={items}
-											fontDisplaySize={item.fontDisplaySize}
-											baseWidth={width}
-											rotation={
-												items.find((i) => i.id === item.id)?.rotation || 0
-											}
 											onClick={() => setActiveItem(item)}
 											onDragStart={() => {
-												//setActiveItem(item);
+												setActiveItem(item);
 											}}
 											setCanvas={(obj: any) => {
 												let p = items;
@@ -191,6 +167,7 @@ function Canvas() {
 											onDragEndGrp={(position: { x: number; y: number }) => {
 												let p = items;
 												p[i] = { ...p[i], x: position.x, y: position.y };
+												console.log(p[i].x, p[i].y);
 												dispatch(templateActions.editCanvas(p));
 											}}
 											setDisplayFontSizeInStore={(fontSize: number) => {
@@ -198,22 +175,14 @@ function Canvas() {
 												p[i] = { ...p[i], fontDisplaySize: fontSize } as text;
 												dispatch(templateActions.editCanvas(p));
 											}}
+											grid={store.templates.grid}
+											snapPoints={store.templates.snapPoints}
 										/>
 									);
 								default:
 									return null;
 							}
 						})}
-						<Grid
-							points={[]}
-							canvasWidth={1920}
-							canvasHeight={1080}
-							gridWidth={100}
-							gridHeight={100}
-							gridColor={"#000"}
-							gridOpacity={0.4}
-							gridLineWidth={1}
-						/>
 					</Layer>
 				</Stage>
 			</div>

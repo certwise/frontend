@@ -1,3 +1,4 @@
+import { action } from "..";
 import { getNewText } from "./elements";
 import * as types from "./types";
 
@@ -114,9 +115,16 @@ export const setGrid = (grid: types.grid) => {
 	};
 };
 
-export const setNumberOfFonts = (number: number) => {
+export const setNumberOfFonts = (number: number): action => {
 	return {
 		type: types.SET_NUMBER_OF_FONTS,
 		payload: number,
+	};
+};
+
+export const setSnap = (snap: types.snapPoints) => {
+	return {
+		type: types.SET_SNAP,
+		payload: snap,
 	};
 };

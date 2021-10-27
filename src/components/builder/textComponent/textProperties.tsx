@@ -10,30 +10,6 @@ function TextProperties() {
 	const items = store.templates.currentTemplate.canvas.items;
 	const activeItem = store.templates.currentTemplate.canvas.activeItem;
 	const [isFontsOpen, setIsFontsOpen] = useState(false);
-	const [numberOfFonts, setNumberOfFonts] = useState(100);
-	useEffect(() => {
-		dispatch(templateActions.setFontsLoading(true));
-		loadFonts("popularity").then((fonts) => {
-			console.log("loadFonts func then");
-			fonts = fonts.slice(0, numberOfFonts);
-			for (let i in fonts) {
-				try {
-					let apiUrl = [];
-					apiUrl.push("https://fonts.googleapis.com/css?family=");
-					apiUrl.push(fonts[i].family.replace(/ /g, "+"));
-					var url = apiUrl.join("");
-					let style = document.createElement("link");
-					style.href = url;
-					style.rel = "stylesheet";
-					document.head.appendChild(style);
-				} catch {
-					console.log("font error");
-				}
-			}
-			dispatch(templateActions.setFonts(fonts));
-			dispatch(templateActions.setFontsLoading(false));
-		});
-	}, [numberOfFonts]);
 
 	const editActiveItem = (e: any, val: any) => {
 		switch (val) {
@@ -249,7 +225,15 @@ function TextProperties() {
 								setIsFontsOpen(false);
 							}}
 							styles={{ width: "450px", height: window.innerHeight }}
-							loadMoreFonts={() => setNumberOfFonts((prev) => prev + 30)}
+							loadMoreFonts={() => {
+								console.log("load more fonts tP");
+								dispatch(
+									templateActions.setNumberOfFonts(
+										store.templates.numberOfFonts + 30
+									)
+								);
+								console.log(store.templates.numberOfFonts);
+							}}
 						/>
 					</div>
 
