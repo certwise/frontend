@@ -13,10 +13,6 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 export const env = {
-<<<<<<< HEAD
 	//url: "http://localhost:5000",
 	url: "https://api.certwise.app",
-=======
-	url: "http://localhost:5000",
->>>>>>> 6ed39e413c8a4aa7538cd5574b4fe15c133f4557
 };

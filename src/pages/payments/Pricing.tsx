@@ -1,21 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
-<<<<<<< HEAD
 import { env } from "../../config";
-=======
->>>>>>> 6ed39e413c8a4aa7538cd5574b4fe15c133f4557
 
 function Pricing() {
 	const [redirect, setredirect] = useState(false);
 	const checkOut = async (plan: string) => {
 		if (plan !== "custom") {
 			const res = await axios.post(
-<<<<<<< HEAD
 				env.url + "/payments/create-checkout-session",
-=======
-				"http://localhost:5000/payments/create-checkout-session",
->>>>>>> 6ed39e413c8a4aa7538cd5574b4fe15c133f4557
 				{ plan: plan }
 			);
 			window.location.replace(res.data.url);
