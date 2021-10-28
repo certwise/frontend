@@ -42,9 +42,7 @@ const reducer = (state: authState, action: action) => {
 			};
 		case SIGN_OUT:
 			return {
-				...state,
-				isSignedIn: false,
-				user: null,
+				initialState,
 			};
 		default:
 			return state;

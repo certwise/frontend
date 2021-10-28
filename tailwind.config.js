@@ -11,6 +11,7 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
+
     extend: {
       colors: {
         gray: {
@@ -46,6 +47,18 @@ module.exports = {
           800: '#285E61',
           900: '#234E52',
         },
+        cyan: {
+          100: colors.cyan[100],
+          200: colors.cyan[200],
+          300: colors.cyan[300],
+          400: colors.cyan[400],
+          500: colors.cyan[500],
+          600: colors.cyan[600],
+          700: colors.cyan[700],
+          800: colors.cyan[800],
+          900: colors.cyan[900],
+        },
+
         gray: colors.blueGray,
         'light-blue': colors.sky,
         red: colors.rose,

@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import { action } from ".";
 import user from "./auth/reducer";
 import { authState } from "./auth/types";
@@ -14,7 +15,11 @@ const combineReducers = (slices: any) => (state: any, action: action) =>
 		}),
 		state
 	);
-const initialAppState: appState = { isLoading: false, isInHomePage: true };
+const initialAppState: appState = {
+	isLoading: false,
+	isInHomePage: true,
+	pageTitle: "",
+};
 const app = (state = initialAppState, action: any): appState => {
 	switch (action.type) {
 		case "SET_LOADING_STATE":
@@ -26,6 +31,11 @@ const app = (state = initialAppState, action: any): appState => {
 			return {
 				...state,
 				isInHomePage: action.payload,
+			};
+		case "SET_PAGE_TITLE":
+			return {
+				...state,
+				pageTitle: action.payload,
 			};
 		default:
 			return state;
@@ -44,6 +54,7 @@ export default rootReducer;
 type appState = {
 	isLoading: boolean;
 	isInHomePage: boolean;
+	pageTitle: string;
 };
 
 export type globalState = {

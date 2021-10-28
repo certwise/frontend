@@ -1,0 +1,23 @@
+.icon {
+	font-size: 25px;
+}
+
+.eIcon {
+	@apply text-primary;
+}
+.tIcon {
+	@apply text-primary;
+}
+.dIcon {
+	@apply text-error;
+}
+
+.eIcon:hover {
+	@apply text-primary-focus;
+}
+.tIcon:hover {
+	@apply text-primary-focus;
+}
+.dIcon:hover {
+	@apply text-warning;
+}

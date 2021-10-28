@@ -1,24 +1,37 @@
 import { useState, useEffect, useContext } from "react";
 import "./App.css";
-import Template from "./components/templates/template";
+import Template from "./pages/templates/template";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Certificate from "./components/certificates/certificate";
-import { Switch, Route, Redirect } from "react-router-dom";
+import Certificate from "./pages/certificates/certificate";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import Context from "./store/context";
 import { signIn } from "./store";
-import TemplateCanvas from "./components/templates/templateCanvas";
-import CreateCertificate from "./components/certificates/createCertificate";
+import TemplateCanvas from "./pages/templates/templateCanvas";
+import CreateCertificate from "./pages/certificates/createCertificate";
 import AOS from "aos";
-import Navbar from "./components/Navbar";
-import Home from "./components/home";
-import SignIn from "./components/auth";
+import Home from "./pages/home/home";
+import SignIn from "./pages/SignIn";
+import Payments from "./pages/payments";
+import { focusHandling } from "cruip-js-toolkit";
+import "./css/style.scss";
+import SignUp from "./pages/SignUp";
+import Auth from "./pages/user/auth";
+import Dashboard from "./pages/admin/Dashboard";
+import Header from "./partials/admin/Header";
+import Sidebar from "./partials/admin/Sidebar";
+import { GrCertificate } from "react-icons/gr";
 //import E404 from "./components/404";
-
 function App() {
+	const location = useLocation();
 	const { store, dispatch }: any = useContext(Context);
 	const auth = getAuth();
 	const [user, setUser] = useState(store.user || null);
-
+	const [sidebarOpen, setSidebarOpen] = useState(false);
+	let icon = document.createElement("link");
+	icon.rel = "icon";
+	icon.href = "./images/certificate.png";
+	icon.type = "image/gif";
+	document.head.appendChild(icon);
 	useEffect(() => {
 		onAuthStateChanged(auth, (user_obj) => {
 			if (user_obj) {
@@ -27,11 +40,23 @@ function App() {
 				console.log("No user");
 			}
 		});
+		AOS.init({
+			once: true,
+			disable: "phone",
+			duration: 700,
+			easing: "ease-out-cubic",
+		});
 	});
 	useEffect(() => {
 		dispatch(signIn(user));
 		console.log("UserId from App.js", user.uid);
 	}, [user]);
+	useEffect(() => {
+		(document.querySelector("html") as any).style.scrollBehavior = "auto";
+		window.scroll({ top: 0 });
+		(document.querySelector("html") as any).style.scrollBehavior = "";
+		focusHandling();
+	}, [location.pathname]); // triggered on route change
 
 	useEffect(() => {
 		AOS.init({
@@ -44,38 +69,55 @@ function App() {
 
 	return (
 		<>
-			<Switch>
-				{!store.user.uid && (
-					<>
-						<Navbar isSignedIn={false} />
+			{!store.user.uid && (
+				<>
+					<Switch>
 						<Route exact path="/">
-							<LoadingHome />
-						</Route>
-						<Route path="/signup">
-							<SignIn />
+							<Home />
+							dfdf
 						</Route>
 						<Route path="/signin" exact>
 							<SignIn />
 						</Route>
-					</>
-				)}
-				<>
-					{store.user.uid && (
-						<>
+						<Route path="/signup">
+							<SignUp />
+						</Route>
+					</Switch>
+				</>
+			)}
+			<>
+				{store.user.uid && (
+					<>
+						<Switch>
+							s{" "}
 							<Route path="/template/:templateId" exact>
 								<TemplateCanvas />
 							</Route>
-							{!store.templates.currentTemplate.isEditing && (
-								<>
-									<Navbar isSignedIn />
-									<div className="flex h-screen overflow-hidden">
-										<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-											<main>
+						</Switch>
+						{!store.templates.currentTemplate.isEditing && (
+							<>
+								<div className="flex h-screen overflow-hidden">
+									{/* Sidebar */}
+									<Sidebar
+										sidebarOpen={sidebarOpen}
+										setSidebarOpen={setSidebarOpen}
+									/>
+
+									{/* Content area */}
+									<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+										{/*  Site header */}
+										<Header
+											sidebarOpen={sidebarOpen}
+											setSidebarOpen={setSidebarOpen}
+										/>
+
+										<main>
+											<Switch>
 												<Route exact path="/">
 													<Redirect to="/admin" />
 												</Route>
 												<Route exact path="/admin">
-													<Home />
+													<Dashboard />
 												</Route>
 												<Route path="/templates" exact>
 													<Template />
@@ -87,17 +129,21 @@ function App() {
 													<CreateCertificate />
 												</Route>
 												<Route exact path="/user">
-													<SignIn />
+													<Auth />
 												</Route>
-											</main>
-										</div>
+												<Route path="/payments">
+													<Payments />
+												</Route>
+												<Route>404</Route>
+											</Switch>
+										</main>
 									</div>
-								</>
-							)}
-						</>
-					)}
-				</>
-			</Switch>
+								</div>
+							</>
+						)}
+					</>
+				)}
+			</>
 		</>
 	);
 }
