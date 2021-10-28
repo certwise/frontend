@@ -9,6 +9,7 @@ const initialState: globalState = {
 	app: {
 		isLoading: false,
 		isInHomePage: true,
+		pageTitle: "",
 	},
 	user,
 	templates,
