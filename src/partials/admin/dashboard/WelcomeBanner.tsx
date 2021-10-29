@@ -1,78 +1,45 @@
-function WelcomeBanner() {
+function WelcomeBanner({ name }: { name: string | null }) {
 	return (
 		<div className="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-8">
 			{/* Background illustration */}
-			<div
-				className="absolute right-0 top-0 -mt-4 mr-16 pointer-events-none hidden xl:block"
-				aria-hidden="true"
-			>
-				<svg width="319" height="198" xmlnsXlink="http://www.w3.org/1999/xlink">
-					<defs>
-						<path id="welcome-a" d="M64 0l64 128-64-20-64 20z" />
-						<path id="welcome-e" d="M40 0l40 80-40-12.5L0 80z" />
-						<path id="welcome-g" d="M40 0l40 80-40-12.5L0 80z" />
-						<linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="welcome-b">
-							<stop stopColor="#A5B4FC" offset="0%" />
-							<stop stopColor="#818CF8" offset="100%" />
-						</linearGradient>
-						<linearGradient
-							x1="50%"
-							y1="24.537%"
-							x2="50%"
-							y2="100%"
-							id="welcome-c"
-						>
-							<stop stopColor="#4338CA" offset="0%" />
-							<stop stopColor="#6366F1" stopOpacity="0" offset="100%" />
-						</linearGradient>
-					</defs>
-					<g fill="none" fillRule="evenodd">
-						<g transform="rotate(64 36.592 105.604)">
-							<mask id="welcome-d" fill="#fff">
-								<use xlinkHref="#welcome-a" />
-							</mask>
-							<use fill="url(#welcome-b)" xlinkHref="#welcome-a" />
-							<path
-								fill="url(#welcome-c)"
-								mask="url(#welcome-d)"
-								d="M64-24h80v152H64z"
-							/>
-						</g>
-						<g transform="rotate(-51 91.324 -105.372)">
-							<mask id="welcome-f" fill="#fff">
-								<use xlinkHref="#welcome-e" />
-							</mask>
-							<use fill="url(#welcome-b)" xlinkHref="#welcome-e" />
-							<path
-								fill="url(#welcome-c)"
-								mask="url(#welcome-f)"
-								d="M40.333-15.147h50v95h-50z"
-							/>
-						</g>
-						<g transform="rotate(44 61.546 392.623)">
-							<mask id="welcome-h" fill="#fff">
-								<use xlinkHref="#welcome-g" />
-							</mask>
-							<use fill="url(#welcome-b)" xlinkHref="#welcome-g" />
-							<path
-								fill="url(#welcome-c)"
-								mask="url(#welcome-h)"
-								d="M40.333-15.147h50v95h-50z"
-							/>
-						</g>
-					</g>
-				</svg>
-			</div>
+			<div className="w-100"></div>
 
 			{/* Content */}
 			<div className="relative">
 				<h1 className="text-2xl md:text-3xl text-gray-800 font-bold mb-1">
-					Good afternoon, Acme Inc. 👋
+					Good afternoon, {name}. 👋
 				</h1>
-				<p>Here is what’s happening with your projects today:</p>
+				<p>Here is your CertWise stats for today:</p>
 			</div>
 		</div>
 	);
 }
 
 export default WelcomeBanner;
+
+const Shape = () => {
+	<svg
+		style={{ height: "50px" }}
+		id="sw-js-blob-svg"
+		viewBox="0 0 100 100"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<defs>
+			{" "}
+			<linearGradient id="sw-gradient" x1="0" x2="1" y1="1" y2="0">
+				<stop id="stop1" stop-color="rgba(102, 126, 234, 1)" offset="0%"></stop>
+				<stop id="stop2" stop-color="rgba(0, 188, 212, 1)" offset="100%"></stop>
+			</linearGradient>{" "}
+		</defs>
+		<path
+			fill="url(#sw-gradient)"
+			d="M24,-16.8C31.9,-9.2,39.7,0.8,38.4,9.5C37,18.2,26.4,25.5,15,31C3.6,36.4,-8.7,40,-17.9,36C-27,32,-33.1,20.5,-33.7,10C-34.3,-0.6,-29.4,-10.1,-22.9,-17.4C-16.4,-24.7,-8.2,-29.7,-0.1,-29.7C8,-29.6,16.1,-24.4,24,-16.8Z"
+			width="100%"
+			height="100%"
+			transform="translate(50 50)"
+			stroke-width="0"
+			style={{ transition: "all 0.3s ease 0s" }}
+			stroke="url(#sw-gradient)"
+		></path>{" "}
+	</svg>;
+};

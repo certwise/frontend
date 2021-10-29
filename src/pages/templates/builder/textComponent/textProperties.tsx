@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { templateActions } from "../../../../store";
 import Context from "../../../../store/context";
 import { text } from "../../../../store/templates/types";
-import { loadFonts } from "./fontLoader";
 import FontSelector from "./fontSelector";
 
 function TextProperties() {

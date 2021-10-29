@@ -4,7 +4,7 @@ import Context from "../../store/context";
 import { useContext, useEffect } from "react";
 import { setPageTitle } from "../../store/actions";
 function Dashboard() {
-	const { dispatch } = useContext(Context);
+	const { store, dispatch } = useContext(Context);
 	useEffect(() => {
 		dispatch(setPageTitle("Dashboard"));
 		return () => dispatch(setPageTitle(""));
@@ -14,7 +14,7 @@ function Dashboard() {
 			<main>
 				<div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 					{/* Welcome banner */}
-					<WelcomeBanner />
+					<WelcomeBanner name={store.user.displayName} />
 
 					{/* Dashboard actions */}
 					<div className="sm:flex sm:justify-between sm:items-center mb-8">

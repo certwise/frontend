@@ -62,7 +62,7 @@ export const createTemplate = async (info: any) => {
 		updatedAt: new Date(),
 	};
 	const result = "";
-	axios.post(env.url + "/template", template).then((res) => {
+	await axios.post(env.url + "/template", template).then((res) => {
 		console.log(res);
 	});
 	return result;

@@ -15,9 +15,15 @@ function CreateTemplate(props: any) {
 				name,
 				description,
 			};
-			const res = await api.createTemplate(info);
-			console.log(res);
-			window.location.reload();
+			api
+				.createTemplate(info)
+				.then((res) => {
+					console.log(res);
+					window.location.reload();
+				})
+				.catch((e) => {
+					console.log(e);
+				});
 		}
 	};
 	useEffect(() => {

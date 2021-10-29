@@ -112,7 +112,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 							<NavLink
 								exact
 								to="/"
-								className={`block text-primary hover:text-primary-focus transition duration-150 ${
+								className={`block text-white hover:text-gray-200 transition duration-150 ${
 									page === "" && "hover:text-gray-200"
 								}`}
 							>
@@ -132,7 +132,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 							<NavLink
 								exact
 								to="/templates"
-								className={`block text-primary hover:text-primary-focus transition duration-150 ${
+								className={`block text-white hover:text-gray-200 transition duration-150 ${
 									page === "customers" && "hover:text-gray-200"
 								}`}
 							>
@@ -151,7 +151,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 							<NavLink
 								exact
 								to="/certificates"
-								className={`block text-primary hover:text-primary-focus transition duration-150 ${
+								className={`block text-white hover:text-gray-200 transition duration-150 ${
 									page === "orders" && "hover:text-gray-200"
 								}`}
 							>
@@ -172,7 +172,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 							<NavLink
 								exact
 								to="/payments"
-								className={`block text-primary hover:text-primary-focus transition duration-150 ${
+								className={`block text-white hover:text-gray-200 transition duration-150 ${
 									page === "campaigns" && "hover:text-gray-200"
 								}`}
 							>
@@ -192,7 +192,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 							<NavLink
 								exact
 								to="/user"
-								className={`block text-primary hover:text-primary-focus transition duration-150 ${
+								className={`block text-white hover:text-gray-200 transition duration-150 ${
 									page === "messages" && "hover:text-gray-200"
 								}`}
 							>
@@ -213,7 +213,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 							<NavLink
 								exact
 								to="/settings"
-								className={`block text-primary hover:text-primary-focus transition duration-150 ${
+								className={`block text-white hover:text-gray-200 transition duration-150 ${
 									page.startsWith("team-") && "hover:text-gray-200"
 								}`}
 							>
