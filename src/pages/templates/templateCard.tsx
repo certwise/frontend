@@ -206,13 +206,15 @@ function TemplateCard({ template, uid, id, type }: Props) {
 							<HiOutlineTemplate className={`${css.tIcon} ${css.icon}`} />
 						</Link>
 
-						<Link
-							to="/"
+						<div
 							data-tip="Delete"
 							className="tooltip hover:text-primary"
+							onClick={() => {
+								deleteTemplate(id).then(() => window.location.reload());
+							}}
 						>
 							<FiTrash2 className={`${css.dIcon} ${css.icon}`} />
-						</Link>
+						</div>
 					</div>
 				</div>
 			</div>

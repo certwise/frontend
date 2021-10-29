@@ -19,7 +19,6 @@ import Auth from "./pages/user/auth";
 import Dashboard from "./pages/admin/Dashboard";
 import Header from "./partials/admin/Header";
 import Sidebar from "./partials/admin/Sidebar";
-import { GrCertificate } from "react-icons/gr";
 //import E404 from "./components/404";
 function App() {
 	const location = useLocation();
@@ -89,58 +88,59 @@ function App() {
 				{store.user.uid && (
 					<>
 						<Switch>
-							s{" "}
 							<Route path="/template/:templateId" exact>
 								<TemplateCanvas />
+								{store.templates.currentTemplate.isEditing && <></>}
 							</Route>
 						</Switch>
-						{!store.templates.currentTemplate.isEditing && (
-							<>
-								<div className="flex h-screen overflow-hidden">
-									{/* Sidebar */}
-									<Sidebar
-										sidebarOpen={sidebarOpen}
-										setSidebarOpen={setSidebarOpen}
-									/>
-
-									{/* Content area */}
-									<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-										{/*  Site header */}
-										<Header
+						{!store.templates.currentTemplate.isEditing &&
+							!location.pathname.includes("/template/") && (
+								<>
+									<div className="flex h-screen overflow-hidden">
+										{/* Sidebar */}
+										<Sidebar
 											sidebarOpen={sidebarOpen}
 											setSidebarOpen={setSidebarOpen}
 										/>
 
-										<main>
-											<Switch>
-												<Route exact path="/">
-													<Redirect to="/admin" />
-												</Route>
-												<Route exact path="/admin">
-													<Dashboard />
-												</Route>
-												<Route path="/templates" exact>
-													<Template />
-												</Route>
-												<Route path="/certificates" exact>
-													<Certificate />
-												</Route>
-												<Route exact path="/certificate/create/:name">
-													<CreateCertificate />
-												</Route>
-												<Route exact path="/user">
-													<Auth />
-												</Route>
-												<Route path="/payments">
-													<Payments />
-												</Route>
-												<Route>404</Route>
-											</Switch>
-										</main>
+										{/* Content area */}
+										<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+											{/*  Site header */}
+											<Header
+												sidebarOpen={sidebarOpen}
+												setSidebarOpen={setSidebarOpen}
+											/>
+
+											<main>
+												<Switch>
+													<Route exact path="/">
+														<Redirect to="/admin" />
+													</Route>
+													<Route exact path="/admin">
+														<Dashboard />
+													</Route>
+													<Route path="/templates" exact>
+														<Template />
+													</Route>
+													<Route path="/certificates" exact>
+														<Certificate />
+													</Route>
+													<Route exact path="/certificate/create/:name">
+														<CreateCertificate />
+													</Route>
+													<Route exact path="/user">
+														<Auth />
+													</Route>
+													<Route path="/payments">
+														<Payments />
+													</Route>
+													<Route>404</Route>
+												</Switch>
+											</main>
+										</div>
 									</div>
-								</div>
-							</>
-						)}
+								</>
+							)}
 					</>
 				)}
 			</>

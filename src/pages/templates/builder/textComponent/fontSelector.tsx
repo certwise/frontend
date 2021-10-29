@@ -26,7 +26,7 @@ function FontSelector({ isOpen, close, styles, loadMoreFonts }: any) {
 				className="flex"
 				appElement={document.getElementById("root") as any}
 			>
-				<div className="w-11/12 bg-transparent"></div>
+				<div className="w-full bg-transparent"></div>
 				<ul
 					style={{
 						overflow: "auto",
@@ -34,7 +34,7 @@ function FontSelector({ isOpen, close, styles, loadMoreFonts }: any) {
 						background: "rgba(0, 0, 0, 0.8)",
 						...styles,
 					}}
-					className="p-2 border-2 shadow-lg  menu w-1/6  bg-transparent"
+					className="p-2 border-2 shadow-lg  menu w-1/5  bg-transparent"
 				>
 					<div className="ml-auto mr-5 pr-5  bg-transparent">
 						<div
@@ -50,7 +50,7 @@ function FontSelector({ isOpen, close, styles, loadMoreFonts }: any) {
 							<li
 								key={i}
 								style={{ fontFamily: font.family }}
-								className="text-white text-xl btn bg-transparent border-none hover:bg-gray-500"
+								className="text-white  text-left text-lg btn bg-transparent border-none hover:bg-gray-500"
 								onChange={(e) => {}}
 								onClick={() => {
 									let p: items = [...items];

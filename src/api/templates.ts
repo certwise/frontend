@@ -1,32 +1,13 @@
 import { getStorage, getDownloadURL, uploadBytes, ref } from "firebase/storage";
 import { certificate } from "../store/certificates/types";
 import { getNewImage } from "../store/templates/elements";
-import {
-	baseImage,
-	image,
-	items,
-	template,
-	text,
-} from "../store/templates/types";
+import { image, items, template, text } from "../store/templates/types";
 import axios from "axios";
 import { env } from "../config";
 
 export const createTemplate = async (info: any) => {
 	const { uid, name, description } = info;
-	const baseImage: baseImage = {
-		type: "base-image",
-		x: 0,
-		y: 0,
-		id: makeid(12),
-		name: "Base template image",
-		alt: "Example image",
-		imageStorageRef: "default_template_images/base.jpg",
-		width: 1920,
-		height: 1080,
-		opacity: 0,
-		rotation: 0,
-		isConstant: true,
-	};
+
 	const text: text = {
 		type: "text",
 		name: "Text field",
@@ -46,6 +27,19 @@ export const createTemplate = async (info: any) => {
 		id: "",
 		textAlign: "",
 	};
+	const image: image = {
+		name: "Sample image",
+		id: "sampleimage",
+		type: "image",
+		isConstant: false,
+		imageStorageRef: "default_template_images/base.jpg",
+		height: 1080,
+		width: 1920,
+		x: 0,
+		y: 0,
+		opacity: 100,
+		rotation: 0,
+	};
 	const template: any = {
 		name,
 		description,
@@ -53,9 +47,9 @@ export const createTemplate = async (info: any) => {
 		createdAt: new Date(),
 		numberOfCertificates: 0,
 		canvas: {
-			width: baseImage.width,
-			height: baseImage.height,
-			items: [baseImage, text],
+			width: 1920,
+			height: 1080,
+			items: [image, text],
 			exportCanvasAs: "png",
 		},
 		id: "",

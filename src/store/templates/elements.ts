@@ -1,4 +1,4 @@
-import { baseImage as baseImageType, image, text } from "./types";
+import { image, text } from "./types";
 
 export const getNewText = (): text => {
 	let text: text = {
@@ -40,20 +40,6 @@ export const getNewImage = (): image => {
 		rotation: 0,
 	};
 	return image;
-};
-
-export const baseImage: baseImageType = {
-	id: "baseImage",
-	type: "base-image",
-	name: "Base template image",
-	imageStorageRef: "",
-	height: 0,
-	width: 0,
-	x: 0,
-	y: 0,
-	opacity: 0,
-	rotation: 0,
-	isConstant: true,
 };
 
 const makeid = (length: number) => {

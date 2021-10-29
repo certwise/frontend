@@ -1,4 +1,4 @@
-import { getNewImage, getNewText, baseImage } from "./elements";
+import { getNewImage, getNewText } from "./elements";
 import { templatesState } from "./types";
 const text = getNewText();
 const image: any = getNewImage();
@@ -14,7 +14,7 @@ export const initialState: templatesState = {
 		downloadCurrentTemplate: false,
 		canvas: {
 			activeItem: undefined,
-			items: [text, image, baseImage],
+			items: [text, image],
 			exportCanvasAs: "png",
 			height: 1080,
 			width: 1920,

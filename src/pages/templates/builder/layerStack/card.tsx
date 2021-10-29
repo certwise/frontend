@@ -3,6 +3,8 @@ import { useDrag, useDrop } from "react-dnd";
 import { templateActions } from "../../../../store";
 import Context from "../../../../store/context";
 import { item } from "../../../../store/templates/types";
+import { CgMore } from "react-icons/cg";
+import css from "./card.module.css";
 const ItemTypes = {
 	CARD: "card",
 };
@@ -74,24 +76,26 @@ export const Card = ({ id, index, moveCard, item }: any) => {
 	drag(drop(ref));
 	return (
 		<div
-			className={`flex flex-row btn btn-sm btn-ghost rounded-none my-1 
+			data-handler-id={handlerId}
+			ref={ref}
+			style={{ opacity }}
+			className={`flex flex-row ${
+				css.layerCard
+			} card border bg-white border-gray-300 p-1 rounded-none my-1 
 								${
 									store.templates.currentTemplate.canvas.activeItem?.id ===
 									item.id
-										? "border-secondary font-bold text-secondary-focus "
+										? "border-primary text-primary "
 										: "border-gray-400"
 								}`}
 			onClick={() => setActiveItem(item)}
 		>
-			<div
-				className="	"
-				ref={ref}
-				style={{ opacity }}
-				data-handler-id={handlerId}
-			>
+			<div className="text-left w-11/12  hover:cursor-pointer h-full align-middle pt-1 ">
 				{item.name}
 			</div>
-			<div className="text-right ml-auto text-xl">...</div>
+			<div className={`${css.selector} right-0 pt-1`}>
+				<CgMore />
+			</div>
 		</div>
 	);
 };

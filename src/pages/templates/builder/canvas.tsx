@@ -13,10 +13,8 @@ function Canvas() {
 	const stageRef = useRef<any>(null);
 	const items = store.templates.currentTemplate.canvas.items;
 	const activeItem = store.templates.currentTemplate.canvas.activeItem;
-	const width: number = items.find((item) => item.type === "base-image")
-		?.width as number;
-	const height: number = items.find((item) => item.type === "base-image")
-		?.height as number;
+	const width: number = store.templates.currentTemplate.canvas.width;
+	const height: number = store.templates.currentTemplate.canvas.height;
 	const ratio = width / height;
 	const [dimensions, setDimensions] = useState({
 		height: window.innerHeight,
@@ -97,7 +95,7 @@ function Canvas() {
 
 	return (
 		<div>
-			<div className="">
+			<div className="border border-gray-300 shadow-xl">
 				<Stage
 					ref={stageRef}
 					width={stageWidth}
@@ -108,25 +106,6 @@ function Canvas() {
 					<Layer>
 						{items.map((item, i) => {
 							switch (item.type) {
-								case "base-image":
-									return (
-										<>
-											<Image
-												key={i}
-												image={item.src}
-												onClick={() => setActiveItem(item)}
-												x={0}
-												y={0}
-												width={width}
-												height={height}
-												src={item.src}
-											/>
-											{store.templates.grid.isEnabled && (
-												<Grid key={"dsfiklusdf97"} />
-											)}
-										</>
-									);
-
 								case "image":
 									return (
 										<DynamicImage
@@ -183,6 +162,7 @@ function Canvas() {
 									return null;
 							}
 						})}
+						{store.templates.grid.isEnabled && <Grid />}
 					</Layer>
 				</Stage>
 			</div>

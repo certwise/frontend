@@ -4,6 +4,7 @@ import { templateActions } from "../../../store";
 import * as api from "../../../api/templates";
 import TextProperties from "./textComponent/textProperties";
 import ImageProperties from "./imageComponent/imageProperties";
+import { BsCardImage } from "react-icons/bs";
 
 function CanvasItems() {
 	const { store, dispatch } = useContext(Context);
@@ -51,7 +52,7 @@ function CanvasItems() {
 
 	return (
 		<div
-			className="text-sm"
+			className="text-sm "
 			onKeyDown={(e) => {
 				if (e.key === "Delete") {
 					deleteActiveItem();
@@ -64,67 +65,6 @@ function CanvasItems() {
 			{activeItem?.type === "text" && <TextProperties />}
 			{activeItem?.type === "image" && <ImageProperties />}
 
-			{activeItem?.type === "base-image" ? (
-				<div>
-					<div className="border-b-2 border-gray-300 pb-2" />
-					<div className="mt-2 border-b-2 border-gray-300 pb-2">
-						<div>
-							<span className="font-bold">Width:</span>
-							<span className="font-bold text-primary">
-								{items.find((i) => i.id === activeItem?.id)?.width}
-							</span>
-						</div>
-						<div>
-							<span className="font-bold">Height:</span>
-							<span className="font-bold text-primary">
-								{items.find((i) => i.id === activeItem?.id)?.height}
-							</span>
-						</div>
-					</div>
-					<div className="mb-2 mt-2 font-bold">Change Image</div>
-
-					<div className="rounded w-full border-b-2 border-gray-300 pb-2 ">
-						<label className="btn-sm rounded btn-primary btn-outline">
-							<img
-								src="https://img.icons8.com/material-outlined/24/000000/add-image.png"
-								alt="select"
-							/>
-							<span className="ml-2">Select Image</span>
-							<input
-								className="hidden"
-								type="file"
-								accept="image/*"
-								onChange={(e: any) => onChangeImg(e.target.files[0])}
-							/>
-						</label>
-						{image ? (
-							<div>
-								<img
-									className="border-2 border-secondary mt-2"
-									style={{ height: "100px" }}
-									src={image}
-									alt="set"
-								/>
-								<div>{imageBlob.name}</div>
-								<button
-									className="btn-xs w-1/3 rounded btn-primary mt-2 mb-3"
-									onClick={() => setBaseImage(image)}
-								>
-									Set image
-								</button>
-								<button
-									className="ml-1 btn-xs w-1/3 rounded btn-error mt-2 mb-3"
-									onClick={() => setImageState(null)}
-								>
-									Cancel
-								</button>
-							</div>
-						) : (
-							<span className="font-bold text-md ml-2">No image selected</span>
-						)}
-					</div>
-				</div>
-			) : null}
 			{activeItem?.id !== "none" ? (
 				<button
 					className="btn-sm rounded btn-primary mt-2  w-1/3"
@@ -138,19 +78,34 @@ function CanvasItems() {
 			) : (
 				<div className="text-red-400 font-bold">No layer is selected</div>
 			)}
-			{activeItem?.type !== "base-image" && activeItem?.id !== "none" && (
-				<button
-					className="btn-sm rounded btn-error mt-2 ml-3  w-1/3"
-					onClick={deleteActiveItem}
-				>
-					Delete
-				</button>
-			)}
+
+			<button
+				className="btn-sm rounded btn-primary btn-outline mt-2 ml-3  w-1/3"
+				onClick={deleteActiveItem}
+			>
+				Delete
+			</button>
 		</div>
 	);
 }
 
 export default CanvasItems;
+
+export const ItemProperty = (props: {
+	name: string | any;
+	children: any;
+	cWidth?: string;
+}) => {
+	const { name } = props;
+	return (
+		<div className="text-xs my-3 flex flex-shrink-0  flex-row items-stretch justify-items-stretch border border-gray-200 ">
+			<div className={props.cWidth + " bg-gray-100 border p-0.5 px-3 "}>
+				{name}
+			</div>
+			<div className="flex-grow bg-white pr-2">{props.children}</div>
+		</div>
+	);
+};
 
 const makeid = () => {
 	let length = 12;

@@ -1,0 +1,7 @@
+.addLayer {
+	@apply text-primary;
+}
+.addLayer:hover {
+	@apply text-primary-focus;
+	cursor: pointer;
+}

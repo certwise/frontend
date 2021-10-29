@@ -3,7 +3,9 @@ import { templateActions } from "../../../../store";
 import Context from "../../../../store/context";
 import { text } from "../../../../store/templates/types";
 import FontSelector from "./fontSelector";
-
+import { ImFont } from "react-icons/im";
+import { AiFillCaretDown } from "react-icons/ai";
+import { ItemProperty } from "../canvasItems";
 function TextProperties() {
 	const { store, dispatch } = useContext(Context);
 	const items = store.templates.currentTemplate.canvas.items;
@@ -51,11 +53,13 @@ function TextProperties() {
 				let p = items;
 				p.map((item) => {
 					if (item.id === activeItem?.id) {
-						item["isConstant"] = e.target.checked;
+						item["isConstant"] = e.target.value === "true" ? true : false;
 					}
 					return null;
 				});
 				dispatch(templateActions.editCanvas(p));
+				console.log(e.target.value);
+
 				break;
 			}
 
@@ -66,60 +70,123 @@ function TextProperties() {
 	return (
 		<div>
 			{activeItem?.type === "text" ? (
-				<div style={{ marginTop: "5px" }}>
-					<div className="border-b-2 pb-1 border-gray-100">
+				<div className="mt-3 text-xs">
+					<ItemProperty name="Name">
+						<input
+							type="text"
+							className="pl-1 h-full w-full"
+							value={items.find((item) => item.id === activeItem.id)?.name}
+							onChange={(e) => editActiveItem(e, "name")}
+						/>
+					</ItemProperty>
+
+					<ItemProperty name="Content">
+						<textarea
+							className="pl-2 w-full"
+							value={
+								(items.find((item) => item.id === activeItem.id) as any).text
+							}
+							onChange={(e) => editActiveItem(e, "val")}
+						/>
+					</ItemProperty>
+
+					<ItemProperty name="Variable Field ">
 						{activeItem.id !== "none" && (
-							<label className="cursor-pointer label">
-								<span className="label-text">Is this field constant?</span>
-								<input
-									className="checkbox checkbox-sm checkbox-primary ml-2 mr-auto"
-									type="checkbox"
-									defaultChecked={
-										items.find((i) => i.id === activeItem.id)?.isConstant
-									}
-									onChange={(e) => editActiveItem(e, "check")}
-								/>
-							</label>
+							<select
+								className="w-full h-full"
+								defaultChecked={
+									items.find((i) => i.id === activeItem.id)?.isConstant
+								}
+								onChange={(e) => editActiveItem(e, "check")}
+							>
+								<option value="true">Constant</option>
+								<option value="false">Variable</option>
+							</select>
 						)}
-					</div>
-					<div className=" font-bold mt-1 border-b-2 pb-2 border-gray-100">
-						<label className="mt-1 w-1/6 p-1">x</label>
+					</ItemProperty>
+
+					<ItemProperty name="x">
 						<input
 							type="number"
-							className="mt-1 input-xs w-2/6 input  input-primary"
-							value={items.find((item) => item.id === activeItem.id)?.x}
+							className="w-full h-full align-middle pl-2"
+							value={items
+								.find((item) => item.id === activeItem.id)
+								?.x.toFixed(0)}
 							onChange={(e) => {
 								let p = [...items];
 								p.map((item) => {
 									if (item.id === activeItem.id) {
-										item.x = parseFloat(e.target.value);
+										item.x = parseInt(e.target.value);
 									}
 									return item;
 								});
 								dispatch(templateActions.editCanvas(p));
 							}}
 						/>
-						<label className="mt-1 w-1/6 ml-2 p-1">y</label>
+					</ItemProperty>
+
+					<ItemProperty name="y">
 						<input
 							type="number"
-							className="mt-1 input-xs w-2/6 input  input-primary"
-							value={items.find((item) => item.id === activeItem.id)?.y}
+							className="w-full h-full align-middle pl-2"
+							value={items
+								.find((item) => item.id === activeItem.id)
+								?.y.toFixed(0)}
 							onChange={(e) => {
 								let p = [...items];
 								p.map((item) => {
 									if (item.id === activeItem.id) {
-										item.y = parseFloat(e.target.value);
+										item.y = parseInt(e.target.value);
 									}
 									return item;
 								});
 								dispatch(templateActions.editCanvas(p));
 							}}
 						/>
-					</div>
-					<div className=" font-bold  border-b-2 pb-2 pt-1 border-gray-100">
-						<label className="mt-2 w-2/6 ">Opacity</label>
+					</ItemProperty>
+
+					<ItemProperty name="Width">
 						<input
-							style={{ height: "80" }}
+							type="number"
+							className="w-full h-full align-middle pl-2"
+							value={items
+								.find((item) => item.id === activeItem.id)
+								?.width.toFixed(0)}
+							onChange={(e) => {
+								let p = [...items];
+								p.map((item) => {
+									if (item.id === activeItem.id) {
+										item.width = parseInt(e.target.value);
+									}
+									return item;
+								});
+								dispatch(templateActions.editCanvas(p));
+							}}
+						/>
+					</ItemProperty>
+
+					<ItemProperty name="Height">
+						<input
+							type="number"
+							className="w-full h-full align-middle pl-2"
+							value={items
+								.find((item) => item.id === activeItem.id)
+								?.height.toFixed(0)}
+							onChange={(e) => {
+								let p = [...items];
+								p.map((item) => {
+									if (item.id === activeItem.id) {
+										item.height = parseInt(e.target.value);
+									}
+									return item;
+								});
+								dispatch(templateActions.editCanvas(p));
+							}}
+						/>
+					</ItemProperty>
+
+					<ItemProperty name="Opacity">
+						<input
 							defaultValue={
 								(items.find((item) => item.id === activeItem.id)
 									?.opacity as number) * 100 || 100
@@ -127,7 +194,7 @@ function TextProperties() {
 							type="range"
 							min={1}
 							max={100}
-							className="range pt-1 range-xs range-primary ml-2 mt-1 w-2/3"
+							className="range range-xs px-2 align-middle bg-white h-full"
 							onChange={(e) => {
 								let p = [...items];
 								p.map((item) => {
@@ -139,29 +206,11 @@ function TextProperties() {
 								dispatch(templateActions.editCanvas(p));
 							}}
 						/>
-					</div>
-					<div className=" font-bold  border-b-2 pb-2 pt-1 border-gray-100">
-						<label className="mt-1 w-2/6 ">Name</label>
+					</ItemProperty>
+
+					<ItemProperty name="Font Color">
 						<input
-							className="mt-1 input-xs w-4/6 input ml-2 input-primary"
-							value={items.find((item) => item.id === activeItem.id)?.name}
-							onChange={(e) => editActiveItem(e, "name")}
-						/>
-					</div>
-					<div className="mt-2 font-bold border-b-2 pb-1 border-gray-100">
-						<label className="align-top w-2/6">Content</label>
-						<textarea
-							className="input-xs input w-4/6 ml-2 input-primary"
-							value={
-								(items.find((item) => item.id === activeItem.id) as any).text
-							}
-							onChange={(e) => editActiveItem(e, "val")}
-						/>
-					</div>
-					<div className="mt-1 font-bold border-b-2 pb-1 border-gray-100 ">
-						<label className=" align-middle">Font Color</label>
-						<input
-							className="align-middle ml-2 mb-1"
+							className="align-middle h-full p-1 pl-1 w-24"
 							type="color"
 							defaultValue={activeItem.fill}
 							onChange={(e) => {
@@ -175,11 +224,11 @@ function TextProperties() {
 								dispatch(templateActions.editCanvas(p));
 							}}
 						/>
-					</div>
-					<div className="font-bold  border-b-2 pb-2 border-gray-100">
-						Max Font Size
+					</ItemProperty>
+
+					<ItemProperty cWidth="w-36" name="Max Font Size">
 						<input
-							className="w-1/3 input-xs input ml-2 mt-2  input-primary"
+							className="pl-2 w-full h-full"
 							type="number"
 							min="6"
 							max="400"
@@ -198,26 +247,20 @@ function TextProperties() {
 								dispatch(templateActions.editCanvas(p));
 							}}
 						/>
-					</div>
-					<div
-						className=" mt-2 mb-2 border-b-2 pb-2 border-gray-100  bg-transparent "
-						style={{ overflow: "hidden" }}
-					>
-						<label className="font-bold mr-2 w-2/6">
-							Font Family:
-							<span className="text-primary">
-								{(items.find((i) => i.id === activeItem.id) as text)
-									.fontFamily || "Default"}
-							</span>
-						</label>
+					</ItemProperty>
+
+					<ItemProperty name={<ImFont size={16} />}>
 						<button
-							className="btn-xs btn-primary rounded-md"
 							onClick={() => {
 								setIsFontsOpen((i) => !i);
 							}}
+							className="focus:border-primary border border-none font-bold w-full px-2 pt-1 flex flex-row align-middle p-0.5 hover:text-indigo-500"
 						>
-							Change
+							{(items.find((i) => i.id === activeItem.id) as text).fontFamily ||
+								"Default"}
+							<AiFillCaretDown className="pt-1 text-right" size={16} />
 						</button>
+
 						<FontSelector
 							isOpen={isFontsOpen}
 							close={() => {
@@ -234,84 +277,49 @@ function TextProperties() {
 								console.log(store.templates.numberOfFonts);
 							}}
 						/>
-					</div>
+					</ItemProperty>
 
-					<div className="font-bold  border-b-2 pb-2 border-gray-100">
-						<label className="pb-2 mr-2 align-middle">Align</label>
-						<button
-							className={`btn-ghost rounded p-1 bg-gray-200 ${
-								(items.find((i) => i.id === activeItem.id) as text)
-									.textAlign === "left"
-									? "border-b-2"
-									: ""
-							}`}
-							onClick={() => {
+					<ItemProperty name="Horizontal Align">
+						<select
+							className="w-full h-full align-middle"
+							value={
+								(
+									store.templates.currentTemplate.canvas.items.find(
+										(i) => i.id === activeItem.id
+									) as text
+								)?.textAlign
+							}
+							onChange={(e) => {
 								let p = [...items];
 								p.map((item) => {
 									if (item.id === activeItem.id && item.type === "text") {
-										item.textAlign = "left";
+										item.textAlign = e.target.value;
 									}
 									return item;
 								});
 								dispatch(templateActions.editCanvas(p));
 							}}
 						>
-							<img
-								style={{ height: "20px" }}
-								src="https://img.icons8.com/material/48/000000/align-left--v2.png"
-								alt="left"
-							/>
-						</button>
-						<button
-							className={`btn-ghost rounded p-1 bg-gray-200 ml-2 ${
-								(items.find((i) => i.id === activeItem.id) as text)
-									.textAlign === "center"
-									? "border-b-2"
-									: ""
-							}`}
-							onClick={() => {
-								let p = [...items];
-								p.map((item) => {
-									if (item.id === activeItem.id && item.type === "text") {
-										item.textAlign = "center";
-									}
-									return item;
-								});
-
-								dispatch(templateActions.editCanvas(p));
-							}}
-						>
-							<img
-								style={{ height: "20px" }}
-								src="https://img.icons8.com/material/48/000000/align-center--v1.png"
-								alt="center"
-							/>
-						</button>
-						<button
-							className={`btn-ghost rounded p-1 bg-gray-200 ml-2 ${
-								(items.find((i) => i.id === activeItem.id) as text)
-									.textAlign === "right"
-									? "border-b-2"
-									: ""
-							}`}
-							onClick={() => {
-								let p = [...items];
-								p.map((item) => {
-									if (item.id === activeItem.id && item.type === "text") {
-										item.textAlign = "right";
-									}
-									return item;
-								});
-								dispatch(templateActions.editCanvas(p));
-							}}
-						>
-							<img
-								style={{ height: "20px" }}
-								src="https://img.icons8.com/material/48/000000/align-right--v1.png"
-								alt="right"
-							/>
-						</button>
-					</div>
+							<option
+								className="text-gray-800 bg-transparent hover:bg-gray-300"
+								value="left"
+							>
+								Left
+							</option>
+							<option
+								className="text-gray-800 bg-transparent hover:bg-gray-300"
+								value="center"
+							>
+								Center
+							</option>
+							<option
+								className="text-gray-800 bg-transparent hover:bg-gray-300"
+								value="right"
+							>
+								Right
+							</option>
+						</select>
+					</ItemProperty>
 				</div>
 			) : null}
 		</div>

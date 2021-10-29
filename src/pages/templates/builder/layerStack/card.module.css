@@ -1,0 +1,14 @@
+.layerCard {
+	background: white;
+}
+.layerCard:hover {
+	cursor: move;
+	font-weight: bold;
+}
+.selector {
+	font-size: 20px;
+}
+.selector:hover {
+	cursor: pointer;
+	@apply text-secondary;
+}

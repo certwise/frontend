@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { templateActions } from "../../../../store";
 import Context from "../../../../store/context";
 import * as api from "../../../../api/templates";
+import { ItemProperty } from "../canvasItems";
+import { BsCardImage } from "react-icons/bs";
 function ImageProperties() {
 	const { store, dispatch } = useContext(Context);
 	const items = store.templates.currentTemplate.canvas.items;
@@ -74,67 +76,105 @@ function ImageProperties() {
 	};
 	return (
 		<div>
-			<div className="border-b-2 pb-1 border-gray-300">
-				{activeItem?.type !== "base-image" && activeItem?.id !== "none" && (
-					<label className="cursor-pointer label">
-						<span className="label-text">Is this field constant?</span>
-						<input
-							className="checkbox checkbox-sm checkbox-primary ml-2 mr-auto"
-							type="checkbox"
-							defaultChecked={
-								items.find((i) => i.id === activeItem?.id)?.isConstant
-							}
-							onChange={(e) => editActiveItem(e, "check")}
-						/>
-					</label>
-				)}
-			</div>
-			<div className=" font-bold mt-1 border-b-2 pb-2 border-gray-300">
-				<label className="mt-2 w-1/6 p-1">x</label>
+			<ItemProperty name="Name">
 				<input
-					type="number"
-					className="mt-1 input-xs w-2/6 input  input-primary"
-					value={items.find((item) => item.id === activeItem?.id)?.x}
-					onChange={(e) => {
-						let p = [...items];
-						p.map((item) => {
-							if (item.id === activeItem?.id) {
-								item.x = parseFloat(e.target.value);
-							}
-							return item;
-						});
-						dispatch(templateActions.editCanvas(p));
-					}}
-				/>
-				<label className="mt-1 w-1/6 ml-2 p-1">y</label>
-				<input
-					type="number"
-					className="mt-1 input-xs w-2/6 input  input-primary"
-					value={items.find((item) => item.id === activeItem?.id)?.y}
-					onChange={(e) => {
-						let p = [...items];
-						p.map((item) => {
-							if (item.id === activeItem?.id) {
-								item.y = parseFloat(e.target.value);
-							}
-							return item;
-						});
-						dispatch(templateActions.editCanvas(p));
-					}}
-				/>
-			</div>
-			<div className=" font-bold  border-b-2 pb-2 pt-1 border-gray-300">
-				<label className="mt-1 w-2/6 ">Name</label>
-				<input
-					className="mt-1 input-xs w-4/6 input ml-2 input-primary"
+					type="text"
+					className="pl-1 h-full w-full"
 					value={items.find((item) => item.id === activeItem?.id)?.name}
 					onChange={(e) => editActiveItem(e, "img")}
 				/>
-			</div>
-			<div className=" font-bold  border-b-2 pb-2 pt-1 border-gray-300">
-				<label className="mt-2 w-2/6 ">Opacity</label>
+			</ItemProperty>
+			<ItemProperty name="Variable Field ">
+				{activeItem?.id !== "none" && (
+					<select
+						className="w-full h-full"
+						defaultChecked={
+							items.find((i) => i.id === activeItem?.id)?.isConstant
+						}
+						onChange={(e) => editActiveItem(e, "check")}
+					>
+						<option value="true">Constant</option>
+						<option value="false">Variable</option>
+					</select>
+				)}
+			</ItemProperty>
+			<ItemProperty name="x">
 				<input
-					style={{ height: "80" }}
+					type="number"
+					className="w-full h-full align-middle pl-2"
+					value={items.find((item) => item.id === activeItem?.id)?.x.toFixed(0)}
+					onChange={(e) => {
+						let p = [...items];
+						p.map((item) => {
+							if (item.id === activeItem?.id) {
+								item.x = parseInt(e.target.value);
+							}
+							return item;
+						});
+						dispatch(templateActions.editCanvas(p));
+					}}
+				/>
+			</ItemProperty>
+
+			<ItemProperty name="y">
+				<input
+					type="number"
+					className="w-full h-full align-middle pl-2"
+					value={items.find((item) => item.id === activeItem?.id)?.y.toFixed(0)}
+					onChange={(e) => {
+						let p = [...items];
+						p.map((item) => {
+							if (item.id === activeItem?.id) {
+								item.y = parseInt(e.target.value);
+							}
+							return item;
+						});
+						dispatch(templateActions.editCanvas(p));
+					}}
+				/>
+			</ItemProperty>
+
+			<ItemProperty name="Width">
+				<input
+					type="number"
+					className="w-full h-full align-middle pl-2"
+					value={items
+						.find((item) => item.id === activeItem?.id)
+						?.width.toFixed(0)}
+					onChange={(e) => {
+						let p = [...items];
+						p.map((item) => {
+							if (item.id === activeItem?.id) {
+								item.width = parseInt(e.target.value);
+							}
+							return item;
+						});
+						dispatch(templateActions.editCanvas(p));
+					}}
+				/>
+			</ItemProperty>
+
+			<ItemProperty name="Height">
+				<input
+					type="number"
+					className="w-full h-full align-middle pl-2"
+					value={items
+						.find((item) => item.id === activeItem?.id)
+						?.height.toFixed(0)}
+					onChange={(e) => {
+						let p = [...items];
+						p.map((item) => {
+							if (item.id === activeItem?.id) {
+								item.height = parseInt(e.target.value);
+							}
+							return item;
+						});
+						dispatch(templateActions.editCanvas(p));
+					}}
+				/>
+			</ItemProperty>
+			<ItemProperty name="Opacity">
+				<input
 					defaultValue={
 						(items.find((item) => item.id === activeItem?.id)
 							?.opacity as number) * 100 || 100
@@ -142,7 +182,7 @@ function ImageProperties() {
 					type="range"
 					min={1}
 					max={100}
-					className="range pt-1 range-xs range-primary ml-2 mt-1 w-2/3"
+					className="range range-xs px-2 align-middle bg-white h-full"
 					onChange={(e) => {
 						let p = [...items];
 						p.map((item) => {
@@ -154,35 +194,12 @@ function ImageProperties() {
 						dispatch(templateActions.editCanvas(p));
 					}}
 				/>
-			</div>
-			{/* <div className=' font-bold  border-b-2 pb-2 pt-1 border-gray-300'>
-                <label className='mt-2 w-2/6 '>Rotation</label>
-                <input
-                    style={{ height: '80' }}
-                    defaultValue={items.find(item => item.id === activeItem.id).rotation * 100 || 100}
-                    type="range"
-                    min={0}
-                    max={360}
-                    className="range pt-1 range-xs range-primary ml-2 mt-1 w-2/3"
-                    onChange={(e) => {
-                        let p = [...items]
-                        p.map(item => {
-                            if (item.id === activeItem.id) {
-                                item['rotation'] = parseInt(e.target.value)
-                            }
-                            return item
-                        })
-                        dispatch(templateActions.editCanvas(p))
-                    }} />
-            </div> */}
-			<div className="my-2 font-bold ">Change Image</div>
+			</ItemProperty>
 
-			<div className="rounded w-full border-b-2 border-gray-300 pb-2 ">
+			<div className="rounded w-full border-b-2 border-t-2  border-gray-300 py-2 ">
+				<div className="mb-1  font-bold ">Change Image</div>
 				<label className="btn-sm rounded btn-primary btn-outline hover:cursor-pointer">
-					<img
-						src="https://img.icons8.com/material-outlined/24/000000/add-image.png"
-						alt="add-img"
-					/>
+					<BsCardImage size={20} />
 					<span className="ml-2  hover:cursor-pointer">Select Image</span>
 					<input
 						className="hidden  hover:cursor-pointer"

@@ -58,6 +58,12 @@ function TemplateCanvas() {
 			dispatch(templateActions.isEditingTemplate(false));
 		};
 	}, [store.templates.doneSaving]);
+	useEffect(() => {
+		dispatch(templateActions.isEditingTemplate(true));
+		return () => {
+			dispatch(templateActions.isEditingTemplate(false));
+		};
+	}, []);
 
 	const setCurrentTemplate = (srcTemplate: template) => {
 		console.log("setting current template");

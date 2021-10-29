@@ -29,7 +29,7 @@ export const setStageRef = (stage: any) => {
 		info: "description",
 	};
 };
-export const editWholeCanvas = (items: types.items) => {
+export const editWholeCanvas = (items: types.canvas) => {
 	return {
 		type: types.EDIT_WHOLE_CANVAS,
 		payload: items,
