@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import "./App.css";
 import Template from "./pages/templates/template";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import Certificate from "./pages/certificates/certificate";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import Context from "./store/context";
@@ -19,12 +19,13 @@ import Auth from "./pages/user/auth";
 import Dashboard from "./pages/admin/Dashboard";
 import Header from "./partials/admin/Header";
 import Sidebar from "./partials/admin/Sidebar";
+import { getUser, updateUser } from "./api/user";
 //import E404 from "./components/404";
 function App() {
 	const location = useLocation();
 	const { store, dispatch }: any = useContext(Context);
 	const auth = getAuth();
-	const [user, setUser] = useState(store.user || null);
+	const [user, setUser] = useState<User>(store.user || null);
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	let icon = document.createElement("link");
 	icon.rel = "icon";
@@ -46,25 +47,31 @@ function App() {
 			easing: "ease-out-cubic",
 		});
 	});
+
 	useEffect(() => {
-		dispatch(signIn(user));
-		console.log("UserId from App.js", user.uid);
+		if (user.uid !== "") {
+			getUser(user.uid).then((res) => {
+				console.log("User:", res);
+				if (res) {
+					if (res.email) dispatch(signIn({ ...res, uid: user.uid }));
+					else {
+						updateUser({ ...res, email: user.email as string }).then(() => {
+							dispatch(
+								signIn({ ...res, uid: user.uid, email: user.email as string })
+							);
+						});
+					}
+				}
+			});
+		}
 	}, [user]);
+
 	useEffect(() => {
 		(document.querySelector("html") as any).style.scrollBehavior = "auto";
 		window.scroll({ top: 0 });
 		(document.querySelector("html") as any).style.scrollBehavior = "";
 		focusHandling();
 	}, [location.pathname]); // triggered on route change
-
-	useEffect(() => {
-		AOS.init({
-			once: true,
-			disable: "phone",
-			duration: 700,
-			easing: "ease-out-cubic",
-		});
-	});
 
 	return (
 		<>

@@ -1,38 +1,25 @@
 import { action } from "..";
-import { authState, SIGN_IN, SIGN_OUT } from "./types";
+import { user, SIGN_IN, SIGN_OUT } from "./types";
 
-export const initialState: authState = {
+export const initialState: user = {
 	uid: "",
-	isSignedIn: false,
-	emailVerified: false,
-	isAnonymous: false,
-	metadata: undefined as any,
-	providerData: [],
-	refreshToken: "",
-	tenantId: null,
-	delete: function (): Promise<void> {
-		throw new Error("Function not implemented.");
-	},
-	getIdToken: function (forceRefresh?: boolean): Promise<string> {
-		throw new Error("Function not implemented.");
-	},
-	getIdTokenResult: function (forceRefresh?: boolean): any {
-		throw new Error("Function not implemented.");
-	},
-	reload: function (): Promise<void> {
-		throw new Error("Function not implemented.");
-	},
-	toJSON: function (): object {
-		throw new Error("Function not implemented.");
-	},
-	displayName: null,
-	email: null,
-	phoneNumber: null,
-	photoURL: null,
-	providerId: "",
+	name: "",
+	isVerified: false,
+	createdAt: new Date(),
+	numberOfCerificatesRemaining: 0,
+	numberOfCerificatesCreated: 0,
+	numberOfTemplatesRemaining: 0,
+	numberOfTemplatesCreated: 0,
+	templates: [],
+	currentPlan: "",
+	previousSubscriptions: [],
+	topUps: [],
+	email: "",
+	institution: "",
+	stripeCustomerId: "",
 };
 
-const reducer = (state: authState, action: action) => {
+const reducer = (state: user, action: action) => {
 	switch (action.type) {
 		case SIGN_IN:
 			return {

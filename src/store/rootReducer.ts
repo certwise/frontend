@@ -1,7 +1,6 @@
-import { stat } from "fs";
 import { action } from ".";
 import user from "./auth/reducer";
-import { authState } from "./auth/types";
+import { user as authState } from "./auth/types";
 import { certificatesState } from "./certificates/initialState";
 import templates from "./templates/reducer";
 import { templatesState } from "./templates/types";
@@ -20,7 +19,7 @@ const initialAppState: appState = {
 	isInHomePage: true,
 	pageTitle: "",
 };
-const app = (state = initialAppState, action: any): appState => {
+const app = (state = initialAppState, action: action): appState => {
 	switch (action.type) {
 		case "SET_LOADING_STATE":
 			return {

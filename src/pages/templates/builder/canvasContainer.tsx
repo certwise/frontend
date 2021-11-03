@@ -14,7 +14,7 @@ function BuilderContainer() {
 				}}
 			>
 				<div
-					className="w-1/6  scrollbar-hide border-r bg-gray-50 border-gray-300"
+					className="w-1/6  scrollbar-hide border-r bg-trueGray-50 border-gray-300"
 					style={{ height: window.innerHeight, overflowY: "scroll" }}
 				>
 					<CanvasLayers />
@@ -31,7 +31,7 @@ function BuilderContainer() {
 					<Canvas />
 				</div>
 				<div
-					className="w-1/5 h-full bg-gray-50 scrollbar-hide p-2 pt-3 rounded border-l border-gray-300"
+					className="w-1/5 h-full bg-trueGray-50 scrollbar-hide p-2 pt-3 rounded border-l border-gray-300"
 					style={{
 						overflowY: "scroll",
 						overflowX: "hidden",

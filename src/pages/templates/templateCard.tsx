@@ -190,7 +190,6 @@ function TemplateCard({ template, uid, id, type }: Props) {
 									? "/template/" +
 									  template.name.toLowerCase().replace(/\s/g, "")
 									: "/certificate/create/" +
-									  "/template/" +
 									  template.name.toLowerCase().replace(/\s/g, "")
 							}
 							data-tip="Edit"

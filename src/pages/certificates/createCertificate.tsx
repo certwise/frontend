@@ -50,7 +50,7 @@ function CreateCertificate() {
 			};
 			console.log(req);
 			let urls = `${env.url}/certificate/one/`;
-			console.log("create certificate:", urls, req);
+			console.log("create certificate:", req);
 			axios
 				.post(urls, req)
 				.then((res) => {
@@ -119,10 +119,19 @@ function CreateCertificate() {
 										type="text"
 										placeholder={field}
 										onChange={(e) => {
-											setfields([
-												...fields,
-												{ name: field, value: e.target.value },
-											]);
+											let f = fields;
+											let x = f.find((i) => i.name === field);
+											if (x !== undefined) {
+												x.value = e.target.value;
+												f.map((i) => {
+													if (i.name === x?.name) {
+														return x;
+													} else return i;
+												});
+											} else {
+												f.push({ name: field, value: e.target.value });
+											}
+											setfields(f);
 										}}
 									/>
 								</div>

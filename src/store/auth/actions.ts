@@ -1,7 +1,7 @@
 import { action } from "..";
-import { SIGN_IN, SIGN_OUT } from "./types";
+import { SIGN_IN, SIGN_OUT, user } from "./types";
 
-export const signIn = (user: any): action => {
+export const signIn = (user: user): action => {
 	return {
 		type: SIGN_IN,
 		payload: user,

@@ -1,17 +1,33 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Redirect } from "react-router-dom";
+import { createStripeCustomer } from "../../api/user";
 import { env } from "../../config";
+import Context from "../../store/context";
 
 function Pricing() {
+	const { store, dispatch } = useContext(Context);
 	const [redirect, setredirect] = useState(false);
 	const checkOut = async (plan: string) => {
 		if (plan !== "custom") {
-			const res = await axios.post(
-				env.url + "/payments/create-checkout-session",
-				{ plan: plan }
-			);
-			window.location.replace(res.data.url);
+			if (store.user.stripeCustomerId !== "") {
+				const res = await axios.post(
+					env.url + "/payments/create-checkout-session",
+					{
+						plan: plan,
+						customerId: store.user.stripeCustomerId,
+						email: store.user.email,
+					}
+				);
+				window.location.replace(res.data.url);
+			} else {
+				const customerId = await createStripeCustomer(store.user);
+				const res = await axios.post(
+					env.url + "/payments/create-checkout-session",
+					{ plan: plan, customerId: customerId, email: store.user.email }
+				);
+				window.location.replace(res.data.url);
+			}
 		} else {
 			setredirect(true);
 			window.location.href = "/payments/custom";

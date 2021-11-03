@@ -4,6 +4,9 @@ import { useContext, useState } from "react";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Context from "../store/context";
 import { signIn as signIntoStore } from "../store";
+import { user } from "../store/auth/types";
+import axios from "axios";
+import { env } from "../config";
 
 const SignIn = () => {
 	const auth = getAuth();
@@ -16,8 +19,28 @@ const SignIn = () => {
 		signInWithPopup(auth, provider)
 			.then((result) => {
 				const user = result.user;
-				dispatch(signIntoStore(user));
-				console.log(user);
+				let x: user = {
+					uid: user.uid,
+					name: user.displayName || "CertwiseDefaultUser",
+					isVerified: false,
+					createdAt: new Date(),
+					numberOfCerificatesRemaining: 0,
+					numberOfCerificatesCreated: 0,
+					numberOfTemplatesRemaining: 0,
+					numberOfTemplatesCreated: 0,
+					templates: [],
+					currentPlan: "",
+					previousSubscriptions: [],
+					topUps: [],
+					email: user.email || "",
+					institution: "Default",
+					stripeCustomerId: "",
+				};
+				return axios.post(env.url + "/user", x);
+			})
+			.then((res) => {
+				dispatch(signIntoStore(res.data));
+				console.log("created user", res.data);
 				window.location.href = "/admin";
 			})
 			.catch((error) => {
