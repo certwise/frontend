@@ -35,6 +35,7 @@ const SignIn = () => {
 					email: user.email || "",
 					institution: "Default",
 					stripeCustomerId: "",
+					subscriptionId: "",
 				};
 				return axios.post(env.url + "/user", x);
 			})

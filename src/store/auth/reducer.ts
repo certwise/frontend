@@ -17,6 +17,7 @@ export const initialState: user = {
 	email: "",
 	institution: "",
 	stripeCustomerId: "",
+	subscriptionId: "",
 };
 
 const reducer = (state: user, action: action) => {

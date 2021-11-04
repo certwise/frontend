@@ -27,4 +27,6 @@ export type user = {
 	topUps: string[];
 
 	stripeCustomerId: string;
+
+	subscriptionId: string;
 };
