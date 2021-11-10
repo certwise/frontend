@@ -13,20 +13,4 @@ export type user = {
 	createdAt: Date;
 	photoURL?: string;
 	updatedAt?: Date;
-
-	numberOfCerificatesRemaining: number;
-	numberOfCerificatesCreated: number;
-	certificates?: string[];
-
-	numberOfTemplatesRemaining: number;
-	numberOfTemplatesCreated: number;
-	templates: string[];
-
-	currentPlan: string;
-	previousSubscriptions: string[];
-	topUps: string[];
-
-	stripeCustomerId: string;
-
-	subscriptionId: string;
 };

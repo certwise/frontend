@@ -6,18 +6,9 @@ export const initialState: user = {
 	name: "",
 	isVerified: false,
 	createdAt: new Date(),
-	numberOfCerificatesRemaining: 0,
-	numberOfCerificatesCreated: 0,
-	numberOfTemplatesRemaining: 0,
-	numberOfTemplatesCreated: 0,
-	templates: [],
-	currentPlan: "",
-	previousSubscriptions: [],
-	topUps: [],
+
 	email: "",
 	institution: "",
-	stripeCustomerId: "",
-	subscriptionId: "",
 };
 
 const reducer = (state: user, action: action) => {

@@ -48,12 +48,7 @@ Chart.register({
 			ctx.save();
 			ctx.fillStyle = chart.config.options.chartArea.backgroundColor;
 			// eslint-disable-next-line max-len
-			ctx.fillRect(
-				chartArea.left,
-				chartArea.top,
-				chartArea.right - chartArea.left,
-				chartArea.bottom - chartArea.top
-			);
+
 			ctx.restore();
 		}
 	},

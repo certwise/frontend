@@ -24,7 +24,7 @@ function Routes({ user }: { user: user }) {
 	else
 		return (
 			<>
-				{true && (
+				{user.institution === "" && (
 					<Switch>
 						<Route path="/onboard-organization">
 							<Onboarding1 />
@@ -32,13 +32,13 @@ function Routes({ user }: { user: user }) {
 						<Route path="/onboard-organization-details">
 							<Onboarding2 />
 						</Route>
-						<Route path="/onboard">
-							<Onboarding3 />
-						</Route>
 					</Switch>
 				)}
 				{user.institution !== "" && (
 					<Switch>
+						<Route path="/onboard">
+							<Onboarding3 />
+						</Route>
 						<Route exact path="/certificate">
 							<Certificate />
 						</Route>

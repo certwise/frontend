@@ -1,9 +1,46 @@
 import { Link } from "react-router-dom";
-
+import Context from "../../store/context";
 import OnboardingImage from "../../images/onboarding-image.jpg";
 import OnboardingDecoration from "../../images/auth-decoration.png";
+import { useState } from "react";
+import axios from "axios";
+import { env } from "../../config";
+import { useContext } from "react";
+import { signIn, templateActions } from "../../store";
+import { user } from "../../store/auth/types";
+type institution = {
+	name: string;
+	createdBy: string;
+	createdAt: Date;
+	recipients: Array<string>;
+	subscriptions: Array<string>;
+	activeSubscription: string;
+	templates: Array<string>;
+	certificates: Array<string>;
+	admins: Array<string>;
+};
 
 function Onboarding2() {
+	const { store, dispatch } = useContext(Context);
+	const [form, setform] = useState("");
+	const createInstitution = async (e: any) => {
+		e.preventDefault();
+		const x: institution = {
+			name: form,
+			createdBy: store.user.uid,
+			createdAt: new Date(),
+			activeSubscription: "",
+			recipients: [],
+			subscriptions: [],
+			templates: [],
+			certificates: [],
+			admins: [],
+		};
+		const institutionId = await axios.post(env.url + "/institution", x);
+		const y: user = { ...store.user, institution: institutionId.data };
+		await axios.put(env.url + "/user", y);
+		dispatch(signIn(y));
+	};
 	return (
 		<main className="bg-white">
 			<div className="relative flex">
@@ -116,6 +153,9 @@ function Onboarding2() {
 												id="company-name"
 												className="form-input w-full"
 												type="text"
+												onChange={(e) => {
+													setform(e.target.value);
+												}}
 											/>
 										</div>
 										{/* City and Postal Code */}
@@ -184,12 +224,13 @@ function Onboarding2() {
 										>
 											&lt;- Back
 										</Link>
-										<Link
+										<button
 											className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-auto"
-											to="/onboard"
+											//to="/onboard"
+											onClick={(e) => createInstitution(e)}
 										>
 											Next Step -&gt;
-										</Link>
+										</button>
 									</div>
 								</form>
 							</div>

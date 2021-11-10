@@ -1,40 +1,34 @@
 import { Link } from "react-router-dom";
-import {
-	getAuth,
-	GoogleAuthProvider,
-	signInWithPopup,
-	deleteUser,
-} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { user } from "../store/auth/types";
 import axios from "axios";
-import { env } from "../../config";
-import AuthImage from "../../images/auth-image.jpg";
-import AuthDecoration from "../../images/auth-decoration.png";
-import Context from "../../store/context";
-import { useContext } from "react";
-import { signIn as storeSignIn } from "../../store";
-import { user } from "../../store/auth/types";
+import { env } from "../config";
+import AuthImage from "../images/auth-image.jpg";
+import AuthDecoration from "../images/auth-decoration.png";
+
 function Signin() {
-	const { dispatch } = useContext(Context);
 	const auth = getAuth();
-	const signIn = async (e: any) => {
-		try {
-			e.preventDefault();
-			const provider = new GoogleAuthProvider();
-			const result = await signInWithPopup(auth, provider);
-			const userCheck = await axios.get(env.url + "/user/" + result.user.uid);
-			console.log("userCheck:", userCheck, result.user.uid);
-			if (userCheck.data) {
-				dispatch(storeSignIn(userCheck as unknown as user));
-			} else {
-				await deleteUser(result.user);
-				console.log("Deleted user");
-				alert(
-					"No accounts found for the account please signup for a new account"
-				);
-			}
-		} catch (e) {
-			console.log(e);
-		}
+	const signIn = (e: any) => {
+		e.preventDefault();
+		const provider = new GoogleAuthProvider();
+		signInWithPopup(auth, provider)
+			.then((result) => {
+				const user = result.user;
+				let x: user = {
+					uid: user.uid,
+					name: user.displayName || "CertwiseDefaultUser",
+					isVerified: false,
+					createdAt: new Date(),
+
+					email: user.email || "",
+					institution: "Default",
+				};
+				return axios.post(env.url + "/user", x);
+			})
+			.then((res) => {})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 	return (
 		<main className="bg-white">

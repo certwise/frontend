@@ -47,18 +47,9 @@ function Signup() {
 				name: user.displayName || "CertwiseDefaultUser",
 				isVerified: false,
 				createdAt: new Date(),
-				numberOfCerificatesRemaining: 0,
-				numberOfCerificatesCreated: 0,
-				numberOfTemplatesRemaining: 0,
-				numberOfTemplatesCreated: 0,
-				templates: [],
-				currentPlan: "",
-				previousSubscriptions: [],
-				topUps: [],
+
 				email: user.email || "",
 				institution: "",
-				stripeCustomerId: "",
-				subscriptionId: "",
 			};
 			await axios.post(env.url + "/user", x);
 			setredirect(true);
