@@ -1,192 +1,78 @@
 const colors = require('tailwindcss/colors');
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
-  purge: {
-    content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-    options: {
-      safelist: [
-        /data-theme$/,
-      ]
-    },
-  },
-  darkMode: false, // or 'media' or 'class'
+  mode: 'jit',
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
+    screens: {
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1281px',
+      '2xl': '1536px',
+    },
     extend: {
+      boxShadow: {
+        DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.02)',
+        md: '0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
+        lg: '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.01)',
+        xl: '0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.01)',
+      },
       colors: {
-        gray: {
-          100: '#FBFBFB',
-          200: '#EAEAEA',
-          300: '#DFDFDF',
-          400: '#999999',
-          500: '#7F7F7F',
-          600: '#666666',
-          700: '#4C4C4C',
-          800: '#333333',
-          900: '#191919',
-        },
-        blue: {
-          100: '#E6F0FD',
-          200: '#CCE2FC',
-          300: '#99C5FA',
-          400: '#66A9F7',
-          500: '#338CF5',
-          600: '#0070F4',
-          700: '#0064DA',
-          800: '#0059C2',
-          900: '#004391',
-        },
-        teal: {
-          100: '#E6FFFA',
-          200: '#B2F5EA',
-          300: '#81E6D9',
-          400: '#4FD1C5',
-          500: '#3ABAB4',
-          600: '#319795',
-          700: '#2C7A7B',
-          800: '#285E61',
-          900: '#234E52',
-        },
-        cyan: {
-          100: colors.cyan[100],
-          200: colors.cyan[200],
-          300: colors.cyan[300],
-          400: colors.cyan[400],
-          500: colors.cyan[500],
-          600: colors.cyan[600],
-          700: colors.cyan[700],
-          800: colors.cyan[800],
-          900: colors.cyan[900],
-        },
-
         gray: colors.blueGray,
         'light-blue': colors.sky,
         red: colors.rose,
       },
-      boxShadow: {
-        xs: '0 0 0 1px rgba(0, 0, 0, 0.16)',
-        sm: '0 1px 2px 0 rgba(0, 0, 0, 0.16)',
-        default: '0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.03)',
-        md: '0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
-        lg: '0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02)',
-        xl: '0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
-        '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
-        inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.04)',
-        outline: '0 0 0 3px rgba(66, 153, 225, 0.5)',
-        none: 'none',
-      },
-      spacing: {
-        '9/16': '56.25%',
-        '3/4': '75%',
-        '1/1': '100%',
+      outline: {
+        blue: '2px solid rgba(0, 112, 244, 0.5)',
       },
       fontFamily: {
-        inter: ['Inter', 'sans-serif']
+        inter: ['Inter', 'sans-serif'],
       },
       fontSize: {
-        xs: '0.75rem',
-        sm: '0.875rem',
-        base: '1rem',
-        lg: '1.125rem',
-        xl: '1.25rem',
-        '2xl': '1.5rem',
-        '3xl': '2rem',
-        '4xl': '2.625rem',
-        '5xl': '3.25rem',
-        '6xl': '5.5rem',
+        xs: ['0.75rem', { lineHeight: '1.5' }],
+        sm: ['0.875rem', { lineHeight: '1.5715' }],
+        base: ['1rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
+        lg: ['1.125rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
+        xl: ['1.25rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
+        '2xl': ['1.5rem', { lineHeight: '1.33', letterSpacing: '-0.01em' }],
+        '3xl': ['1.88rem', { lineHeight: '1.33', letterSpacing: '-0.01em' }],
+        '4xl': ['2.25rem', { lineHeight: '1.25', letterSpacing: '-0.02em' }],
+        '5xl': ['3rem', { lineHeight: '1.25', letterSpacing: '-0.02em' }],
+        '6xl': ['3.75rem', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
       },
-      inset: {
-        '1/2': '50%',
-        'full': '100%',
+      screens: {
+        xs: '480px',
       },
-      letterSpacing: {
-        tighter: '-0.02em',
-        tight: '-0.01em',
-        normal: '0',
-        wide: '0.01em',
-        wider: '0.02em',
-        widest: '0.4em',
-      },
-      lineHeight: {
-        none: '1',
-        tighter: '1.125',
-        tight: '1.25',
-        snug: '1.375',
-        normal: '1.5',
-        relaxed: '1.625',
-        loose: '2',
-        '3': '.75rem',
-        '4': '1rem',
-        '5': '1.2rem',
-        '6': '1.5rem',
-        '7': '1.75rem',
-        '8': '2rem',
-        '9': '2.25rem',
-        '10': '2.5rem',
+      borderWidth: {
+        3: '3px',
       },
       minWidth: {
-        '10': '2.5rem',
-        '48': '12rem',
+        36: '9rem',
+        44: '11rem',
+        56: '14rem',
+        60: '15rem',
+        72: '18rem',
+        80: '20rem',
       },
-      opacity: {
-        '90': '0.9',
-      },
-      scale: {
-        '98': '.98'
-      },
-      animation: {
-        float: 'float 3s ease-in-out infinite',
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0)', },
-          '50%': { transform: 'translateY(-5%)', },
-        },
+      maxWidth: {
+        '8xl': '88rem',
+        '9xl': '96rem',
       },
       zIndex: {
-        '-1': '-1',
+        60: '60',
       },
     },
   },
-  variants: {
-    extend: {},
-  },
   plugins: [
-    require('daisyui'),
-    require('tailwind-scrollbar-hide')
+    // eslint-disable-next-line global-require
+    //require('@tailwindcss/forms'),
+    // add custom variant for expanding sidebar
+    plugin(({ addVariant, e }) => {
+      addVariant('sidebar-expanded', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => `.sidebar-expanded .${e(`sidebar-expanded${separator}${className}`)}`);
+      });
+    }),
   ],
-  daisyui: {
-    styled: true,
-    themes: false,
-    base: true,
-    utils: true,
-    logs: false,
-    rtl: false,
-    themes: [
-      {
-        mytheme: {
-          'primary': colors.indigo[500],
-          'primary-focus': colors.indigo[700],
-          'primary-content': '#ffffff',
-          'secondary': colors.cyan[400],
-          'secondary-focus': colors.cyan[500],
-          'secondary-content': '#444444',
-          'accent': colors.sky[600],
-          'accent-focus': colors.sky[800],
-          'accent-content': '#343434',
-          'neutral': '#3d4451',
-          'neutral-focus': '#2a2e37',
-          'neutral-content': '#ffffff',
-          'base-100': '#ffffff',
-          'base-200': '#f9fafb',
-          'base-300': '#d1d5db',
-          'base-content': '#1f2937',
-          'info': '#2094f3',
-          'success': '#009485',
-          'warning': '#ff9900',
-          'warning-focus': '#ff8800',
-          'error': '#ff5724',
-        },
-      }
-    ],
-  }
-}
+};

@@ -1,7 +1,13 @@
 import { getStorage, getDownloadURL, uploadBytes, ref } from "firebase/storage";
 import { certificate } from "../store/certificates/types";
 import { getNewImage } from "../store/templates/elements";
-import { image, items, template, text } from "../store/templates/types";
+import {
+	currentTemplate,
+	image,
+	items,
+	template,
+	text,
+} from "../store/templates/types";
 import axios from "axios";
 import { env } from "../config";
 
@@ -56,9 +62,7 @@ export const createTemplate = async (info: any) => {
 		updatedAt: new Date(),
 	};
 	const result = "";
-	await axios.post(env.url + "/template", template).then((res) => {
-		console.log(res);
-	});
+	await axios.post(env.url + "/template", template).then((res) => {});
 	return result;
 };
 
@@ -68,32 +72,35 @@ export const getTemplates = async (uid: any): Promise<Array<template>> => {
 	return templates;
 };
 
-export const editTemplateItems = async (id: any, items: items) => {
-	const doc = await axios.get(env.url + "/template/one/" + id);
+export const editTemplate = async (template_: currentTemplate) => {
+	let template = { ...template_ };
+	const doc = await axios.get(env.url + "/template/one/" + template.id);
 	if (doc.data !== false) {
-		let template = doc.data as template;
+		let templateDoc = doc.data as template;
 		let itemss: items = [];
-		for (let i in items) {
-			itemss.push(items[i]);
+		for (let i in template.canvas.items) {
+			itemss.push(template.canvas.items[i]);
 		}
 		itemss.map((item: any) => {
-			if (item.type === "image" || item.type === "base-image") {
+			if (item.type === "image") {
+				console.log("Setting image to null");
 				item.src = null;
 			}
 			return item;
 		});
-		template = {
-			...template,
+
+		templateDoc = {
+			...templateDoc,
 			canvas: {
-				...template.canvas,
-				items: items,
+				...templateDoc.canvas,
+				items: itemss,
+				width: template.canvas.width,
+				height: template.canvas.height,
 			},
-			id: id,
+			updatedAt: new Date(),
+			id: template.id,
 		};
-		const result = await axios.put(
-			env.url + "/template/update/" + id,
-			template
-		);
+		const result = await axios.put(env.url + "/template/update", templateDoc);
 		return result.data;
 	} else {
 		return Promise.resolve(false);
@@ -130,20 +137,16 @@ export const getTemplateByName = async (
 };
 
 export const renameTemplate = async (id: any, name: any): Promise<boolean> => {
-	console.log(id, name, "Gibberish");
 	try {
 		const data = { id: id, name: name };
 		const res = await axios.put(env.url + "/template/rename", data);
-		console.log("REss", res);
 		return res.data;
 	} catch (e) {
-		console.log(e);
 		return false;
 	}
 };
 
 export const deleteTemplate = async (id: string) => {
-	console.log("id", id);
 	await axios.delete(env.url + "/template/" + id);
 };
 
@@ -163,7 +166,6 @@ export const uploadImage = async (image: any, refs: any) => {
 	const storage = getStorage();
 	const imageRef = ref(storage, refs);
 	const result = await uploadBytes(imageRef, image);
-	console.log("Uploaded");
 	return result;
 };
 

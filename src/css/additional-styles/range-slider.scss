@@ -1,0 +1,58 @@
+// Range slider
+$range-thumb-size: 15px;
+
+input[type="range"] {
+	appearance: none;
+	background: #ccc;
+	width: 95%;
+	border-radius: 1px;
+	height: 4px;
+	margin-top: 5px;
+	margin-bottom: auto;
+	margin-left: 10px;
+	--thumb-size: #{$range-thumb-size};
+	&:focus {
+		outline: none;
+	}
+	&::-webkit-slider-thumb {
+		z-index: 2;
+		appearance: none;
+		-webkit-appearance: none;
+		background-color: #000;
+		background-position: center;
+		background-repeat: no-repeat;
+		border: 0;
+		border-radius: 50%;
+		cursor: pointer;
+		height: $range-thumb-size;
+		width: $range-thumb-size;
+	}
+
+	&::-moz-range-thumb {
+		z-index: 2;
+		background-color: #000;
+		background-position: center;
+		background-repeat: no-repeat;
+		border: 0;
+		border: none;
+		border-radius: 50%;
+		cursor: pointer;
+		height: $range-thumb-size;
+		width: $range-thumb-size;
+	}
+
+	&::-ms-thumb {
+		z-index: 2;
+		background-position: center;
+		background-repeat: no-repeat;
+		border: 0;
+		border-radius: 50%;
+		cursor: pointer;
+		height: $range-thumb-size;
+		width: $range-thumb-size;
+	}
+
+	&::-moz-focus-outer {
+		border: 0;
+	}
+}

@@ -52,33 +52,3 @@ const makeid = (length: number) => {
 	}
 	return result;
 };
-
-export interface IText {
-	id: string;
-	isConstant: boolean;
-	type: string;
-	name: string;
-	value: string;
-	fill: string;
-	x: number;
-	y: number;
-	fontSize: number;
-	fontFamily: string;
-	fontWeight: string | number;
-	width: number;
-	height: number;
-	fontDisplaySize?: number;
-	attr?: any;
-}
-
-export interface IImage {
-	id: string;
-	isConstant: boolean;
-	type: string;
-	name: string;
-	x: number;
-	y: number;
-	scale: number;
-	draggable: boolean;
-	src?: string | null;
-}

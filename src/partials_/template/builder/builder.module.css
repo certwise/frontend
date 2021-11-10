@@ -1,0 +1,7 @@
+.addLayer {
+	@apply text-indigo-500;
+}
+.addLayer:hover {
+	@apply text-indigo-600;
+	cursor: pointer;
+}

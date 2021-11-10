@@ -1,8 +1,1 @@
 node_modules
-.pnp
-.pnp.js
-coverage
-build
-.firebase
-firebase.json
-todo.md
