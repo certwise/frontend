@@ -23,7 +23,7 @@ function Signin() {
 			const result = await signInWithPopup(auth, provider);
 			const userCheck = await axios.get(env.url + "/user/" + result.user.uid);
 			console.log("userCheck:", userCheck, result.user.uid);
-			if (userCheck.data) {
+			if (userCheck.data !== false || userCheck.data !== "false") {
 				dispatch(storeSignIn(userCheck as unknown as user));
 			} else {
 				await deleteUser(result.user);
