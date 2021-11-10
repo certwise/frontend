@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import Onboarding1 from "./pages_/signup/Onboarding01";
 import Onboarding2 from "./pages_/signup/Onboarding02";
 import Onboarding3 from "./pages_/signup/Onboarding03";
+import { Group } from "react-konva";
+import GroupTiles from "./pages/TeamTiles";
 
 function Routes({ user }: { user: user }) {
 	const path = useLocation();
@@ -44,6 +46,9 @@ function Routes({ user }: { user: user }) {
 						</Route>
 						<Route exact path="/recipients/list">
 							<Recipients />
+						</Route>
+						<Route exact path="/recipients/groups">
+							<GroupTiles />
 						</Route>
 						<Route exact path="/templates">
 							<Templates />

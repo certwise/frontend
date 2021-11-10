@@ -2,15 +2,17 @@ import { useState, useEffect } from "react";
 import { focusHandling } from "cruip-js-toolkit";
 import Customer from "./RecipientTableItem";
 
-function CustomersTable({ selectedItems }: any) {
+function CustomersTable({ selectedItems, recipients }: any) {
 	const [selectAll, setSelectAll] = useState<any>(false);
 	const [isCheck, setIsCheck] = useState<any>([]);
-	const [list, setList] = useState<any>([]);
-
-	useEffect(() => {
-		setList([]);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	//const [list, setList] = useState<any>([]);
+	// useEffect(() => {
+	// 	setList(data?.data?.recipients);
+	// 	console.log("1920", data, error, isLoading, isError);
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [data]);
+	console.log("1920 list", recipients);
+	const list = recipients;
 
 	useEffect(() => {
 		focusHandling();
@@ -42,7 +44,8 @@ function CustomersTable({ selectedItems }: any) {
 		<div className="bg-white shadow-lg rounded-sm border border-gray-200 relative">
 			<header className="px-5 py-4">
 				<h2 className="font-semibold text-gray-800">
-					All Recipients <span className="text-gray-400 font-medium">248</span>
+					All Recipients{" "}
+					<span className="text-gray-400 font-medium">{list.length || 0}</span>
 				</h2>
 			</header>
 			<div>
@@ -89,33 +92,15 @@ function CustomersTable({ selectedItems }: any) {
 									<div className="font-semibold text-left">DOB</div>
 								</th>
 								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-									<div className="font-semibold">Refunds</div>
-								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-									<span className="sr-only">Menu</span>
+									<div className="font-semibold">...</div>
 								</th>
 							</tr>
 						</thead>
 						{/* Table body */}
 						<tbody className="text-sm divide-y divide-gray-200">
 							{list.map((customer: any) => {
-								return (
-									<Customer
-										key={customer.id}
-										id={customer.id}
-										image={customer.image}
-										name={customer.name}
-										email={customer.email}
-										location={customer.location}
-										orders={customer.orders}
-										lastOrder={customer.lastOrder}
-										spent={customer.spent}
-										refunds={customer.refunds}
-										fav={customer.fav}
-										handleClick={handleClick}
-										isChecked={isCheck.includes(customer.id)}
-									/>
-								);
+								console.log("1920 Cus", customer);
+								return <Customer key={customer} id={customer} />;
 							})}
 						</tbody>
 					</table>

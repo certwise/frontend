@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "certify-4bf9a"
+  },
+  "targets": {
+    "certify-4bf9a": {
+      "hosting": {
+        "certwise.app": [
+          "certwise"
+        ]
+      }
+    }
+  }
+}

@@ -8,11 +8,20 @@ import FilterButton from "../../components/ui/DropdownFilter";
 import RecipientsTable from "../../partials_/recepients/RecipientsTable";
 import PaginationClassic from "../../components/ui/PaginationClassic";
 import ModalBasic from "../../components/ui/ModalBasic";
-
+import axios from "axios";
+import { env } from "../../config";
+import { recipient } from "../../store/certificates/types";
+import Context from "../../store/context";
+import { useContext } from "react";
+import { useGetRecipients } from "../../api/recipientQueries";
 function Recipients() {
+	const { store } = useContext(Context);
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 	const [selectedItems, setSelectedItems] = useState<any>([]);
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
+	const { isLoading, data, isError, error, refetch } = useGetRecipients(
+		store.user.institution
+	);
 	const [recipientDetails, setRecipientDetails] = useState({
 		name: "",
 		email: "",
@@ -21,8 +30,24 @@ function Recipients() {
 	const handleSelectedItems = (selectedItems: any) => {
 		setSelectedItems([...selectedItems]);
 	};
-	const createNewRecipient = () => {
-		console.log(recipientDetails);
+
+	const createNewRecipient = async () => {
+		const recipient: recipient = {
+			email: recipientDetails.email,
+			name: recipientDetails.name,
+			createdAt: new Date(),
+		};
+		try {
+			await axios.post(env.url + "/recipient", {
+				recipient,
+				institutionId: store.user.institution,
+			});
+			refetch();
+			setBasicModalOpen(false);
+		} catch (e) {
+			console.log(e);
+		}
+		console.log("Recipient added");
 	};
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -171,7 +196,12 @@ function Recipients() {
 						</ModalBasic>
 
 						{/* Table */}
-						<RecipientsTable selectedItems={handleSelectedItems} />
+						{!isLoading && (
+							<RecipientsTable
+								selectedItems={handleSelectedItems}
+								recipients={data?.data.recipients}
+							/>
+						)}
 
 						{/* Pagination */}
 						<div className="mt-8">

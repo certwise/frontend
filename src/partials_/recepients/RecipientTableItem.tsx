@@ -1,4 +1,37 @@
-function CustomersTableItem(props: any) {
+import { useGetRecipient } from "../../api/recipientQueries";
+
+type RecipientItemProps = {
+	id: string;
+	name: string;
+	email: string;
+	rollId: string;
+	certificateCount: number;
+	lastCertificate: string;
+	dob: string;
+	isChecked: boolean | undefined;
+	image: any;
+	fav: boolean;
+	handleClick: (e: any) => any;
+};
+function CustomersTableItem({ id }: { id: string }) {
+	const { data } = useGetRecipient(id);
+	console.log("1920 key", data, id);
+	const props: RecipientItemProps = {
+		id: "",
+		name: data?.data.name,
+		email: data?.data.email,
+		rollId: "",
+		certificateCount: 0,
+		lastCertificate: "",
+		dob: "",
+		isChecked: undefined,
+		image: undefined,
+		fav: false,
+		handleClick: function (e: any) {
+			console.log("Function not implemented.");
+		},
+	};
+	console.log(props);
 	return (
 		<tr>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
@@ -31,7 +64,7 @@ function CustomersTableItem(props: any) {
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 				<div className="flex items-center">
-					<div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
+					{/* <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
 						<img
 							className="rounded-full"
 							src={props.image}
@@ -39,7 +72,7 @@ function CustomersTableItem(props: any) {
 							height="40"
 							alt={props.name}
 						/>
-					</div>
+					</div> */}
 					<div className="font-medium text-gray-800">{props.name}</div>
 				</div>
 			</td>
@@ -47,24 +80,20 @@ function CustomersTableItem(props: any) {
 				<div className="text-left">{props.email}</div>
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div className="text-left">{props.location}</div>
+				<div className="text-left">{props.rollId}</div>
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div className="text-center">{props.orders}</div>
+				<div className="text-center">{props.certificateCount}</div>
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 				<div className="text-left font-medium text-light-blue-500">
-					{props.lastOrder}
+					{props.lastCertificate}
 				</div>
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div className="text-left font-medium text-green-500">
-					{props.spent}
-				</div>
+				<div className="text-left font-medium text-green-500">{props.dob}</div>
 			</td>
-			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div className="text-center">{props.refunds}</div>
-			</td>
+
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
 				{/* Menu button */}
 				<button className="text-gray-400 hover:text-gray-500 rounded-full">

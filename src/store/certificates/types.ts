@@ -24,8 +24,9 @@ export type Field = {
 
 export type recipient = {
 	id?: string;
-	name: string;
 	email: string;
+	name: string;
 	phone?: string;
-	certificates?: Array<string>;
+	address?: string;
+	createdAt: Date;
 };
