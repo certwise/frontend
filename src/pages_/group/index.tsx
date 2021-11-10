@@ -2,51 +2,53 @@ import { useState } from "react";
 
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
-import SearchForm from "../../partials/actions/SearchForm";
-import TeamTilesCard from "../../partials/team/TeamTilesCard";
-import PaginationNumeric from "../../partials/PaginationNumeric";
-import { group, useGetGroup, useGetGroups } from "../../api/groupQueries";
-import Context from "../../store/context";
-import { useContext } from "react";
+import DeleteButton from "../../partials/actions/DeleteButton";
+import DateSelect from "../../components/ui/DateSelect";
+import FilterButton from "../../components/ui/DropdownFilter";
+import PaginationClassic from "../../components/ui/PaginationClassic";
 import ModalBasic from "../../components/ui/ModalBasic";
 import axios from "axios";
 import { env } from "../../config";
-import moment from "moment";
-function Groups() {
-	const { store, dispatch } = useContext(Context);
-	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
-	const [groupDetails, setGroupDetails] = useState({
-		name: "",
-		description: "",
-	});
-	const { data, refetch } = useGetGroups(store.user.institution);
-	// const items = [
-	// 	{
-	// 		id: 0,
-	// 		name: "18BCS Coursera",
-	// 		link: "#0",
-	// 		location: "🇮🇳",
-	// 		content:
-	// 			"Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.",
-	// 	},
-	// ];
-	const items = data?.data;
-	console.log("1920 items:", items);
+import { recipient } from "../../store/certificates/types";
+import Context from "../../store/context";
+import { useContext } from "react";
+import { useGetRecipients } from "../../api/recipientQueries";
+import GroupTable from "../../partials_/group/GroupTable";
+import { useGetGroup } from "../../api/groupQueries";
+import { useParams } from "react-router-dom";
+function Recipients() {
+	const { id }: any = useParams();
+	const { store } = useContext(Context);
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
-	const createNewGroup = () => {
-		const group: group = {
-			name: groupDetails.name,
-			description: groupDetails.description,
-			created_at: new Date(),
-			updated_at: new Date(),
-			recipients: [],
-			institution: store.user.institution,
+	const [selectedItems, setSelectedItems] = useState<any>([]);
+	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
+	const { isLoading, data, isError, error, refetch } = useGetGroup(id);
+	const [recipientDetails, setRecipientDetails] = useState({
+		name: "",
+		email: "",
+		uniqueId: "",
+	});
+	const handleSelectedItems = (selectedItems: any) => {
+		setSelectedItems([...selectedItems]);
+	};
+
+	const createNewRecipient = async () => {
+		const recipient: recipient = {
+			email: recipientDetails.email,
+			name: recipientDetails.name,
+			createdAt: new Date(),
 		};
-		axios.post(env.url + "/group", group).then((res) => {
-			console.log(res);
-			setBasicModalOpen(false);
+		try {
+			await axios.put(env.url + "/group", {
+				...data?.data,
+				recipients: [...data?.data.recipients, recipient],
+			});
 			refetch();
-		});
+			setBasicModalOpen(false);
+		} catch (e) {
+			console.log(e);
+		}
+		console.log("Recipient added");
 	};
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -65,22 +67,25 @@ function Groups() {
 							{/* Left: Title */}
 							<div className="mb-4 sm:mb-0">
 								<h1 className="text-2xl md:text-3xl text-gray-800 font-bold">
-									Group Groups ✨
+									Recipients ✨
 								</h1>
 							</div>
 
 							{/* Right: Actions */}
 							<div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-								{/* Search form */}
-								<SearchForm />
-								{/* Add member button */}
-
+								{/* Delete button */}
+								<DeleteButton selectedItems={selectedItems} />
+								{/* Dropdown */}
+								<DateSelect />
+								{/* Filter button */}
+								<FilterButton align="right" />
+								{/* Add customer button */}
 								<button
-									className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
 									onClick={(e) => {
 										e.stopPropagation();
 										setBasicModalOpen(true);
 									}}
+									className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
 								>
 									<svg
 										className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
@@ -88,7 +93,7 @@ function Groups() {
 									>
 										<path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
 									</svg>
-									<span className="hidden xs:block ml-2">Create Group</span>
+									<span className="hidden xs:block ml-2">Add Recipient</span>
 								</button>
 							</div>
 						</div>
@@ -96,13 +101,13 @@ function Groups() {
 							id="basic-modal"
 							modalOpen={basicModalOpen}
 							setModalOpen={setBasicModalOpen}
-							title="Add group"
+							title="Add recipient"
 						>
 							{/* Modal content */}
 							<div className="px-5 pt-4 pb-1">
 								<div className="text-sm">
 									{/* <div className="font-medium text-gray-800 mb-2">
-										Add a new group:
+										Add a new recipient:
 									</div> */}
 									<div className="space-y-2">
 										<div>
@@ -112,15 +117,15 @@ function Groups() {
 													className="block text-sm font-medium mb-1"
 													htmlFor="default"
 												>
-													Group Name
+													Recipient Name
 												</label>
 												<input
 													id="default"
 													className="form-input w-full"
 													type="text"
 													onChange={(e) =>
-														setGroupDetails({
-															...groupDetails,
+														setRecipientDetails({
+															...recipientDetails,
 															name: e.target.value,
 														})
 													}
@@ -131,21 +136,39 @@ function Groups() {
 													className="block text-sm font-medium mb-1"
 													htmlFor="default"
 												>
-													Group Description
+													Recipient Email
 												</label>
 												<input
 													id="default"
 													className="form-input w-full"
 													type="text"
 													onChange={(e) =>
-														setGroupDetails({
-															...groupDetails,
-															description: e.target.value,
+														setRecipientDetails({
+															...recipientDetails,
+															email: e.target.value,
 														})
 													}
 												/>
 											</div>
-
+											<div className="my-6">
+												<label
+													className="block text-sm font-medium mb-1"
+													htmlFor="default"
+												>
+													Recipient Roll no. / unique ID
+												</label>
+												<input
+													id="default"
+													className="form-input w-full"
+													type="text"
+													onChange={(e) =>
+														setRecipientDetails({
+															...recipientDetails,
+															uniqueId: e.target.value,
+														})
+													}
+												/>
+											</div>
 											{/* End */}
 										</div>
 									</div>
@@ -164,35 +187,27 @@ function Groups() {
 										Cancel
 									</button>
 									<button
-										onClick={() => createNewGroup()}
+										onClick={() => createNewRecipient()}
 										className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
 									>
-										Create New Group
+										Create New Recipient
 									</button>
 								</div>
 							</div>
 						</ModalBasic>
 
-						{/* Cards */}
-						<div className="grid grid-cols-12 gap-6">
-							{items?.map((item: any) => {
-								return (
-									<TeamTilesCard
-										key={item.id}
-										id={item.id}
-										recipients={item.recipients}
-										name={item.name}
-										location={item.location}
-										content={item.description}
-										createdAt={moment(item.created_at).format("lll")}
-									/>
-								);
-							})}
-						</div>
+						{/* Table */}
+						{!isLoading && (
+							<GroupTable
+								selectedItems={handleSelectedItems}
+								recipients={data?.data.recipients}
+							/>
+						)}
 
-						{/* Pagination  <div className="mt-8">
-							<PaginationNumeric />
-						</div> */}
+						{/* Pagination */}
+						<div className="mt-8">
+							<PaginationClassic />
+						</div>
 					</div>
 				</main>
 			</div>
@@ -200,4 +215,4 @@ function Groups() {
 	);
 }
 
-export default Groups;
+export default Recipients;

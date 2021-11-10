@@ -36,7 +36,7 @@ function ProfileSidebar({ profileSidebarOpen, setProfileSidebarOpen }: any) {
 										/>
 										<div className="truncate">
 											<span className="font-semibold text-gray-800">
-												Acme Inc.
+												CertWise Inc.
 											</span>
 										</div>
 									</div>

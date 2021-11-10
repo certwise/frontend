@@ -547,7 +547,7 @@ function Calendar() {
 									<li className="m-1">
 										<button className="btn-sm bg-white border-gray-200 hover:border-gray-300 text-gray-500">
 											<div className="w-1 h-3.5 bg-light-blue-500 flex-shrink-0"></div>
-											<span className="ml-1.5">Acme Inc.</span>
+											<span className="ml-1.5">CertWise Inc.</span>
 										</button>
 									</li>
 									<li className="m-1">

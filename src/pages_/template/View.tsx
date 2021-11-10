@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router-dom";
+import { useGetTemplateImageQuery } from "../../api/templateQueries";
 import { template } from "../../store/templates/types";
 
 function View({ template }: { template: template }) {
+	const { data, isLoading } = useGetTemplateImageQuery(
+		template?.id || "",
+		template?.uid || ""
+	);
 	const { id } = useParams<any>();
 	const [redirect, setRedirect] = useState("");
 	useEffect(() => {
@@ -46,8 +51,8 @@ function View({ template }: { template: template }) {
 					<div className="flex justify-center bg-gray-100 border-2 border-gray-600">
 						<img
 							className="p-3"
-							style={{ height: window.innerHeight / 2 }}
-							src="https://powerslides.com/wp-content/uploads/2020/04/Certificate-Templates-1.png"
+							style={{ maxHeight: 500 }}
+							src={data as any}
 							alt="Template"
 						/>
 					</div>
@@ -56,7 +61,7 @@ function View({ template }: { template: template }) {
 							onClick={() => {
 								setRedirect("/template/edit/" + id);
 							}}
-							className="btn bg-indigo-500 hover:bg-indigo-600 text-white flex-grow"
+							className="btn bg-indigo-500 hover:bg-indigo-600 text-white flex-grow rounded-sm"
 						>
 							Edit template
 						</button>
@@ -64,7 +69,7 @@ function View({ template }: { template: template }) {
 							onClick={() => {
 								setRedirect("/template/edit/" + id);
 							}}
-							className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-2 flex-grow"
+							className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-2 flex-grow rounded-sm"
 						>
 							Go to certificates
 						</button>
@@ -72,7 +77,7 @@ function View({ template }: { template: template }) {
 							onClick={() => {
 								setRedirect("/template/edit/" + id);
 							}}
-							className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-2 flex-grow"
+							className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-2 flex-grow rounded-sm"
 						>
 							Archive Template
 						</button>
@@ -80,7 +85,7 @@ function View({ template }: { template: template }) {
 							onClick={() => {
 								setRedirect("/template/edit/" + id);
 							}}
-							className="btn bg-white hover:bg-white border-gray-400 hover:border-gray-300 text-red-500 ml-2 flex-grow"
+							className="btn bg-white hover:bg-white border-gray-400 hover:border-gray-300 text-red-500 ml-2 flex-grow rounded-sm"
 						>
 							Delete
 						</button>

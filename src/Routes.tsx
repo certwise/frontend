@@ -11,8 +11,17 @@ import { useEffect, useState } from "react";
 import Onboarding1 from "./pages_/signup/Onboarding01";
 import Onboarding2 from "./pages_/signup/Onboarding02";
 import Onboarding3 from "./pages_/signup/Onboarding03";
-import { Group } from "react-konva";
-import GroupTiles from "./pages/TeamTiles";
+import Groups from "./pages_/recipients/Groups";
+import Group from "./pages_/group";
+import Certificates from "./pages_/certificates";
+import PageNotFound from "./pages/404";
+import Calendar from "./pages/Calendar";
+import Account from "./pages/settings/Account";
+import Notifications from "./pages/settings/Notifications";
+import Apps from "./pages/settings/Apps";
+import Plans from "./pages/settings/Plans";
+import Billing from "./pages/settings/Billing";
+import Feedback from "./pages/settings/Feedback";
 
 function Routes({ user }: { user: user }) {
 	const path = useLocation();
@@ -44,11 +53,17 @@ function Routes({ user }: { user: user }) {
 						<Route exact path="/certificate">
 							<Certificate />
 						</Route>
+						<Route exact path="/certificates/list">
+							<Certificates />
+						</Route>
 						<Route exact path="/recipients/list">
 							<Recipients />
 						</Route>
 						<Route exact path="/recipients/groups">
-							<GroupTiles />
+							<Groups />
+						</Route>
+						<Route exact path="/group/:id">
+							<Group />
 						</Route>
 						<Route exact path="/templates">
 							<Templates />
@@ -64,6 +79,30 @@ function Routes({ user }: { user: user }) {
 						</Route>
 						<Route exact path="/">
 							<Dashboard />
+						</Route>
+						<Route exact path="/calendar">
+							<Calendar />
+						</Route>
+						<Route exact path="/account">
+							<Account />
+						</Route>
+						<Route exact path="/account/notifications">
+							<Notifications />
+						</Route>
+						<Route exact path="/account/apps">
+							<Apps />
+						</Route>
+						<Route exact path="/account/plans">
+							<Plans />
+						</Route>
+						<Route exact path="/account/billing">
+							<Billing />
+						</Route>
+						<Route exact path="/account/feedback">
+							<Feedback />
+						</Route>
+						<Route path="*">
+							<PageNotFound />
 						</Route>
 					</Switch>
 				)}

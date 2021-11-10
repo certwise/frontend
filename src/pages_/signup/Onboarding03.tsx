@@ -108,7 +108,7 @@ function Onboarding3() {
 										/>
 									</svg>
 									<h1 className="text-3xl text-gray-800 font-bold mb-8">
-										Nice to have you, Acme Inc. 🙌
+										Nice to have you, CertWise Inc. 🙌
 									</h1>
 									<Link
 										className="btn bg-indigo-500 hover:bg-indigo-600 text-white"

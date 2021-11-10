@@ -51,8 +51,7 @@ export const useCreateTemplateQuery = () => {
 
 export const useGetTemplateImageQuery = (id: string, uid: string) => {
 	return useQuery(["templateImage", id], () => getTemplateImage(id, uid), {
-		refetchInterval: 1000 * 60 * 5, //5mins
-		refetchOnMount: false,
+		refetchOnMount: true,
 		refetchOnWindowFocus: false,
 		refetchOnReconnect: false,
 	});

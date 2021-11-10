@@ -222,7 +222,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen }: any) {
 										</div>
 										<div className="truncate">
 											<span className="text-sm font-medium text-gray-800">
-												Acme Marketing
+												CertWise Marketing
 											</span>
 										</div>
 									</div>
@@ -291,7 +291,7 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen }: any) {
 										</div>
 										<div className="truncate">
 											<span className="text-sm font-medium text-gray-800">
-												Acme Product
+												CertWise Product
 											</span>
 										</div>
 									</div>
@@ -484,14 +484,14 @@ function ProfileBody({ profileSidebarOpen, setProfileSidebarOpen }: any) {
 						</div>
 						<div className="text-sm">
 							<h3 className="font-medium text-gray-800">Email</h3>
-							<div>carolinmcneail@acme.com</div>
+							<div>carolinmcneail@CertWise.com</div>
 						</div>
 						<div className="text-sm">
 							<h3 className="font-medium text-gray-800">Birthdate</h3>
 							<div>4 April, 1987</div>
 						</div>
 						<div className="text-sm">
-							<h3 className="font-medium text-gray-800">Joined Acme</h3>
+							<h3 className="font-medium text-gray-800">Joined CertWise</h3>
 							<div>7 April, 2017</div>
 						</div>
 					</aside>

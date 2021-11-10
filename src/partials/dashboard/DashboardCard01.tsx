@@ -108,7 +108,9 @@ function DashboardCard01() {
 						</li>
 					</EditMenu>
 				</header>
-				<h2 className="text-lg font-semibold text-gray-800 mb-2">Acme Plus</h2>
+				<h2 className="text-lg font-semibold text-gray-800 mb-2">
+					CertWise Plus
+				</h2>
 				<div className="text-xs font-semibold text-gray-400 uppercase mb-1">
 					Sales
 				</div>

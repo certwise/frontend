@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { focusHandling } from "cruip-js-toolkit";
-import Customer from "./RecipientTableItem";
+import Customer from "./GroupTableItem";
 
-function CustomersTable({ selectedItems, recipients }: any) {
+function GroupTable({ selectedItems, recipients }: any) {
 	const [selectAll, setSelectAll] = useState<any>(false);
 	const [isCheck, setIsCheck] = useState<any>([]);
 	//const [list, setList] = useState<any>([]);
@@ -37,6 +37,7 @@ function CustomersTable({ selectedItems, recipients }: any) {
 
 	useEffect(() => {
 		selectedItems(isCheck);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isCheck]);
 
 	return (
@@ -109,4 +110,4 @@ function CustomersTable({ selectedItems, recipients }: any) {
 	);
 }
 
-export default CustomersTable;
+export default GroupTable;

@@ -54,7 +54,7 @@ function UserMenu() {
 				/>
 				<div className="flex items-center truncate">
 					<span className="truncate ml-2 text-sm font-medium group-hover:text-gray-800">
-						Acme Inc.
+						CertWise Inc.
 					</span>
 					<svg
 						className="w-3 h-3 flex-shrink-0 ml-1 fill-current text-gray-400"
@@ -82,7 +82,7 @@ function UserMenu() {
 					onBlur={() => setDropdownOpen(false)}
 				>
 					<div className="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200">
-						<div className="font-medium text-gray-800">Acme Inc.</div>
+						<div className="font-medium text-gray-800">CertWise Inc.</div>
 						<div className="text-xs text-gray-500 italic">Administrator</div>
 					</div>
 					<ul>

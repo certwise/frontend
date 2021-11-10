@@ -55,7 +55,7 @@ function DropdownSwitch({ align }: any) {
 					alt="Group 01"
 				/>
 				<div className="truncate">
-					<span className="text-sm font-medium">Acme Inc.</span>
+					<span className="text-sm font-medium">CertWise Inc.</span>
 				</div>
 				<svg
 					className="w-3 h-3 flex-shrink-0 ml-1 fill-current text-gray-400"
@@ -97,7 +97,7 @@ function DropdownSwitch({ align }: any) {
 										height="28"
 										alt="Channel 01"
 									/>
-									<div className="truncate">Acme Inc.</div>
+									<div className="truncate">CertWise Inc.</div>
 								</div>
 								<svg
 									className="w-3 h-3 flex-shrink-0 fill-current text-indigo-500 ml-1"
@@ -123,7 +123,7 @@ function DropdownSwitch({ align }: any) {
 										height="28"
 										alt="Channel 02"
 									/>
-									<div className="truncate">Acme Limited</div>
+									<div className="truncate">CertWise Limited</div>
 								</div>
 							</div>
 						</a>
@@ -143,7 +143,7 @@ function DropdownSwitch({ align }: any) {
 										height="28"
 										alt="Channel 03"
 									/>
-									<div className="truncate">Acme Srl</div>
+									<div className="truncate">CertWise Srl</div>
 								</div>
 							</div>
 						</a>
