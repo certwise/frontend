@@ -1,7 +1,6 @@
 name: Deploy to Production
 
-on:
-  workflow_dispatch
+on: workflow_dispatch
 
 jobs:
   build:
@@ -13,9 +12,9 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: "16"
           check-latest: true
-          cache: 'npm'
+          cache: "npm"
       - name: Install Dependencies
         run: npm install
       - name: Build
@@ -36,11 +35,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-output
+          path: build
       - name: Deploy to firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting
-          
+          args: deploy --only hosting:production --message \"${{ github.event.head_commit.message }}\"
+
         env:
-          FIREBASE_TOKEN : ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_ID: certify-4bf9a

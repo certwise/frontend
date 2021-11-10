@@ -5,8 +5,14 @@
   "targets": {
     "certify-4bf9a": {
       "hosting": {
-        "certwise.app": [
-          "certwise"
+        "production": [
+          "certify-4bf9a"
+        ],
+        "staging": [
+          "certwise-frontend-staging"
+        ],
+        "dev": [
+          "certwise-frontend-dev"
         ]
       }
     }
