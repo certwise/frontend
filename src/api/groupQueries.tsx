@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { env } from "../config";
 import axios from "axios";
 export type group = {
@@ -25,7 +25,12 @@ const getGroups = (instituteId: string) => {
 };
 
 export const useCreateGroup = () => {
-	return useMutation(createGroup);
+	const query = useQueryClient();
+	return useMutation(createGroup, {
+		onSuccess: (data) => {
+			query.invalidateQueries("groups");
+		},
+	});
 };
 
 export const useGetGroups = (instituteId: string) => {

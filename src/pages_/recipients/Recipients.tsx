@@ -19,9 +19,8 @@ function Recipients() {
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 	const [selectedItems, setSelectedItems] = useState<any>([]);
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
-	const { isLoading, data, isError, error, refetch } = useGetRecipients(
-		store.user.institution
-	);
+	const { isLoading, isFetching, data, isError, error, refetch } =
+		useGetRecipients(store.user.institution);
 	const [recipientDetails, setRecipientDetails] = useState({
 		name: "",
 		email: "",
@@ -196,11 +195,13 @@ function Recipients() {
 						</ModalBasic>
 
 						{/* Table */}
-						{!isLoading && (
+						{!isLoading && !isFetching ? (
 							<RecipientsTable
 								selectedItems={handleSelectedItems}
 								recipients={data?.data.recipients}
 							/>
+						) : (
+							<div>Loading...</div>
 						)}
 
 						{/* Pagination */}

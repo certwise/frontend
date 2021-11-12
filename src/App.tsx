@@ -18,6 +18,7 @@ function App() {
 	const location = useLocation();
 	const auth = getAuth();
 	const [user, setUser] = useState<user | any>({ uid: "" });
+	const [initialLoad, setinitialLoad] = useState(0);
 	useEffect(() => {
 		(document.querySelector("html") as any).style.scrollBehavior = "auto";
 		window.scroll({ top: 0 });
@@ -30,6 +31,7 @@ function App() {
 				setUser(user_obj);
 			} else {
 				console.log("user is null");
+				setinitialLoad(-1);
 			}
 		});
 	});
@@ -38,6 +40,7 @@ function App() {
 			getUser(user.uid).then((res) => {
 				if (res) {
 					dispatch(signIn(res));
+					setinitialLoad(1);
 				}
 			});
 		}
@@ -46,8 +49,14 @@ function App() {
 	return (
 		<>
 			<QueryClientProvider client={queryClient}>
-				{store.user.uid !== "" && <Routes user={store.user} />}
-				{store.user.uid === "" && <HomeRoutes user={store.user} />}
+				{initialLoad === 0 ? (
+					<div>Loading {initialLoad}</div>
+				) : (
+					<>
+						{store.user.uid !== "" && <Routes user={store.user} />}
+						{store.user.uid === "" && <HomeRoutes user={store.user} />}
+					</>
+				)}
 			</QueryClientProvider>
 		</>
 	);

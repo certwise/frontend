@@ -9,6 +9,7 @@ import { Redirect } from "react-router-dom";
 
 function CreateTemplate({ uid }: { uid: string }) {
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
+	const [clicked, setClicked] = useState<boolean>(false);
 	const { mutate, isLoading, isError, isSuccess } = useCreateTemplateQuery();
 	const [form, setForm] = useState({
 		name: "",
@@ -199,13 +200,15 @@ function CreateTemplate({ uid }: { uid: string }) {
 						</div>
 						<button
 							onClick={() => {
-								mutate(
-									createTemplate({
-										name: form.name,
-										description: form.description,
-										uid,
-									})
-								);
+								!clicked &&
+									mutate(
+										createTemplate({
+											name: form.name,
+											description: form.description,
+											uid,
+										})
+									);
+								setClicked(true);
 							}}
 							className="btn bg-indigo-500 hover:bg-indigo-600 text-white mt-5"
 						>

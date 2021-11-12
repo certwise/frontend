@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { env } from "../config";
 import axios from "axios";
 import { template } from "../store/templates/types";
@@ -42,16 +42,18 @@ export const useUpdateTemplateQuery = (data: template) => {
 };
 
 export const useCreateTemplateQuery = () => {
+	const query = useQueryClient();
 	return useMutation(createTemplate, {
 		onSuccess: (data) => {
 			console.log("Successfully created template", data);
+			query.invalidateQueries("templates");
 		},
 	});
 };
 
 export const useGetTemplateImageQuery = (id: string, uid: string) => {
 	return useQuery(["templateImage", id], () => getTemplateImage(id, uid), {
-		refetchOnMount: true,
+		refetchOnMount: false,
 		refetchOnWindowFocus: false,
 		refetchOnReconnect: false,
 	});

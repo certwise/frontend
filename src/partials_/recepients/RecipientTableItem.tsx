@@ -14,7 +14,7 @@ type RecipientItemProps = {
 	handleClick: (e: any) => any;
 };
 function CustomersTableItem({ id }: { id: string }) {
-	const { data } = useGetRecipient(id);
+	const { data, isFetching } = useGetRecipient(id);
 	console.log("1920 key", data, id);
 	const props: RecipientItemProps = {
 		id: "",
@@ -73,30 +73,27 @@ function CustomersTableItem({ id }: { id: string }) {
 							alt={props.name}
 						/>
 					</div> */}
-					<div className="font-medium text-gray-800">{props.name}</div>
+					<div className="font-medium text-gray-800">
+						{!isFetching ? (
+							props.name
+						) : (
+							<div className="flex justify-center items-center">
+								<div className="animate-spin rounded-full h-8 w-8 border-b-2 text-xl "></div>
+							</div>
+						)}
+					</div>
 				</div>
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 				<div className="text-left">{props.email}</div>
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div className="text-left">{props.rollId}</div>
-			</td>
-			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 				<div className="text-center">{props.certificateCount}</div>
 			</td>
-			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div className="text-left font-medium text-light-blue-500">
-					{props.lastCertificate}
-				</div>
-			</td>
-			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div className="text-left font-medium text-green-500">{props.dob}</div>
-			</td>
 
-			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-				{/* Menu button */}
-				<button className="text-gray-400 hover:text-gray-500 rounded-full">
+			{/* <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px"> */}
+			{/* Menu button */}
+			{/* <button className="text-gray-400 hover:text-gray-500 rounded-full">
 					<span className="sr-only">Menu</span>
 					<svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
 						<circle cx="16" cy="16" r="2" />
@@ -104,7 +101,7 @@ function CustomersTableItem({ id }: { id: string }) {
 						<circle cx="22" cy="16" r="2" />
 					</svg>
 				</button>
-			</td>
+			</td> */}
 		</tr>
 	);
 }

@@ -22,6 +22,7 @@ import Apps from "./pages/settings/Apps";
 import Plans from "./pages/settings/Plans";
 import Billing from "./pages/settings/Billing";
 import Feedback from "./pages/settings/Feedback";
+import CreateCertificate from "./pages_/certificates/CreateCertificate";
 
 function Routes({ user }: { user: user }) {
 	const path = useLocation();
@@ -55,6 +56,9 @@ function Routes({ user }: { user: user }) {
 						</Route>
 						<Route exact path="/certificates/list">
 							<Certificates />
+						</Route>
+						<Route exact path="/certificates/create">
+							<CreateCertificate />
 						</Route>
 						<Route exact path="/recipients/list">
 							<Recipients />

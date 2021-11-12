@@ -316,7 +316,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 													<li className="mb-1 last:mb-0">
 														<NavLink
 															exact
-															to="/certificates"
+															to="/certificates/create"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
 															activeClassName="!text-indigo-500"
 														>

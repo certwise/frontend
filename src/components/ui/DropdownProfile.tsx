@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Transition from "../../utils/Transition";
 import { signOut, getAuth } from "firebase/auth";
 import UserAvatar from "../../images/user-avatar-32.png";
-
+import Context from "../../store/context";
+import { signOut as signOutStore } from "../../store";
 function DropdownProfile({ align }: any) {
+	const { dispatch } = useContext(Context);
 	const [dropdownOpen, setDropdownOpen] = useState<any>(false);
 
 	const trigger = useRef<any>(null);
@@ -101,7 +103,10 @@ function DropdownProfile({ align }: any) {
 							<Link
 								className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
 								to="/signin"
-								onClick={() => signOut(getAuth())}
+								onClick={() => {
+									dispatch(signOutStore());
+									signOut(getAuth());
+								}}
 							>
 								Sign Out
 							</Link>

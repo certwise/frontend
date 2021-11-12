@@ -12,7 +12,7 @@ function CertificatesTable({ selectedItems }: any) {
 			customer: "Dominik Lamakani",
 			issueddate: "22/07/2021",
 			paiddate: "-",
-			type: "Subscription",
+			type: "CSE Internship template",
 		},
 		{
 			id: "1",
@@ -22,7 +22,7 @@ function CertificatesTable({ selectedItems }: any) {
 			customer: "Mark Cameron",
 			issueddate: "19/07/2021",
 			paiddate: "20/07/2021",
-			type: "Subscription",
+			type: "CSE Internship template",
 		},
 		{
 			id: "2",
@@ -32,7 +32,7 @@ function CertificatesTable({ selectedItems }: any) {
 			customer: "Sergio Gonnelli",
 			issueddate: "17/07/2021",
 			paiddate: "19/07/2021",
-			type: "One-time",
+			type: "Google Intern",
 		},
 		{
 			id: "3",
@@ -42,7 +42,7 @@ function CertificatesTable({ selectedItems }: any) {
 			customer: "Manuel Garbaya",
 			issueddate: "04/07/2021",
 			paiddate: "-",
-			type: "Subscription",
+			type: "CSE Internship template",
 		},
 		{
 			id: "4",
@@ -52,7 +52,7 @@ function CertificatesTable({ selectedItems }: any) {
 			customer: "Cool Robot",
 			issueddate: "04/07/2021",
 			paiddate: "-",
-			type: "Subscription",
+			type: "CSE Internship template",
 		},
 		{
 			id: "5",
@@ -62,7 +62,7 @@ function CertificatesTable({ selectedItems }: any) {
 			customer: "Mark Cameron",
 			issueddate: "04/07/2021",
 			paiddate: "09/07/2021",
-			type: "One-time",
+			type: "Google Intern",
 		},
 		{
 			id: "6",
@@ -72,7 +72,7 @@ function CertificatesTable({ selectedItems }: any) {
 			customer: "Glenn Thomas",
 			issueddate: "01/07/2021",
 			paiddate: "01/07/2021",
-			type: "One-time",
+			type: "Google Intern",
 		},
 		{
 			id: "7",
@@ -82,7 +82,7 @@ function CertificatesTable({ selectedItems }: any) {
 			customer: "Dominik Lamakani",
 			issueddate: "22/06/2021",
 			paiddate: "-",
-			type: "Subscription",
+			type: "CSE Internship template",
 		},
 		{
 			id: "8",
@@ -92,7 +92,7 @@ function CertificatesTable({ selectedItems }: any) {
 			customer: "Brian Halligan",
 			issueddate: "21/06/2021",
 			paiddate: "29/06/2021",
-			type: "One-time",
+			type: "Google Intern",
 		},
 		{
 			id: "9",
@@ -102,7 +102,7 @@ function CertificatesTable({ selectedItems }: any) {
 			customer: "Carolyn McNeail",
 			issueddate: "17/06/2021",
 			paiddate: "-",
-			type: "Subscription",
+			type: "CSE Internship template",
 		},
 	];
 
@@ -185,7 +185,7 @@ function CertificatesTable({ selectedItems }: any) {
 									<div className="font-semibold text-left">Created on</div>
 								</th>
 								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-									<div className="font-semibold text-left">Status</div>
+									<div className="font-semibold text-left">Template</div>
 								</th>
 								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Actions</div>
