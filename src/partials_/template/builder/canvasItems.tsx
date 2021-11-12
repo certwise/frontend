@@ -35,7 +35,7 @@ function CanvasItems() {
 			{activeItem ? (
 				<div>
 					<button
-						className="btn text-indigo-500 border-indigo-500 hover:bg-indigo-600 hover:text-white mt-2 p-1 text-xs w-1/3"
+						className="btn text-blue-500 border-blue-500 hover:bg-blue-600 hover:text-white mt-2 p-1 text-xs w-1/3"
 						onClick={() => {
 							dispatch(templateActions.setActiveItem(undefined));
 						}}
@@ -43,14 +43,14 @@ function CanvasItems() {
 						Deselect
 					</button>
 					<button
-						className="btn text-indigo-500 border-indigo-500 hover:bg-indigo-600 hover:text-white mt-2 ml-3 p-1 text-xs w-1/3"
+						className="btn text-blue-500 border-blue-500 hover:bg-blue-600 hover:text-white mt-2 ml-3 p-1 text-xs w-1/3"
 						onClick={deleteActiveItem}
 					>
 						Delete
 					</button>
 				</div>
 			) : (
-				<div className="text-indigo-600 font-bold">No layer is selected</div>
+				<div className="text-blue-600 font-bold">No layer is selected</div>
 			)}
 		</div>
 	);

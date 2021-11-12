@@ -92,7 +92,7 @@ function DropdownProfile({ align }: any) {
 					<ul>
 						<li>
 							<Link
-								className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
+								className="font-medium text-sm text-blue-500 hover:text-blue-600 flex items-center py-1 px-3"
 								to="/settings"
 								onClick={() => setDropdownOpen(!dropdownOpen)}
 							>
@@ -101,7 +101,7 @@ function DropdownProfile({ align }: any) {
 						</li>
 						<li>
 							<Link
-								className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
+								className="font-medium text-sm text-blue-500 hover:text-blue-600 flex items-center py-1 px-3"
 								to="/signin"
 								onClick={() => {
 									dispatch(signOutStore());

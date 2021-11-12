@@ -57,7 +57,7 @@ function Onboarding04() {
 								<div className="text-sm">
 									Have an account?{" "}
 									<Link
-										className="font-medium text-indigo-500 hover:text-indigo-600"
+										className="font-medium text-blue-500 hover:text-blue-600"
 										to="/signin"
 									>
 										Sign In
@@ -76,7 +76,7 @@ function Onboarding04() {
 										<ul className="relative flex justify-between w-full">
 											<li>
 												<Link
-													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white"
+													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-blue-500 text-white"
 													to="/onboarding-01"
 												>
 													1
@@ -84,7 +84,7 @@ function Onboarding04() {
 											</li>
 											<li>
 												<Link
-													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white"
+													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-blue-500 text-white"
 													to="/onboarding-02"
 												>
 													2
@@ -92,7 +92,7 @@ function Onboarding04() {
 											</li>
 											<li>
 												<Link
-													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white"
+													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-blue-500 text-white"
 													to="/onboarding-03"
 												>
 													3
@@ -100,7 +100,7 @@ function Onboarding04() {
 											</li>
 											<li>
 												<Link
-													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white"
+													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-blue-500 text-white"
 													to="/onboarding-04"
 												>
 													4
@@ -129,7 +129,7 @@ function Onboarding04() {
 										Nice to have you, CertWise Inc. 🙌
 									</h1>
 									<Link
-										className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
+										className="btn bg-blue-500 hover:bg-blue-600 text-white"
 										to="/"
 									>
 										Go To Dashboard -&gt;

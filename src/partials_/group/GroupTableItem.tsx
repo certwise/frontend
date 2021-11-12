@@ -15,7 +15,6 @@ type RecipientItemProps = {
 };
 function GroupTableItem({ id }: { id: string }) {
 	const { data } = useGetRecipient(id);
-	console.log("1920 key", data, id);
 	const props: RecipientItemProps = {
 		id: "",
 		name: data?.data.name,
@@ -80,18 +79,7 @@ function GroupTableItem({ id }: { id: string }) {
 				<div className="text-left">{props.email}</div>
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div className="text-left">{props.rollId}</div>
-			</td>
-			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 				<div className="text-center">{props.certificateCount}</div>
-			</td>
-			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div className="text-left font-medium text-light-blue-500">
-					{props.lastCertificate}
-				</div>
-			</td>
-			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div className="text-left font-medium text-green-500">{props.dob}</div>
 			</td>
 
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">

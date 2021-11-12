@@ -28,9 +28,8 @@ function DashboardCard04() {
 			{
 				label: "Indirect",
 				data: [4900, 2600, 5350, 4800, 5200, 4800],
-				backgroundColor: (tailwindConfig() as any).theme.colors.indigo[500],
-				hoverBackgroundColor: (tailwindConfig() as any).theme.colors
-					.indigo[600],
+				backgroundColor: (tailwindConfig() as any).theme.colors.blue[500],
+				hoverBackgroundColor: (tailwindConfig() as any).theme.colors.blue[600],
 				barPercentage: 0.66,
 				categoryPercentage: 0.66,
 			},

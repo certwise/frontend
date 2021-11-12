@@ -102,7 +102,7 @@ function ModalSearch({ id, searchId, modalOpen, setModalOpen }: any) {
 							<ul className="text-sm">
 								<li>
 									<Link
-										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-blue-500 rounded group"
 										to="#0"
 										onClick={() => setModalOpen(!modalOpen)}
 									>
@@ -117,7 +117,7 @@ function ModalSearch({ id, searchId, modalOpen, setModalOpen }: any) {
 								</li>
 								<li>
 									<Link
-										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-blue-500 rounded group"
 										to="#0"
 										onClick={() => setModalOpen(!modalOpen)}
 									>
@@ -132,7 +132,7 @@ function ModalSearch({ id, searchId, modalOpen, setModalOpen }: any) {
 								</li>
 								<li>
 									<Link
-										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-blue-500 rounded group"
 										to="#0"
 										onClick={() => setModalOpen(!modalOpen)}
 									>
@@ -147,7 +147,7 @@ function ModalSearch({ id, searchId, modalOpen, setModalOpen }: any) {
 								</li>
 								<li>
 									<Link
-										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-blue-500 rounded group"
 										to="#0"
 										onClick={() => setModalOpen(!modalOpen)}
 									>
@@ -162,7 +162,7 @@ function ModalSearch({ id, searchId, modalOpen, setModalOpen }: any) {
 								</li>
 								<li>
 									<Link
-										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-blue-500 rounded group"
 										to="#0"
 										onClick={() => setModalOpen(!modalOpen)}
 									>
@@ -177,7 +177,7 @@ function ModalSearch({ id, searchId, modalOpen, setModalOpen }: any) {
 								</li>
 								<li>
 									<Link
-										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-blue-500 rounded group"
 										to="#0"
 										onClick={() => setModalOpen(!modalOpen)}
 									>
@@ -200,7 +200,7 @@ function ModalSearch({ id, searchId, modalOpen, setModalOpen }: any) {
 							<ul className="text-sm">
 								<li>
 									<Link
-										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-blue-500 rounded group"
 										to="#0"
 										onClick={() => setModalOpen(!modalOpen)}
 									>
@@ -220,7 +220,7 @@ function ModalSearch({ id, searchId, modalOpen, setModalOpen }: any) {
 								</li>
 								<li>
 									<Link
-										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-indigo-500 rounded group"
+										className="flex items-center p-2 text-gray-800 hover:text-white hover:bg-blue-500 rounded group"
 										to="#0"
 										onClick={() => setModalOpen(!modalOpen)}
 									>

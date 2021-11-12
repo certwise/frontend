@@ -66,7 +66,7 @@ function Onboarding3() {
 										<ul className="relative flex justify-between w-full">
 											<li>
 												<Link
-													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white"
+													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-blue-500 text-white"
 													to="/onboard-organization"
 												>
 													1
@@ -111,7 +111,7 @@ function Onboarding3() {
 										Nice to have you, CertWise Inc. 🙌
 									</h1>
 									<Link
-										className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
+										className="btn bg-blue-500 hover:bg-blue-600 text-white"
 										to="/"
 									>
 										Go To Dashboard -&gt;

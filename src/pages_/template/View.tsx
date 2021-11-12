@@ -39,7 +39,7 @@ function View({ template }: { template: template }) {
 						onClick={() => {
 							setRedirect("/templates");
 						}}
-						className="ml-auto btn bg-white hover:bg-white border-gray-400 hover:border-gray-300 text-indigo-500"
+						className="ml-auto btn bg-white hover:bg-white border-gray-400 hover:border-gray-300 text-blue-500"
 					>
 						Back to all templates
 					</button>
@@ -61,7 +61,7 @@ function View({ template }: { template: template }) {
 							onClick={() => {
 								setRedirect("/template/edit/" + id);
 							}}
-							className="btn bg-indigo-500 hover:bg-indigo-600 text-white flex-grow rounded-sm"
+							className="btn bg-blue-500 hover:bg-blue-600 text-white flex-grow rounded-sm"
 						>
 							Edit template
 						</button>
@@ -69,7 +69,7 @@ function View({ template }: { template: template }) {
 							onClick={() => {
 								setRedirect("/template/edit/" + id);
 							}}
-							className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-2 flex-grow rounded-sm"
+							className="btn bg-blue-500 hover:bg-blue-600 text-white ml-2 flex-grow rounded-sm"
 						>
 							Go to certificates
 						</button>
@@ -77,7 +77,7 @@ function View({ template }: { template: template }) {
 							onClick={() => {
 								setRedirect("/template/edit/" + id);
 							}}
-							className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-2 flex-grow rounded-sm"
+							className="btn bg-blue-500 hover:bg-blue-600 text-white ml-2 flex-grow rounded-sm"
 						>
 							Archive Template
 						</button>

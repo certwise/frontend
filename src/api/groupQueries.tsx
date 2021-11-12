@@ -15,13 +15,14 @@ const createGroup = (group: group) => {
 	return axios.post(`${env.url}/group`, group);
 };
 const getGroup = (instituteId: string) => {
-	console.log("Group query");
 	return axios.get(`${env.url}/group/${instituteId}`);
 };
 
 const getGroups = (instituteId: string) => {
-	console.log("Group querys");
 	return axios.get(`${env.url}/group/all/${instituteId}`);
+};
+const setGroup = (group: group) => {
+	return axios.put(`${env.url}/group`, group);
 };
 
 export const useCreateGroup = () => {
@@ -48,5 +49,14 @@ export const useGetGroup = (instituteId: string) => {
 		refetchOnReconnect: false,
 		retryOnMount: false,
 		refetchOnWindowFocus: false,
+	});
+};
+
+export const useSetGroup = () => {
+	const query = useQueryClient();
+	return useMutation(setGroup, {
+		onSuccess: (data) => {
+			query.invalidateQueries("groups");
+		},
 	});
 };

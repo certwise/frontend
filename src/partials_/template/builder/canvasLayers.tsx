@@ -54,8 +54,8 @@ function CanvasLayers() {
 						<button
 							className={`mt-5 btn  py-1 w-11/12 ml-1.5 rounded-sm p-1 ${
 								state.saving
-									? "text-white bg-indigo-200 "
-									: "text-white bg-indigo-500 hover:bg-indigo-600"
+									? "text-white bg-blue-200 "
+									: "text-white bg-blue-500 hover:bg-blue-600"
 							}`}
 							onClick={(e) => saveCanvas(e)}
 						>
@@ -65,7 +65,7 @@ function CanvasLayers() {
 					{state.saved && alert("Templated successfully saved!")}
 					<div>
 						<button
-							className="mt-3 mb-5 btn p-1 text-indigo-500 w-11/12 border-indigo-500 hover:bg-indigo-600 hover:text-white ml-1.5 bg-white rounded-sm "
+							className="mt-3 mb-5 btn p-1 text-blue-500 w-11/12 border-blue-500 hover:bg-blue-600 hover:text-white ml-1.5 bg-white rounded-sm "
 							onClick={() => setExit(true)}
 						>
 							Exit Editor
@@ -119,13 +119,13 @@ function CanvasLayers() {
 										value: "text",
 										label: "",
 										className:
-											"btn m-2 btn text-white bg-indigo-500 hover:bg-indigo-600 block w-48 z-10",
+											"btn m-2 btn text-white bg-blue-500 hover:bg-blue-600 block w-48 z-10",
 									},
 									{
 										value: "image",
 										label: "",
 										className:
-											"btn m-2 btn text-white bg-indigo-500 hover:bg-indigo-600 block w-48 z-10",
+											"btn m-2 btn text-white bg-blue-500 hover:bg-blue-600 block w-48 z-10",
 									},
 								]}
 								arrowClosed={<MdAddCircleOutline className="mt-1" size={24} />}
@@ -208,13 +208,13 @@ function CanvasLayers() {
 					<div className="mt-5 border-t pt-2 border-gray-300"></div>
 					<div className="flex flex-row w-full">
 						<div className="flex-grow w-full my-2 mr-1">
-							<button className="btn p-1 text-indigo-500 w-11/12 border-indigo-500 hover:bg-indigo-600 hover:text-white rounded-none">
+							<button className="btn p-1 text-blue-500 w-11/12 border-blue-500 hover:bg-blue-600 hover:text-white rounded-none">
 								<FaUndo className="mr-2" />
 								Undo
 							</button>
 						</div>
 						<div className="flex-grow w-full my-2 ml-1">
-							<button className="btn p-1 text-indigo-500 w-11/12 border-indigo-500 hover:bg-indigo-600 hover:text-white rounded-none">
+							<button className="btn p-1 text-blue-500 w-11/12 border-blue-500 hover:bg-blue-600 hover:text-white rounded-none">
 								<FaRedo className="mr-2" />
 								Redo
 							</button>

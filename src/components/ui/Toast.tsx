@@ -49,7 +49,7 @@ function Toast({ children, className, type, open, setOpen }: any) {
 			case "success":
 				return "bg-green-500";
 			default:
-				return "bg-indigo-500";
+				return "bg-blue-500";
 		}
 	};
 

@@ -1,6 +1,5 @@
 import { Reducer, useReducer } from "react";
 import rootReducer, { globalState } from "./rootReducer";
-
 import { initialState as user } from "./auth/reducer";
 import { initialState as templates } from "./templates/initialState";
 import { action } from ".";
@@ -16,6 +15,10 @@ const initialState: globalState = {
 	certificates: {
 		certificates: [],
 		currentCertificate: null,
+	},
+	recipients: {
+		recipients: [],
+		selected: [],
 	},
 };
 

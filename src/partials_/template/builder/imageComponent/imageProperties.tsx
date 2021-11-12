@@ -199,8 +199,8 @@ function ImageProperties() {
 			<div className="rounded w-full border-b-2 border-t-2  border-gray-300 py-2 ">
 				<div className="mb-1  font-bold ">Change Image</div>
 				<label
-					className="btn-sm text-xs rounded bg-white text-indigo-600 
-				hover:bg-indigo-600 hover:text-white border border-indigo-500 hover:cursor-pointer"
+					className="btn-sm text-xs rounded bg-white text-blue-600 
+				hover:bg-blue-600 hover:text-white border border-blue-500 hover:cursor-pointer"
 				>
 					<BsCardImage size={20} />
 					<span className="ml-2  hover:cursor-pointer">Select Image</span>
@@ -221,9 +221,9 @@ function ImageProperties() {
 						/>
 						<div>{imageBlob.name}</div>
 						<button
-							className="btn-sm text-xs  bg-white text-indigo-600 
-										hover:bg-indigo-600 hover:text-white border 
-										border-indigo-500 hover:cursor-pointer
+							className="btn-sm text-xs  bg-white text-blue-600 
+										hover:bg-blue-600 hover:text-white border 
+										border-blue-500 hover:cursor-pointer
 											w-1/3 rounded btn-primary mt-2 mb-3"
 							onClick={() => setImage(image)}
 						>

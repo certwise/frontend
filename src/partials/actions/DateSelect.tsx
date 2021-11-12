@@ -109,7 +109,7 @@ function DateSelect() {
 								key={option.id}
 								tabIndex={0}
 								className={`flex items-center w-full hover:bg-gray-50 py-1 px-3 cursor-pointer ${
-									option.id === selected && "text-indigo-500"
+									option.id === selected && "text-blue-500"
 								}`}
 								onClick={() => {
 									setSelected(option.id);
@@ -117,7 +117,7 @@ function DateSelect() {
 								}}
 							>
 								<svg
-									className={`flex-shrink-0 mr-2 fill-current text-indigo-500 ${
+									className={`flex-shrink-0 mr-2 fill-current text-blue-500 ${
 										option.id !== selected && "invisible"
 									}`}
 									width="12"

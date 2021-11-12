@@ -103,7 +103,7 @@ function Onboarding2() {
 										<ul className="relative flex justify-between w-full">
 											<li>
 												<Link
-													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white"
+													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-blue-500 text-white"
 													to="/onboard-organization"
 												>
 													1
@@ -225,7 +225,7 @@ function Onboarding2() {
 											&lt;- Back
 										</Link>
 										<button
-											className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-auto"
+											className="btn bg-blue-500 hover:bg-blue-600 text-white ml-auto"
 											//to="/onboard"
 											onClick={(e) => createInstitution(e)}
 										>

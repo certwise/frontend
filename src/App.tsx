@@ -12,7 +12,9 @@ import { signIn } from "./store";
 import Context from "./store/context";
 import { user } from "./store/auth/types";
 import { getUser } from "./api/userQueries";
+import { ReactQueryDevtools } from "react-query/devtools";
 const queryClient = new QueryClient();
+
 function App() {
 	const { store, dispatch } = useContext(Context);
 	const location = useLocation();
@@ -57,6 +59,7 @@ function App() {
 						{store.user.uid === "" && <HomeRoutes user={store.user} />}
 					</>
 				)}
+				<ReactQueryDevtools initialIsOpen={false} />
 			</QueryClientProvider>
 		</>
 	);

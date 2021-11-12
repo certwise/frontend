@@ -12,14 +12,14 @@ function AnalyticsCard08() {
 				label: "Sessions By Device",
 				data: [12, 50, 38],
 				backgroundColor: [
-					(tailwindConfig() as any).theme.colors.indigo[500],
+					(tailwindConfig() as any).theme.colors.blue[500],
 					(tailwindConfig() as any).theme.colors["light-blue"][400],
-					(tailwindConfig() as any).theme.colors.indigo[800],
+					(tailwindConfig() as any).theme.colors.blue[800],
 				],
 				hoverBackgroundColor: [
-					(tailwindConfig() as any).theme.colors.indigo[600],
+					(tailwindConfig() as any).theme.colors.blue[600],
 					(tailwindConfig() as any).theme.colors["light-blue"][500],
-					(tailwindConfig() as any).theme.colors.indigo[900],
+					(tailwindConfig() as any).theme.colors.blue[900],
 				],
 				hoverBorderColor: (tailwindConfig() as any).theme.colors.white,
 			},

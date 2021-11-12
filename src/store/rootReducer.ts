@@ -4,7 +4,8 @@ import { user as authState } from "./auth/types";
 import { certificatesState } from "./certificates/initialState";
 import templates from "./templates/reducer";
 import { templatesState } from "./templates/types";
-
+import recipients from "./recipients/reducer";
+import { recipientsState } from "./recipients/types";
 const combineReducers = (slices: any) => (state: any, action: action) =>
 	Object.keys(slices).reduce(
 		// use for..in loop, if you prefer it
@@ -45,6 +46,7 @@ const reducers = {
 	app,
 	templates,
 	user,
+	recipients,
 };
 
 const rootReducer = combineReducers(reducers);
@@ -61,4 +63,5 @@ export type globalState = {
 	templates: templatesState;
 	user: authState;
 	certificates: certificatesState;
+	recipients: recipientsState;
 };

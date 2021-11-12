@@ -1,47 +1,49 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { focusHandling } from "cruip-js-toolkit";
 import Customer from "./RecipientTableItem";
 import ModalBasic from "../../components/ui/ModalBasic";
-
-function CustomersTable({ selectedItems, recipients }: any) {
-	const [selectAll, setSelectAll] = useState<any>(false);
-	const [isCheck, setIsCheck] = useState<any>([]);
+import {
+	useGetInstitution,
+	useSetCustomFields,
+} from "../../api/recipientQueries";
+import Context from "../../store/context";
+function RecipientsTable({ recipients }: { recipients: string[] }) {
+	const { store, dispatch } = useContext(Context);
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
-	const [customField, setcustomField] = useState("");
-	console.log("1920 list", recipients);
-	const list = recipients;
-	const setCustomFields = () => {};
+	const [customFieldName, setCustomFieldName] = useState("");
+	const institute = useGetInstitution(store.user.institution);
+	const setCustomField = useSetCustomFields();
+	const setCustomFields = () => {
+		const iId = store.user.institution;
+		if (institute.data?.data.customFields) {
+			const newFields = [
+				...institute.data?.data.customFields,
+				{ name: customFieldName },
+			];
+			setCustomField.mutate({
+				institutionId: iId,
+				customFields: newFields,
+			});
+		} else {
+			setCustomField.mutate({
+				institutionId: iId,
+				customFields: [{ name: customFieldName }],
+			});
+		}
+		setBasicModalOpen(false);
+	};
 	useEffect(() => {
 		focusHandling();
-	}, [list]);
-
-	const handleSelectAll = () => {
-		setSelectAll(!selectAll);
-		setIsCheck(list.map((li: any) => li.id));
-		if (selectAll) {
-			setIsCheck([]);
-		}
-	};
-
-	const handleClick = (e: any) => {
-		const { id, checked } = e.target;
-		setSelectAll(false);
-		setIsCheck([...isCheck, id]);
-		if (!checked) {
-			setIsCheck(isCheck.filter((item: any) => item !== id));
-		}
-	};
-
-	useEffect(() => {
-		selectedItems(isCheck);
-	}, [isCheck]);
+	}, [recipients]);
 
 	return (
 		<div className="bg-white shadow-lg rounded-sm border border-gray-200 relative">
 			<header className="px-5 py-4">
 				<h2 className="font-semibold text-gray-800">
 					All Recipients{" "}
-					<span className="text-gray-400 font-medium">{list.length || 0}</span>
+					<span className="text-gray-400 font-medium">
+						{recipients.length || 0}
+					</span>
 				</h2>
 			</header>
 			<div>
@@ -57,8 +59,19 @@ function CustomersTable({ selectedItems, recipients }: any) {
 										<input
 											className="form-checkbox"
 											type="checkbox"
-											checked={selectAll}
-											onChange={handleSelectAll}
+											onChange={(e) => {
+												e.target.checked &&
+													dispatch({
+														type: "SET_SELECTED_RECIPIENTS",
+														payload: recipients,
+													});
+												!e.target.checked &&
+													dispatch({
+														type: "SET_SELECTED_RECIPIENTS",
+														payload: [],
+													});
+											}}
+											//checked={selectAll}
 										/>
 									</label>
 								</div>
@@ -72,16 +85,23 @@ function CustomersTable({ selectedItems, recipients }: any) {
 							<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 								<div className="font-semibold text-left">Email</div>
 							</th>
-							<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-								<div className="font-semibold">No. of certificates</div>
-							</th>
-							{}
+
+							{institute.data?.data.customFields &&
+								institute.data?.data.customFields.map((field: any) => (
+									<th
+										className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap "
+										key={field.name}
+									>
+										<div className="font-semibold text-left">{field.name}</div>
+									</th>
+								))}
 							<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
 								<button
-									onClick={() => {
-										alert("SetCustomFields");
+									onClick={(e) => {
+										e.stopPropagation();
+										setBasicModalOpen(true);
 									}}
-									className="flex flex-row hover:text-indigo-500"
+									className="flex flex-row hover:text-blue-500"
 								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -106,13 +126,20 @@ function CustomersTable({ selectedItems, recipients }: any) {
 						</thead>
 						{/* Table body */}
 						<tbody className="text-sm divide-y divide-gray-200">
-							{list.map((customer: any) => {
-								console.log("1920 Cus", customer);
-								return <Customer key={customer} id={customer} />;
-							})}
+							{recipients &&
+								recipients.map((recipient, i: number) => {
+									return (
+										<Customer
+											key={recipient}
+											id={recipient}
+											customFields={institute.data?.data.customFields}
+										/>
+									);
+								})}
 						</tbody>
 					</table>
 				</div>
+
 				<ModalBasic
 					id="basic-modal"
 					modalOpen={basicModalOpen}
@@ -122,9 +149,6 @@ function CustomersTable({ selectedItems, recipients }: any) {
 					{/* Modal content */}
 					<div className="px-5 pt-4 pb-1">
 						<div className="text-sm">
-							{/* <div className="font-medium text-gray-800 mb-2">
-										Add a new recipient:
-									</div> */}
 							<div className="space-y-2">
 								<div>
 									{/* Start */}
@@ -139,7 +163,7 @@ function CustomersTable({ selectedItems, recipients }: any) {
 											id="default"
 											className="form-input w-full"
 											type="text"
-											onChange={(e) => setcustomField(e.target.value)}
+											onChange={(e) => setCustomFieldName(e.target.value)}
 										/>
 									</div>
 									{/* End */}
@@ -161,9 +185,9 @@ function CustomersTable({ selectedItems, recipients }: any) {
 							</button>
 							<button
 								onClick={() => setCustomFields()}
-								className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+								className="btn-sm bg-blue-500 hover:bg-blue-600 text-white"
 							>
-								Create New Recipient
+								Add new field
 							</button>
 						</div>
 					</div>
@@ -173,4 +197,4 @@ function CustomersTable({ selectedItems, recipients }: any) {
 	);
 }
 
-export default CustomersTable;
+export default RecipientsTable;

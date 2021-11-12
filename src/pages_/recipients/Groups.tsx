@@ -5,7 +5,12 @@ import Header from "../../partials/Header";
 import SearchForm from "../../partials/actions/SearchForm";
 import TeamTilesCard from "../../partials/team/TeamTilesCard";
 import PaginationNumeric from "../../partials/PaginationNumeric";
-import { group, useGetGroup, useGetGroups } from "../../api/groupQueries";
+import {
+	group,
+	useCreateGroup,
+	useGetGroup,
+	useGetGroups,
+} from "../../api/groupQueries";
 import Context from "../../store/context";
 import { useContext } from "react";
 import ModalBasic from "../../components/ui/ModalBasic";
@@ -20,18 +25,8 @@ function Groups() {
 		description: "",
 	});
 	const { data, refetch } = useGetGroups(store.user.institution);
-	// const items = [
-	// 	{
-	// 		id: 0,
-	// 		name: "18BCS Coursera",
-	// 		link: "#0",
-	// 		location: "🇮🇳",
-	// 		content:
-	// 			"Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover.",
-	// 	},
-	// ];
+	const create = useCreateGroup();
 	const items = data?.data;
-	console.log("1920 items:", items);
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 	const createNewGroup = () => {
 		const group: group = {
@@ -42,11 +37,11 @@ function Groups() {
 			recipients: [],
 			institution: store.user.institution,
 		};
-		axios.post(env.url + "/group", group).then((res) => {
-			console.log(res);
-			setBasicModalOpen(false);
-			refetch();
-		});
+		// axios.post(env.url + "/group", group).then((res) => {
+		// 	setBasicModalOpen(false);
+		// 	refetch();
+		// });
+		create.mutate(group);
 	};
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -76,7 +71,7 @@ function Groups() {
 								{/* Add member button */}
 
 								<button
-									className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
+									className="btn bg-blue-500 hover:bg-blue-600 text-white"
 									onClick={(e) => {
 										e.stopPropagation();
 										setBasicModalOpen(true);
@@ -163,12 +158,18 @@ function Groups() {
 									>
 										Cancel
 									</button>
-									<button
-										onClick={() => createNewGroup()}
-										className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
-									>
-										Create New Group
-									</button>
+									{!create.isLoading ? (
+										<button
+											onClick={() => createNewGroup()}
+											className="btn-sm bg-blue-500 hover:bg-blue-600 text-white"
+										>
+											Create New Group
+										</button>
+									) : (
+										<button className="btn-sm bg-blue-300 text-white">
+											Create New Group
+										</button>
+									)}
 								</div>
 							</div>
 						</ModalBasic>

@@ -91,7 +91,7 @@ function TeamTabsCard(props: any) {
 				{/* Card footer */}
 				<div className="border-t border-gray-200">
 					<Link
-						className="block text-center text-sm text-indigo-500 hover:text-indigo-600 font-medium px-3 py-4"
+						className="block text-center text-sm text-blue-500 hover:text-blue-600 font-medium px-3 py-4"
 						to="/messages"
 					>
 						<div className="flex items-center justify-center">

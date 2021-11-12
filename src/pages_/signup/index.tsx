@@ -204,14 +204,14 @@ function Signup() {
 											</label>
 										</div>
 										{/* <Link
-										className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap"
+										className="btn bg-blue-500 hover:bg-blue-600 text-white ml-3 whitespace-nowrap"
 										to="/onboard-organization"
 
 									>
 										Next
 									</Link> */}
 										<button
-											className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap"
+											className="btn bg-blue-500 hover:bg-blue-600 text-white ml-3 whitespace-nowrap"
 											onClick={(e) => signUp(e)}
 										>
 											SignUp
@@ -219,7 +219,7 @@ function Signup() {
 									</div>
 									<button
 										onClick={(e) => signUpGoogle(e)}
-										className="btn font-medium text-white bg-indigo-500 hover:bg-indigo-600 flex p-2 mt-2 rounded-lg justify-center align-middle"
+										className="btn font-medium text-white bg-blue-500 hover:bg-blue-600 flex p-2 mt-2 rounded-lg justify-center align-middle"
 									>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -246,7 +246,7 @@ function Signup() {
 									<div className="text-sm">
 										Have an account?{" "}
 										<Link
-											className="font-medium text-indigo-500 hover:text-indigo-600"
+											className="font-medium text-blue-500 hover:text-blue-600"
 											to="/signin"
 										>
 											Sign In

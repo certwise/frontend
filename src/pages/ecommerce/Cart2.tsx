@@ -28,7 +28,7 @@ function Cart2() {
 										<div className="flex text-sm font-medium text-gray-400 space-x-2">
 											<span className="text-gray-500">Review</span>
 											<span>-&gt;</span>
-											<span className="text-indigo-500">Payment</span>
+											<span className="text-blue-500">Payment</span>
 											<span>-&gt;</span>
 											<span className="text-gray-500">Confirm</span>
 										</div>
@@ -190,7 +190,7 @@ function Cart2() {
 
 											<div className="mt-6">
 												<div className="mb-4">
-													<button className="btn w-full bg-indigo-500 hover:bg-indigo-600 text-white">
+													<button className="btn w-full bg-blue-500 hover:bg-blue-600 text-white">
 														Pay $253.00
 													</button>
 												</div>

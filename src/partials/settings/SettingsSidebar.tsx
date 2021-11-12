@@ -18,12 +18,12 @@ function SettingsSidebar() {
 							exact
 							to="/account"
 							className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${
-								pathname.includes("/account/account") && "bg-indigo-50"
+								pathname.includes("/account/account") && "bg-blue-50"
 							}`}
 						>
 							<svg
 								className={`w-4 h-4 flex-shrink-0 fill-current text-gray-400 mr-2 ${
-									pathname.includes("/account/account") && "text-indigo-400"
+									pathname.includes("/account/account") && "text-blue-400"
 								}`}
 								viewBox="0 0 16 16"
 							>
@@ -32,7 +32,7 @@ function SettingsSidebar() {
 							<span
 								className={`text-sm font-medium ${
 									pathname.includes("/account/account")
-										? "text-indigo-500"
+										? "text-blue-500"
 										: "hover:text-gray-700"
 								}`}
 							>
@@ -45,13 +45,12 @@ function SettingsSidebar() {
 							exact
 							to="/account/notifications"
 							className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${
-								pathname.includes("/account/notifications") && "bg-indigo-50"
+								pathname.includes("/account/notifications") && "bg-blue-50"
 							}`}
 						>
 							<svg
 								className={`w-4 h-4 flex-shrink-0 fill-current text-gray-400 mr-2 ${
-									pathname.includes("/account/notifications") &&
-									"text-indigo-400"
+									pathname.includes("/account/notifications") && "text-blue-400"
 								}`}
 								viewBox="0 0 16 16"
 							>
@@ -60,7 +59,7 @@ function SettingsSidebar() {
 							<span
 								className={`text-sm font-medium ${
 									pathname.includes("/account/notifications")
-										? "text-indigo-500"
+										? "text-blue-500"
 										: "hover:text-gray-700"
 								}`}
 							>
@@ -73,12 +72,12 @@ function SettingsSidebar() {
 							exact
 							to="/account/apps"
 							className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${
-								pathname.includes("/account/apps") && "bg-indigo-50"
+								pathname.includes("/account/apps") && "bg-blue-50"
 							}`}
 						>
 							<svg
 								className={`w-4 h-4 flex-shrink-0 fill-current text-gray-400 mr-2 ${
-									pathname.includes("/account/apps") && "text-indigo-400"
+									pathname.includes("/account/apps") && "text-blue-400"
 								}`}
 								viewBox="0 0 16 16"
 							>
@@ -87,7 +86,7 @@ function SettingsSidebar() {
 							<span
 								className={`text-sm font-medium ${
 									pathname.includes("/account/apps")
-										? "text-indigo-500"
+										? "text-blue-500"
 										: "hover:text-gray-700"
 								}`}
 							>
@@ -100,12 +99,12 @@ function SettingsSidebar() {
 							exact
 							to="/account/plans"
 							className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${
-								pathname.includes("/account/plans") && "bg-indigo-50"
+								pathname.includes("/account/plans") && "bg-blue-50"
 							}`}
 						>
 							<svg
 								className={`w-4 h-4 flex-shrink-0 fill-current text-gray-400 mr-2 ${
-									pathname.includes("/account/plans") && "text-indigo-400"
+									pathname.includes("/account/plans") && "text-blue-400"
 								}`}
 								viewBox="0 0 16 16"
 							>
@@ -114,7 +113,7 @@ function SettingsSidebar() {
 							<span
 								className={`text-sm font-medium ${
 									pathname.includes("/account/plans")
-										? "text-indigo-500"
+										? "text-blue-500"
 										: "hover:text-gray-700"
 								}`}
 							>
@@ -127,12 +126,12 @@ function SettingsSidebar() {
 							exact
 							to="/account/billing"
 							className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${
-								pathname.includes("/account/billing") && "bg-indigo-50"
+								pathname.includes("/account/billing") && "bg-blue-50"
 							}`}
 						>
 							<svg
 								className={`w-4 h-4 flex-shrink-0 fill-current text-gray-400 mr-2 ${
-									pathname.includes("/account/billing") && "text-indigo-400"
+									pathname.includes("/account/billing") && "text-blue-400"
 								}`}
 								viewBox="0 0 16 16"
 							>
@@ -141,7 +140,7 @@ function SettingsSidebar() {
 							<span
 								className={`text-sm font-medium ${
 									pathname.includes("/account/billing")
-										? "text-indigo-500"
+										? "text-blue-500"
 										: "hover:text-gray-700"
 								}`}
 							>
@@ -162,12 +161,12 @@ function SettingsSidebar() {
 							exact
 							to="/account/feedback"
 							className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${
-								pathname.includes("/account/feedback") && "bg-indigo-50"
+								pathname.includes("/account/feedback") && "bg-blue-50"
 							}`}
 						>
 							<svg
 								className={`w-4 h-4 flex-shrink-0 fill-current text-gray-400 mr-2 ${
-									pathname.includes("/account/feedback") && "text-indigo-400"
+									pathname.includes("/account/feedback") && "text-blue-400"
 								}`}
 								viewBox="0 0 16 16"
 							>
@@ -176,7 +175,7 @@ function SettingsSidebar() {
 							<span
 								className={`text-sm font-medium ${
 									pathname.includes("/account/feedback")
-										? "text-indigo-500"
+										? "text-blue-500"
 										: "hover:text-gray-700"
 								}`}
 							>

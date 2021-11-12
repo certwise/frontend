@@ -8,32 +8,37 @@ const createRecipient = (recipient: recipient) => {
 };
 
 const getRecipient = (id: string) => {
-	console.log("Recipient query");
 	return axios.get(`${env.url}/recipient/${id}`);
 };
 
-const getRecipients = (id: string) => {
-	console.log("Recipient querys");
+const getInstitution = (id: string) => {
 	return axios.get(`${env.url}/institution/${id}`);
 };
-
+const setCustomFields = (institutionId: string, customFields: any) => {
+	console.log("Func", institutionId, customFields);
+	return axios.put(`${env.url}/institution/customFields`, {
+		fields: customFields,
+		institutionId,
+	});
+};
+const editRecipient = (recipient: any) => {
+	return axios.put(`${env.url}/recipient`, recipient);
+};
 export const useCreateRecipient = () => {
 	const query = useQueryClient();
 	return useMutation(createRecipient, {
 		onSuccess: () => {
-			query.invalidateQueries("recipients");
+			query.invalidateQueries("institute");
 		},
 	});
 };
 
-export const useGetRecipients = (id: string) => {
-	return useQuery("recipients", () => getRecipients(id), {
+export const useGetInstitution = (id: string) => {
+	return useQuery("institute", () => getInstitution(id), {
 		refetchOnMount: false,
 		refetchOnReconnect: false,
 		retryOnMount: false,
-		onSuccess: (data) => {
-			console.log("Frp, useQuery gRs:", data.data.recipients);
-		},
+		onSuccess: (data) => {},
 		refetchOnWindowFocus: false,
 	});
 };
@@ -48,18 +53,25 @@ export const useGetRecipient = (id: string) => {
 	});
 };
 
-const setCustomFields = (instituteId: string, customFields: any) => {
-	return axios.put(`${env.url}/institution/customFields`, {
-		customFields,
-		instituteId,
-	});
+export const useSetCustomFields = () => {
+	const query = useQueryClient();
+	return useMutation(
+		(data: { institutionId: string; customFields: Array<{ name: string }> }) =>
+			setCustomFields(data.institutionId, data.customFields),
+		{
+			onSuccess: () => {
+				query.invalidateQueries("institute");
+				console.log("Success	");
+			},
+		}
+	);
 };
 
-// export const useSetCustomFields = (instituteId: string, customFields: any) => {
-// 	const query = useQueryClient();
-// 	return useMutation(setCustomFields, {
-// 		onSuccess: () => {
-// 			query.invalidateQueries("institutes");
-// 		},
-// 	});
-// };
+export const useEditRecipient = () => {
+	const query = useQueryClient();
+	return useMutation(editRecipient, {
+		onSuccess: (data) => {
+			query.invalidateQueries(["recipient", data.data]);
+		},
+	});
+};

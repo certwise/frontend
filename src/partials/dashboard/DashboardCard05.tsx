@@ -80,13 +80,12 @@ function DashboardCard05() {
 				backgroundColor: `rgba(${hexToRGB(
 					(tailwindConfig() as any).theme.colors.blue[500]
 				)}, 0.08)`,
-				borderColor: (tailwindConfig() as any).theme.colors.indigo[500],
+				borderColor: (tailwindConfig() as any).theme.colors.blue[500],
 				borderWidth: 2,
 				tension: 0,
 				pointRadius: 0,
 				pointHoverRadius: 3,
-				pointBackgroundColor: (tailwindConfig() as any).theme.colors
-					.indigo[500],
+				pointBackgroundColor: (tailwindConfig() as any).theme.colors.blue[500],
 				clip: 20,
 			},
 		],

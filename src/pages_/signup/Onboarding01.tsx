@@ -66,7 +66,7 @@ function Onboarding1() {
 										<ul className="relative flex justify-between w-full">
 											<li>
 												<Link
-													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-indigo-500 text-white"
+													className="flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold bg-blue-500 text-white"
 													to="/onboard-organization"
 												>
 													1
@@ -115,22 +115,22 @@ function Onboarding1() {
 													viewBox="0 0 24 24"
 												>
 													<path
-														className="text-indigo-500"
+														className="text-blue-500"
 														d="m12 10.856 9-5-8.514-4.73a1 1 0 0 0-.972 0L3 5.856l9 5Z"
 													/>
 													<path
-														className="text-indigo-300"
+														className="text-blue-300"
 														d="m11 12.588-9-5V18a1 1 0 0 0 .514.874L11 23.588v-11Z"
 													/>
 													<path
-														className="text-indigo-200"
+														className="text-blue-200"
 														d="M13 12.588v11l8.486-4.714A1 1 0 0 0 22 18V7.589l-9 4.999Z"
 													/>
 												</svg>
 												<span>I am an academic institution's admin</span>
 											</div>
 											<div
-												className="absolute inset-0 border-2 border-transparent peer-checked:border-indigo-400 rounded pointer-events-none"
+												className="absolute inset-0 border-2 border-transparent peer-checked:border-blue-400 rounded pointer-events-none"
 												aria-hidden="true"
 											></div>
 										</label>
@@ -146,11 +146,11 @@ function Onboarding1() {
 													viewBox="0 0 24 24"
 												>
 													<path
-														className="text-indigo-500"
+														className="text-blue-500"
 														d="m12 10.856 9-5-8.514-4.73a1 1 0 0 0-.972 0L3 5.856l9 5Z"
 													/>
 													<path
-														className="text-indigo-300"
+														className="text-blue-300"
 														d="m11 12.588-9-5V18a1 1 0 0 0 .514.874L11 23.588v-11Z"
 													/>
 												</svg>
@@ -160,7 +160,7 @@ function Onboarding1() {
 												</span>
 											</div>
 											<div
-												className="absolute inset-0 border-2 border-transparent peer-checked:border-indigo-400 rounded pointer-events-none"
+												className="absolute inset-0 border-2 border-transparent peer-checked:border-blue-400 rounded pointer-events-none"
 												aria-hidden="true"
 											></div>
 										</label>
@@ -176,7 +176,7 @@ function Onboarding1() {
 													viewBox="0 0 24 24"
 												>
 													<path
-														className="text-indigo-500"
+														className="text-blue-500"
 														d="m12 10.856 9-5-8.514-4.73a1 1 0 0 0-.972 0L3 5.856l9 5Z"
 													/>
 												</svg>
@@ -186,7 +186,7 @@ function Onboarding1() {
 												</span>
 											</div>
 											<div
-												className="absolute inset-0 border-2 border-transparent peer-checked:border-indigo-400 rounded pointer-events-none"
+												className="absolute inset-0 border-2 border-transparent peer-checked:border-blue-400 rounded pointer-events-none"
 												aria-hidden="true"
 											></div>
 										</label>
@@ -202,29 +202,29 @@ function Onboarding1() {
 													viewBox="0 0 24 24"
 												>
 													<path
-														className="text-indigo-400"
+														className="text-blue-400"
 														d="m12 10.856 9-5-8.514-4.73a1 1 0 0 0-.972 0L3 5.856l9 5Z"
 													/>
 													<path
-														className="text-indigo-400"
+														className="text-blue-400"
 														d="m11 12.588-9-5V18a1 1 0 0 0 .514.874L11 23.588v-11Z"
 													/>
 													<path
-														className="text-indigo-400"
+														className="text-blue-400"
 														d="M13 12.588v11l8.486-4.714A1 1 0 0 0 22 18V7.589l-9 4.999Z"
 													/>
 												</svg>
 												<span>Other</span>
 											</div>
 											<div
-												className="absolute inset-0 border-2 border-transparent peer-checked:border-indigo-400 rounded pointer-events-none"
+												className="absolute inset-0 border-2 border-transparent peer-checked:border-blue-400 rounded pointer-events-none"
 												aria-hidden="true"
 											></div>
 										</label>
 									</div>
 									<div className="flex items-center justify-between">
 										<Link
-											className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-auto"
+											className="btn bg-blue-500 hover:bg-blue-600 text-white ml-auto"
 											to="/onboard-organization-details"
 										>
 											Next Step -&gt;

@@ -52,12 +52,12 @@ function Chart01() {
 						backgroundColor: `rgba(${hexToRGB(
 							fullConfig?.theme.colors.blue[500]
 						)}, 0.08)`,
-						borderColor: fullConfig?.theme.colors.indigo[500],
+						borderColor: fullConfig?.theme.colors.blue[500],
 						borderWidth: 2,
 						tension: 0,
 						pointRadius: 0,
 						pointHoverRadius: 3,
-						pointBackgroundColor: fullConfig?.theme.colors.indigo[500],
+						pointBackgroundColor: fullConfig?.theme.colors.blue[500],
 					},
 					// Gray line
 					{

@@ -19,9 +19,8 @@ function AnalyticsCard03() {
 			{
 				label: "Direct",
 				data: [5000, 4000, 4000, 3800, 5200, 5100],
-				backgroundColor: (tailwindConfig() as any).theme.colors.indigo[700],
-				hoverBackgroundColor: (tailwindConfig() as any).theme.colors
-					.indigo[800],
+				backgroundColor: (tailwindConfig() as any).theme.colors.blue[700],
+				hoverBackgroundColor: (tailwindConfig() as any).theme.colors.blue[800],
 				barPercentage: 0.66,
 				categoryPercentage: 0.66,
 			},
@@ -29,9 +28,8 @@ function AnalyticsCard03() {
 			{
 				label: "Referral",
 				data: [2500, 2600, 4000, 4000, 4800, 3500],
-				backgroundColor: (tailwindConfig() as any).theme.colors.indigo[500],
-				hoverBackgroundColor: (tailwindConfig() as any).theme.colors
-					.indigo[600],
+				backgroundColor: (tailwindConfig() as any).theme.colors.blue[500],
+				hoverBackgroundColor: (tailwindConfig() as any).theme.colors.blue[600],
 				barPercentage: 0.66,
 				categoryPercentage: 0.66,
 			},
@@ -39,9 +37,8 @@ function AnalyticsCard03() {
 			{
 				label: "Organic Search",
 				data: [2300, 2000, 3100, 2700, 1300, 2600],
-				backgroundColor: (tailwindConfig() as any).theme.colors.indigo[300],
-				hoverBackgroundColor: (tailwindConfig() as any).theme.colors
-					.indigo[400],
+				backgroundColor: (tailwindConfig() as any).theme.colors.blue[300],
+				hoverBackgroundColor: (tailwindConfig() as any).theme.colors.blue[400],
 				barPercentage: 0.66,
 				categoryPercentage: 0.66,
 			},
@@ -49,9 +46,8 @@ function AnalyticsCard03() {
 			{
 				label: "Social",
 				data: [4800, 4200, 4800, 1800, 3300, 3500],
-				backgroundColor: (tailwindConfig() as any).theme.colors.indigo[100],
-				hoverBackgroundColor: (tailwindConfig() as any).theme.colors
-					.indigo[200],
+				backgroundColor: (tailwindConfig() as any).theme.colors.blue[100],
+				hoverBackgroundColor: (tailwindConfig() as any).theme.colors.blue[200],
 				barPercentage: 0.66,
 				categoryPercentage: 0.66,
 			},

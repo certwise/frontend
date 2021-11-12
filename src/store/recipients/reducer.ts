@@ -1,15 +1,18 @@
 import { action } from "..";
-import { certificatesState } from "./initialState";
 import * as types from "./types";
 
-const reducer = (state: certificatesState, action: action) => {
+const reducer = (state: types.recipientsState, action: action) => {
 	switch (action.type) {
-		case types.SET_CURRENT_CERTIFICATE:
+		case "SET_RECIPIENTS":
 			return {
 				...state,
-				currentCertificate: action.payload,
+				recipients: action.payload,
 			};
-
+		case "SET_SELECTED_RECIPIENTS":
+			return {
+				...state,
+				selected: action.payload,
+			};
 		default:
 			return state;
 	}

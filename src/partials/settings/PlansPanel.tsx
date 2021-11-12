@@ -230,12 +230,12 @@ function PlansPanel() {
 							{/* Tab 3 */}
 							<div className="relative col-span-full xl:col-span-4 bg-white shadow-md rounded-sm border border-gray-200">
 								<div
-									className="absolute top-0 left-0 right-0 h-0.5 bg-indigo-500"
+									className="absolute top-0 left-0 right-0 h-0.5 bg-blue-500"
 									aria-hidden="true"
 								></div>
 								<div className="px-5 pt-5 pb-6 border-b border-gray-200">
 									<header className="flex items-center mb-2">
-										<div className="w-6 h-6 rounded-full flex-shrink-0 bg-gradient-to-tr from-indigo-500 to-indigo-300 mr-3">
+										<div className="w-6 h-6 rounded-full flex-shrink-0 bg-gradient-to-tr from-blue-500 to-blue-300 mr-3">
 											<svg
 												className="w-6 h-6 fill-current text-white"
 												viewBox="0 0 24 24"
@@ -260,7 +260,7 @@ function PlansPanel() {
 										</span>
 									</div>
 									{/* CTA */}
-									<button className="btn bg-indigo-500 hover:bg-indigo-600 text-white w-full">
+									<button className="btn bg-blue-500 hover:bg-blue-600 text-white w-full">
 										Upgrade
 									</button>
 								</div>
@@ -333,11 +333,11 @@ function PlansPanel() {
 
 				{/* Contact Sales */}
 				<section>
-					<div className="px-5 py-3 bg-indigo-50 border border-indigo-100 rounded-sm text-center xl:text-left xl:flex xl:flex-wrap xl:justify-between xl:items-center">
+					<div className="px-5 py-3 bg-blue-50 border border-blue-100 rounded-sm text-center xl:text-left xl:flex xl:flex-wrap xl:justify-between xl:items-center">
 						<div className="text-gray-800 font-semibold mb-2 xl:mb-0">
 							Looking for different configurations?
 						</div>
-						<button className="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+						<button className="btn bg-blue-500 hover:bg-blue-600 text-white">
 							Contact Sales
 						</button>
 					</div>
@@ -377,7 +377,7 @@ function PlansPanel() {
 								qui officia deserunt mollit anim id est laborum in voluptate
 								velit esse cillum dolore eu fugiat{" "}
 								<a
-									className="font-medium text-indigo-500 hover:text-indigo-600"
+									className="font-medium text-blue-500 hover:text-blue-600"
 									href="#0"
 								>
 									contact us
@@ -396,7 +396,7 @@ function PlansPanel() {
 						<button className="btn border-gray-200 hover:border-gray-300 text-gray-600">
 							Cancel
 						</button>
-						<button className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3">
+						<button className="btn bg-blue-500 hover:bg-blue-600 text-white ml-3">
 							Save Changes
 						</button>
 					</div>

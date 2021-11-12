@@ -20,9 +20,8 @@ function DashboardCard09() {
 			{
 				label: "Stack 1",
 				data: [6200, 9200, 6600, 8800, 5200, 9200],
-				backgroundColor: (tailwindConfig() as any).theme.colors.indigo[500],
-				hoverBackgroundColor: (tailwindConfig() as any).theme.colors
-					.indigo[600],
+				backgroundColor: (tailwindConfig() as any).theme.colors.blue[500],
+				hoverBackgroundColor: (tailwindConfig() as any).theme.colors.blue[600],
 				barPercentage: 0.66,
 				categoryPercentage: 0.66,
 			},
@@ -30,9 +29,8 @@ function DashboardCard09() {
 			{
 				label: "Stack 2",
 				data: [-4000, -2600, -5350, -4000, -7500, -2000],
-				backgroundColor: (tailwindConfig() as any).theme.colors.indigo[200],
-				hoverBackgroundColor: (tailwindConfig() as any).theme.colors
-					.indigo[300],
+				backgroundColor: (tailwindConfig() as any).theme.colors.blue[200],
+				hoverBackgroundColor: (tailwindConfig() as any).theme.colors.blue[300],
 				barPercentage: 0.66,
 				categoryPercentage: 0.66,
 			},

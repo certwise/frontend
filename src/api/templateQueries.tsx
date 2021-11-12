@@ -45,7 +45,6 @@ export const useCreateTemplateQuery = () => {
 	const query = useQueryClient();
 	return useMutation(createTemplate, {
 		onSuccess: (data) => {
-			console.log("Successfully created template", data);
 			query.invalidateQueries("templates");
 		},
 	});

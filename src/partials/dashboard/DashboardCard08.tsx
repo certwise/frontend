@@ -42,14 +42,13 @@ function DashboardCard08() {
 					73, 64, 73, 69, 104, 104, 164, 164, 120, 120, 120, 148, 142, 104, 122,
 					110, 104, 152, 166, 233, 268, 252, 284, 284, 333, 323,
 				],
-				borderColor: (tailwindConfig() as any).theme.colors.indigo[500],
+				borderColor: (tailwindConfig() as any).theme.colors.blue[500],
 				fill: false,
 				borderWidth: 2,
 				tension: 0,
 				pointRadius: 0,
 				pointHoverRadius: 3,
-				pointBackgroundColor: (tailwindConfig() as any).theme.colors
-					.indigo[500],
+				pointBackgroundColor: (tailwindConfig() as any).theme.colors.blue[500],
 			},
 			// Blue line
 			{

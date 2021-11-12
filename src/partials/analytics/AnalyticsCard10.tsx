@@ -13,7 +13,7 @@ function AnalyticsCard10() {
 				data: [500, 326, 242],
 				backgroundColor: [
 					`rgba(${hexToRGB(
-						(tailwindConfig() as any).theme.colors.indigo[500]
+						(tailwindConfig() as any).theme.colors.blue[500]
 					)}, 0.8)`,
 					`rgba(${hexToRGB(
 						(tailwindConfig() as any).theme.colors["light-blue"][400]
@@ -24,7 +24,7 @@ function AnalyticsCard10() {
 				],
 				hoverBackgroundColor: [
 					`rgba(${hexToRGB(
-						(tailwindConfig() as any).theme.colors.indigo[600]
+						(tailwindConfig() as any).theme.colors.blue[600]
 					)}, 0.8)`,
 					`rgba(${hexToRGB(
 						(tailwindConfig() as any).theme.colors["light-blue"][500]

@@ -15,6 +15,10 @@ const initialState: globalState = {
 		certificates: [],
 		currentCertificate: null,
 	},
+	recipients: {
+		recipients: [],
+		selected: [],
+	},
 };
 
 const Context = createContext<{

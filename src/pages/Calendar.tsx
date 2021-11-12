@@ -51,7 +51,7 @@ function Calendar() {
 				7
 			),
 			eventName: "⛱️ Relax for 2 at Marienbad",
-			eventColor: "indigo",
+			eventColor: "blue",
 		},
 		{
 			eventStart: new Date(
@@ -106,7 +106,7 @@ function Calendar() {
 			),
 			eventEnd: "",
 			eventName: "Reservation at La Ginestre",
-			eventColor: "indigo",
+			eventColor: "blue",
 		},
 		{
 			eventStart: new Date(
@@ -192,7 +192,7 @@ function Calendar() {
 			),
 			eventEnd: "",
 			eventName: "Reservation at La Ginestre",
-			eventColor: "indigo",
+			eventColor: "blue",
 		},
 		{
 			eventStart: new Date(
@@ -208,7 +208,7 @@ function Calendar() {
 				11
 			),
 			eventName: "⛱️ Relax for 2 at Marienbad",
-			eventColor: "indigo",
+			eventColor: "blue",
 		},
 		{
 			eventStart: new Date(
@@ -305,7 +305,7 @@ function Calendar() {
 				23
 			),
 			eventName: "You stay at Meridiana B&B",
-			eventColor: "indigo",
+			eventColor: "blue",
 		},
 		{
 			eventStart: new Date(
@@ -423,8 +423,8 @@ function Calendar() {
 		switch (color) {
 			case "light-blue":
 				return "text-white bg-light-blue-500";
-			case "indigo":
-				return "text-white bg-indigo-500";
+			case "blue":
+				return "text-white bg-blue-500";
 			case "yellow":
 				return "text-white bg-yellow-500";
 			case "green":
@@ -527,7 +527,7 @@ function Calendar() {
 								<hr className="w-px h-full bg-gray-200 mx-1" />
 
 								{/* Create event button */}
-								<button className="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+								<button className="btn bg-blue-500 hover:bg-blue-600 text-white">
 									<svg
 										className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
 										viewBox="0 0 16 16"
@@ -558,7 +558,7 @@ function Calendar() {
 									</li>
 									<li className="m-1">
 										<button className="btn-sm bg-white border-gray-200 hover:border-gray-300 text-gray-500">
-											<div className="w-1 h-3.5 bg-indigo-500 flex-shrink-0"></div>
+											<div className="w-1 h-3.5 bg-blue-500 flex-shrink-0"></div>
 											<span className="ml-1.5">Reservations</span>
 										</button>
 									</li>
@@ -575,7 +575,7 @@ function Calendar() {
 										</button>
 									</li>
 									<li className="m-1">
-										<button className="btn-sm bg-white border-gray-200 hover:border-gray-300 text-indigo-500">
+										<button className="btn-sm bg-white border-gray-200 hover:border-gray-300 text-blue-500">
 											+Add New
 										</button>
 									</li>
@@ -584,7 +584,7 @@ function Calendar() {
 
 							{/* View buttons (requires custom integration) */}
 							<div className="flex flex-nowrap -space-x-px">
-								<button className="btn bg-gray-50 border-gray-200 hover:bg-gray-50 text-indigo-500 rounded-none first:rounded-l last:rounded-r">
+								<button className="btn bg-gray-50 border-gray-200 hover:bg-gray-50 text-blue-500 rounded-none first:rounded-l last:rounded-r">
 									Month
 								</button>
 								<button className="btn bg-white border-gray-200 hover:bg-gray-50 text-gray-600 rounded-none first:rounded-l last:rounded-r">
@@ -732,8 +732,8 @@ function Calendar() {
 													)}
 													{/* Day number */}
 													<button
-														className={`inline-flex ml-auto w-6 h-6 items-center justify-center text-xs sm:text-sm font-medium text-center rounded-full hover:bg-indigo-100 ${
-															isToday(day) && "text-indigo-500"
+														className={`inline-flex ml-auto w-6 h-6 items-center justify-center text-xs sm:text-sm font-medium text-center rounded-full hover:bg-blue-100 ${
+															isToday(day) && "text-blue-500"
 														}`}
 													>
 														{day}

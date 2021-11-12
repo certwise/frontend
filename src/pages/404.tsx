@@ -37,7 +37,7 @@ function PageNotFound() {
 								</div>
 								<Link
 									to="/"
-									className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
+									className="btn bg-blue-500 hover:bg-blue-600 text-white"
 								>
 									Back To Dashboard
 								</Link>

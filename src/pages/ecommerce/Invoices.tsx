@@ -43,7 +43,7 @@ function Invoices() {
 								{/* Search form */}
 								<SearchForm placeholder="Search by invoice ID…" />
 								{/* Add member button */}
-								<button className="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+								<button className="btn bg-blue-500 hover:bg-blue-600 text-white">
 									<svg
 										className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
 										viewBox="0 0 16 16"
@@ -61,8 +61,8 @@ function Invoices() {
 							<div className="mb-4 sm:mb-0">
 								<ul className="flex flex-wrap -m-1">
 									<li className="m-1">
-										<button className="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-indigo-500 text-white duration-150 ease-in-out">
-											All <span className="ml-1 text-indigo-200">67</span>
+										<button className="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-blue-500 text-white duration-150 ease-in-out">
+											All <span className="ml-1 text-blue-200">67</span>
 										</button>
 									</li>
 									<li className="m-1">

@@ -12,7 +12,6 @@ import { env } from "../../config";
 import { recipient } from "../../store/certificates/types";
 import Context from "../../store/context";
 import { useContext } from "react";
-import { useGetRecipients } from "../../api/recipientQueries";
 import GroupTable from "../../partials_/group/GroupTable";
 import { useGetGroup } from "../../api/groupQueries";
 import { useParams } from "react-router-dom";
@@ -48,7 +47,6 @@ function Recipients() {
 		} catch (e) {
 			console.log(e);
 		}
-		console.log("Recipient added");
 	};
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -85,7 +83,7 @@ function Recipients() {
 										e.stopPropagation();
 										setBasicModalOpen(true);
 									}}
-									className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
+									className="btn bg-blue-500 hover:bg-blue-600 text-white"
 								>
 									<svg
 										className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
@@ -188,7 +186,7 @@ function Recipients() {
 									</button>
 									<button
 										onClick={() => createNewRecipient()}
-										className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+										className="btn-sm bg-blue-500 hover:bg-blue-600 text-white"
 									>
 										Create New Recipient
 									</button>

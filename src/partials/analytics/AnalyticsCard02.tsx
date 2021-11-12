@@ -46,13 +46,12 @@ function AnalyticsCard02() {
 				backgroundColor: `rgba(${hexToRGB(
 					(tailwindConfig() as any).theme.colors.blue[500]
 				)}, 0.08)`,
-				borderColor: (tailwindConfig() as any).theme.colors.indigo[500],
+				borderColor: (tailwindConfig() as any).theme.colors.blue[500],
 				borderWidth: 2,
 				tension: 0,
 				pointRadius: 0,
 				pointHoverRadius: 3,
-				pointBackgroundColor: (tailwindConfig() as any).theme.colors
-					.indigo[500],
+				pointBackgroundColor: (tailwindConfig() as any).theme.colors.blue[500],
 				clip: 20,
 			},
 		],
@@ -158,7 +157,7 @@ function AnalyticsCard02() {
 				{/* Card footer */}
 				<div className="text-right px-5 pb-4">
 					<Link
-						className="text-sm font-medium text-indigo-500 hover:text-indigo-600"
+						className="text-sm font-medium text-blue-500 hover:text-blue-600"
 						to="#0"
 					>
 						Real-Time Report -&gt;

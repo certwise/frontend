@@ -266,7 +266,7 @@ function TextProperties() {
 							onClick={() => {
 								setIsFontsOpen((i) => !i);
 							}}
-							className="focus:border-primary border border-none font-bold w-full px-2 pt-1 flex flex-row align-middle p-0.5 hover:text-indigo-500"
+							className="focus:border-primary border border-none font-bold w-full px-2 pt-1 flex flex-row align-middle p-0.5 hover:text-blue-500"
 						>
 							{(items.find((i) => i.id === activeItem.id) as text).fontFamily ||
 								"Default"}

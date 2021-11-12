@@ -37,7 +37,7 @@ function TemplateCard({ template }: templateCardProps) {
 					{isLoading && (
 						<div style={{ height: "200px" }}>
 							<div className="animate-pulse w-full h-full">
-								<div className="bg-indigo-300 p-5 h-full w-full flex justify-center">
+								<div className="bg-blue-300 p-5 h-full w-full flex justify-center">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										className="icon icon-tabler icon-tabler-photo  mt-6"
@@ -84,7 +84,7 @@ function TemplateCard({ template }: templateCardProps) {
 									</svg>
 									<div>
 										<div className="mr-6 font-bold text-xs">Created at:</div>
-										<div className="text-xs  text-indigo-600">
+										<div className="text-xs  text-blue-600">
 											{moment(template.createdAt).format("LLL")}
 										</div>
 									</div>
@@ -99,7 +99,7 @@ function TemplateCard({ template }: templateCardProps) {
 									<div>
 										<div className="mr-5 font-bold text-xs">Last edited:</div>
 
-										<div className="text-right text-xs text-indigo-600">
+										<div className="text-right text-xs text-blue-600">
 											{moment(template.updatedAt).format("LLL")}
 										</div>
 									</div>
@@ -119,7 +119,7 @@ function TemplateCard({ template }: templateCardProps) {
 											Number of certificates
 										</div>
 									</div>
-									<div className="ml-3 font-bold inline-flex text-sm bg-indigo-100 text-indigo-600 rounded-full text-center mr-4 px-4 py-0.5">
+									<div className="ml-3 font-bold inline-flex text-sm bg-blue-100 text-blue-600 rounded-full text-center mr-4 px-4 py-0.5">
 										{template.numberOfCertificates}
 									</div>
 								</li>
@@ -144,7 +144,7 @@ function TemplateCard({ template }: templateCardProps) {
 						{/* Card footer */}
 						<div>
 							<Link
-								className="btn-sm mt-5 w-full bg-indigo-500 hover:bg-indigo-600 text-white"
+								className="btn mt-5 w-full bg-blue-500 hover:bg-blue-600 text-white"
 								to={"/template/view/" + template.id}
 							>
 								Go to template

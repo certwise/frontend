@@ -13,13 +13,13 @@ function HomeRoutes({ user }: { user: user }) {
 				<Switch>
 					<Route exact path="/">
 						<Link
-							className="mt-2 btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap"
+							className="mt-2 btn bg-blue-500 hover:bg-blue-600 text-white ml-3 whitespace-nowrap"
 							to="/signin"
 						>
 							<button>Signin</button>
 						</Link>
 						<Link
-							className="mt-2 btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3 whitespace-nowrap"
+							className="mt-2 btn bg-blue-500 hover:bg-blue-600 text-white ml-3 whitespace-nowrap"
 							to="/signup"
 						>
 							<button>Signup</button>

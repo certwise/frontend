@@ -25,7 +25,7 @@ function Cart() {
 							<div className="mb-6 lg:mb-0">
 								<div className="mb-3">
 									<div className="flex text-sm font-medium text-gray-400 space-x-2">
-										<span className="text-indigo-500">Review</span>
+										<span className="text-blue-500">Review</span>
 										<span>-&gt;</span>
 										<span className="text-gray-500">Payment</span>
 										<span>-&gt;</span>
@@ -87,14 +87,14 @@ function Cart() {
 											type="text"
 										/>
 										<button
-											className="btn w-full bg-indigo-500 hover:bg-indigo-600 text-white disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed shadow-none"
+											className="btn w-full bg-blue-500 hover:bg-blue-600 text-white disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed shadow-none"
 											disabled
 										>
 											Apply Code
 										</button>
 									</div>
 									<div className="mb-4">
-										<button className="btn w-full bg-indigo-500 hover:bg-indigo-600 text-white">
+										<button className="btn w-full bg-blue-500 hover:bg-blue-600 text-white">
 											Buy Now - $253.00
 										</button>
 									</div>

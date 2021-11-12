@@ -33,7 +33,7 @@ function Product() {
 							<div>
 								<div className="mb-3">
 									<a
-										className="text-sm font-medium text-indigo-500 hover:text-indigo-600"
+										className="text-sm font-medium text-blue-500 hover:text-blue-600"
 										href="#0"
 									>
 										&lt;- Back To Listing
@@ -502,7 +502,7 @@ function Product() {
 									</ul>
 									{/* Load More */}
 									<div className="text-center">
-										<button className="btn bg-white border-gray-200 hover:border-gray-300 text-indigo-500 hover:text-gray-600">
+										<button className="btn bg-white border-gray-200 hover:border-gray-300 text-blue-500 hover:text-gray-600">
 											Load More Reviews
 										</button>
 									</div>
@@ -792,7 +792,7 @@ function Product() {
 									</ul>
 									{/* Load More */}
 									<div className="text-center">
-										<button className="btn bg-white border-gray-200 hover:border-gray-300 text-indigo-500 hover:text-gray-600">
+										<button className="btn bg-white border-gray-200 hover:border-gray-300 text-blue-500 hover:text-gray-600">
 											Load More Stuff
 										</button>
 									</div>
@@ -824,11 +824,11 @@ function Product() {
 											</button>
 										</li>
 										<li>
-											<button className="w-full h-full text-left py-3 px-4 rounded bg-white border-2 border-indigo-400 shadow-sm duration-150 ease-in-out">
+											<button className="w-full h-full text-left py-3 px-4 rounded bg-white border-2 border-blue-400 shadow-sm duration-150 ease-in-out">
 												<div className="flex flex-wrap items-center justify-between mb-0.5">
 													<span className="font-semibold text-gray-800">
 														Premium{" "}
-														<span className="text-xs italic text-indigo-500 align-top">
+														<span className="text-xs italic text-blue-500 align-top">
 															Best Value ✨
 														</span>
 													</span>
@@ -859,7 +859,7 @@ function Product() {
 									</ul>
 									<div className="mb-4">
 										<a
-											className="btn w-full bg-indigo-500 hover:bg-indigo-600 text-white"
+											className="btn w-full bg-blue-500 hover:bg-blue-600 text-white"
 											href="#0"
 										>
 											Buy Now - $69.00

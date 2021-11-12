@@ -69,7 +69,7 @@ function Templates() {
 							<ul className="text-sm font-medium flex flex-nowrap -mx-4 sm:-mx-6 lg:-mx-8 overflow-x-scroll no-scrollbar">
 								<li className="pb-3 mr-6 last:mr-0 first:pl-4 sm:first:pl-6 lg:first:pl-8 last:pr-4 sm:last:pr-6 lg:last:pr-8">
 									<a
-										className="text-indigo-500 hover:text-gray-600 whitespace-nowrap"
+										className="text-blue-500 hover:text-gray-600 whitespace-nowrap"
 										href="#0"
 									>
 										Active

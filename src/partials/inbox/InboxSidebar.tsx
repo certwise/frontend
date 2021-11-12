@@ -73,7 +73,7 @@ function InboxSidebar({ inboxSidebarOpen, setInboxSidebarOpen }: any) {
 							<ul className="relative text-sm font-medium flex flex-nowrap -mx-4 sm:-mx-6 lg:-mx-8 overflow-x-scroll no-scrollbar">
 								<li className="mr-6 last:mr-0 first:pl-4 sm:first:pl-6 lg:first:pl-8 last:pr-4 sm:last:pr-6 lg:last:pr-8">
 									<a
-										className="block pb-3 text-indigo-500 whitespace-nowrap border-b-2 border-indigo-500"
+										className="block pb-3 text-blue-500 whitespace-nowrap border-b-2 border-blue-500"
 										href="#0"
 									>
 										Primary
@@ -105,7 +105,7 @@ function InboxSidebar({ inboxSidebarOpen, setInboxSidebarOpen }: any) {
 							<ul className="mb-6">
 								<li className="-mx-2">
 									<button
-										className="flex w-full p-2 rounded bg-indigo-100 text-left"
+										className="flex w-full p-2 rounded bg-blue-100 text-left"
 										onClick={() => setInboxSidebarOpen(false)}
 									>
 										<img

@@ -164,19 +164,19 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 										<svg className="flex-shrink-0 h-6 w-6" viewBox="0 0 24 24">
 											<path
 												className={`fill-current text-gray-400 ${
-													pathname === "/" && "!text-indigo-500"
+													pathname === "/" && "!text-blue-500"
 												}`}
 												d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z"
 											/>
 											<path
 												className={`fill-current text-gray-600 ${
-													pathname === "/" && "text-indigo-600"
+													pathname === "/" && "text-blue-600"
 												}`}
 												d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z"
 											/>
 											<path
 												className={`fill-current text-gray-400 ${
-													pathname === "/" && "text-indigo-200"
+													pathname === "/" && "text-blue-200"
 												}`}
 												d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z"
 											/>
@@ -209,19 +209,19 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 											>
 												<path
 													className={`fill-current text-gray-600 ${
-														pathname.includes("templates") && "text-indigo-500"
+														pathname.includes("templates") && "text-blue-500"
 													}`}
 													d="M8 1v2H3v19h18V3h-5V1h7v23H1V1z"
 												/>
 												<path
 													className={`fill-current text-gray-600 ${
-														pathname.includes("templates") && "text-indigo-500"
+														pathname.includes("templates") && "text-blue-500"
 													}`}
 													d="M1 1h22v23H1z"
 												/>
 												<path
 													className={`fill-current text-gray-400 ${
-														pathname.includes("templates") && "text-indigo-300"
+														pathname.includes("templates") && "text-blue-300"
 													}`}
 													d="M15 10.586L16.414 12 11 17.414 7.586 14 9 12.586l2 2zM5 0h14v4H5z"
 												/>
@@ -263,21 +263,21 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															<path
 																className={`fill-current text-gray-400 ${
 																	pathname.includes("certificates") &&
-																	"text-indigo-300"
+																	"text-blue-300"
 																}`}
 																d="M13 15l11-7L11.504.136a1 1 0 00-1.019.007L0 7l13 8z"
 															/>
 															<path
 																className={`fill-current text-gray-700 ${
 																	pathname.includes("certificates") &&
-																	"!text-indigo-600"
+																	"!text-blue-600"
 																}`}
 																d="M13 15L0 7v9c0 .355.189.685.496.864L13 24v-9z"
 															/>
 															<path
 																className={`fill-current text-gray-600 ${
 																	pathname.includes("certificates") &&
-																	"text-indigo-500"
+																	"text-blue-500"
 																}`}
 																d="M13 15.047V24l10.573-7.181A.999.999 0 0024 16V8l-11 7.047z"
 															/>
@@ -306,7 +306,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/certificates/list"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																Your Certificates
@@ -318,7 +318,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/certificates/create"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																Create Certificate(s)
@@ -330,7 +330,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/certificates/manage"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																Manage Certificates
@@ -373,14 +373,14 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															<path
 																className={`fill-current text-gray-600 ${
 																	pathname.includes("recipients") &&
-																	"text-indigo-500"
+																	"text-blue-500"
 																}`}
 																d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z"
 															/>
 															<path
 																className={`fill-current text-gray-400 ${
 																	pathname.includes("recipients") &&
-																	"text-indigo-300"
+																	"text-blue-300"
 																}`}
 																d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z"
 															/>
@@ -409,7 +409,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/recipients/list"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																All recipients
@@ -421,7 +421,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/recipients/groups"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																Groups
@@ -433,7 +433,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/recipients/manage"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																Manage recipients
@@ -464,13 +464,13 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 										<svg className="flex-shrink-0 h-6 w-6" viewBox="0 0 24 24">
 											<path
 												className={`fill-current text-gray-600 ${
-													pathname.includes("calendar") && "text-indigo-500"
+													pathname.includes("calendar") && "text-blue-500"
 												}`}
 												d="M1 3h22v20H1z"
 											/>
 											<path
 												className={`fill-current text-gray-400 ${
-													pathname.includes("calendar") && "text-indigo-300"
+													pathname.includes("calendar") && "text-blue-300"
 												}`}
 												d="M21 3h2v4H1V3h2V1h4v2h10V1h4v2Z"
 											/>
@@ -507,28 +507,28 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															<path
 																className={`fill-current text-gray-600 ${
 																	pathname.includes("account") &&
-																	"text-indigo-500"
+																	"text-blue-500"
 																}`}
 																d="M19.714 14.7l-7.007 7.007-1.414-1.414 7.007-7.007c-.195-.4-.298-.84-.3-1.286a3 3 0 113 3 2.969 2.969 0 01-1.286-.3z"
 															/>
 															<path
 																className={`fill-current text-gray-400 ${
 																	pathname.includes("account") &&
-																	"text-indigo-300"
+																	"text-blue-300"
 																}`}
 																d="M10.714 18.3c.4-.195.84-.298 1.286-.3a3 3 0 11-3 3c.002-.446.105-.885.3-1.286l-6.007-6.007 1.414-1.414 6.007 6.007z"
 															/>
 															<path
 																className={`fill-current text-gray-600 ${
 																	pathname.includes("account") &&
-																	"text-indigo-500"
+																	"text-blue-500"
 																}`}
 																d="M5.7 10.714c.195.4.298.84.3 1.286a3 3 0 11-3-3c.446.002.885.105 1.286.3l7.007-7.007 1.414 1.414L5.7 10.714z"
 															/>
 															<path
 																className={`fill-current text-gray-400 ${
 																	pathname.includes("account") &&
-																	"text-indigo-300"
+																	"text-blue-300"
 																}`}
 																d="M19.707 9.292a3.012 3.012 0 00-1.415 1.415L13.286 5.7c-.4.195-.84.298-1.286.3a3 3 0 113-3 2.969 2.969 0 01-.3 1.286l5.007 5.006z"
 															/>
@@ -557,7 +557,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/account"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																My Account
@@ -569,7 +569,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/account/notifications"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																My Notifications
@@ -581,7 +581,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/account/apps"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																Connected Apps
@@ -593,7 +593,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/account/plans"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																Plans
@@ -605,7 +605,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/account/billing"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																Billing & Invoices
@@ -617,7 +617,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															exact
 															to="/account/feedback"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-indigo-500"
+															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																Give Feedback

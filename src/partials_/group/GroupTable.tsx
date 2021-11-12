@@ -1,17 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { focusHandling } from "cruip-js-toolkit";
 import Customer from "./GroupTableItem";
-
+import { useGetInstitution } from "../../api/recipientQueries";
+import Context from "../../store/context";
 function GroupTable({ selectedItems, recipients }: any) {
+	const { store } = useContext(Context);
 	const [selectAll, setSelectAll] = useState<any>(false);
 	const [isCheck, setIsCheck] = useState<any>([]);
-	//const [list, setList] = useState<any>([]);
-	// useEffect(() => {
-	// 	setList(data?.data?.recipients);
-	// 	console.log("1920", data, error, isLoading, isError);
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [data]);
-	console.log("1920 list", recipients);
+	const institute = useGetInstitution(store.user.institution);
+
 	const list = recipients;
 
 	useEffect(() => {
@@ -78,19 +75,17 @@ function GroupTable({ selectedItems, recipients }: any) {
 									<div className="font-semibold text-left">Email</div>
 								</th>
 								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-									<div className="font-semibold text-left">Roll Number</div>
-								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold">No. of certificates</div>
 								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-									<div className="font-semibold text-left">
-										Last certificate
-									</div>
-								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-									<div className="font-semibold text-left">DOB</div>
-								</th>
+								{institute.data?.data.customFields &&
+									institute.data?.data.customFields.map((field: any) => (
+										<div
+											key={field.name}
+											className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap"
+										>
+											<div className="font-semibold">{field.name}</div>
+										</div>
+									))}
 								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold">...</div>
 								</th>
@@ -99,7 +94,6 @@ function GroupTable({ selectedItems, recipients }: any) {
 						{/* Table body */}
 						<tbody className="text-sm divide-y divide-gray-200">
 							{list.map((customer: any) => {
-								console.log("1920 Cus", customer);
 								return <Customer key={customer} id={customer} />;
 							})}
 						</tbody>

@@ -210,7 +210,7 @@ function CreateTemplate({ uid }: { uid: string }) {
 									);
 								setClicked(true);
 							}}
-							className="btn bg-indigo-500 hover:bg-indigo-600 text-white mt-5"
+							className="btn bg-blue-500 hover:bg-blue-600 text-white mt-5"
 						>
 							<svg
 								className="w-4 h-4 fill-current opacity-50 flex-shrink-0"

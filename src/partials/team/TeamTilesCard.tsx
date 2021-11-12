@@ -67,7 +67,7 @@ function TeamTilesCard(props: any) {
 						</EditMenu>
 					</div>
 					{/* Bio */}
-					<div className="flex flex-row bg-indigo-200 py-5 align-center bg-opacity-75 blur-50  w-full">
+					<div className="flex flex-row bg-blue-200 py-5 align-center bg-opacity-75 blur-50  w-full">
 						<div>
 							<img
 								src={image}
@@ -78,18 +78,17 @@ function TeamTilesCard(props: any) {
 						</div>
 						<div className="ml-5 font-bold text-sm">
 							<div className="mt-2">
-								Number of Recipients: <span className="text-indigo-500">0</span>
+								Number of Recipients: <span className="text-blue-500">0</span>
 							</div>
 							<div className="mt-2">
-								Number of Certificates:{" "}
-								<span className="text-indigo-500">0</span>
+								Number of Certificates: <span className="text-blue-500">0</span>
 							</div>
 							<div className="mt-2">
-								Created by: <span className="text-indigo-500">0</span>
+								Created by: <span className="text-blue-500">0</span>
 							</div>
 							<div className="mt-2">
 								Created at:{" "}
-								<span className="text-indigo-500">{props.createdAt}</span>
+								<span className="text-blue-500">{props.createdAt}</span>
 							</div>
 						</div>
 					</div>
@@ -101,7 +100,7 @@ function TeamTilesCard(props: any) {
 				<div className="border-t border-gray-200">
 					<div className="flex divide-x divide-gray-200r">
 						<Link
-							className="block flex-1 text-center text-sm text-indigo-500 hover:text-indigo-600 font-medium px-3 py-4"
+							className="block flex-1 text-center text-sm text-blue-500 hover:text-blue-600 font-medium px-3 py-4"
 							to={"/group/" + props.id}
 						>
 							<div className="flex items-center justify-center">
@@ -118,7 +117,7 @@ function TeamTilesCard(props: any) {
 							className="block flex-1 text-center text-sm text-gray-600 hover:text-gray-800 font-medium px-3 py-4 group"
 							to="/settings"
 						>
-							<div className="flex items-center justify-center text-indigo-500 hover:text-indigo-600">
+							<div className="flex items-center justify-center text-blue-500 hover:text-blue-600">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									className="text-gray-400 group-hover:text-gray-500 mr-1"

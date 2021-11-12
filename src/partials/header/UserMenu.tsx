@@ -88,7 +88,7 @@ function UserMenu() {
 					<ul>
 						<li>
 							<Link
-								className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
+								className="font-medium text-sm text-blue-500 hover:text-blue-600 flex items-center py-1 px-3"
 								to="/settings"
 								onClick={() => setDropdownOpen(!dropdownOpen)}
 							>
@@ -97,7 +97,7 @@ function UserMenu() {
 						</li>
 						<li>
 							<Link
-								className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
+								className="font-medium text-sm text-blue-500 hover:text-blue-600 flex items-center py-1 px-3"
 								to="/signin"
 								onClick={() => setDropdownOpen(!dropdownOpen)}
 							>

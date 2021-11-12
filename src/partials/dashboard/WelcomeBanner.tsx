@@ -2,7 +2,7 @@ import React from "react";
 
 function WelcomeBanner() {
 	return (
-		<div className="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-8">
+		<div className="relative bg-blue-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-8">
 			{/* Background illustration */}
 			<div
 				className="absolute right-0 top-0 -mt-4 mr-16 pointer-events-none hidden xl:block"
@@ -24,11 +24,12 @@ function WelcomeBanner() {
 							y2="100%"
 							id="welcome-c"
 						>
-							<stop stopColor="#4338CA" offset="0%" />
-							<stop stopColor="#6366F1" stopOpacity="0" offset="100%" />
+							<stop stopColor="#3526da" offset="0%" />
+							<stop stopColor="#3638df" stopOpacity="0" offset="100%" />
 						</linearGradient>
 					</defs>
 					<g fill="none" fillRule="evenodd">
+						s
 						<g transform="rotate(64 36.592 105.604)">
 							<mask id="welcome-d" fill="#fff">
 								<use xlinkHref="#welcome-a" />

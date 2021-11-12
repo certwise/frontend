@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import DeleteButton from "../../partials/actions/DeleteButton";
@@ -13,23 +12,33 @@ import { env } from "../../config";
 import { recipient } from "../../store/certificates/types";
 import Context from "../../store/context";
 import { useContext } from "react";
-import { useGetRecipients } from "../../api/recipientQueries";
+import { useGetInstitution } from "../../api/recipientQueries";
+import { useGetGroups, useSetGroup } from "../../api/groupQueries";
+import GroupSelector from "../../partials_/recepients/DropdownClassic";
+import ModalBlank from "../../components/ui/ModalBlank";
+export type recipientType = { id: string; isSelected: boolean };
 function Recipients() {
-	const { store } = useContext(Context);
+	const { store, dispatch } = useContext(Context);
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
-	const [selectedItems, setSelectedItems] = useState<any>([]);
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
-	const { isLoading, isFetching, data, isError, error, refetch } =
-		useGetRecipients(store.user.institution);
+	const [groupModalOpen, setGroupModalOpen] = useState<any>(false);
+	const [selectedGroup, setSelectedGroup] = useState("");
 	const [recipientDetails, setRecipientDetails] = useState({
 		name: "",
 		email: "",
 		uniqueId: "",
 	});
-	const handleSelectedItems = (selectedItems: any) => {
-		setSelectedItems([...selectedItems]);
-	};
-
+	const { isLoading, isFetching, data, isError, error, refetch } =
+		useGetInstitution(store.user.institution);
+	const editGroup = useSetGroup();
+	const groups = useGetGroups(store.user.institution);
+	console.log("Groups:", groups);
+	const recipients = data?.data.recipients;
+	useEffect(() => {
+		return () => {
+			dispatch({ type: "SET_SELECTED_RECIPIENT", payload: [] });
+		};
+	}, []);
 	const createNewRecipient = async () => {
 		const recipient: recipient = {
 			email: recipientDetails.email,
@@ -46,7 +55,25 @@ function Recipients() {
 		} catch (e) {
 			console.log(e);
 		}
-		console.log("Recipient added");
+	};
+	const updateGroup = (name: string) => {
+		if (groups.data) {
+			console.log("Groups:", groups.data.data);
+			const x = [...groups.data.data];
+			x.map((group: any) => {
+				if (group.name === name) {
+					let y = { ...group };
+					if (y.recipients) {
+						y.recipients = [...y.recipients, ...store.recipients.selected];
+					} else {
+						y.recipients = [...store.recipients.selected];
+					}
+					editGroup.mutate(y);
+					setGroupModalOpen(false);
+				} else {
+				}
+			});
+		}
 	};
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -72,7 +99,9 @@ function Recipients() {
 							{/* Right: Actions */}
 							<div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
 								{/* Delete button */}
-								<DeleteButton selectedItems={selectedItems} />
+								<DeleteButton
+									selectedItems={store.recipients.selected || [""]}
+								/>
 								{/* Dropdown */}
 								<DateSelect />
 								{/* Filter button */}
@@ -83,7 +112,7 @@ function Recipients() {
 										e.stopPropagation();
 										setBasicModalOpen(true);
 									}}
-									className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
+									className="btn bg-blue-500 hover:bg-blue-600 text-white"
 								>
 									<svg
 										className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
@@ -95,6 +124,35 @@ function Recipients() {
 								</button>
 							</div>
 						</div>
+						{store.recipients.selected.length > 0 && (
+							<div className="flex flex-row">
+								<button
+									onClick={(e) => {
+										e.stopPropagation();
+										setGroupModalOpen(true);
+									}}
+									className="btn bg-white text-blue-500 hover:bg-blue-500 hover:text-white border border-blue-500 mb-3"
+								>
+									Add Selected to Group
+								</button>
+
+								{groups.data && (
+									<div style={{ width: "250px" }} className="ml-3 ">
+										<GroupSelector
+											onSelect={(group: any) => {
+												setSelectedGroup(group);
+											}}
+											options={
+												groups.data?.data.map((i: any) => {
+													return i.name;
+												}) || []
+											}
+										/>
+									</div>
+								)}
+							</div>
+						)}
+
 						<ModalBasic
 							id="basic-modal"
 							modalOpen={basicModalOpen}
@@ -186,7 +244,7 @@ function Recipients() {
 									</button>
 									<button
 										onClick={() => createNewRecipient()}
-										className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+										className="btn-sm bg-blue-500 hover:bg-blue-600 text-white"
 									>
 										Create New Recipient
 									</button>
@@ -194,12 +252,42 @@ function Recipients() {
 							</div>
 						</ModalBasic>
 
+						<ModalBlank
+							id="group"
+							modalOpen={groupModalOpen}
+							setModalOpen={setGroupModalOpen}
+							title="Add Selected users to group"
+						>
+							{/* Modal content */}
+							<div className="px-5 pt-4 pb-1">
+								Do you want to add {store.recipients.selected.length} users to
+								{selectedGroup} group?
+							</div>
+							{/* Modal footer */}
+							<div className="px-5 py-4">
+								<div className="flex flex-wrap justify-end space-x-2">
+									<button
+										className="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
+										onClick={(e) => {
+											e.stopPropagation();
+											setGroupModalOpen(false);
+										}}
+									>
+										Cancel
+									</button>
+									<button
+										onClick={() => updateGroup(selectedGroup)}
+										className="btn-sm bg-blue-500 hover:bg-blue-600 text-white"
+									>
+										Yes
+									</button>
+								</div>
+							</div>
+						</ModalBlank>
+
 						{/* Table */}
-						{!isLoading && !isFetching ? (
-							<RecipientsTable
-								selectedItems={handleSelectedItems}
-								recipients={data?.data.recipients}
-							/>
+						{!isLoading && !isFetching && recipients ? (
+							<RecipientsTable recipients={recipients} />
 						) : (
 							<div>Loading...</div>
 						)}

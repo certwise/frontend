@@ -127,7 +127,7 @@ function Signin() {
 										</Link>
 									</div>
 									<Link
-										className="btn bg-indigo-500 hover:bg-indigo-600 text-white ml-3"
+										className="btn bg-blue-500 hover:bg-blue-600 text-white ml-3"
 										to="/"
 									>
 										Sign In
@@ -139,7 +139,7 @@ function Signin() {
 								<div className="text-sm">
 									Don’t you have an account?{" "}
 									<Link
-										className="font-medium text-indigo-500 hover:text-indigo-600"
+										className="font-medium text-blue-500 hover:text-blue-600"
 										to="/signup"
 									>
 										Sign Up
@@ -147,7 +147,7 @@ function Signin() {
 								</div>
 								<button
 									onClick={(e) => signIn(e)}
-									className="btn font-medium text-white bg-indigo-500 hover:bg-indigo-600 flex p-2 mt-2 rounded-lg justify-center align-middle"
+									className="btn font-medium text-white bg-blue-500 hover:bg-blue-600 flex p-2 mt-2 rounded-lg justify-center align-middle"
 								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
