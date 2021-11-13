@@ -3,30 +3,25 @@ import { useState } from "react";
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import SearchForm from "../../partials/actions/SearchForm";
-import TeamTilesCard from "../../partials/team/TeamTilesCard";
-import PaginationNumeric from "../../partials/PaginationNumeric";
-import {
-	group,
-	useCreateGroup,
-	useGetGroup,
-	useGetGroups,
-} from "../../api/groupQueries";
+import GroupCard from "../../partials_/group/GroupCard";
+import { group, useCreateGroup, useGetGroups } from "../../api/groupQueries";
 import Context from "../../store/context";
 import { useContext } from "react";
 import ModalBasic from "../../components/ui/ModalBasic";
-import axios from "axios";
-import { env } from "../../config";
+
 import moment from "moment";
 function Groups() {
-	const { store, dispatch } = useContext(Context);
+	const { store } = useContext(Context);
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
 	const [groupDetails, setGroupDetails] = useState({
 		name: "",
 		description: "",
 	});
-	const { data, refetch } = useGetGroups(store.user.institution);
+	const { data } = useGetGroups(store.user.institution);
 	const create = useCreateGroup();
-	const items = data?.data;
+	const items = data?.data?.sort((a: any, b: any) => {
+		return a?.name - b?.name;
+	});
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 	const createNewGroup = () => {
 		const group: group = {
@@ -42,6 +37,7 @@ function Groups() {
 		// 	refetch();
 		// });
 		create.mutate(group);
+		setBasicModalOpen(false);
 	};
 	return (
 		<div className="flex h-screen overflow-hidden">
@@ -60,7 +56,7 @@ function Groups() {
 							{/* Left: Title */}
 							<div className="mb-4 sm:mb-0">
 								<h1 className="text-2xl md:text-3xl text-gray-800 font-bold">
-									Group Groups ✨
+									Group ✨
 								</h1>
 							</div>
 
@@ -177,17 +173,7 @@ function Groups() {
 						{/* Cards */}
 						<div className="grid grid-cols-12 gap-6">
 							{items?.map((item: any) => {
-								return (
-									<TeamTilesCard
-										key={item.id}
-										id={item.id}
-										recipients={item.recipients}
-										name={item.name}
-										location={item.location}
-										content={item.description}
-										createdAt={moment(item.created_at).format("lll")}
-									/>
-								);
+								return <GroupCard key={item.id} group={item} />;
 							})}
 						</div>
 

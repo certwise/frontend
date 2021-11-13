@@ -24,6 +24,7 @@ module.exports = {
         'light-blue': colors.sky,
         red: colors.rose,
       },
+
       outline: {
         blue: '2px solid rgba(0, 112, 244, 0.5)',
       },

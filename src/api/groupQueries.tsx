@@ -21,7 +21,7 @@ const getGroup = (instituteId: string) => {
 const getGroups = (instituteId: string) => {
 	return axios.get(`${env.url}/group/all/${instituteId}`);
 };
-const setGroup = (group: group) => {
+const setGroup = (group: any) => {
 	return axios.put(`${env.url}/group`, group);
 };
 
@@ -43,8 +43,8 @@ export const useGetGroups = (instituteId: string) => {
 	});
 };
 
-export const useGetGroup = (instituteId: string) => {
-	return useQuery(["group", instituteId], () => getGroup(instituteId), {
+export const useGetGroup = (groupId: string) => {
+	return useQuery(["group", groupId], () => getGroup(groupId), {
 		refetchOnMount: false,
 		refetchOnReconnect: false,
 		retryOnMount: false,
@@ -52,11 +52,11 @@ export const useGetGroup = (instituteId: string) => {
 	});
 };
 
-export const useSetGroup = () => {
+export const useSetGroup = (id?: any) => {
 	const query = useQueryClient();
 	return useMutation(setGroup, {
 		onSuccess: (data) => {
-			query.invalidateQueries("groups");
+			query.invalidateQueries(["group", id, "groups"]);
 		},
 	});
 };

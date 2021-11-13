@@ -1,48 +1,62 @@
 import { useState, useEffect, useContext } from "react";
 import { focusHandling } from "cruip-js-toolkit";
-import Customer from "./GroupTableItem";
+import GroupTableItem from "./GroupTableItem";
 import { useGetInstitution } from "../../api/recipientQueries";
 import Context from "../../store/context";
-function GroupTable({ selectedItems, recipients }: any) {
+import { useSetGroup } from "../../api/groupQueries";
+import ModalBasic from "../../components/ui/ModalBasic";
+
+function GroupTable({ data }: any) {
 	const { store } = useContext(Context);
 	const [selectAll, setSelectAll] = useState<any>(false);
 	const [isCheck, setIsCheck] = useState<any>([]);
+	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
+	const [customFieldName, setCustomFieldName] = useState("");
 	const institute = useGetInstitution(store.user.institution);
-
-	const list = recipients;
-
+	const customFields = institute.data?.data.customFields;
+	const customGroupFields = data?.customFields;
+	const editGroup = useSetGroup();
+	const recipients = data.recipients;
 	useEffect(() => {
 		focusHandling();
-	}, [list]);
+	}, [recipients]);
 
 	const handleSelectAll = () => {
 		setSelectAll(!selectAll);
-		setIsCheck(list.map((li: any) => li.id));
+		setIsCheck(recipients.map((li: any) => li.id));
 		if (selectAll) {
 			setIsCheck([]);
 		}
 	};
 
-	const handleClick = (e: any) => {
-		const { id, checked } = e.target;
-		setSelectAll(false);
-		setIsCheck([...isCheck, id]);
-		if (!checked) {
-			setIsCheck(isCheck.filter((item: any) => item !== id));
+	const addField = (e: any) => {
+		e.preventDefault();
+		if (data) {
+			if (data.customFields) {
+				const group = {
+					...data,
+					customFields: [...data.customFields, { name: customFieldName }],
+				};
+				editGroup.mutate(group);
+			} else {
+				const group = {
+					...data,
+					customFields: [{ name: customFieldName }],
+				};
+				editGroup.mutate(group);
+			}
 		}
+		setBasicModalOpen(false);
 	};
-
-	useEffect(() => {
-		selectedItems(isCheck);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isCheck]);
 
 	return (
 		<div className="bg-white shadow-lg rounded-sm border border-gray-200 relative">
 			<header className="px-5 py-4">
 				<h2 className="font-semibold text-gray-800">
-					All Recipients{" "}
-					<span className="text-gray-400 font-medium">{list.length || 0}</span>
+					All Recipients in Group{" "}
+					<span className="text-gray-400 font-medium">
+						{recipients.length || 0}
+					</span>
 				</h2>
 			</header>
 			<div>
@@ -52,7 +66,7 @@ function GroupTable({ selectedItems, recipients }: any) {
 						{/* Table header */}
 						<thead className="text-xs font-semibold uppercase text-gray-500 bg-gray-50 border-t border-b border-gray-200">
 							<tr>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap ">
 									<div className="flex items-center">
 										<label className="inline-flex">
 											<span className="sr-only">Select all</span>
@@ -65,7 +79,7 @@ function GroupTable({ selectedItems, recipients }: any) {
 										</label>
 									</div>
 								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap ">
 									<span className="sr-only">Favourite</span>
 								</th>
 								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -74,32 +88,128 @@ function GroupTable({ selectedItems, recipients }: any) {
 								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Email</div>
 								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-									<div className="font-semibold">No. of certificates</div>
-								</th>
-								{institute.data?.data.customFields &&
-									institute.data?.data.customFields.map((field: any) => (
-										<div
+
+								{customFields &&
+									customFields.map((field: any) => (
+										<th
 											key={field.name}
 											className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap"
 										>
-											<div className="font-semibold">{field.name}</div>
-										</div>
+											<div className="font-semibold text-left">
+												{field.name}
+											</div>
+										</th>
 									))}
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-									<div className="font-semibold">...</div>
+								{customGroupFields &&
+									customGroupFields.map((field: any) => (
+										<th
+											key={field.name || "null"}
+											className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap"
+										>
+											<div className="font-semibold text-left">
+												{field.name || "null"}
+											</div>
+										</th>
+									))}
+								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+									<button
+										onClick={(e) => {
+											e.stopPropagation();
+											setBasicModalOpen(true);
+										}}
+										className="flex flex-row hover:text-blue-500"
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											className="icon icon-tabler icon-tabler-new-section"
+											width="28"
+											height="28"
+											viewBox="0 0 24 24"
+											strokeWidth="1.5"
+											stroke="#2c3e50"
+											fill="none"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+										>
+											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+											<line x1="9" y1="12" x2="15" y2="12" />
+											<line x1="12" y1="9" x2="12" y2="15" />
+											<path d="M4 6v-1a1 1 0 0 1 1 -1h1m5 0h2m5 0h1a1 1 0 0 1 1 1v1m0 5v2m0 5v1a1 1 0 0 1 -1 1h-1m-5 0h-2m-5 0h-1a1 1 0 0 1 -1 -1v-1m0 -5v-2m0 -5" />
+										</svg>
+										<span className="ml-1 mt-1">New field</span>
+									</button>
 								</th>
 							</tr>
 						</thead>
 						{/* Table body */}
 						<tbody className="text-sm divide-y divide-gray-200">
-							{list.map((customer: any) => {
-								return <Customer key={customer} id={customer} />;
-							})}
+							{data &&
+								recipients.map((recipient: any) => {
+									return (
+										<GroupTableItem
+											id={recipient}
+											group={data}
+											key={recipient}
+											customFields={customFields}
+										/>
+									);
+								})}
 						</tbody>
 					</table>
 				</div>
 			</div>
+			<ModalBasic
+				id="basic-modal"
+				modalOpen={basicModalOpen}
+				setModalOpen={setBasicModalOpen}
+				title="Add a custom Field"
+			>
+				{/* Modal content */}
+				<div className="px-5 pt-4 pb-1">
+					<div className="text-sm">
+						<div className="space-y-2">
+							<div>
+								{/* Start */}
+								<div className="my-6">
+									<label
+										className="block text-sm font-medium mb-1"
+										htmlFor="default"
+									>
+										Field Name
+									</label>
+									<input
+										id="default"
+										className="form-input w-full"
+										type="text"
+										onChange={(e) => setCustomFieldName(e.target.value)}
+									/>
+								</div>
+								{/* End */}
+							</div>
+						</div>
+					</div>
+				</div>
+				{/* Modal footer */}
+				<div className="px-5 py-4">
+					<div className="flex flex-wrap justify-end space-x-2">
+						<button
+							className="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
+							onClick={(e) => {
+								e.stopPropagation();
+								setBasicModalOpen(false);
+							}}
+						>
+							Cancel
+						</button>
+						<button
+							onClick={(e) => addField(e)}
+							className="btn-sm bg-blue-500 hover:bg-blue-600 text-white"
+						>
+							Add new field
+						</button>
+					</div>
+				</div>
+			</ModalBasic>
 		</div>
 	);
 }

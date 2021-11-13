@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { focusHandling } from "cruip-js-toolkit";
-import Customer from "./RecipientTableItem";
+import RecipientTableItem from "./RecipientTableItem";
 import ModalBasic from "../../components/ui/ModalBasic";
 import {
 	useGetInstitution,
@@ -129,7 +129,7 @@ function RecipientsTable({ recipients }: { recipients: string[] }) {
 							{recipients &&
 								recipients.map((recipient, i: number) => {
 									return (
-										<Customer
+										<RecipientTableItem
 											key={recipient}
 											id={recipient}
 											customFields={institute.data?.data.customFields}
@@ -144,7 +144,7 @@ function RecipientsTable({ recipients }: { recipients: string[] }) {
 					id="basic-modal"
 					modalOpen={basicModalOpen}
 					setModalOpen={setBasicModalOpen}
-					title="Add recipient"
+					title="Add a custom Field"
 				>
 					{/* Modal content */}
 					<div className="px-5 pt-4 pb-1">

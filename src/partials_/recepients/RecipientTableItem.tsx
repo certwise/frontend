@@ -1,9 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useEditRecipient, useGetRecipient } from "../../api/recipientQueries";
 import ModalBasic from "../../components/ui/ModalBasic";
 import Context from "../../store/context";
 
-function CustomersTableItem({
+function RecipientsTableItem({
 	id,
 	customFields,
 }: {
@@ -16,6 +16,9 @@ function CustomersTableItem({
 	const { data, isFetching } = useGetRecipient(id);
 	const recipient = data?.data || {};
 	const [recipientFormData, setRecipientFormData] = useState({ ...recipient });
+	useEffect(() => {
+		setRecipientFormData({ ...data?.data });
+	}, [data]);
 	const onChanged = (e: any, id: string) => {
 		console.log(e.target.checked, id, store.recipients);
 		const x = [...store.recipients.selected];
@@ -72,7 +75,7 @@ function CustomersTableItem({
 							alt={props.name}
 						/>
 					</div> */}
-						<div className="font-medium text-gray-800">
+						<div className="font-medium text-blue-600">
 							{!isFetching ? (
 								recipient.name
 							) : (
@@ -223,4 +226,4 @@ function CustomersTableItem({
 	);
 }
 
-export default CustomersTableItem;
+export default RecipientsTableItem;

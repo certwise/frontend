@@ -3,7 +3,7 @@ import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import DeleteButton from "../../partials/actions/DeleteButton";
 import DateSelect from "../../components/ui/DateSelect";
-import FilterButton from "../../components/ui/DropdownFilter";
+import FilterButton from "../../partials_/recepients/DropdownFilter";
 import RecipientsTable from "../../partials_/recepients/RecipientsTable";
 import PaginationClassic from "../../components/ui/PaginationClassic";
 import ModalBasic from "../../components/ui/ModalBasic";
@@ -51,6 +51,7 @@ function Recipients() {
 				institutionId: store.user.institution,
 			});
 			refetch();
+			setRecipientDetails({ name: "", email: "", uniqueId: "" });
 			setBasicModalOpen(false);
 		} catch (e) {
 			console.log(e);
