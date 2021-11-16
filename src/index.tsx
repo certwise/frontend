@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
+import "./css/style.scss";
 import * as serviceWorker from "./serviceWorker";
 import StoreProvider from "./store/StoreProvider";
 

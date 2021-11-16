@@ -56,7 +56,7 @@ export const useSetGroup = (id?: any) => {
 	const query = useQueryClient();
 	return useMutation(setGroup, {
 		onSuccess: (data) => {
-			query.invalidateQueries(["group", id, "groups"]);
+			query.invalidateQueries(["groups"]);
 		},
 	});
 };

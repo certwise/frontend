@@ -134,8 +134,7 @@ function TemplateCard({ template }: templateCardProps) {
 									<div>
 										<div className=" mb-1 text-xs font-bold">Description :</div>
 										<div className="mb-2 text-xs font">
-											{template.description +
-												"salksajlkjsadlkjlk aslkdj asldkj sadlkj"}
+											{template.description}
 										</div>
 									</div>
 								</li>

@@ -75,3 +75,30 @@ export const useEditRecipient = () => {
 		},
 	});
 };
+
+const getAllRecipients = (recipients: Array<string>) => {
+	let promises = [];
+	for (let i in recipients) {
+		console.log("Recipients", recipients[i]);
+		promises.push(axios.get(`${env.url}/recipient/${recipients[i]}`));
+	}
+	return Promise.all(promises)
+		.then((responses) => {
+			return Promise.all(
+				responses.map((response) => {
+					return response;
+				})
+			);
+		})
+		.then((data) => data);
+};
+
+export const useGetAllRecipients = (recipients: Array<string>) => {
+	return useQuery(["recipients"], () => getAllRecipients(recipients), {
+		enabled: !!recipients,
+		refetchOnMount: false,
+		refetchOnReconnect: false,
+		retryOnMount: false,
+		refetchOnWindowFocus: false,
+	});
+};

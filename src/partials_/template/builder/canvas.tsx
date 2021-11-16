@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useRef, useState } from "react";
-import { Stage, Layer, Image, Line, Group } from "react-konva";
+import { Stage, Layer, Image, Line, Group, Rect } from "react-konva";
 import Context from "../../../store/context";
 import { templateActions } from "../../../store";
 import DynamicImage from "./imageComponent/resizeableImage";
@@ -87,6 +87,7 @@ function Canvas() {
 					scaleY={stageWidth / ratio / height}
 				>
 					<Layer>
+						<Rect x={0} y={0} width={width} height={height} fill="#fff" />
 						{items.map((item, i) => {
 							switch (item.type) {
 								case "image":

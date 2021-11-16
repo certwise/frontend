@@ -1,39 +1,27 @@
-import { image, text } from "../../store/templates/types";
+import { text } from "../../store/templates/types";
 
 export const createTemplate = (info: any) => {
 	const { uid, name, description } = info;
 	const text: text = {
 		type: "text",
-		name: "Text field",
-		text: "Example text field",
-		x: 25,
-		y: 25,
+		name: "Getting started",
+		text: "Add a new layer to get started",
+		x: 10,
+		y: 450,
 		fill: "#000",
 		opacity: 1,
-		fontSize: 100,
+		fontSize: 60,
 		fontFamily: "Roboto",
 		fontWeight: "normal",
-		fontDisplaySize: 100,
+		fontDisplaySize: 60,
 		rotation: 0,
-		height: 200,
-		width: 800,
+		height: 300,
+		width: 1920,
 		isConstant: false,
 		id: "",
-		textAlign: "",
+		textAlign: "center",
 	};
-	const image: image = {
-		name: "Sample image",
-		id: "sampleimage",
-		type: "image",
-		isConstant: false,
-		imageStorageRef: "default_template_images/base.jpg",
-		height: 1080,
-		width: 1920,
-		x: 0,
-		y: 0,
-		opacity: 100,
-		rotation: 0,
-	};
+
 	const template: any = {
 		name,
 		description,
@@ -43,7 +31,7 @@ export const createTemplate = (info: any) => {
 		canvas: {
 			width: 1920,
 			height: 1080,
-			items: [image, text],
+			items: [text],
 			exportCanvasAs: "png",
 		},
 		id: "",

@@ -41,8 +41,12 @@ function GroupCard({ group }: { group: any }) {
 								<div className="mt-1 pr-1 flex flex-row">
 									<div
 										className={`w-3 h-3 mr-2 mt-3 ml-1 bg-${
-											group.color || "blue"
-										}-500 p-1 rounded-full leading-snug`}
+											group.color
+												? group.color === "gray"
+													? "gray-400"
+													: group.color + "-500"
+												: "blue"
+										} p-1 rounded-full leading-snug`}
 									/>
 									<Link
 										className="inline-flex text-gray-800 hover:text-gray-900"
@@ -222,35 +226,35 @@ function GroupCard({ group }: { group: any }) {
 									onClick={() => {
 										setSelectedColor("blue");
 									}}
-									color="blue"
+									color="blue-500"
 								/>
 								<Color
-									isSelected={selectedColor === "indigo"}
+									isSelected={selectedColor === "gray"}
 									onClick={() => {
-										setSelectedColor("indigo");
+										setSelectedColor("gray");
 									}}
-									color="indigo"
+									color="gray-400"
 								/>
 								<Color
 									isSelected={selectedColor === "red"}
 									onClick={() => {
 										setSelectedColor("red");
 									}}
-									color="red"
+									color="red-500"
 								/>
 								<Color
 									isSelected={selectedColor === "yellow"}
 									onClick={() => {
 										setSelectedColor("yellow");
 									}}
-									color="yellow"
+									color="yellow-500"
 								/>
 								<Color
 									isSelected={selectedColor === "green"}
 									onClick={() => {
 										setSelectedColor("green");
 									}}
-									color="green"
+									color="green-500"
 								/>
 							</div>
 						</div>
@@ -317,7 +321,7 @@ const Color = ({
 						height: "16px",
 						width: "16px",
 					}}
-					className={`bg-${color}-500 rounded-full`}
+					className={`bg-${color} rounded-full`}
 				></div>
 			</div>
 		</div>
