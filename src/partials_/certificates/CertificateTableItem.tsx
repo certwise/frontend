@@ -1,4 +1,7 @@
+import moment from "moment";
+
 function CertificatesTableItem(props: any) {
+	console.log("ITems 1920:", props);
 	const totalColor = (status: any) => {
 		switch (status) {
 			case "Paid":
@@ -65,7 +68,7 @@ function CertificatesTableItem(props: any) {
 				</div>
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div className="font-medium text-light-blue-500">{props.invoice}</div>
+				<div className="font-medium text-light-blue-500">{props.id}</div>
 			</td>
 
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -84,7 +87,7 @@ function CertificatesTableItem(props: any) {
 				<div>{props.issueddate}</div>
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-				<div>{props.paiddate}</div>
+				<div>{moment(props.paiddate).format("ll")}</div>
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 				<div className="flex items-center">

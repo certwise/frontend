@@ -4,7 +4,7 @@ import axios from "axios";
 import { certificate } from "../store/certificates/types";
 
 const getCertificatesByUid = (uid: string) => {
-	return axios.get(`${env.url}/certificate/uid/${uid}`);
+	return axios.get(`${env.url}/certificate/owner/${uid}`);
 };
 const getCertificateById = async (id: string) => {
 	return axios.get(`${env.url}/certificate/${id}`);

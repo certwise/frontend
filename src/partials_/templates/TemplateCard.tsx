@@ -1,7 +1,8 @@
-import moment from "moment";
 import { Link } from "react-router-dom";
 import { useGetTemplateImageQuery } from "../../api/templateQueries";
+import Tooltip from "../Tooltip";
 import { template } from "../../store/templates/types";
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
 type templateCardProps = {
 	template: template;
@@ -22,7 +23,7 @@ function TemplateCard({ template }: templateCardProps) {
 				<div className="flex flex-col h-full">
 					{/* Image */}
 					{!isLoading && (
-						<div className="border-b-2 border-gray-300 p-2 bg-gray-50 flex justify-center">
+						<div className="border-b-2 border-gray-300 p-1 bg-blue-100 flex justify-center">
 							<img
 								className=""
 								src={data as any}
@@ -67,63 +68,67 @@ function TemplateCard({ template }: templateCardProps) {
 						{/* Card body */}
 						<div className="flex-grow">
 							{/* Header */}
-							<header className="mb-3">
-								<h3 className="text-lg text-gray-800 font-semibold">
-									{template.name}
-								</h3>
-							</header>
+							<div className="flex flex-row  text-sm text-gray-900">
+								<header className="mb-1 flex flex-row">
+									<h3 className="text-lg  text-gray-800 font-semibold">
+										{template.name}{" "}
+									</h3>
+									<span className="mt-0.5">
+										<Tooltip
+											position="bottom"
+											bg="dark"
+											size="sm"
+											name={
+												<div className="ml-3 font-bold inline-flex text-xs bg-blue-100 text-blue-600 rounded-full text-center mr-4 px-3 py-0.5">
+													{template.numberOfCertificates}
+												</div>
+											}
+										>
+											<div className="text-white text-xs">
+												There are {template.numberOfCertificates} certificates
+												created with this template.
+											</div>
+										</Tooltip>
+									</span>
+								</header>
+							</div>
 
 							{/* Features list */}
 							<ul className="text-sm space-y-3 mb-2">
-								<li className="flex">
+								{/* <li className="flex">
 									<svg
-										className="w-4 h-4 fill-current text-gray-400 flex-shrink-0 mr-3 mt-1"
-										viewBox="0 0 16 16"
+									className="w-4 h-4 fill-current text-gray-400 flex-shrink-0 mr-3 mt-1"
+									viewBox="0 0 16 16"
 									>
-										<path d="M15.686 5.695L10.291.3c-.4-.4-.999-.4-1.399 0s-.4.999 0 1.399l.6.599-6.794 3.697-1-1c-.4-.399-.999-.399-1.398 0-.4.4-.4 1 0 1.4l1.498 1.498 2.398 2.398L.6 13.988 2 15.387l3.696-3.697 3.997 3.996c.5.5 1.199.2 1.398 0 .4-.4.4-.999 0-1.398l-.999-1 3.697-6.694.6.6c.599.6 1.199.2 1.398 0 .3-.4.3-1.1-.1-1.499zM8.493 11.79L4.196 7.494l6.695-3.697 1.298 1.299-3.696 6.694z" />
+									<path d="M15.686 5.695L10.291.3c-.4-.4-.999-.4-1.399 0s-.4.999 0 1.399l.6.599-6.794 3.697-1-1c-.4-.399-.999-.399-1.398 0-.4.4-.4 1 0 1.4l1.498 1.498 2.398 2.398L.6 13.988 2 15.387l3.696-3.697 3.997 3.996c.5.5 1.199.2 1.398 0 .4-.4.4-.999 0-1.398l-.999-1 3.697-6.694.6.6c.599.6 1.199.2 1.398 0 .3-.4.3-1.1-.1-1.499zM8.493 11.79L4.196 7.494l6.695-3.697 1.298 1.299-3.696 6.694z" />
 									</svg>
 									<div>
-										<div className="mr-6 font-bold text-xs">Created at:</div>
-										<div className="text-xs  text-blue-600">
-											{moment(template.createdAt).format("LLL")}
-										</div>
+									<div className="mr-6 font-bold text-xs">Created at:</div>
+									<div className="text-xs  text-blue-600">
+									{moment(template.createdAt).format("LLL")}
+									</div>
 									</div>
 								</li>
 								<li className="flex ">
-									<svg
-										className="w-4 h-4 fill-current text-gray-400 flex-shrink-0 mr-3 mt-1"
-										viewBox="0 0 16 16"
+								<svg
+								className="w-4 h-4 fill-current text-gray-400 flex-shrink-0 mr-3 mt-1"
+								viewBox="0 0 16 16"
 									>
-										<path d="M15 15V5l-5-5H2c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h12c.6 0 1-.4 1-1zM3 2h6v4h4v8H3V2z" />
+									<path d="M15 15V5l-5-5H2c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h12c.6 0 1-.4 1-1zM3 2h6v4h4v8H3V2z" />
 									</svg>
 									<div>
-										<div className="mr-5 font-bold text-xs">Last edited:</div>
+									<div className="mr-5 font-bold text-xs">Last edited:</div>
 
-										<div className="text-right text-xs text-blue-600">
+									<div className="text-right text-xs text-blue-600">
 											{moment(template.updatedAt).format("LLL")}
-										</div>
-									</div>
-								</li>
+											</div>
+											</div>
+								</li> */}
 
-								<li className="flex ">
-									<svg
-										className="w-4 h-4 fill-current text-gray-400 flex-shrink-0 mr-3 mt-1"
-										viewBox="0 0 16 16"
-									>
-										<path d="M7.3 8.7c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0zm0 6c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0zm-7-5c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0z" />
-									</svg>
-									{/* Rating */}
-									<div className="flex items-center space-x-2 mr-2">
-										{/* Number of certificates */}
-										<div className="flex space-x-1 text-xs font-bold">
-											Number of certificates
-										</div>
-									</div>
-									<div className="ml-3 font-bold inline-flex text-sm bg-blue-100 text-blue-600 rounded-full text-center mr-4 px-4 py-0.5">
-										{template.numberOfCertificates}
-									</div>
-								</li>
 								{/* Description*/}
+								<div className="ml-2">
+									<div className="flex flex-row mr-1"></div>
+								</div>
 								<li className="flex ">
 									<svg
 										className="w-4 h-4 fill-current text-gray-400 flex-shrink-0 mr-3 mt-1"
@@ -132,8 +137,8 @@ function TemplateCard({ template }: templateCardProps) {
 										<path d="M7.3 8.7c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0zm0 6c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0zm-7-5c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0z" />
 									</svg>
 									<div>
-										<div className=" mb-1 text-xs font-bold">Description :</div>
-										<div className="mb-2 text-xs font">
+										{/* <div className="text-xs font-bold">Description :</div> */}
+										<div className="text-xs font mt-1">
 											{template.description}
 										</div>
 									</div>
@@ -143,10 +148,14 @@ function TemplateCard({ template }: templateCardProps) {
 						{/* Card footer */}
 						<div>
 							<Link
-								className="btn mt-5 w-full bg-blue-500 hover:bg-blue-600 text-white"
+								className="btn btn-xs mt-2 px-3 bg-blue-500 hover:bg-blue-600 text-xs font-bold text-white"
 								to={"/template/view/" + template.id}
 							>
-								Go to template
+								Go to template{" "}
+								<HiOutlineArrowNarrowRight
+									size={16}
+									className="mt-1 mx-1 text-white"
+								/>
 							</Link>
 						</div>
 					</div>

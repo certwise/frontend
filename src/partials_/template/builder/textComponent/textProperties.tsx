@@ -97,7 +97,17 @@ function TextProperties() {
 								defaultChecked={
 									items.find((i) => i.id === activeItem.id)?.isConstant
 								}
-								onChange={(e) => editActiveItem(e, "check")}
+								onChange={(e) => {
+									let p = [...items];
+									p.map((item) => {
+										if (item.id === activeItem.id) {
+											item.isConstant =
+												e.target.value === "true" ? true : false;
+										}
+										return item;
+									});
+									dispatch(templateActions.editCanvas(p));
+								}}
 							>
 								<option
 									style={{ background: "#fff" }}

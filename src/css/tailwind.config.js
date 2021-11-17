@@ -3,10 +3,7 @@ const plugin = require('tailwindcss/plugin');
 
 module.exports = {
   mode: 'jit',
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html', './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-    './layout/**/*.{js,ts,jsx,tsx}',
-    './helpers/**/*.{js,ts,jsx,tsx}',],
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     screens: {
       'sm': '640px',
@@ -25,7 +22,7 @@ module.exports = {
       colors: {
         gray: colors.blueGray,
         'light-blue': colors.sky,
-        red: colors.rose,
+        red: colors.rose
       },
 
       outline: {

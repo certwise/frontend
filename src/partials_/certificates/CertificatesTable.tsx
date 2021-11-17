@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { focusHandling } from "cruip-js-toolkit";
 import Invoices from "./CertificateTableItem";
-
+import { useGetCertificatesByUid } from "../../api/certificateQueries";
+import Context from "../../store/context";
 function CertificatesTable({ selectedItems }: any) {
-	const invoices = [
+	const { store } = React.useContext(Context);
+	const invoices1 = [
 		{
 			id: "0",
 			invoice: "#123567",
@@ -105,7 +107,9 @@ function CertificatesTable({ selectedItems }: any) {
 			type: "CSE Internship template",
 		},
 	];
-
+	const invoicess = useGetCertificatesByUid(store.user.uid);
+	const invoices = invoicess.data?.data;
+	console.log("XWA", invoicess);
 	const [selectAll, setSelectAll] = useState<any>(false);
 	const [isCheck, setIsCheck] = useState<any>([]);
 	const [list, setList] = useState<any>([]);
@@ -194,18 +198,18 @@ function CertificatesTable({ selectedItems }: any) {
 						</thead>
 						{/* Table body */}
 						<tbody className="text-sm divide-y divide-gray-200">
-							{list.map((invoice: any) => {
+							{invoices.map((invoice: any) => {
 								return (
 									<Invoices
 										key={invoice.id}
 										id={invoice.id}
-										invoice={invoice.invoice}
+										invoice={invoice.id}
 										total={invoice.total}
-										status={invoice.status}
-										customer={invoice.customer}
-										issueddate={invoice.issueddate}
-										paiddate={invoice.paiddate}
-										type={invoice.type}
+										status={invoice.issueDate ? "Issued" : "Created"}
+										customer={invoice.recipient}
+										issueddate={invoice.issueDate}
+										paiddate={invoice.createdAt}
+										type={invoice.template}
 										handleClick={handleClick}
 										isChecked={isCheck.includes(invoice.id)}
 									/>
