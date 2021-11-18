@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Context from "../../store/context";
 import {
 	useGetAllRecipients,
@@ -6,13 +6,19 @@ import {
 } from "../../api/recipientQueries";
 import Dropdownfull from "./DropdownRepients";
 import { AiOutlineArrowRight } from "react-icons/ai";
-function CreateCertificateForm({ setRecipient }: any) {
+import DropdownGroups from "./DropdownGroups";
+import { useGetGroups } from "../../api/groupQueries";
+function CreateCertificateForm({ setRecipient, setType, setGroup }: any) {
 	const { store, dispatch } = useContext(Context);
 	const [createType, setCreateType] = useState<"single" | "group">("single");
 	const institution = useGetInstitution(store.user.institution);
 	const recipients = useGetAllRecipients(institution.data?.data.recipients);
+	const groups = useGetGroups(store.user.institution);
+	const [selectedGroup, setSelectedGroup] = useState<any>();
 	const [selectedreipient, setSelectedreipient] = useState<any>();
-
+	useEffect(() => {
+		setType(createType);
+	}, [createType]);
 	return (
 		<div className="">
 			<form className="mt-2">
@@ -26,9 +32,9 @@ function CreateCertificateForm({ setRecipient }: any) {
 							name="g1"
 							type="radio"
 							checked={createType === "single"}
-							onChange={(e) =>
-								setCreateType(e.target.checked ? "single" : "group")
-							}
+							onChange={(e) => {
+								setCreateType(e.target.checked ? "single" : "group");
+							}}
 							style={{ background: "#0ff" }}
 						/>
 					</div>
@@ -41,9 +47,9 @@ function CreateCertificateForm({ setRecipient }: any) {
 							name="g1"
 							type="radio"
 							checked={createType === "group"}
-							onChange={(e) =>
-								setCreateType(e.target.checked ? "group" : "single")
-							}
+							onChange={(e) => {
+								setCreateType(e.target.checked ? "group" : "single");
+							}}
 						/>
 					</div>
 				</div>
@@ -60,12 +66,29 @@ function CreateCertificateForm({ setRecipient }: any) {
 					/>
 				</form>
 			)}
-
-			{selectedreipient && (
+			{createType === "group" && (
+				<form className="mt-5 flex flex-row max-w-lg">
+					<DropdownGroups
+						groups={groups.data?.data}
+						setGroup={setSelectedGroup}
+					/>
+				</form>
+			)}
+			{selectedreipient && createType === "single" && (
 				<button
 					onClick={() => {
-						console.log(selectedreipient);
 						setRecipient(selectedreipient);
+					}}
+					className="btn btn-sm my-5 bg-blue-500 text-white hover:bg-blue-600"
+				>
+					Next
+					<AiOutlineArrowRight className="mt-0.5 ml-1" />
+				</button>
+			)}
+			{selectedGroup && createType === "group" && (
+				<button
+					onClick={() => {
+						setGroup(selectedGroup);
 					}}
 					className="btn btn-sm my-5 bg-blue-500 text-white hover:bg-blue-600"
 				>

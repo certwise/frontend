@@ -55,6 +55,7 @@ export const useGetTemplateImageQuery = (id: string, uid: string) => {
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
 		refetchOnReconnect: false,
+		retry: 1,
 	});
 };
 

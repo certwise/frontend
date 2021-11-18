@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
-import { useGetTemplateImageQuery } from "../../api/templateQueries";
+import {
+	useGetDefaultTemplateImageQuery,
+	useGetTemplateImageQuery,
+} from "../../api/templateQueries";
 import Tooltip from "../Tooltip";
 import { template } from "../../store/templates/types";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
@@ -8,10 +11,11 @@ type templateCardProps = {
 	template: template;
 };
 function TemplateCard({ template }: templateCardProps) {
-	const { data, isLoading } = useGetTemplateImageQuery(
+	const { data, isLoading, isError } = useGetTemplateImageQuery(
 		template.id,
 		template.uid
 	);
+	const defaultImage = useGetDefaultTemplateImageQuery();
 
 	return (
 		<>
@@ -22,11 +26,24 @@ function TemplateCard({ template }: templateCardProps) {
 			>
 				<div className="flex flex-col h-full">
 					{/* Image */}
-					{!isLoading && (
+					{!isLoading && !isError && (
 						<div className="border-b-2 border-gray-300 p-1 bg-blue-100 flex justify-center">
 							<img
 								className=""
 								src={data as any}
+								style={{
+									height: "200px",
+									objectFit: "scale-down",
+								}}
+								alt="Template"
+							/>
+						</div>
+					)}
+					{!isLoading && isError && (
+						<div className="border-b-2 border-gray-300 p-1 bg-blue-100 flex justify-center">
+							<img
+								className=""
+								src={defaultImage.data as any}
 								style={{
 									height: "200px",
 									objectFit: "scale-down",

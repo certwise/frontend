@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DropdownMapping from "./DropdownMapping";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
-function MapFields({ certificateFields, selectedTemplateFields, setmap }: any) {
+function MapFields({ recipientFields, selectedTemplateFields, setmap }: any) {
 	let mapInit: any = {};
 	selectedTemplateFields.map((field: any, i: number) => {
 		mapInit[field] = "";
@@ -22,7 +22,7 @@ function MapFields({ certificateFields, selectedTemplateFields, setmap }: any) {
 									<HiOutlineArrowNarrowRight size={24} className="mt-2 mx-2" />
 									<div className="">
 										<DropdownMapping
-											fields={certificateFields}
+											fields={recipientFields}
 											setSelectedField={(value: any) =>
 												setMap({ ...map, [field]: value })
 											}

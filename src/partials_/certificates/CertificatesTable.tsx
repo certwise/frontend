@@ -159,7 +159,7 @@ function CertificatesTable({ selectedItems }: any) {
 						{/* Table header */}
 						<thead className="text-xs font-semibold uppercase text-gray-500 bg-gray-50 border-t border-b border-gray-200">
 							<tr>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
 									<div className="flex items-center">
 										<label className="inline-flex">
 											<span className="sr-only">Select all</span>
@@ -172,33 +172,33 @@ function CertificatesTable({ selectedItems }: any) {
 										</label>
 									</div>
 								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Credential</div>
 								</th>
 
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Status</div>
 								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Recipient</div>
 								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Issued on</div>
 								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Created on</div>
 								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Template</div>
 								</th>
-								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Actions</div>
 								</th>
 							</tr>
 						</thead>
 						{/* Table body */}
 						<tbody className="text-sm divide-y divide-gray-200">
-							{invoices.map((invoice: any) => {
+							{invoices?.map((invoice: any) => {
 								return (
 									<Invoices
 										key={invoice.id}
@@ -209,9 +209,10 @@ function CertificatesTable({ selectedItems }: any) {
 										customer={invoice.recipient}
 										issueddate={invoice.issueDate}
 										paiddate={invoice.createdAt}
-										type={invoice.template}
+										type={invoice.templateId}
 										handleClick={handleClick}
 										isChecked={isCheck.includes(invoice.id)}
+										storageRef={invoice.storageRef}
 									/>
 								);
 							})}
