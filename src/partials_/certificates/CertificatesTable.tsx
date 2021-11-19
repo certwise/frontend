@@ -2,120 +2,13 @@ import React, { useState, useEffect } from "react";
 import { focusHandling } from "cruip-js-toolkit";
 import Invoices from "./CertificateTableItem";
 import { useGetCertificatesByUid } from "../../api/certificateQueries";
-import Context from "../../store/context";
-function CertificatesTable({ selectedItems }: any) {
-	const { store } = React.useContext(Context);
-	const invoices1 = [
-		{
-			id: "0",
-			invoice: "#123567",
-			total: "$129.00",
-			status: "Revoked",
-			customer: "Dominik Lamakani",
-			issueddate: "22/07/2021",
-			paiddate: "-",
-			type: "CSE Internship template",
-		},
-		{
-			id: "1",
-			invoice: "#779912",
-			total: "$59.00",
-			status: "Issued",
-			customer: "Mark Cameron",
-			issueddate: "19/07/2021",
-			paiddate: "20/07/2021",
-			type: "CSE Internship template",
-		},
-		{
-			id: "2",
-			invoice: "#889924",
-			total: "$89.00",
-			status: "Issued",
-			customer: "Sergio Gonnelli",
-			issueddate: "17/07/2021",
-			paiddate: "19/07/2021",
-			type: "Google Intern",
-		},
-		{
-			id: "3",
-			invoice: "#897726",
-			total: "$129.00",
-			status: "Created",
-			customer: "Manuel Garbaya",
-			issueddate: "04/07/2021",
-			paiddate: "-",
-			type: "CSE Internship template",
-		},
-		{
-			id: "4",
-			invoice: "#123567",
-			total: "$129.00",
-			status: "Created",
-			customer: "Cool Robot",
-			issueddate: "04/07/2021",
-			paiddate: "-",
-			type: "CSE Internship template",
-		},
-		{
-			id: "5",
-			invoice: "#896644",
-			total: "$129.00",
-			status: "Issued",
-			customer: "Mark Cameron",
-			issueddate: "04/07/2021",
-			paiddate: "09/07/2021",
-			type: "Google Intern",
-		},
-		{
-			id: "6",
-			invoice: "#136988",
-			total: "$69.00",
-			status: "Issued",
-			customer: "Glenn Thomas",
-			issueddate: "01/07/2021",
-			paiddate: "01/07/2021",
-			type: "Google Intern",
-		},
-		{
-			id: "7",
-			invoice: "#442206",
-			total: "$129.00",
-			status: "Revoked",
-			customer: "Dominik Lamakani",
-			issueddate: "22/06/2021",
-			paiddate: "-",
-			type: "CSE Internship template",
-		},
-		{
-			id: "8",
-			invoice: "#764321",
-			total: "$89.00",
-			status: "Issued",
-			customer: "Brian Halligan",
-			issueddate: "21/06/2021",
-			paiddate: "29/06/2021",
-			type: "Google Intern",
-		},
-		{
-			id: "9",
-			invoice: "#908764",
-			total: "$129.00",
-			status: "Created",
-			customer: "Carolyn McNeail",
-			issueddate: "17/06/2021",
-			paiddate: "-",
-			type: "CSE Internship template",
-		},
-	];
-	const invoicess = useGetCertificatesByUid(store.user.uid);
-	const invoices = invoicess.data?.data;
-	console.log("XWA", invoicess);
+function CertificatesTable({ selectedItems, certificates }: any) {
 	const [selectAll, setSelectAll] = useState<any>(false);
 	const [isCheck, setIsCheck] = useState<any>([]);
 	const [list, setList] = useState<any>([]);
 
 	useEffect(() => {
-		setList(invoices);
+		setList(certificates);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -125,7 +18,7 @@ function CertificatesTable({ selectedItems }: any) {
 
 	const handleSelectAll = () => {
 		setSelectAll(!selectAll);
-		setIsCheck(list.map((li: any) => li.id));
+		setIsCheck(list?.map((li: any) => li.id));
 		if (selectAll) {
 			setIsCheck([]);
 		}
@@ -172,49 +65,42 @@ function CertificatesTable({ selectedItems }: any) {
 										</label>
 									</div>
 								</th>
-								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="pl-2 pr-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Credential</div>
 								</th>
 
-								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="pl-2 pr-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Status</div>
 								</th>
-								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="pl-2 pr-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Recipient</div>
 								</th>
-								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-									<div className="font-semibold text-left">Issued on</div>
+								<th className="pl-2 pr-5 last:pr-5 py-3 whitespace-nowrap">
+									<div className="font-semibold text-left">Last Updated</div>
 								</th>
-								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="pl-2 pr-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Created on</div>
 								</th>
-								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="pl-2 pr-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Template</div>
 								</th>
-								<th className="px-5 mx-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+								<th className="pl-2 pr-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Actions</div>
 								</th>
 							</tr>
 						</thead>
 						{/* Table body */}
 						<tbody className="text-sm divide-y divide-gray-200">
-							{invoices?.map((invoice: any) => {
-								return (
-									<Invoices
-										key={invoice.id}
-										id={invoice.id}
-										invoice={invoice.id}
-										total={invoice.total}
-										status={invoice.issueDate ? "Issued" : "Created"}
-										customer={invoice.recipient}
-										issueddate={invoice.issueDate}
-										paiddate={invoice.createdAt}
-										type={invoice.templateId}
-										handleClick={handleClick}
-										isChecked={isCheck.includes(invoice.id)}
-										storageRef={invoice.storageRef}
-									/>
-								);
+							{certificates?.map((certificate: any) => {
+								if (true)
+									return (
+										<Invoices
+											key={certificate.id}
+											certificate={certificate}
+											handleClick={handleClick}
+											isChecked={isCheck}
+										/>
+									);
 							})}
 						</tbody>
 					</table>

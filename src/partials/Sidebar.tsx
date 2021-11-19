@@ -412,7 +412,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-																All recipients
+																Manage recipients
 															</span>
 														</NavLink>
 													</li>
@@ -425,18 +425,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
 																Groups
-															</span>
-														</NavLink>
-													</li>
-													<li className="mb-1 last:mb-0">
-														<NavLink
-															exact
-															to="/recipients/manage"
-															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-blue-500"
-														>
-															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-																Manage recipients
 															</span>
 														</NavLink>
 													</li>

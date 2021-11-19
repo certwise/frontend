@@ -23,9 +23,10 @@ function MapFields({ recipientFields, selectedTemplateFields, setmap }: any) {
 									<div className="">
 										<DropdownMapping
 											fields={recipientFields}
-											setSelectedField={(value: any) =>
-												setMap({ ...map, [field]: value })
-											}
+											setSelectedField={(value: any) => {
+												setMap({ ...map, [field]: value });
+												console.log("settingMap", field, value, map);
+											}}
 										/>
 									</div>
 								</div>

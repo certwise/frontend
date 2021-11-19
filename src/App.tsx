@@ -13,11 +13,13 @@ import Context from "./store/context";
 import { user } from "./store/auth/types";
 import { getUser } from "./api/userQueries";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { env } from "./config";
 const queryClient = new QueryClient();
 
 function App() {
 	const { store, dispatch } = useContext(Context);
 	const location = useLocation();
+	console.log("URLLLLLLLL", env);
 	const auth = getAuth();
 	const [user, setUser] = useState<user | any>({ uid: "" });
 	const [initialLoad, setinitialLoad] = useState(0);

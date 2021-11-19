@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
@@ -6,14 +6,22 @@ import SearchForm from "../../partials/actions/SearchForm";
 import DeleteButton from "../../partials/actions/DeleteButton";
 import DateSelect from "../../components/ui/DateSelect";
 import FilterButton from "../../components/ui/DropdownFilter";
-import InvoicesTable from "../../partials/invoices/InvoicesTable";
 import PaginationClassic from "../../components/ui/PaginationClassic";
 import CertificatesTable from "../../partials_/certificates/CertificatesTable";
+import Context from "../../store/context";
+import { useGetCertificatesByUid } from "../../api/certificateQueries";
 
 function Certificates() {
+	const { store } = React.useContext(Context);
+	const [filter, setfilter] = useState("");
+	const [certStatus, setCertStatus] = useState({
+		issued: 0,
+		created: 0,
+		revoked: 0,
+	});
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 	const [selectedItems, setSelectedItems] = useState<any>([]);
-
+	const data = useGetCertificatesByUid(store.user.uid);
 	const handleSelectedItems = (selectedItems: any) => {
 		setSelectedItems([...selectedItems]);
 	};
@@ -65,22 +73,25 @@ function Certificates() {
 								<ul className="flex flex-wrap -m-1">
 									<li className="m-1">
 										<button className="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-transparent shadow-sm bg-blue-500 text-white duration-150 ease-in-out">
-											All <span className="ml-1 text-blue-200">67</span>
+											All{" "}
+											<span className="ml-1 text-blue-200">
+												{data.data ? data.data.data.length : 0}
+											</span>
 										</button>
 									</li>
 									<li className="m-1">
 										<button className="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-gray-200 hover:border-gray-300 shadow-sm bg-white text-gray-500 duration-150 ease-in-out">
-											Issued <span className="ml-1 text-gray-400">14</span>
+											Issued{" "}
 										</button>
 									</li>
 									<li className="m-1">
 										<button className="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-gray-200 hover:border-gray-300 shadow-sm bg-white text-gray-500 duration-150 ease-in-out">
-											Created <span className="ml-1 text-gray-400">34</span>
+											Created{" "}
 										</button>
 									</li>
 									<li className="m-1">
 										<button className="inline-flex items-center justify-center text-sm font-medium leading-5 rounded-full px-3 py-1 border border-gray-200 hover:border-gray-300 shadow-sm bg-white text-gray-500 duration-150 ease-in-out">
-											Revoked <span className="ml-1 text-gray-400">19</span>
+											Revoked{" "}
 										</button>
 									</li>
 								</ul>
@@ -91,14 +102,17 @@ function Certificates() {
 								{/* Delete button */}
 								<DeleteButton selectedItems={selectedItems} />
 								{/* Dropdown */}
-								<DateSelect />
+								{/* <DateSelect />
 								{/* Filter button */}
-								<FilterButton align="right" />
+								{/* <FilterButton align="right" /> */}
 							</div>
 						</div>
 
 						{/* Table */}
-						<CertificatesTable selectedItems={handleSelectedItems} />
+						<CertificatesTable
+							certificates={data.data?.data}
+							selectedItems={handleSelectedItems}
+						/>
 
 						{/* Pagination */}
 						<div className="mt-8">

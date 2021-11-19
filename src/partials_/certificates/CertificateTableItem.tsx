@@ -1,16 +1,24 @@
 import moment from "moment";
 import { useState } from "react";
-import { useGetCertificateImage } from "../../api/certificateQueries";
+import {
+	useEditCertificate,
+	useGetCertificateImage,
+} from "../../api/certificateQueries";
 import { useGetRecipient } from "../../api/recipientQueries";
 import { useGetTemplateByIdQuery } from "../../api/templateQueries";
 import ModalBlank from "../../components/ui/ModalBlank";
 import { MdOutlineCopyAll } from "react-icons/md";
-function CertificatesTableItem(props: any) {
+import axios from "axios";
+function CertificatesTableItem({ certificate, handleClick, isChecked }: any) {
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
-	const image = useGetCertificateImage(props.storageRef);
-	const recipient = useGetRecipient(props.customer);
-	const template = useGetTemplateByIdQuery(props.type);
-	console.log("ITems 1920:", template, props.type);
+	const image = useGetCertificateImage(certificate.storageRef);
+	const recipient = useGetRecipient(certificate.recipient);
+	const template = useGetTemplateByIdQuery(certificate.templateId);
+	const editCertificate = useEditCertificate();
+	let status = certificate.issueDate ? "Issued" : "Created";
+	if (certificate.revoked) {
+		status = "Revoked";
+	}
 	const totalColor = (status: any) => {
 		switch (status) {
 			case "Paid":
@@ -70,11 +78,11 @@ function CertificatesTableItem(props: any) {
 						<label className="inline-flex">
 							<span className="sr-only">Select</span>
 							<input
-								id={props.id}
+								id={certificate.id}
 								className="form-checkbox"
 								type="checkbox"
-								onChange={props.handleClick}
-								checked={props.isChecked}
+								onChange={handleClick}
+								checked={isChecked}
 							/>
 						</label>
 					</div>
@@ -88,12 +96,12 @@ function CertificatesTableItem(props: any) {
 							}}
 							className="font-bold text-xs text-blue-500"
 						>
-							{props.id}
+							{certificate.id}
 						</button>
 						<button className="ml-2">
 							<MdOutlineCopyAll
 								className="mt-0.5 ml-1 hover:text-blue-500"
-								onClick={() => navigator.clipboard.writeText(props.id)}
+								onClick={() => navigator.clipboard.writeText(certificate.id)}
 								size={16}
 							/>
 						</button>
@@ -103,10 +111,10 @@ function CertificatesTableItem(props: any) {
 				<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 					<div
 						className={`inline-flex text-xs font-medium rounded-full text-center px-2.5 py-0.5 ${statusColor(
-							props.status
+							status
 						)}`}
 					>
-						{props.status}
+						{status}
 					</div>
 				</td>
 				<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap text-xs  ">
@@ -115,17 +123,29 @@ function CertificatesTableItem(props: any) {
 				</td>
 				<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap text-xs">
 					<div>
-						{props.status === "Created"
-							? "Certififcate not issued"
-							: props.issuedAt}
+						{status === "Created" && (
+							<span className="text-yellow-500 font-bold">
+								{moment(certificate.lastUpdated).format("llll")}
+							</span>
+						)}
+						{status === "Issued" && (
+							<span className="text-green-600 font-bold">
+								{moment(certificate.lastUpdated).format("llll")}
+							</span>
+						)}
+						{status === "Revoked" && (
+							<span className="text-red-500 font-bold">
+								{moment(certificate.lastUpdated).format("llll")}
+							</span>
+						)}
 					</div>
 				</td>
 				<td className="px-2 first:pl-5 last:pr-5 py-3 text-xs whitespace-nowrap text-green-500">
-					<div>{moment(props.paiddate).format("llll")}</div>
+					<div>{moment(certificate.createdAt).format("ll")}</div>
 				</td>
 				<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap text-xs">
 					<div className="flex items-center">
-						{typeIcon(props.type)}
+						{/* {typeIcon("Subscription")} */}
 						<div>{template.data?.data.name || "Template"}</div>
 					</div>
 				</td>
@@ -172,9 +192,36 @@ function CertificatesTableItem(props: any) {
 							>
 								Exit
 							</button>
-							{/* <button className="btn-sm bg-blue-500 hover:bg-blue-600 text-white">
-								Save changes to Recipient
-							</button> */}
+							{!certificate.issueDate ? (
+								<button
+									onClick={(e) => {
+										editCertificate.mutate({
+											...certificate,
+											issueDate: new Date(),
+											lastUpdated: new Date(),
+										});
+										setBasicModalOpen(false);
+									}}
+									className="btn-sm bg-blue-500 hover:bg-blue-600 text-white"
+								>
+									Issue Certificate
+								</button>
+							) : (
+								<button
+									onClick={(e) => {
+										editCertificate.mutate({
+											...certificate,
+											issueDate: false,
+											revoked: true,
+											lastUpdated: new Date(),
+										});
+										setBasicModalOpen(false);
+									}}
+									className="btn-sm bg-red-500 hover:bg-red-600 text-white"
+								>
+									Revoke Certificate
+								</button>
+							)}
 						</div>
 						<div></div>
 					</div>

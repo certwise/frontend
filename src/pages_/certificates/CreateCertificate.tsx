@@ -44,13 +44,15 @@ function CreateCertificate() {
 		}
 		if (map && type === "group") {
 			setFields(undefined);
+			console.log("Group map map", map);
 			Object.keys(map).forEach((key: any, i: number) => {
+				console.log("Group map loop", key, i, groupFields, map);
 				setFields((prevState: any) => {
-					if (prevState)
-						return [...prevState, { name: key, value: groupFields[i] }];
-					else return [{ name: key, value: groupFields[i] }];
+					if (prevState) return [...prevState, { name: key, value: map[key] }];
+					else return [{ name: key, value: map[key] }];
 				});
 			});
+			console.log("Group map fields", fields);
 		}
 	}, [map]);
 	useEffect(() => {
@@ -104,7 +106,7 @@ function CreateCertificate() {
 				for (let field in fields) {
 					const r = fields[field];
 					console.log("field", fields[field]);
-					console.log("r", rec.data[r.value]);
+					console.log("r", r);
 					f.push({ name: fields[field].name, value: rec.data[r.value] });
 				}
 				console.log("user", f);

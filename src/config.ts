@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-
+import dotenv from "dotenv";
+dotenv.config();
 const firebaseConfig = {
 	apiKey: "AIzaSyBaX8tNR8l6g596VD30jXrb8sqcIay1OQg",
 	authDomain: "certify-4bf9a.firebaseapp.com",
@@ -13,6 +14,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 export const env = {
-	url: "http://localhost:5000",
+	url: process.env.REACT_APP_URL,
 	//url: "https://api.certwise.app",
 };
+console.log("env", process.env);
