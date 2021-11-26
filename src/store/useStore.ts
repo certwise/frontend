@@ -1,6 +1,6 @@
 import { Reducer, useReducer } from "react";
 import rootReducer, { globalState } from "./rootReducer";
-import { initialState as user } from "./auth/reducer";
+import { initialState as user } from "./user/reducer";
 import { initialState as templates } from "./templates/initialState";
 import { action } from ".";
 

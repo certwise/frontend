@@ -3,14 +3,20 @@ import { useState } from "react";
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import Tooltip from "../../components/ui/Tooltip";
-import { useCreateTemplateQuery } from "../../api/templateQueries";
+import { useCreate } from "../../api/template";
 import { createTemplate } from "../../partials_/template/createTemplate";
 import { Redirect } from "react-router-dom";
 
-function CreateTemplate({ uid }: { uid: string }) {
+function CreateTemplate({
+	uid,
+	organization,
+}: {
+	uid: string;
+	organization: string;
+}) {
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 	const [clicked, setClicked] = useState<boolean>(false);
-	const { mutate, isLoading, isError, isSuccess } = useCreateTemplateQuery();
+	const { mutate, isLoading, isError, isSuccess } = useCreate();
 	const [form, setForm] = useState({
 		name: "",
 		description: "",
@@ -199,16 +205,17 @@ function CreateTemplate({ uid }: { uid: string }) {
 							</div>
 						</div>
 						<button
+							disabled={isLoading}
 							onClick={() => {
-								!clicked &&
-									mutate(
-										createTemplate({
-											name: form.name,
-											description: form.description,
-											uid,
-										})
-									);
-								setClicked(true);
+								const template = createTemplate({
+									name: form.name,
+									description: form.description,
+									uid,
+									organization,
+								});
+								delete template.canvas.activeItem;
+								delete template.canvas.stageRef;
+								mutate(template);
 							}}
 							className="btn bg-blue-500 hover:bg-blue-600 text-white mt-5"
 						>

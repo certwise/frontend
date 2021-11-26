@@ -1,6 +1,6 @@
 import { action } from ".";
-import user from "./auth/reducer";
-import { user as authState } from "./auth/types";
+import user from "./user/reducer";
+import { user as authState } from "./user/types";
 import { certificatesState } from "./certificates/initialState";
 import templates from "./templates/reducer";
 import { templatesState } from "./templates/types";

@@ -1,10 +1,8 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useCreateCertificate } from "../../api/certificateQueries";
-import {
-	useGetAllRecipients,
-	useGetInstitution,
-} from "../../api/recipientQueries";
+import { useCreate } from "../../api/certificate";
+import { useGetByOrganization } from "../../api/recipient";
+import { useGet } from "../../api/organization";
 import { env } from "../../config";
 import Header from "../../partials/Header";
 import Sidebar from "../../partials/Sidebar";
@@ -23,13 +21,13 @@ function CreateCertificate() {
 	const [map, setMap] = useState<any>();
 	const [type, setType] = useState<any>();
 	const [groupFields, setGroupFields] = useState<any>(group);
-	const institution = useGetInstitution(store.user.institution);
-	const createCertificateMutation = useCreateCertificate();
+	const organization = useGet(store.user.organization);
+	const createCertificateMutation = useCreate();
 	const {
 		data: recipients,
 		isLoading,
 		isError,
-	} = useGetAllRecipients(group?.recipients);
+	} = useGetByOrganization(group?.recipients);
 	useEffect(() => {
 		setFields([]);
 		if (map && type === "single") {
@@ -59,7 +57,7 @@ function CreateCertificate() {
 		const fieldss = ["name", "email"];
 		if (group) {
 			group.customFields.forEach((field: any) => fieldss.push(field.name));
-			institution.data?.data.customFields.forEach((field: any) =>
+			organization.data?.data.customFields.forEach((field: any) =>
 				fieldss.push(field.name)
 			);
 		}
@@ -100,7 +98,7 @@ function CreateCertificate() {
 			console.log("grouppppppppp:", recipients);
 			for (const i in recipients) {
 				const x: any = i;
-				const rec: any = { ...recipients[x] };
+				const rec: any = { ...recipients.data?.data[x] };
 				console.log("recipient", rec);
 				const f: any = [];
 				for (let field in fields) {

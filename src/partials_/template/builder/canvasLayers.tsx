@@ -4,23 +4,22 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import Context from "../../../store/context";
 import { Container } from "./layerStack/cardContainer";
 import { templateActions } from "../../../store";
-import * as api from "../../../api/templates";
 import { Redirect } from "react-router-dom";
 import { MdAddCircleOutline } from "react-icons/md";
 import css from "./builder.module.css";
 import Dropdown from "react-dropdown";
 import { ItemProperty } from "./canvasItems";
 import { FaUndo, FaRedo } from "react-icons/fa";
+import { useAddImage } from "../../../api/template";
+import { useUpdate } from "../../../api/template";
+
 function CanvasLayers() {
+	const addImage = useAddImage();
 	const addLayerDummyValue = "";
 	const { store, dispatch } = React.useContext(Context);
-	const [state, setstate] = React.useState({
-		saved: false,
-		isSaved: false,
-		downloaded: false,
-		saving: false,
-	});
 	const [exit, setExit] = React.useState<boolean>(false);
+	const saveTemplate = useUpdate();
+
 	useEffect(() => {
 		return () => {
 			dispatch(templateActions.isEditingTemplate(false));
@@ -30,21 +29,16 @@ function CanvasLayers() {
 	const saveCanvas = (e: any) => {
 		e.preventDefault();
 		dispatch(templateActions.setActiveItem(undefined));
-		setstate({ ...state, saving: true });
-		let currentTemplate = store.templates.currentTemplate;
 		dispatch(templateActions.downloadCurrentTemplate(true));
+		dispatch(templateActions.setTemplateSaving(true));
+		console.log("saving template", store.templates.currentTemplate);
+		saveTemplate.mutate(store.templates.currentTemplate);
 	};
 
 	const addText = () => {
 		dispatch(templateActions.createTextItem());
 	};
 
-	const addImg = async () => {
-		let base = store.templates.currentTemplate.canvas;
-		api.addImg(base.width / 4, base.height / 4).then((res) => {
-			dispatch(templateActions.createImageItem(res));
-		});
-	};
 	if (exit) return <Redirect to="/templates" />;
 	else
 		return (
@@ -52,9 +46,10 @@ function CanvasLayers() {
 				<div className="p-2  h-screen text-xs scrollbar-hidden ">
 					<div className="">
 						<button
+							disabled={store.templates.isSaving && saveTemplate.isLoading}
 							className={`mt-5 btn  py-1 w-11/12 ml-1.5 rounded-sm p-1 ${
-								state.saving
-									? "text-white bg-blue-200 "
+								store.templates.isSaving && saveTemplate.isLoading
+									? "text-white bg-blue-200 btn-disabled border-none"
 									: "text-white bg-blue-500 hover:bg-blue-600"
 							}`}
 							onClick={(e) => saveCanvas(e)}
@@ -62,7 +57,6 @@ function CanvasLayers() {
 							Save Template
 						</button>
 					</div>
-					{state.saved && alert("Templated successfully saved!")}
 					<div>
 						<button
 							className="mt-3 mb-5 btn p-1 text-blue-500 w-11/12 border-blue-500 hover:bg-blue-600 hover:text-white ml-1.5 bg-white rounded-sm "
@@ -134,7 +128,7 @@ function CanvasLayers() {
 								value={addLayerDummyValue}
 								onChange={(e) => {
 									if (e.value === "text") addText();
-									else if (e.value === "image") addImg();
+									else if (e.value === "image") addImage.mutate();
 								}}
 							/>
 						</div>
@@ -220,22 +214,17 @@ function CanvasLayers() {
 							</button>
 						</div>
 					</div>
+					<div className="flex-grow w-full my-2 ml-1">
+						<button
+							onClick={() => console.log(store.templates)}
+							className="btn p-1 text-blue-500 w-11/12 border-blue-500 hover:bg-blue-600 hover:text-white rounded-none"
+						>
+							Print
+						</button>
+					</div>
 				</div>
 			)
 		);
 }
 
 export default CanvasLayers;
-
-const alert = (msg: string) => {
-	return (
-		<div className="alert">
-			<div className="text-sm text-success">{msg}</div>
-		</div>
-	);
-};
-const ExitButton = () => (
-	<div className="mt-3 btn-sm btn-primary m-2 w-full rounded-none p-0 ">
-		Exit Editor
-	</div>
-);

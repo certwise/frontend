@@ -5,13 +5,18 @@ import App from "./App";
 import "./css/style.scss";
 import * as serviceWorker from "./serviceWorker";
 import StoreProvider from "./store/StoreProvider";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
 	<StoreProvider>
 		<BrowserRouter>
 			<React.StrictMode>
 				<Router>
-					<App />
+					<QueryClientProvider client={queryClient}>
+						<App />
+					</QueryClientProvider>
 				</Router>
 			</React.StrictMode>
 		</BrowserRouter>

@@ -1,7 +1,7 @@
-import { text } from "../../store/templates/types";
+import { template, text } from "../../store/templates/types";
 
 export const createTemplate = (info: any) => {
-	const { uid, name, description } = info;
+	const { uid, name, description, organization } = info;
 	const text: text = {
 		type: "text",
 		name: "Getting started",
@@ -12,30 +12,52 @@ export const createTemplate = (info: any) => {
 		opacity: 1,
 		fontSize: 60,
 		fontFamily: "Roboto",
-		fontWeight: "normal",
+		weight: 500,
 		fontDisplaySize: 60,
 		rotation: 0,
 		height: 300,
 		width: 1920,
 		isConstant: false,
 		id: "",
-		textAlign: "center",
+		horizontalAlign: "center",
+		verticalAlign: "top",
+		fontStyle: "",
+		textDecoration: "",
+		fontFileLink: "",
+		fontFileName: "",
+		underline: false,
+		italic: false,
+		flipX: false,
+		flipY: false,
+		draggable: false,
 	};
 
-	const template: any = {
+	const template: template = {
 		name,
 		description,
-		uid,
 		createdAt: new Date(),
-		numberOfCertificates: 0,
+		updatedAt: new Date(),
+		isArchived: false,
 		canvas: {
 			width: 1920,
 			height: 1080,
 			items: [text],
-			exportCanvasAs: "png",
+			activeItem: text,
+			stageRef: "",
+			exportCanvasAs: "jpg",
 		},
-		id: "",
-		updatedAt: new Date(),
+		numberOfCertificates: 0,
+		imageRef: "",
+		createdBy: uid,
+		organization,
+		templateFields: [],
+		mailTemplate: {
+			subject: "",
+			from: "",
+			to: "",
+			message: "",
+			cc: "",
+		},
 	};
 	return template;
 };

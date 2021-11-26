@@ -1,10 +1,7 @@
 import { Link, Route, Switch } from "react-router-dom";
 import Signin from "./pages_/signin";
 import Signup from "./pages_/signup";
-import OnboardingDetails1 from "./pages_/signup/Onboarding01";
-import Onboarding03 from "./pages_/signup/Onboarding02";
-import Onboarding04 from "./pages_/signup/Onboarding03";
-import { user } from "./store/auth/types";
+import { user } from "./store/user/types";
 function HomeRoutes({ user }: { user: user }) {
 	console.log("USer", user);
 	return (

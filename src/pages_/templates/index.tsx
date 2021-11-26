@@ -4,15 +4,16 @@ import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import AddTemplateCard from "../../partials_/templates/AddTemplateCard";
 import TemplateCard from "../../partials_/templates/TemplateCard";
-import { useGetTemplatesByUidQuery } from "../../api/templateQueries";
+import { useGetByOrganization } from "../../api/template";
 import Context from "../../store/context";
 import { template } from "../../store/templates/types";
 import moment from "moment";
 
 function Templates() {
 	const { store, dispatch } = useContext(Context);
-	const { isLoading, data, isError, error, refetch } =
-		useGetTemplatesByUidQuery(store.user.uid);
+	const { isLoading, data, isError, error, refetch } = useGetByOrganization(
+		store.user.organization
+	);
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 
 	return (
@@ -92,19 +93,32 @@ function Templates() {
 						</div>
 
 						{/* Templates */}
-						<div className="grid grid-cols-12 gap-4">
-							<AddTemplateCard />
+						<div>
+							{/* <AddTemplateCard /> */}
 
-							{isLoading && data ? (
-								<div className="flex justify-center items-center h-full">
+							{isLoading ? (
+								<div className="items-center h-full">
 									<div className="spinner mr-4"></div>
 									<p className="text-gray-500">Loading...</p>
 								</div>
 							) : (
 								<>
-									{data?.data.map((template: template) => (
-										<TemplateCard key={template.id} template={template} />
-									))}
+									{data?.data.length > 0 ? (
+										<div className="grid grid-cols-12 gap-4">
+											{data?.data.map((template: template) => (
+												<TemplateCard key={template._id} template={template} />
+											))}
+										</div>
+									) : (
+										<div className="text-xl w-full ">
+											{
+												"No templates to display. Create a new template to get started"
+											}
+											<div className="grid grid-cols-12 gap-0 mt-5">
+												<AddTemplateCard />
+											</div>
+										</div>
+									)}
 								</>
 							)}
 						</div>

@@ -1,8 +1,5 @@
 import { Link } from "react-router-dom";
-import {
-	useGetDefaultTemplateImageQuery,
-	useGetTemplateImageQuery,
-} from "../../api/templateQueries";
+import { useGetDefaultBaseImage, useGetSavedImage } from "../../api/template";
 import Tooltip from "../Tooltip";
 import { template } from "../../store/templates/types";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
@@ -11,17 +8,17 @@ type templateCardProps = {
 	template: template;
 };
 function TemplateCard({ template }: templateCardProps) {
-	const { data, isLoading, isError } = useGetTemplateImageQuery(
-		template.id,
-		template.uid
+	const { data, isLoading, isError } = useGetSavedImage(
+		template._id as string,
+		template.createdBy
 	);
-	const defaultImage = useGetDefaultTemplateImageQuery();
+	const defaultImage = useGetDefaultBaseImage();
 
 	return (
 		<>
 			{/* Card 1 */}
 			<div
-				className="col-span-full sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-3 
+				className="xs:container col-span-full sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-3 
 			bg-white shadow-xl rounded-sm border border-gray-300 overflow-hidden"
 			>
 				<div className="flex flex-col h-full">
@@ -166,7 +163,7 @@ function TemplateCard({ template }: templateCardProps) {
 						<div>
 							<Link
 								className="btn btn-xs mt-2 px-3 bg-blue-500 hover:bg-blue-600 text-xs font-bold text-white"
-								to={"/template/view/" + template.id}
+								to={"/template/view/" + template._id}
 							>
 								Go to template{" "}
 								<HiOutlineArrowNarrowRight

@@ -128,3 +128,10 @@ export const setSnap = (snap: types.snapPoints) => {
 		payload: snap,
 	};
 };
+
+export const setTemplateSaving = (bool: boolean) => {
+	return {
+		type: types.SET_SAVING_TEMPLATE,
+		payload: bool,
+	};
+};

@@ -127,7 +127,7 @@ function Onboarding1() {
 														d="M13 12.588v11l8.486-4.714A1 1 0 0 0 22 18V7.589l-9 4.999Z"
 													/>
 												</svg>
-												<span>I am an academic institution's admin</span>
+												<span>I am an academic organization's admin</span>
 											</div>
 											<div
 												className="absolute inset-0 border-2 border-transparent peer-checked:border-blue-400 rounded pointer-events-none"

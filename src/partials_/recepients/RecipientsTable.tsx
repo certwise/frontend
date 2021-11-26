@@ -2,31 +2,30 @@ import { useState, useEffect, useContext } from "react";
 import { focusHandling } from "cruip-js-toolkit";
 import RecipientTableItem from "./RecipientTableItem";
 import ModalBasic from "../../components/ui/ModalBasic";
-import {
-	useGetInstitution,
-	useSetCustomFields,
-} from "../../api/recipientQueries";
+import * as organizationQuery from "../../api/organization";
 import Context from "../../store/context";
-function RecipientsTable({ recipients }: { recipients: string[] }) {
+import { recipient } from "../../store/certificates/types";
+function RecipientsTable({ recipients }: { recipients: recipient[] }) {
 	const { store, dispatch } = useContext(Context);
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
 	const [customFieldName, setCustomFieldName] = useState("");
-	const institute = useGetInstitution(store.user.institution);
-	const setCustomField = useSetCustomFields();
+	const organizationObj = organizationQuery.useGet(store.user.organization);
+	const organization: organizationQuery.organization =
+		organizationObj.data?.data;
+	const setCustomField = organizationQuery.useUpdate();
 	const setCustomFields = () => {
-		const iId = store.user.institution;
-		if (institute.data?.data.customFields) {
+		if (organization.customFields) {
 			const newFields = [
-				...institute.data?.data.customFields,
+				...organization?.customFields,
 				{ name: customFieldName },
 			];
 			setCustomField.mutate({
-				institutionId: iId,
+				...organization,
 				customFields: newFields,
 			});
 		} else {
 			setCustomField.mutate({
-				institutionId: iId,
+				...organization,
 				customFields: [{ name: customFieldName }],
 			});
 		}
@@ -86,8 +85,8 @@ function RecipientsTable({ recipients }: { recipients: string[] }) {
 								<div className="font-semibold text-left">Email</div>
 							</th>
 
-							{institute.data?.data.customFields &&
-								institute.data?.data.customFields.map((field: any) => (
+							{organization?.customFields &&
+								organization?.customFields.map((field) => (
 									<th
 										className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap "
 										key={field.name}
@@ -127,12 +126,12 @@ function RecipientsTable({ recipients }: { recipients: string[] }) {
 						{/* Table body */}
 						<tbody className="text-sm divide-y divide-gray-200">
 							{recipients &&
-								recipients.map((recipient, i: number) => {
+								recipients.map((recipient) => {
 									return (
 										<RecipientTableItem
-											key={recipient}
-											id={recipient}
-											customFields={institute.data?.data.customFields}
+											key={recipient._id}
+											recipient={recipient}
+											orgCustomFields={organization?.customFields}
 										/>
 									);
 								})}

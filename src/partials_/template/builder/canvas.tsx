@@ -1,11 +1,10 @@
-import React, { useEffect, useContext, useRef, useState } from "react";
-import { Stage, Layer, Image, Line, Group, Rect } from "react-konva";
+import { useEffect, useContext, useRef, useState } from "react";
+import { Stage, Layer, Rect } from "react-konva";
 import Context from "../../../store/context";
 import { templateActions } from "../../../store";
 import DynamicImage from "./imageComponent/resizeableImage";
 import DynamicText from "./textComponent/dynamicText";
 import { getStorage, ref, uploadBytes } from "@firebase/storage";
-import * as api from "../../../api/templates";
 import { item, text } from "../../../store/templates/types";
 import Grid from "./grid/grid";
 function Canvas() {
@@ -56,7 +55,7 @@ function Canvas() {
 				});
 				let data = img.replace(/^data:image\/\w+;base64,/, "");
 				let buffer = Buffer.from(data, "base64");
-				let pathref = `${store.user.uid}/templates/${store.templates.currentTemplate.id}/example/${name}`;
+				let pathref = `${store.user.uid}/templates/${store.templates.currentTemplate._id}/example/${name}`;
 				await uploadBytes(ref(getStorage(), pathref), buffer);
 				return "Success";
 			} else {
@@ -65,16 +64,13 @@ function Canvas() {
 			}
 		}
 		async function asyncFunc() {
-			if (store.templates.currentTemplate.downloadCurrentTemplate) {
+			if (store.templates.downloadCurrentTemplate) {
 				await downloadURI();
-				//const x = store.templates.currentTemplate;
-				await api.editTemplate({ ...store.templates.currentTemplate });
-				dispatch(templateActions.downloadCurrentTemplate(false));
-				window.location.reload();
+				dispatch(templateActions.setTemplateSaving(false));
 			}
 		}
 		asyncFunc();
-	}, [store.templates.currentTemplate.downloadCurrentTemplate]);
+	}, [store.templates.downloadCurrentTemplate]);
 
 	return (
 		<div>

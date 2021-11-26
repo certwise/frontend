@@ -1,23 +1,31 @@
 import { useContext, useEffect, useState } from "react";
-import * as api from "../../api/templates";
 import Context from "../../store/context";
 import { useParams } from "react-router-dom";
 import CanvasContainer from "../../partials_/template/builder/canvasContainer";
 import { templateActions } from "../../store";
-import getCurrentTemplate from "../../partials_/template/getCurrentTemplate";
+import getCurrentTemplateItems from "../../partials_/template/getCurrentTemplate";
 import {
 	loadFontIntoCSS,
 	loadFonts,
 } from "../../partials_/template/builder/textComponent/fontLoader";
 import { template } from "../../store/templates/types";
+import { useGetOne } from "../../api/template";
 function TemplateBuilder() {
 	const { store, dispatch } = useContext(Context);
 	const { id }: any = useParams();
-	const templateId = id;
+	const template = useGetOne(id);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isValidUrl, setIsValidUrl] = useState(true);
 	const numberOfFonts = store.templates.numberOfFonts;
-	useEffect(() => dispatch(templateActions.setNumberOfFonts(100)), []);
+
+	useEffect(() => {
+		dispatch(templateActions.isEditingTemplate(true));
+		dispatch(templateActions.setNumberOfFonts(100));
+		return () => {
+			dispatch(templateActions.isEditingTemplate(false));
+		};
+	}, []);
+
 	useEffect(() => {
 		dispatch(templateActions.setFontsLoading(true));
 		loadFonts("popularity").then((fonts) => {
@@ -38,37 +46,26 @@ function TemplateBuilder() {
 			dispatch(templateActions.setFontsLoading(false));
 		});
 	}, [store.templates.numberOfFonts]);
+
 	useEffect(() => {
 		dispatch(templateActions.isEditingTemplate(true));
 		setIsLoading(true);
-		api
-			.getTemplateById(templateId, store.user.uid)
-			.then((template) => {
-				if (template) {
-					setIsValidUrl(true);
-					return setCurrentTemplate(template);
-				}
-			})
-			.then(() => {
+		if (template.data) {
+			setCurrentTemplate(template.data.data).then(() => {
 				setIsLoading(false);
-				dispatch({ type: "DONE_SAVING", payload: false });
 			});
+		}
 		return () => {
 			dispatch(templateActions.isEditingTemplate(false));
 		};
-	}, [store.templates.doneSaving]);
-	useEffect(() => {
-		dispatch(templateActions.isEditingTemplate(true));
-		return () => {
-			dispatch(templateActions.isEditingTemplate(false));
-		};
-	}, []);
+	}, [template.data]);
 
 	const setCurrentTemplate = (srcTemplate: template) => {
 		return new Promise((resolve, reject) => {
 			dispatch(templateActions.setCurrentTemplateNull());
-			getCurrentTemplate(srcTemplate.canvas.items).then((res) => {
+			getCurrentTemplateItems(srcTemplate.canvas.items).then((res) => {
 				for (let i in res) {
+					console.log("1920 res[i]", res[i]);
 					let imgItem = res[i];
 					srcTemplate.canvas.items.map((item) => {
 						if (item.id === imgItem.id) return imgItem;
@@ -83,6 +80,7 @@ function TemplateBuilder() {
 					}
 				});
 				dispatch(templateActions.setCurrentTemplate(srcTemplate));
+				console.log("1920 Current Template is set", srcTemplate);
 				resolve(true);
 			});
 		});

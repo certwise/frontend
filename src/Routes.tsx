@@ -6,7 +6,7 @@ import Template from "./pages_/template";
 import Builder from "./pages_/template/Builder";
 import Certificate from "./pages_/certificate";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
-import { user } from "./store/auth/types";
+import { user } from "./store/user/types";
 import { useEffect, useState } from "react";
 import Onboarding1 from "./pages_/signup/Onboarding01";
 import Onboarding2 from "./pages_/signup/Onboarding02";
@@ -28,7 +28,7 @@ function Routes({ user }: { user: user }) {
 	const path = useLocation();
 	const [redirect, setRedirect] = useState("");
 	useEffect(() => {
-		if (user.institution === "") setRedirect("/onboard-organization");
+		if (user.organization === "") setRedirect("/onboard-organization");
 		return () => {};
 	}, [user]);
 	if (redirect && !path.pathname.includes("onboard"))
@@ -36,7 +36,7 @@ function Routes({ user }: { user: user }) {
 	else
 		return (
 			<>
-				{user.institution === "" && (
+				{user.organization === "" && (
 					<Switch>
 						<Route path="/onboard-organization">
 							<Onboarding1 />
@@ -46,7 +46,7 @@ function Routes({ user }: { user: user }) {
 						</Route>
 					</Switch>
 				)}
-				{user.institution !== "" && (
+				{user.organization !== "" && (
 					<Switch>
 						<Route path="/onboard">
 							<Onboarding3 />
@@ -73,7 +73,7 @@ function Routes({ user }: { user: user }) {
 							<Templates />
 						</Route>
 						<Route exact path="/template/create">
-							<CreateTemplate uid={user.uid} />
+							<CreateTemplate uid={user.uid} organization={user.organization} />
 						</Route>
 						<Route exact path="/template/edit/:id">
 							<Builder />

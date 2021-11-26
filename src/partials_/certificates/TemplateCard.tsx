@@ -1,10 +1,7 @@
-import { useGetTemplateImageQuery } from "../../api/templateQueries";
+import { useGetSavedImage } from "../../api/template";
 
 function TemplateCard({ template }: any) {
-	const { data, isLoading } = useGetTemplateImageQuery(
-		template?.id,
-		template?.uid
-	);
+	const { data, isLoading } = useGetSavedImage(template?.id, template?.uid);
 
 	return (
 		<>

@@ -7,75 +7,50 @@ import FilterButton from "../../partials_/recepients/DropdownFilter";
 import RecipientsTable from "../../partials_/recepients/RecipientsTable";
 import PaginationClassic from "../../components/ui/PaginationClassic";
 import ModalBasic from "../../components/ui/ModalBasic";
-import axios from "axios";
-import { env } from "../../config";
 import { recipient } from "../../store/certificates/types";
 import Context from "../../store/context";
 import { useContext } from "react";
-import { useGetInstitution } from "../../api/recipientQueries";
-import { useGetGroups, useSetGroup } from "../../api/groupQueries";
 import GroupSelector from "../../partials_/recepients/DropdownClassic";
 import ModalBlank from "../../components/ui/ModalBlank";
-export type recipientType = { id: string; isSelected: boolean };
+import * as groupQuery from "../../api/group";
+import * as recipientQuery from "../../api/recipient";
+
 function Recipients() {
 	const { store, dispatch } = useContext(Context);
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
 	const [groupModalOpen, setGroupModalOpen] = useState<any>(false);
 	const [selectedGroup, setSelectedGroup] = useState("");
+	const createRecipient = recipientQuery.useCreateRecipient();
+	const groups = groupQuery.useGetByOrganization(store.user.organization);
 	const [recipientDetails, setRecipientDetails] = useState({
 		name: "",
 		email: "",
-		uniqueId: "",
 	});
-	const { isLoading, isFetching, data, isError, error, refetch } =
-		useGetInstitution(store.user.institution);
-	const editGroup = useSetGroup();
-	const groups = useGetGroups(store.user.institution);
-	console.log("Groups:", groups);
-	const recipients = data?.data.recipients;
+	const recipients = recipientQuery.useGetByOrganization(
+		store.user.organization
+	);
+	const addSelectedRecipientsToGroup = () => {};
 	useEffect(() => {
-		return () => {
-			dispatch({ type: "SET_SELECTED_RECIPIENT", payload: [] });
-		};
-	}, []);
+		if (createRecipient.isSuccess) {
+			setBasicModalOpen(false);
+			createRecipient.reset();
+		}
+	}, [createRecipient.isSuccess]);
+
 	const createNewRecipient = async () => {
 		const recipient: recipient = {
 			email: recipientDetails.email,
 			name: recipientDetails.name,
 			createdAt: new Date(),
+			customFields: [],
+			organization: store.user.organization,
+			groups: [],
+			certificates: [],
 		};
-		try {
-			await axios.post(env.url + "/recipient", {
-				recipient,
-				institutionId: store.user.institution,
-			});
-			refetch();
-			setRecipientDetails({ name: "", email: "", uniqueId: "" });
-			setBasicModalOpen(false);
-		} catch (e) {
-			console.log(e);
-		}
+		createRecipient.mutate(recipient);
 	};
-	const updateGroup = (name: string) => {
-		if (groups.data) {
-			console.log("Groups:", groups.data.data);
-			const x = [...groups.data.data];
-			x.map((group: any) => {
-				if (group.name === name) {
-					let y = { ...group };
-					if (y.recipients) {
-						y.recipients = [...y.recipients, ...store.recipients.selected];
-					} else {
-						y.recipients = [...store.recipients.selected];
-					}
-					editGroup.mutate(y);
-					setGroupModalOpen(false);
-				} else {
-				}
-			});
-		}
-	};
+
 	return (
 		<div className="flex h-screen overflow-hidden">
 			{/* Sidebar */}
@@ -207,25 +182,6 @@ function Recipients() {
 													}
 												/>
 											</div>
-											<div className="my-6">
-												<label
-													className="block text-sm font-medium mb-1"
-													htmlFor="default"
-												>
-													Recipient Roll no. / unique ID
-												</label>
-												<input
-													id="default"
-													className="form-input w-full"
-													type="text"
-													onChange={(e) =>
-														setRecipientDetails({
-															...recipientDetails,
-															uniqueId: e.target.value,
-														})
-													}
-												/>
-											</div>
 											{/* End */}
 										</div>
 									</div>
@@ -277,7 +233,7 @@ function Recipients() {
 										Cancel
 									</button>
 									<button
-										onClick={() => updateGroup(selectedGroup)}
+										//onClick={() => addSelectedRecipientsToGroup(selectedGroup)}
 										className="btn-sm bg-blue-500 hover:bg-blue-600 text-white"
 									>
 										Yes
@@ -287,8 +243,8 @@ function Recipients() {
 						</ModalBlank>
 
 						{/* Table */}
-						{!isLoading && !isFetching && recipients ? (
-							<RecipientsTable recipients={recipients} />
+						{!recipients.isLoading ? (
+							<RecipientsTable recipients={recipients.data?.data} />
 						) : (
 							<div>Loading...</div>
 						)}

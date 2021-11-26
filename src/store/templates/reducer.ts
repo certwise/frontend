@@ -1,5 +1,5 @@
-import { action } from "..";
-import { templatesState } from "./types";
+import { action } from "../../types/store";
+import { templatesState } from "../../types/template";
 import * as types from "./types";
 
 const reducer = (state: templatesState, action: action): templatesState => {
@@ -95,24 +95,18 @@ const reducer = (state: templatesState, action: action): templatesState => {
 		case types.DOWLOAD_CURRENT_TEMPLATE:
 			return {
 				...state,
-				currentTemplate: {
-					...state.currentTemplate,
-					downloadCurrentTemplate: action.payload,
-				},
+				downloadCurrentTemplate: action.payload,
 			};
 		case types.IS_EDITING_TEMPLATE: {
 			return {
 				...state,
-				currentTemplate: {
-					...state.currentTemplate,
-					isEditing: action.payload,
-				},
+				isEditing: action.payload,
 			};
 		}
-		case "DONE_SAVING": {
+		case types.SET_SAVING_TEMPLATE: {
 			return {
 				...state,
-				doneSaving: action.payload,
+				isSaving: action.payload,
 			};
 		}
 		case types.SET_GRID: {

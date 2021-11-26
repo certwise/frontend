@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { useGetTemplatesByUidQuery } from "../../api/templateQueries";
+import { useGetByOrganization } from "../../api/template";
 import DropdownTemplate from "./DropDownTemplates";
 import TemplateCard from "./TemplateCard";
 import Context from "../../store/context";
 
 function TemplatesGrid({ setTemplate }: any) {
 	const { store } = useContext(Context);
-	const { isLoading, data, isError, error, refetch } =
-		useGetTemplatesByUidQuery(store.user.uid);
+	const { isLoading, data, isError, error, refetch } = useGetByOrganization(
+		store.user.organization
+	);
 	const [selectedTemplate, setselectedTemplate] = useState<any>();
 	useEffect(() => setTemplate(selectedTemplate), [selectedTemplate]);
 	const [togglePreview, setTogglePreview] = useState(false);

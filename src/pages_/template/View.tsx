@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router-dom";
-import { useGetTemplateImageQuery } from "../../api/templateQueries";
+import { useGetSavedImage } from "../../api/template";
 import { template } from "../../store/templates/types";
 
 function View({ template }: { template: template }) {
-	const { data, isLoading } = useGetTemplateImageQuery(
-		template?.id || "",
-		template?.uid || ""
+	const { data, isLoading } = useGetSavedImage(
+		template?._id || "",
+		template?.createdBy || ""
 	);
 	const { id } = useParams<any>();
 	const [redirect, setRedirect] = useState("");

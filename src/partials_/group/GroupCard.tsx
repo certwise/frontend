@@ -5,11 +5,13 @@ import { MdOutlineGroupAdd } from "react-icons/md";
 import Tooltip from "../../partials_/Tooltip";
 import ModalBlank from "../../components/ui/ModalBlank";
 import { useState } from "react";
-import { useSetGroup } from "../../api/groupQueries";
-function GroupCard({ group }: { group: any }) {
+import { group, useUpdate } from "../../api/group";
+import { useGetByGroup } from "../../api/recipient";
+function GroupCard({ group }: { group: group }) {
 	const [groupModalOpen, setGroupModalOpen] = useState(false);
 	const [selectedColor, setSelectedColor] = useState("blue");
-	const editGroup = useSetGroup(group.id);
+	const editGroup = useUpdate();
+	const recipients = useGetByGroup(group._id as string);
 	const [form, setform] = useState({
 		name: group.name,
 		desc: group.description,
@@ -25,6 +27,7 @@ function GroupCard({ group }: { group: any }) {
 		editGroup.mutate(x);
 		editGroup.isSuccess && setGroupModalOpen(false);
 	};
+
 	return (
 		<div className="col-span-full lg:col-span-6 md:col-span-6 sm:col-span-6 xl:col-span-4 bg-white shadow-xl rounded-sm border border-gray-200">
 			<div className="flex flex-col h-full">
@@ -34,10 +37,6 @@ function GroupCard({ group }: { group: any }) {
 						{/* Image + name */}
 						<header>
 							<div className="flex mb-0.5 ">
-								<Link
-									className="relative inline-flex items-start mr-2"
-									to={group.link}
-								></Link>
 								<div className="mt-1 pr-1 flex flex-row">
 									<div
 										className={`w-3 h-3 mr-2 mt-3 ml-1 bg-${
@@ -48,14 +47,11 @@ function GroupCard({ group }: { group: any }) {
 												: "blue"
 										} p-1 rounded-full leading-snug`}
 									/>
-									<Link
-										className="inline-flex text-gray-800 hover:text-gray-900"
-										to={group.link}
-									>
+									<div className="inline-flex text-gray-800 hover:text-gray-900">
 										<h2 className="text-2xl leading-snug justify-center font-semibold">
 											{group.name}
 										</h2>
-									</Link>
+									</div>
 								</div>
 							</div>
 						</header>
@@ -98,13 +94,13 @@ function GroupCard({ group }: { group: any }) {
 										name={<GrUser size={18} />}
 									>
 										<div className="text-white">
-											There are {group.recipients?.length} recipients in this
-											group.
+											There are {recipients?.data?.data.length} recipients in
+											this group.
 										</div>
 									</Tooltip>
 								</span>
 								<span className="text-blue-600 ml-1">
-									{group.recipients?.length}
+									{recipients?.data?.data.length}
 								</span>
 							</div>
 							<div className="flex flex-row mt-2 ml-2">
@@ -133,7 +129,7 @@ function GroupCard({ group }: { group: any }) {
 					<div className="flex divide-x divide-gray-200r">
 						<Link
 							className="block flex-1 text-center text-sm text-blue-500 hover:text-blue-600 font-medium px-3 py-4"
-							to={"/group/" + group.id}
+							to={"/group/" + group._id}
 						>
 							<div className="flex items-center justify-center ">
 								<MdOutlineGroupAdd size={24} fill="#999999" />

@@ -3,13 +3,13 @@ import { useState } from "react";
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import View from "./View";
-import { useGetTemplateByIdQuery } from "../../api/templateQueries";
+import { useGetOne } from "../../api/template";
 import { useParams } from "react-router-dom";
 
 function Template() {
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 	const { id } = useParams<any>();
-	const { data, isLoading, isError, error } = useGetTemplateByIdQuery(id);
+	const { data, isLoading, isError, error } = useGetOne(id);
 	return (
 		<div className="flex h-screen overflow-hidden">
 			{/* Sidebar */}

@@ -321,7 +321,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-																Create Certificate(s)
+																Create
 															</span>
 														</NavLink>
 													</li>

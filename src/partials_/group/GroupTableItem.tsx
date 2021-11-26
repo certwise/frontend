@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useEditRecipient, useGetRecipient } from "../../api/recipientQueries";
+import { useUpdate, useGetOne } from "../../api/recipient";
 import ModalBasic from "../../components/ui/ModalBasic";
 import Context from "../../store/context";
 
@@ -25,7 +25,7 @@ function GroupTableItem({
 	group: any;
 	customFields: any;
 }) {
-	const { data } = useGetRecipient(id);
+	const { data } = useGetOne(id);
 	const { store, dispatch } = useContext(Context);
 	const props: RecipientItemProps = {
 		id: "",
@@ -43,7 +43,7 @@ function GroupTableItem({
 		},
 	};
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
-	const editRecipient = useEditRecipient();
+	const editRecipient = useUpdate();
 	const recipient = data?.data || {};
 	const [recipientFormData, setRecipientFormData] = useState({ ...recipient });
 	useEffect(() => {

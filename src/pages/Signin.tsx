@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { user } from "../store/auth/types";
+import { user } from "../store/user/types";
 import axios from "axios";
 import { env } from "../config";
 import AuthImage from "../images/auth-image.jpg";
@@ -19,9 +19,11 @@ function Signin() {
 					name: user.displayName || "CertwiseDefaultUser",
 					isVerified: false,
 					createdAt: new Date(),
-
 					email: user.email || "",
-					institution: "Default",
+					organization: "Default",
+					updatedAt: new Date(),
+					numberOfTemplatesCreated: 0,
+					numberOfCerificatesCreated: 0,
 				};
 				return axios.post(env.url + "/user", x);
 			})

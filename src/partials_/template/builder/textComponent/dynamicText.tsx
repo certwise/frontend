@@ -24,25 +24,13 @@ const DynamicText = ({
 	grid,
 	snapPoints,
 }: dTProps) => {
-	const {
-		x,
-		y,
-		width,
-		height,
-		fontSize,
-		text,
-		fontFamily,
-		fill,
-		fontWeight,
-		textAlign,
-		fontDisplaySize,
-		opacity,
-	} = item;
 	const [isDragging, setisDragging] = useState<boolean>();
 	const [draggingPos, setdraggingPos] = useState({ x: 0, y: 0 });
 	const trRef = useRef<any>();
 	const textRef = useRef<any>();
-	const [fontsize, setFontSize] = useState<number | undefined>(fontDisplaySize);
+	const [fontsize, setFontSize] = useState<number | undefined>(
+		item.fontDisplaySize
+	);
 	useEffect(() => {}, []);
 	useEffect(() => {
 		if (isSelected) {
@@ -57,10 +45,10 @@ const DynamicText = ({
 		node.textArr.forEach((text: any) => {
 			textAll += text.text;
 		});
-		if (textAll.replace(" ", "") !== text.replace(" ", "")) {
+		if (textAll.replace(" ", "") !== item.text.replace(" ", "")) {
 			let f = fontsize;
 			setFontSize((prev) => (prev as number) - 3);
-			if (textAll.replace(/\s/g, "") === text.replace(/\s/g, "")) {
+			if (textAll.replace(/\s/g, "") === item.text.replace(/\s/g, "")) {
 				setFontSize(f);
 				setDisplayFontSizeInStore(f);
 			}
@@ -73,8 +61,8 @@ const DynamicText = ({
 	}, [fontsize]);
 
 	useEffect(() => {
-		setFontSize(fontSize);
-	}, [fontSize]);
+		setFontSize(item.fontSize);
+	}, [item.fontSize]);
 	const [rotation, setrotation] = useState(item.rotation);
 	useEffect(() => {
 		setrotation(item.rotation);
@@ -83,19 +71,19 @@ const DynamicText = ({
 		<>
 			<Text
 				draggable
-				x={x}
-				y={y}
-				width={width}
-				height={height}
+				x={item.x}
+				y={item.y}
+				width={item.width}
+				height={item.height}
 				onClick={onClick}
-				align={textAlign}
-				text={text}
-				opacity={opacity || 1}
-				fontSize={fontsize || fontSize}
+				align={item.horizontalAlign}
+				text={item.text}
+				opacity={item.opacity || 1}
+				fontSize={fontsize || item.fontSize}
 				verticalAlign="middle"
-				fontFamily={fontFamily}
-				fontWeight={fontWeight}
-				fill={fill}
+				fontFamily={item.fontFamily}
+				fontWeight={item.weight}
+				fill={item.fill}
 				ref={textRef}
 				rotation={rotation}
 				onDragStart={onDragStart}
@@ -141,9 +129,9 @@ const DynamicText = ({
 						textAll.replace(" ", "") !==
 						textRef.current.attrs.text.replace(" ", "")
 					) {
-						setFontSize((fontDisplaySize as number) * 1.1);
+						setFontSize((item.fontDisplaySize as number) * 1.1);
 					} else {
-						setFontSize(fontSize);
+						setFontSize(item.fontSize);
 					}
 				}}
 				onDblClick={(e) => {
@@ -174,8 +162,8 @@ const DynamicText = ({
 				<Rect
 					x={Math.round(draggingPos.x / grid.width) * grid.width}
 					y={Math.round(draggingPos.y / grid.height) * grid.height}
-					width={width}
-					height={height}
+					width={item.width}
+					height={item.height}
 					fill="transparent"
 					stroke="#999"
 					rotation={rotation}

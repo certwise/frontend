@@ -3,43 +3,43 @@ import Context from "../../store/context";
 import OnboardingImage from "../../images/onboarding-image.jpg";
 import OnboardingDecoration from "../../images/auth-decoration.png";
 import { useState } from "react";
-import axios from "axios";
-import { env } from "../../config";
 import { useContext } from "react";
-import { signIn, templateActions } from "../../store";
-import { user } from "../../store/auth/types";
-type institution = {
-	name: string;
-	createdBy: string;
-	createdAt: Date;
-	recipients: Array<string>;
-	subscriptions: Array<string>;
-	activeSubscription: string;
-	templates: Array<string>;
-	certificates: Array<string>;
-	admins: Array<string>;
-};
+import { organization, useCreate } from "../../api/organization";
+import { Country, State, City } from "country-state-city";
 
 function Onboarding2() {
-	const { store, dispatch } = useContext(Context);
-	const [form, setform] = useState("");
-	const createInstitution = async (e: any) => {
+	const create = useCreate();
+	const countries = Country.getAllCountries();
+	const { store } = useContext(Context);
+	const [form, setform] = useState({
+		name: "",
+		email: "",
+		country: "",
+		state: "",
+		city: "",
+		postalCode: "",
+		phone: "",
+		address: "",
+	});
+	const createOrganization = async (e: any) => {
 		e.preventDefault();
-		const x: institution = {
-			name: form,
+		const organization: organization = {
+			name: form.name,
 			createdBy: store.user.uid,
 			createdAt: new Date(),
-			activeSubscription: "",
-			recipients: [],
-			subscriptions: [],
-			templates: [],
-			certificates: [],
-			admins: [],
+			customFields: [],
+			lastUpdated: new Date(),
+			metaData: {
+				country: form.country,
+				phone: form.phone,
+				state: form.state,
+				city: form.city,
+				postalCode: form.postalCode,
+				address: form.address,
+			},
+			email: form.email,
 		};
-		const institutionId = await axios.post(env.url + "/institution", x);
-		const y: user = { ...store.user, institution: institutionId.data };
-		await axios.put(env.url + "/user", y);
-		dispatch(signIn(y));
+		create.mutate(organization);
 	};
 	return (
 		<main className="bg-white">
@@ -140,7 +140,7 @@ function Onboarding2() {
 								{/* htmlForm */}
 								<form>
 									<div className="space-y-4 mb-8">
-										{/* Company Name */}
+										{/* Name */}
 										<div>
 											<label
 												className="block text-sm font-medium mb-1"
@@ -154,39 +154,135 @@ function Onboarding2() {
 												className="form-input w-full"
 												type="text"
 												onChange={(e) => {
-													setform(e.target.value);
+													setform({ ...form, name: e.target.value });
 												}}
 											/>
 										</div>
-										{/* City and Postal Code */}
-										<div className="flex space-x-4">
-											<div className="flex-1">
-												<label
-													className="block text-sm font-medium mb-1"
-													htmlFor="city"
-												>
-													City <span className="text-red-500">*</span>
-												</label>
-												<input
-													id="city"
-													className="form-input w-full"
-													type="text"
-												/>
-											</div>
-											<div className="flex-1">
-												<label
-													className="block text-sm font-medium mb-1"
-													htmlFor="postal-code"
-												>
-													Postal Code <span className="text-red-500">*</span>
-												</label>
-												<input
-													id="postal-code"
-													className="form-input w-full"
-													type="text"
-												/>
-											</div>
+										{/* Email */}
+										<div>
+											<label
+												className="block text-sm font-medium mb-1"
+												htmlFor="street"
+											>
+												Organization Support email{" "}
+												<span className="text-red-500">*</span>
+											</label>
+											<input
+												id="street"
+												className="form-input w-full"
+												type="email"
+												onChange={(e) =>
+													setform({ ...form, email: e.target.value })
+												}
+											/>
 										</div>
+										{/* Country */}
+										<div>
+											<label
+												className="block text-sm font-medium mb-1"
+												htmlFor="country"
+											>
+												Country
+											</label>
+											<select
+												onChange={(e) => {
+													setform({ ...form, country: e.target.value });
+												}}
+												id="country"
+												className="form-select w-full"
+											>
+												{countries.map((country) => (
+													<option
+														className="text-black"
+														key={country.isoCode}
+														value={country.isoCode}
+													>
+														{country.name}
+													</option>
+												))}
+											</select>
+										</div>
+										{/* State */}
+										{form.country &&
+											State.getStatesOfCountry(form.country).length > 0 && (
+												<div>
+													<label
+														className="block text-sm font-medium mb-1"
+														htmlFor="State"
+													>
+														State
+													</label>
+													<select
+														onChange={(e) =>
+															setform({ ...form, state: e.target.value })
+														}
+														id="State"
+														className="form-select w-full"
+													>
+														{State.getStatesOfCountry(form.country).map(
+															(state) => (
+																<option
+																	className="text-black"
+																	key={state.isoCode}
+																	value={state.isoCode}
+																>
+																	{state.name}
+																</option>
+															)
+														)}
+													</select>
+												</div>
+											)}
+
+										{/* City and Postal Code */}
+										{form.state &&
+											City.getCitiesOfState(form.country, form.state).length >
+												0 && (
+												<div className="flex space-x-4">
+													<div className="flex-1">
+														<label
+															className="block text-sm font-medium mb-1"
+															htmlFor="city"
+														>
+															City
+														</label>
+														<select
+															onChange={(e) =>
+																setform({ ...form, city: e.target.value })
+															}
+															id="city"
+															className=" form-select w-full"
+														>
+															{City.getCitiesOfState(
+																form.country,
+																form.state
+															).map((city) => (
+																<option
+																	className="text-black"
+																	key={city.name}
+																	value={city.name}
+																>
+																	{city.name}
+																</option>
+															))}
+														</select>
+													</div>
+													<div className="flex-1">
+														<label
+															className="block text-sm font-medium mb-1"
+															htmlFor="postal-code"
+														>
+															Postal Code
+														</label>
+														<input
+															id="postal-code"
+															className="form-input w-full"
+															type="text"
+															pattern="[0-9]{6}"
+														/>
+													</div>
+												</div>
+											)}
 										{/* Street Address */}
 										<div>
 											<label
@@ -201,20 +297,23 @@ function Onboarding2() {
 												type="text"
 											/>
 										</div>
-										{/* Country */}
+										{/* Phone Number */}
 										<div>
 											<label
 												className="block text-sm font-medium mb-1"
-												htmlFor="country"
+												htmlFor="street"
 											>
-												Country <span className="text-red-500">*</span>
+												Phone number <span className="text-red-500">*</span>
 											</label>
-											<select id="country" className="form-select w-full">
-												<option>India</option>
-												<option>USA</option>
-												<option>Italy</option>
-												<option>United Kingdom</option>
-											</select>
+											<input
+												id="street"
+												placeholder={
+													"+" +
+													Country.getCountryByCode(form.country)?.phonecode
+												}
+												className="form-input w-full"
+												type="tel"
+											/>
 										</div>
 									</div>
 									<div className="flex items-center justify-between">
@@ -227,7 +326,7 @@ function Onboarding2() {
 										<button
 											className="btn bg-blue-500 hover:bg-blue-600 text-white ml-auto"
 											//to="/onboard"
-											onClick={(e) => createInstitution(e)}
+											onClick={(e) => createOrganization(e)}
 										>
 											Next Step -&gt;
 										</button>

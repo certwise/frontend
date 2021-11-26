@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { focusHandling } from "cruip-js-toolkit";
-import Invoices from "./CertificateTableItem";
-import { useGetCertificatesByUid } from "../../api/certificateQueries";
+import Certificates from "./CertificateTableItem";
 function CertificatesTable({ selectedItems, certificates }: any) {
 	const [selectAll, setSelectAll] = useState<any>(false);
 	const [isCheck, setIsCheck] = useState<any>([]);
@@ -94,7 +93,7 @@ function CertificatesTable({ selectedItems, certificates }: any) {
 							{certificates?.map((certificate: any) => {
 								if (true)
 									return (
-										<Invoices
+										<Certificates
 											key={certificate.id}
 											certificate={certificate}
 											handleClick={handleClick}

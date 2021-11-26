@@ -1,52 +1,41 @@
 import { useState, useEffect, useContext } from "react";
 import { focusHandling } from "cruip-js-toolkit";
 import GroupTableItem from "./GroupTableItem";
-import { useGetInstitution } from "../../api/recipientQueries";
+import { useGet } from "../../api/organization";
 import Context from "../../store/context";
-import { useSetGroup } from "../../api/groupQueries";
+import { group, useUpdate } from "../../api/group";
 import ModalBasic from "../../components/ui/ModalBasic";
+import { useGetByGroup } from "../../api/recipient";
 
-function GroupTable({ data }: any) {
+function GroupTable({ group }: { group: group }) {
 	const { store } = useContext(Context);
-	const [selectAll, setSelectAll] = useState<any>(false);
-	const [isCheck, setIsCheck] = useState<any>([]);
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
 	const [customFieldName, setCustomFieldName] = useState("");
-	const institute = useGetInstitution(store.user.institution);
-	const customFields = institute.data?.data.customFields;
-	const customGroupFields = data?.customFields;
-	const editGroup = useSetGroup();
-	const recipients = data.recipients;
-	useEffect(() => {
-		focusHandling();
-	}, [recipients]);
-
-	const handleSelectAll = () => {
-		setSelectAll(!selectAll);
-		setIsCheck(recipients.map((li: any) => li.id));
-		if (selectAll) {
-			setIsCheck([]);
-		}
-	};
+	const organization = useGet(store.user.organization);
+	const customFields = organization.data?.data.customFields;
+	const recipientQuery = useGetByGroup(group._id as string);
+	const recipients = recipientQuery.data?.data;
+	const editGroup = useUpdate();
 
 	const addField = (e: any) => {
 		e.preventDefault();
-		if (data) {
-			if (data.customFields) {
-				const group = {
-					...data,
-					customFields: [...data.customFields, { name: customFieldName }],
+		if (group) {
+			if (group.customFields) {
+				const editedGroup: group = {
+					...group,
+					customFields: [...group.customFields, { name: customFieldName }],
 				};
-				editGroup.mutate(group);
+				editGroup.mutate(editedGroup);
 			} else {
-				const group = {
-					...data,
+				const editedGroup = {
+					...group,
 					customFields: [{ name: customFieldName }],
 				};
-				editGroup.mutate(group);
+				editGroup.mutate(editedGroup);
 			}
 		}
 		setBasicModalOpen(false);
+		setCustomFieldName("");
 	};
 
 	return (
@@ -73,8 +62,8 @@ function GroupTable({ data }: any) {
 											<input
 												className="form-checkbox"
 												type="checkbox"
-												checked={selectAll}
-												onChange={handleSelectAll}
+												// checked={selectAll}
+												// onChange={handleSelectAll}
 											/>
 										</label>
 									</div>
@@ -100,8 +89,8 @@ function GroupTable({ data }: any) {
 											</div>
 										</th>
 									))}
-								{customGroupFields &&
-									customGroupFields.map((field: any) => (
+								{group.customFields &&
+									group.customFields.map((field: any) => (
 										<th
 											key={field.name || "null"}
 											className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap"
@@ -143,12 +132,12 @@ function GroupTable({ data }: any) {
 						</thead>
 						{/* Table body */}
 						<tbody className="text-sm divide-y divide-gray-200">
-							{data &&
+							{group &&
 								recipients.map((recipient: any) => {
 									return (
 										<GroupTableItem
 											id={recipient}
-											group={data}
+											group={group}
 											key={recipient}
 											customFields={customFields}
 										/>

@@ -9,7 +9,7 @@ import FilterButton from "../../components/ui/DropdownFilter";
 import PaginationClassic from "../../components/ui/PaginationClassic";
 import CertificatesTable from "../../partials_/certificates/CertificatesTable";
 import Context from "../../store/context";
-import { useGetCertificatesByUid } from "../../api/certificateQueries";
+import { useGetByOrganization } from "../../api/certificate";
 
 function Certificates() {
 	const { store } = React.useContext(Context);
@@ -21,7 +21,7 @@ function Certificates() {
 	});
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 	const [selectedItems, setSelectedItems] = useState<any>([]);
-	const data = useGetCertificatesByUid(store.user.uid);
+	const data = useGetByOrganization(store.user.uid);
 	const handleSelectedItems = (selectedItems: any) => {
 		setSelectedItems([...selectedItems]);
 	};

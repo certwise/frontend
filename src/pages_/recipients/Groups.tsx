@@ -4,12 +4,10 @@ import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import SearchForm from "../../partials/actions/SearchForm";
 import GroupCard from "../../partials_/group/GroupCard";
-import { group, useCreateGroup, useGetGroups } from "../../api/groupQueries";
+import { group, useCreate, useGetByOrganization } from "../../api/group";
 import Context from "../../store/context";
 import { useContext } from "react";
 import ModalBasic from "../../components/ui/ModalBasic";
-
-import moment from "moment";
 function Groups() {
 	const { store } = useContext(Context);
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
@@ -17,8 +15,8 @@ function Groups() {
 		name: "",
 		description: "",
 	});
-	const { data } = useGetGroups(store.user.institution);
-	const create = useCreateGroup();
+	const { data } = useGetByOrganization(store.user.organization);
+	const create = useCreate();
 	const items = data?.data?.sort((a: any, b: any) => {
 		return a?.name - b?.name;
 	});
@@ -27,10 +25,12 @@ function Groups() {
 		const group: group = {
 			name: groupDetails.name,
 			description: groupDetails.description,
-			created_at: new Date(),
-			updated_at: new Date(),
-			recipients: [],
-			institution: store.user.institution,
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			organization: store.user.organization,
+			createdBy: store.user.uid,
+			customFields: [],
+			color: "red",
 		};
 		// axios.post(env.url + "/group", group).then((res) => {
 		// 	setBasicModalOpen(false);
@@ -173,7 +173,7 @@ function Groups() {
 						{/* Cards */}
 						<div className="grid grid-cols-12 gap-6">
 							{items?.map((item: any) => {
-								return <GroupCard key={item.id} group={item} />;
+								return <GroupCard key={item._id} group={item} />;
 							})}
 						</div>
 

@@ -6,9 +6,11 @@ export const initialState: user = {
 	name: "",
 	isVerified: false,
 	createdAt: new Date(),
-
 	email: "",
-	institution: "",
+	organization: "",
+	updatedAt: new Date(),
+	numberOfTemplatesCreated: 0,
+	numberOfCerificatesCreated: 0,
 };
 
 const reducer = (state: user, action: action) => {

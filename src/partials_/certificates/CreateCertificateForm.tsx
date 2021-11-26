@@ -1,19 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import Context from "../../store/context";
-import {
-	useGetAllRecipients,
-	useGetInstitution,
-} from "../../api/recipientQueries";
+import { useGetByOrganization } from "../../api/recipient";
+import { useGet } from "../../api/organization";
 import Dropdownfull from "./DropdownRepients";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import DropdownGroups from "./DropdownGroups";
-import { useGetGroups } from "../../api/groupQueries";
+import { useGetByOrganization as groupQueryUseGetByOrganization } from "../../api/group";
 function CreateCertificateForm({ setRecipient, setType, setGroup }: any) {
 	const { store, dispatch } = useContext(Context);
 	const [createType, setCreateType] = useState<"single" | "group">("single");
-	const institution = useGetInstitution(store.user.institution);
-	const recipients = useGetAllRecipients(institution.data?.data.recipients);
-	const groups = useGetGroups(store.user.institution);
+	const organization = useGet(store.user.organization);
+	const recipients = useGetByOrganization(organization.data?.data.recipients);
+	const groups = groupQueryUseGetByOrganization(store.user.organization);
 	const [selectedGroup, setSelectedGroup] = useState<any>();
 	const [selectedreipient, setSelectedreipient] = useState<any>();
 	useEffect(() => {
@@ -58,8 +56,8 @@ function CreateCertificateForm({ setRecipient, setType, setGroup }: any) {
 				<form className="mt-5 flex flex-row max-w-lg">
 					<Dropdownfull
 						users={
-							recipients?.data?.map((user) => {
-								return { ...user.data };
+							recipients.data?.data?.map((user: any) => {
+								return { ...user };
 							}) || []
 						}
 						setRecipient={setSelectedreipient}

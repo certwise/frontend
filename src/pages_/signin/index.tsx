@@ -12,7 +12,7 @@ import AuthDecoration from "../../images/auth-decoration.png";
 import Context from "../../store/context";
 import { useContext } from "react";
 import { signIn as storeSignIn } from "../../store";
-import { user } from "../../store/auth/types";
+import { user } from "../../store/user/types";
 function Signin() {
 	const { dispatch } = useContext(Context);
 	const auth = getAuth();

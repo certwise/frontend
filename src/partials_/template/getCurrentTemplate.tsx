@@ -6,7 +6,8 @@ const getURL = async (refs: any) => {
 	const result = await getDownloadURL(imageRef);
 	return result;
 };
-const getCurrentTemplateImageItems = (items: items) => {
+const getCurrentTemplateImageItems = (items_: items) => {
+	const items = { ...items_ };
 	let promises = [];
 	for (let it in items) {
 		let item = items[it];
@@ -14,13 +15,14 @@ const getCurrentTemplateImageItems = (items: items) => {
 			promises.push(getImageItemWithSourceUrl(item));
 		}
 	}
+	console.log("1920 promises:", promises);
 	return Promise.all(promises);
 };
 
 const getImageItemWithSourceUrl = (item: image): Promise<image> => {
 	let im = new Image();
 	im.crossOrigin = "anonymous";
-	let storageRef = item.imageStorageRef;
+	let storageRef = item.storageRef;
 	return new Promise((resolve, reject) => {
 		if (storageRef) {
 			let imgRef = ref(getStorage(), storageRef);

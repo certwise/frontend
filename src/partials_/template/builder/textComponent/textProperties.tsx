@@ -307,13 +307,14 @@ function TextProperties() {
 									store.templates.currentTemplate.canvas.items.find(
 										(i) => i.id === activeItem.id
 									) as text
-								)?.textAlign
+								)?.horizontalAlign
 							}
 							onChange={(e) => {
 								let p = [...items];
 								p.map((item) => {
 									if (item.id === activeItem.id && item.type === "text") {
-										item.textAlign = e.target.value;
+										const align = e.target.value as "left" | "center" | "right";
+										item.horizontalAlign = align;
 									}
 									return item;
 								});

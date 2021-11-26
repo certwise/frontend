@@ -1,20 +1,16 @@
 import moment from "moment";
 import { useState } from "react";
-import {
-	useEditCertificate,
-	useGetCertificateImage,
-} from "../../api/certificateQueries";
-import { useGetRecipient } from "../../api/recipientQueries";
-import { useGetTemplateByIdQuery } from "../../api/templateQueries";
+import { useUpdate, useGetImage } from "../../api/certificate";
+import { useGetOne } from "../../api/recipient";
+import { useGetOne as useGetOneTemplate } from "../../api/template";
 import ModalBlank from "../../components/ui/ModalBlank";
 import { MdOutlineCopyAll } from "react-icons/md";
-import axios from "axios";
 function CertificatesTableItem({ certificate, handleClick, isChecked }: any) {
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
-	const image = useGetCertificateImage(certificate.storageRef);
-	const recipient = useGetRecipient(certificate.recipient);
-	const template = useGetTemplateByIdQuery(certificate.templateId);
-	const editCertificate = useEditCertificate();
+	const image = useGetImage(certificate.storageRef);
+	const recipient = useGetOne(certificate.recipient);
+	const template = useGetOneTemplate(certificate.templateId);
+	const editCertificate = useUpdate();
 	let status = certificate.issueDate ? "Issued" : "Created";
 	if (certificate.revoked) {
 		status = "Revoked";
@@ -82,7 +78,7 @@ function CertificatesTableItem({ certificate, handleClick, isChecked }: any) {
 								className="form-checkbox"
 								type="checkbox"
 								onChange={handleClick}
-								checked={isChecked}
+								//checked={isChecked}
 							/>
 						</label>
 					</div>
@@ -124,17 +120,17 @@ function CertificatesTableItem({ certificate, handleClick, isChecked }: any) {
 				<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap text-xs">
 					<div>
 						{status === "Created" && (
-							<span className="text-yellow-500 font-bold">
+							<span className="text-yellow-500">
 								{moment(certificate.lastUpdated).format("llll")}
 							</span>
 						)}
 						{status === "Issued" && (
-							<span className="text-green-600 font-bold">
+							<span className="text-green-600">
 								{moment(certificate.lastUpdated).format("llll")}
 							</span>
 						)}
 						{status === "Revoked" && (
-							<span className="text-red-500 font-bold">
+							<span className="text-red-500">
 								{moment(certificate.lastUpdated).format("llll")}
 							</span>
 						)}

@@ -4,13 +4,20 @@ import Context from "../../../../store/context";
 import * as api from "../../../../api/templates";
 import { ItemProperty } from "../canvasItems";
 import { BsCardImage } from "react-icons/bs";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 function ImageProperties() {
 	const { store, dispatch } = useContext(Context);
 	const items = store.templates.currentTemplate.canvas.items;
 	const activeItem = store.templates.currentTemplate.canvas.activeItem;
 	const [image, setImageState] = useState();
 	const [imageBlob, setImageBlob] = useState<any>();
-
+	const uploadImage = async (image: any, refs: any) => {
+		//upload image to firebase storage
+		const storage = getStorage();
+		const imageRef = ref(storage, refs);
+		const result = await uploadBytes(imageRef, image);
+		return result;
+	};
 	const setImage = async (src: string) => {
 		let im = new window.Image();
 		im.src = src;
@@ -20,14 +27,14 @@ function ImageProperties() {
 		im.width = newWidth;
 		im.height = im.height / ratio;
 		const id = makeid();
-		const ref = `${store.user.uid}/${store.templates.currentTemplate.id}/${id}_${imageBlob.name}`;
-		await api.uploadImage(imageBlob, ref);
+		const ref = `${store.user.uid}/${store.templates.currentTemplate._id}/${id}_${imageBlob.name}`;
+		await uploadImage(imageBlob, ref);
 		let p = [...items];
 		p = p.map((item) => {
 			if (item.id === activeItem?.id && item.type === "image") {
 				item["height"] = im.height;
 				item["width"] = im.width;
-				item["imageStorageRef"] = ref;
+				item["storageRef"] = ref;
 				item["src"] = im;
 			}
 			return item;
