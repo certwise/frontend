@@ -1,10 +1,10 @@
 import { env } from "../config";
 import axios from "axios";
-import { user } from "../store/user/types";
+import { user } from "../store/types";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import Context from "../store/context";
+import { Context } from "../store";
 import { useContext } from "react";
-import { signIn } from "../store/user/actions";
+import { signIn } from "../store/actions/user";
 
 const get = (uid: string) => {
 	return axios.get(`${env.url}/user/${uid}`);
@@ -27,20 +27,33 @@ export const useGet = (uid: string) => {
 	});
 };
 
-export const useCreate = (user: user) => {
-	const { dispatch } = useContext(Context);
+export const useCreate = () => {
 	return useMutation(create, {
 		onSuccess: (data) => {
-			dispatch(signIn(data.data));
+			window.location.href = "/onboard-organization";
 		},
 	});
 };
 
-export const useUpdate = (user: user) => {
+export const useUpdate = () => {
 	const query = useQueryClient();
 	return useMutation(update, {
 		onSuccess: () => {
 			query.invalidateQueries("user");
 		},
 	});
+};
+
+export const useDelete = (uid: string) => {
+	const query = useQueryClient();
+	return useMutation(
+		() => {
+			return axios.delete(`${env.url}/user/${uid}`);
+		},
+		{
+			onSuccess: () => {
+				window.location.href = "/signup";
+			},
+		}
+	);
 };

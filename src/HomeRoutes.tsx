@@ -1,9 +1,8 @@
 import { Link, Route, Switch } from "react-router-dom";
-import Signin from "./pages_/signin";
-import Signup from "./pages_/signup";
-import { user } from "./store/user/types";
+import Signin from "./pages/signin";
+import Signup from "./pages/signup";
+import { user } from "./store/types";
 function HomeRoutes({ user }: { user: user }) {
-	console.log("USer", user);
 	return (
 		<>
 			{user.uid === "" && (

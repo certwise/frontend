@@ -7,17 +7,16 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
 import Routes from "./Routes";
 import HomeRoutes from "./HomeRoutes";
-import { signIn } from "./store";
-import Context from "./store/context";
-import { user } from "./store/user/types";
+import { actions, types } from "./store";
+import { Context } from "./store";
 import { useGet } from "./api/user";
-import { ReactQueryDevtools } from "react-query/devtools";
+import Toast from "./partials/Toast";
 
 function App() {
 	const { store, dispatch } = useContext(Context);
 	const location = useLocation();
 	const auth = getAuth();
-	const [user, setUser] = useState<user | any>({ uid: "" });
+	const [user, setUser] = useState<types.user | any>({ uid: "" });
 	const [userStatus, setUserStatus] = useState<
 		"loading" | "no_user" | "user_found"
 	>("loading");
@@ -41,7 +40,7 @@ function App() {
 	useEffect(() => {
 		if (user.uid !== "") {
 			if (getUser.data?.data.uid) {
-				dispatch(signIn(getUser.data.data));
+				dispatch(actions.user.signIn(getUser.data.data));
 				setUserStatus("user_found");
 			}
 		}
@@ -49,7 +48,7 @@ function App() {
 
 	useEffect(() => {
 		if (getUser.data?.data._id) {
-			dispatch(signIn(getUser.data.data));
+			dispatch(actions.user.signIn(getUser.data.data));
 			setUserStatus("user_found");
 		}
 		if (user.uid !== "" && getUser.isError) {
@@ -57,14 +56,21 @@ function App() {
 		}
 	}, [getUser.data]);
 
-	useEffect(() => console.log("userStatus", userStatus));
+	useEffect(() => {
+		console.log("Toasts", store.toasts);
+	}, [store.toasts]);
 
 	return (
 		<>
 			{userStatus === "loading" && <div>Loading</div>}
 			{userStatus === "user_found" && <Routes user={store.user} />}
 			{userStatus === "no_user" && <HomeRoutes user={store.user} />}
-			<ReactQueryDevtools initialIsOpen={false} position="top-right" />
+			<div
+				style={{ top: 100, zIndex: 100, position: "fixed" }}
+				className="absolute top-0 right-0 text-red-500 font-bold text-2xl flex flex-col"
+			>
+				<Toast />
+			</div>
 		</>
 	);
 }

@@ -17,4 +17,3 @@ export const env = {
 	url: process.env.REACT_APP_URL,
 	//url: "https://api.certwise.app",
 };
-console.log("env", process.env);

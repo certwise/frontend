@@ -1,28 +1,27 @@
 import Dashboard from "./pages/Dashboard";
-import Recipients from "./pages_/recipients/Recipients";
-import Templates from "./pages_/templates";
-import CreateTemplate from "./pages_/template/CreateTemplate";
-import Template from "./pages_/template";
-import Builder from "./pages_/template/Builder";
-import Certificate from "./pages_/certificate";
+import Recipients from "./pages/recipients/Recipients";
+import Templates from "./pages/templates";
+import CreateTemplate from "./pages/template/CreateTemplate";
+import Template from "./pages/template";
+import Builder from "./pages/template/Builder";
+import Certificate from "./pages/certificate";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
-import { user } from "./store/user/types";
+import { user } from "./store/types";
 import { useEffect, useState } from "react";
-import Onboarding1 from "./pages_/signup/Onboarding01";
-import Onboarding2 from "./pages_/signup/Onboarding02";
-import Onboarding3 from "./pages_/signup/Onboarding03";
-import Groups from "./pages_/recipients/Groups";
-import Group from "./pages_/group";
-import Certificates from "./pages_/certificates";
+import Onboarding1 from "./pages/signup/Onboarding01";
+import Onboarding2 from "./pages/signup/Onboarding02";
+import Onboarding3 from "./pages/signup/Onboarding03";
+import Groups from "./pages/recipients/Groups";
+import Group from "./pages/group";
+import Certificates from "./pages/certificates";
 import PageNotFound from "./pages/404";
-import Calendar from "./pages/Calendar";
 import Account from "./pages/settings/Account";
-import Notifications from "./pages/settings/Notifications";
-import Apps from "./pages/settings/Apps";
+import Notifications from "./pages/settings/Organization";
 import Plans from "./pages/settings/Plans";
 import Billing from "./pages/settings/Billing";
 import Feedback from "./pages/settings/Feedback";
-import CreateCertificate from "./pages_/certificates/CreateCertificate";
+import CreateCertificate from "./pages/certificates/CreateCertificate";
+import Create from "./pages/certificates/Create";
 
 function Routes({ user }: { user: user }) {
 	const path = useLocation();
@@ -60,6 +59,9 @@ function Routes({ user }: { user: user }) {
 						<Route exact path="/certificates/create">
 							<CreateCertificate />
 						</Route>
+						<Route exact path="/certificates/create2">
+							<Create />
+						</Route>
 						<Route exact path="/recipients/list">
 							<Recipients />
 						</Route>
@@ -84,17 +86,11 @@ function Routes({ user }: { user: user }) {
 						<Route exact path="/">
 							<Dashboard />
 						</Route>
-						<Route exact path="/calendar">
-							<Calendar />
-						</Route>
 						<Route exact path="/account">
 							<Account />
 						</Route>
-						<Route exact path="/account/notifications">
+						<Route exact path="/account/organization">
 							<Notifications />
-						</Route>
-						<Route exact path="/account/apps">
-							<Apps />
 						</Route>
 						<Route exact path="/account/plans">
 							<Plans />

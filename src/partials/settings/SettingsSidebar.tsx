@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 function SettingsSidebar() {
@@ -10,7 +9,7 @@ function SettingsSidebar() {
 			{/* Group 1 */}
 			<div>
 				<div className="text-xs font-semibold text-gray-400 uppercase mb-3">
-					Business settings
+					Profile settings
 				</div>
 				<ul className="flex flex-nowrap md:block mr-3 md:mr-0">
 					<li className="mr-0.5 md:mr-0 md:mb-0.5">
@@ -45,12 +44,12 @@ function SettingsSidebar() {
 							exact
 							to="/account/notifications"
 							className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${
-								pathname.includes("/account/notifications") && "bg-blue-50"
+								pathname.includes("/account/organization") && "bg-blue-50"
 							}`}
 						>
 							<svg
 								className={`w-4 h-4 flex-shrink-0 fill-current text-gray-400 mr-2 ${
-									pathname.includes("/account/notifications") && "text-blue-400"
+									pathname.includes("/account/organization") && "text-blue-400"
 								}`}
 								viewBox="0 0 16 16"
 							>
@@ -58,42 +57,16 @@ function SettingsSidebar() {
 							</svg>
 							<span
 								className={`text-sm font-medium ${
-									pathname.includes("/account/notifications")
+									pathname.includes("/account/organization")
 										? "text-blue-500"
 										: "hover:text-gray-700"
 								}`}
 							>
-								My Notifications
+								My Organization
 							</span>
 						</NavLink>
 					</li>
-					<li className="mr-0.5 md:mr-0 md:mb-0.5">
-						<NavLink
-							exact
-							to="/account/apps"
-							className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${
-								pathname.includes("/account/apps") && "bg-blue-50"
-							}`}
-						>
-							<svg
-								className={`w-4 h-4 flex-shrink-0 fill-current text-gray-400 mr-2 ${
-									pathname.includes("/account/apps") && "text-blue-400"
-								}`}
-								viewBox="0 0 16 16"
-							>
-								<path d="M3.414 2L9 7.586V16H7V8.414l-5-5V6H0V1a1 1 0 011-1h5v2H3.414zM15 0a1 1 0 011 1v5h-2V3.414l-3.172 3.172-1.414-1.414L12.586 2H10V0h5z" />
-							</svg>
-							<span
-								className={`text-sm font-medium ${
-									pathname.includes("/account/apps")
-										? "text-blue-500"
-										: "hover:text-gray-700"
-								}`}
-							>
-								Connected Apps
-							</span>
-						</NavLink>
-					</li>
+
 					<li className="mr-0.5 md:mr-0 md:mb-0.5">
 						<NavLink
 							exact

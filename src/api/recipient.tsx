@@ -1,12 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { env } from "../config";
 import axios from "axios";
-import { recipient } from "../store/certificates/types";
+import { actions, types } from "../store";
+import { Context } from "../store";
+import { useContext } from "react";
 
-const create = (recipient: recipient) => {
+const create = (recipient: types.recipient) => {
 	return axios.post(`${env.url}/recipient`, recipient);
 };
 
+const createBulk = (recipients: types.recipient[]) => {
+	return axios.post(`${env.url}/recipient/bulk`, recipients);
+};
 const getOne = (id: string) => {
 	return axios.get(`${env.url}/recipient/${id}`);
 };
@@ -23,43 +28,90 @@ const getByGroup = (group: string) => {
 	return axios.get(`${env.url}/recipient/group/${group}`);
 };
 
-export const useCreateRecipient = () => {
+export const useCreate = () => {
 	const query = useQueryClient();
+	const { dispatch } = useContext(Context);
 	return useMutation(create, {
 		onSuccess: () => {
 			query.invalidateQueries("recipients");
+			dispatch(
+				actions.toast.makeToast({
+					message: "Created recipient!",
+					type: "success",
+					duration: "long",
+				})
+			);
 		},
 		onError: (err: any) => {
-			alert(err.response.data);
+			dispatch(
+				actions.toast.makeToast({
+					message: err.response.data,
+					type: "error",
+					duration: "long",
+				})
+			);
+		},
+	});
+};
+
+export const useCreateBulk = () => {
+	const query = useQueryClient();
+	const { dispatch } = useContext(Context);
+	return useMutation(createBulk, {
+		onSuccess: (data) => {
+			query.invalidateQueries("recipients");
+			console.log(data);
+		},
+		onError: (err: any) => {
+			dispatch(
+				actions.toast.makeToast({
+					message: err.response.data,
+					type: "error",
+					duration: "long",
+				})
+			);
 		},
 	});
 };
 
 export const useGetByOrganization = (id: string) => {
+	const { dispatch } = useContext(Context);
 	return useQuery("recipients", () => getByOrganization(id), {
-		refetchOnMount: false,
-		refetchOnWindowFocus: false,
-		onSuccess: (data) => {},
+		onSuccess: (data) => {
+			dispatch(actions.recipients.setAll(data.data));
+		},
 	});
 };
 
 export const useGetOne = (recipient: string) => {
 	return useQuery(["recipient", recipient], () => getOne(recipient), {
 		enabled: !!recipient,
-		refetchOnMount: false,
-		refetchOnWindowFocus: false,
-		refetchOnReconnect: false,
-		refetchIntervalInBackground: false,
-		refetchInterval: false,
 	});
 };
 
 export const useUpdate = () => {
 	const query = useQueryClient();
+	const { dispatch } = useContext(Context);
 	return useMutation(update, {
 		onSuccess: (data) => {
 			console.log(data);
 			query.invalidateQueries("recipients");
+			dispatch(
+				actions.toast.makeToast({
+					message: "Updated recipient",
+					type: "success",
+					duration: "long",
+				})
+			);
+		},
+		onError: (err: any) => {
+			dispatch(
+				actions.toast.makeToast({
+					message: err.response.data,
+					type: "error",
+					duration: "long",
+				})
+			);
 		},
 	});
 };

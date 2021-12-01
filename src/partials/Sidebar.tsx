@@ -435,40 +435,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 								}}
 							</SidebarLinkGroup>
 
-							{/* Calendar */}
-							<li
-								className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
-									pathname.includes("calendar") && "bg-gray-900"
-								}`}
-							>
-								<NavLink
-									exact
-									to="/calendar"
-									className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
-										pathname.includes("calendar") && "hover:text-gray-200"
-									}`}
-								>
-									<div className="flex items-center">
-										<svg className="flex-shrink-0 h-6 w-6" viewBox="0 0 24 24">
-											<path
-												className={`fill-current text-gray-600 ${
-													pathname.includes("calendar") && "text-blue-500"
-												}`}
-												d="M1 3h22v20H1z"
-											/>
-											<path
-												className={`fill-current text-gray-400 ${
-													pathname.includes("calendar") && "text-blue-300"
-												}`}
-												d="M21 3h2v4H1V3h2V1h4v2h10V1h4v2Z"
-											/>
-										</svg>
-										<span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-											Calendar
-										</span>
-									</div>
-								</NavLink>
-							</li>
 							{/* Account */}
 							<SidebarLinkGroup activecondition={pathname.includes("account")}>
 								{(handleClick: any, open: any) => {
@@ -555,24 +521,12 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 													<li className="mb-1 last:mb-0">
 														<NavLink
 															exact
-															to="/account/notifications"
+															to="/account/organization"
 															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
 															activeClassName="!text-blue-500"
 														>
 															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-																My Notifications
-															</span>
-														</NavLink>
-													</li>
-													<li className="mb-1 last:mb-0">
-														<NavLink
-															exact
-															to="/account/apps"
-															className="block text-gray-400 hover:text-gray-200 transition duration-150 truncate"
-															activeClassName="!text-blue-500"
-														>
-															<span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-																Connected Apps
+																My Organization
 															</span>
 														</NavLink>
 													</li>

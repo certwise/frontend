@@ -1,8 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { env } from "../config";
 import axios from "axios";
-import { group } from "../types/group";
-
+import { group } from "../store/types/group";
+import { actions, types } from "../store";
+import { Context } from "../store";
+import { useContext } from "react";
 const create = (group: group) => {
 	return axios.post(`${env.url}/group`, group);
 };
@@ -19,18 +21,32 @@ const update = (group: any) => {
 
 export const useCreate = () => {
 	const query = useQueryClient();
+	const { dispatch } = useContext(Context);
 	return useMutation(create, {
 		onSuccess: (data) => {
 			query.invalidateQueries("groups");
+			dispatch(
+				actions.toast.makeToast({
+					message: "Group created!",
+					type: "success",
+					duration: "long",
+				})
+			);
+		},
+		onError: (err: any) => {
+			dispatch(
+				actions.toast.makeToast({
+					message: err.response.data,
+					type: "error",
+					duration: "long",
+				})
+			);
 		},
 	});
 };
 
 export const useGetByOrganization = (instituteId: string) => {
 	return useQuery("groups", () => getByOrganization(instituteId), {
-		refetchOnMount: false,
-		refetchOnReconnect: false,
-		retryOnMount: false,
 		refetchOnWindowFocus: false,
 	});
 };
@@ -48,7 +64,7 @@ export const useUpdate = () => {
 	const query = useQueryClient();
 	return useMutation(update, {
 		onSuccess: (data) => {
-			query.invalidateQueries(["group", data?.data?._id]);
+			query.invalidateQueries(["group", data?.data?._id, "groups"]);
 		},
 	});
 };

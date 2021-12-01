@@ -3,12 +3,11 @@ import { env } from "../config";
 import axios from "axios";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { useContext } from "react";
-import Context from "../store/context";
-import { getNewImage } from "../store/templates/elements";
+import { Context } from "../store";
 import { makeid } from ".";
-import { templateActions } from "../store";
-import { template } from "../types/template";
-import { image } from "../types/template/canvas";
+import { actions } from "../store";
+import { template } from "../store/types/template";
+import { image } from "../store/types/template/canvas";
 const getOne = (id: string) => {
 	return axios.get(`${env.url}/template/one/` + id);
 };
@@ -25,9 +24,12 @@ const create = (data: template) => {
 	return axios.post(`${env.url}/template`, data);
 };
 
-const getSavedImage = (id: string, uid: string) => {
+const getSavedImage = (_id: string, organization: string) => {
 	return getDownloadURL(
-		ref(getStorage(), `${uid}/templates/${id}/example/template_image.jpeg`)
+		ref(
+			getStorage(),
+			`${organization}/templates/${_id}/example/template_image.jpeg`
+		)
 	);
 };
 
@@ -39,8 +41,8 @@ const getDefaultImageItem = () => {
 	return getDownloadURL(ref(getStorage(), `default_template_images/image.jpg`));
 };
 
-export const useGetOne = (id: string) => {
-	return useQuery(["template", id], () => getOne(id), {
+export const useGetOne = (_id: string) => {
+	return useQuery(["template", _id], () => getOne(_id), {
 		refetchOnReconnect: false,
 		refetchOnWindowFocus: false,
 		refetchIntervalInBackground: false,
@@ -50,8 +52,6 @@ export const useGetOne = (id: string) => {
 
 export const useGetByOrganization = (uid: string) => {
 	return useQuery("templates", () => getByOrganization(uid), {
-		refetchOnWindowFocus: false,
-		refetchOnMount: false,
 		retry: 1,
 	});
 };
@@ -61,8 +61,7 @@ export const useUpdate = () => {
 	const queryClient = useQueryClient();
 	return useMutation(update, {
 		onMutate: (data) => {
-			let template = { ...data };
-			console.log("In onMutuate: ", template);
+			const template: template = Object.assign({}, data);
 			delete template.canvas.activeItem;
 			delete template.canvas.stageRef;
 			template.canvas.items.map((item) => {
@@ -74,11 +73,24 @@ export const useUpdate = () => {
 			return template;
 		},
 		onSuccess: () => {
-			dispatch(templateActions.setTemplateSaving(false));
+			dispatch(actions.templates.setTemplateSaving(false));
+			dispatch(
+				actions.toast.makeToast({
+					message: "Template saved",
+					type: "success",
+					duration: "long",
+				})
+			);
 			queryClient.invalidateQueries("templates");
 		},
 		onError: (err: any) => {
-			alert("Error saving template" + err.message);
+			dispatch(
+				actions.toast.makeToast({
+					message: "Error saving template!",
+					type: "error",
+					duration: "long",
+				})
+			);
 		},
 	});
 };
@@ -87,7 +99,7 @@ export const useCreate = () => {
 	const query = useQueryClient();
 	return useMutation(create, {
 		onSuccess: () => {
-			query.invalidateQueries("templates");
+			query.invalidateQueries(["templates"]);
 		},
 		onError: (err: any) => {
 			alert(err.response.data);
@@ -95,17 +107,25 @@ export const useCreate = () => {
 	});
 };
 
-export const useGetSavedImage = (id: string, uid: string) => {
-	return useQuery(["templateImage", id], () => getSavedImage(id, uid), {
-		refetchOnMount: false,
-		refetchOnWindowFocus: false,
-		refetchOnReconnect: false,
-		retry: 1,
-	});
+export const useGetSavedImage = (id_: string, organization: string) => {
+	return useQuery(
+		["templateImage", id_],
+		() => getSavedImage(id_, organization),
+		{
+			refetchOnWindowFocus: false,
+			refetchOnMount: false,
+			retry: 1,
+			refetchOnReconnect: false,
+		}
+	);
 };
 
 export const useGetDefaultBaseImage = () => {
-	return useQuery("defaultTemplateImage", () => getDefaultBaseImage(), {});
+	return useQuery("defaultTemplateImage", () => getDefaultBaseImage(), {
+		refetchOnWindowFocus: false,
+		refetchOnMount: false,
+		refetchOnReconnect: false,
+	});
 };
 
 export const useAddImage = () => {
@@ -116,7 +136,7 @@ export const useAddImage = () => {
 			let im = new window.Image();
 			im.crossOrigin = "anonymous";
 			im.src = url;
-			const width = store.templates.currentTemplate.canvas.width / 3;
+			const width = store.templates.currentTemplate.canvas.width / 3; // 900*600 w=300
 			const ratio = width / im.width;
 			const height = im.height * ratio;
 			im.onload = () => {
@@ -135,14 +155,14 @@ export const useAddImage = () => {
 					opacity: 100,
 					rotation: 0,
 					alt: "",
-					scaleX: 0,
-					scaleY: 0,
-					originalWidth: 0,
-					originalHeight: 0,
+					scaleX: 1,
+					scaleY: 1,
+					originalWidth: im.width,
+					originalHeight: im.height,
 					flipX: false,
 					flipY: false,
 				};
-				dispatch(templateActions.createImageItem(img));
+				dispatch(actions.templates.createImageItem(img));
 				query.invalidateQueries("templateImage");
 			};
 		},

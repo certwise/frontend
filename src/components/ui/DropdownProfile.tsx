@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import Transition from "../../utils/Transition";
 import { signOut, getAuth } from "firebase/auth";
 import UserAvatar from "../../images/user-avatar-32.png";
-import Context from "../../store/context";
-import { signOut as signOutStore } from "../../store";
+import { Context } from "../../store";
+import { signOut as signOutStore } from "../../store/actions/user";
 function DropdownProfile({ align }: any) {
-	const { dispatch } = useContext(Context);
+	const { store, dispatch } = useContext(Context);
 	const [dropdownOpen, setDropdownOpen] = useState<any>(false);
 
 	const trigger = useRef<any>(null);
@@ -56,7 +56,7 @@ function DropdownProfile({ align }: any) {
 				/>
 				<div className="flex items-center truncate">
 					<span className="truncate ml-2 text-sm font-medium group-hover:text-gray-800">
-						CertWise Inc.
+						{store.user.name}
 					</span>
 					<svg
 						className="w-3 h-3 flex-shrink-0 ml-1 fill-current text-gray-400"
@@ -86,7 +86,9 @@ function DropdownProfile({ align }: any) {
 					onBlur={() => setDropdownOpen(false)}
 				>
 					<div className="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200">
-						<div className="font-medium text-gray-800">CertWise Inc.</div>
+						<div className="font-medium text-gray-800">
+							{store.organization.name}
+						</div>
 						<div className="text-xs text-gray-500 italic">Administrator</div>
 					</div>
 					<ul>

@@ -36,7 +36,7 @@ function Header({ sidebarOpen, setSidebarOpen }: any) {
 
 					{/* Header: Right side */}
 					<div className="flex items-center space-x-3">
-						<button
+						{/* <button
 							className={`w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition duration-150 rounded-full ml-3 ${
 								searchModalOpen && "bg-gray-200"
 							}`}
@@ -61,14 +61,14 @@ function Header({ sidebarOpen, setSidebarOpen }: any) {
 									d="M15.707 14.293L13.314 11.9a8.019 8.019 0 01-1.414 1.414l2.393 2.393a.997.997 0 001.414 0 .999.999 0 000-1.414z"
 								/>
 							</svg>
-						</button>
-						<SearchModal
+						</button> */}
+						{/* <SearchModal
 							id="search-modal"
 							searchId="search"
 							modalOpen={searchModalOpen}
 							setModalOpen={setSearchModalOpen}
-						/>
-						<Notifications align="right" />
+						/> */}
+						{/* <Notifications align="right" /> */}
 						<Help align="right" />
 						{/*  Divider */}
 						<hr className="w-px h-6 bg-gray-200 mx-3" />
