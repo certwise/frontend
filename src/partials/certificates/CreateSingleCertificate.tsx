@@ -37,31 +37,38 @@ function CreateSingleCertificate() {
 				Certificate for{" "}
 				{store.certificates.createCertificate.selectedRecipient?.name}
 			</div>
-			<table className="w-xl my-8 table-auto border border-gray-400 p-3 rounded-xl">
-				<thead className="border-b border-gray-400">
-					<tr>
-						<th className="text-left px-4 py-3 ">Template Variable</th>
-						<th className="text-left px-4 py-3 ">Recipient data</th>
-					</tr>
-				</thead>
-				<tbody className="my-5 w-full">
-					{store.certificates.createCertificate.singleCertificateFields.map(
-						(field, index) => {
-							return (
-								<tr
-									className="w-full my-2 border-b border-gray-400 py-3"
-									key={index}
-								>
-									<td className="w-1/3 px-4 text-left py-3">{field.name} </td>
-									<td className="w-1/3 px-4 font-bold text-blue-500 text-left py-3">
-										{field.value}
-									</td>
-								</tr>
-							);
-						}
-					)}
-				</tbody>
-			</table>
+			{template && template?.templateFields.length > 0 && (
+				<table className="w-xl my-8 table-auto border border-gray-400 p-3 rounded-xl">
+					<thead className="border-b border-gray-400">
+						<tr>
+							<th className="text-left px-4 py-3 ">Template Variable</th>
+							<th className="text-left px-4 py-3 ">Recipient data</th>
+						</tr>
+					</thead>
+					<tbody className="my-5 w-full">
+						{store.certificates.createCertificate.singleCertificateFields.map(
+							(field, index) => {
+								return (
+									<tr
+										className="w-full my-2 border-b border-gray-400 py-3"
+										key={index}
+									>
+										<td className="w-1/3 px-4 text-left py-3">{field.name} </td>
+										<td className="w-1/3 px-4 font-bold text-blue-500 text-left py-3">
+											{field.value}
+										</td>
+									</tr>
+								);
+							}
+						)}
+					</tbody>
+				</table>
+			)}
+			{template && template?.templateFields.length === 0 && (
+				<div className="text-yellow-600 text-sm my-5">
+					No variables are in this template.
+				</div>
+			)}
 			<div className="max-w-xl mb-4">
 				Template image:
 				<TemplateCard
@@ -75,7 +82,7 @@ function CreateSingleCertificate() {
 				{!create.isLoading && !createMany.isLoading && (
 					<button
 						onClick={onCreateSingle}
-						className="my-3 btn w-56 bg-blue-500 hover:bg-blue-600 text-white ml-2"
+						className="my-3 btn  bg-blue-500 hover:bg-blue-600 text-white ml-2"
 					>
 						<svg
 							className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
@@ -90,7 +97,7 @@ function CreateSingleCertificate() {
 					</button>
 				)}
 				{(create.isLoading || createMany.isLoading) && (
-					<button className="mt-3 mb-8 w-56 btn bg-blue-200 text-white ml-2">
+					<button className="mt-3 mb-8  btn bg-blue-200 text-white ml-2">
 						<svg
 							className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
 							viewBox="0 0 16 16"
@@ -108,7 +115,7 @@ function CreateSingleCertificate() {
 				{!create.isLoading && !createMany.isLoading && (
 					<button
 						onClick={onCreateMany}
-						className="mt-3 mb-8 w-56 btn bg-blue-500 hover:bg-blue-600 text-white ml-2"
+						className="mt-3 mb-8  btn bg-blue-500 hover:bg-blue-600 text-white ml-2"
 					>
 						<svg
 							className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
@@ -123,7 +130,7 @@ function CreateSingleCertificate() {
 					</button>
 				)}
 				{(create.isLoading || createMany.isLoading) && (
-					<button className="mt-3 mb-8 w-56 btn bg-blue-200 text-white ml-2">
+					<button className="mt-3 mb-8  btn bg-blue-200 text-white ml-2">
 						<svg
 							className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
 							viewBox="0 0 16 16"

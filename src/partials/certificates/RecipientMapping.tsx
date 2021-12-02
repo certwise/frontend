@@ -11,7 +11,6 @@ function RecipientMapping({
 }) {
 	const { store, dispatch } = useContext(Context);
 	const [map, setMap] = useState<any>();
-	console.log("ZZZZZZZZ", templateFields.length);
 	useEffect(() => {
 		if (!!map) {
 			const fields = Object.keys(map).map((key) => {
@@ -59,14 +58,6 @@ function RecipientMapping({
 						Review Certificate -&gt;
 					</button>
 				)}
-			{templateFields.length < 1 && (
-				<button
-					onClick={() => dispatch(actions.certificate.setCreatePage(3))}
-					className="btn bg-blue-500 hover:bg-blue-600 text-white mt-5"
-				>
-					Review Certificate -&gt;
-				</button>
-			)}
 		</div>
 	);
 }

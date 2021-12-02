@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { AiFillLinkedin, AiOutlineGoogle } from "react-icons/ai";
+import Header from "../../partials/Header";
+import AuthDecoration from "../../images/auth-decoration.png";
 
 import {
 	getAuth,
@@ -11,7 +13,6 @@ import {
 import { useEffect, useState } from "react";
 import * as userQuery from "../../api/user";
 import { user } from "../../store/types";
-import LandingHeader from "../../partials/LandingHeader";
 
 function SignUp() {
 	const [redirect, setredirect] = useState(false);
@@ -21,7 +22,6 @@ function SignUp() {
 		password: "",
 		name: "",
 		confirmPassword: "",
-		phone: "",
 	});
 	const auth = getAuth();
 	useEffect(() => {
@@ -55,7 +55,6 @@ function SignUp() {
 						updatedAt: new Date(),
 						numberOfTemplatesCreated: 0,
 						numberOfCerificatesCreated: 0,
-						phoneNumber: form.phone,
 					};
 					create.mutate(x);
 					setredirect(true);
@@ -115,15 +114,15 @@ function SignUp() {
 	return (
 		<div className="flex flex-col min-h-screen overflow-hidden">
 			{/*  Site header */}
-			<LandingHeader />
+			<Header />
 
 			{/*  Page content */}
-			<main className="bg-white flex-grow">
-				<section className="bg-gradient-to-b from-warmGray-100 to-white">
+			<main className="flex-grow">
+				<section className="bg-gradient-to-b from-gray-100 to-white">
 					<div className="max-w-6xl mx-auto px-4 sm:px-6">
-						<div className="pt-2 pb-12 md:pt-40 md:pb-20">
+						<div className="pt-32 pb-12 md:pt-40 md:pb-20">
 							{/* Page header */}
-							<div className="max-w-3xl mx-auto text-center pb-8 md:pb-20">
+							<div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
 								<h1 className="h1">
 									Welcome. We exist to make credentials easier.
 								</h1>
@@ -132,37 +131,6 @@ function SignUp() {
 							{/* Form */}
 							<div className="max-w-sm mx-auto">
 								<form>
-									<div className="flex flex-wrap -mx-3 mb-4">
-										<div className="w-full px-3">
-											<label
-												className="block text-gray-800 text-sm font-medium mb-1"
-												htmlFor="name"
-											>
-												Invite Code <span className="text-red-600">*</span>
-											</label>
-											<input
-												id="name"
-												type="text"
-												className="form-input w-full text-gray-800 mb-2"
-												placeholder="Enter your invite code"
-												required
-												onChange={(e) =>
-													setForm({ ...form, name: e.target.value })
-												}
-											/>
-											<span className="text-sm mt-4">
-												Don't have an invite code?{" "}
-												<a
-													target="_blank"
-													rel="noopener noreferrer"
-													className="text-blue-500 hover:text-blue-600 hover:underline"
-													href="https://certwise.app/early-access"
-												>
-													Apply for early access
-												</a>
-											</span>
-										</div>
-									</div>
 									<div className="flex flex-wrap -mx-3 mb-4">
 										<div className="w-full px-3">
 											<label
@@ -218,7 +186,7 @@ function SignUp() {
 												placeholder="Enter your phone number"
 												required
 												onChange={(e) =>
-													setForm({ ...form, phone: e.target.value })
+													setForm({ ...form, email: e.target.value })
 												}
 											/>
 										</div>
@@ -265,19 +233,9 @@ function SignUp() {
 									</div>
 									<div className="flex flex-wrap -mx-3 mt-6">
 										<div className="w-full px-3">
-											{!create.isLoading && (
-												<button
-													onClick={(e) => signUp(e)}
-													className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
-												>
-													Sign up
-												</button>
-											)}
-											{create.isLoading && (
-												<button className="btn text-white bg-blue-200 w-full">
-													Signing up...
-												</button>
-											)}
+											<button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
+												Sign up
+											</button>
 										</div>
 									</div>
 									<div className="text-sm text-gray-500 text-center mt-3">
@@ -316,10 +274,7 @@ function SignUp() {
 									</div>
 									<div className="flex flex-wrap -mx-3">
 										<div className="w-full px-3">
-											<button
-												onClick={(e) => signUpGoogle(e)}
-												className="btn px-0 text-white bg-red-600 hover:bg-red-700 w-full relative flex items-center"
-											>
+											<button className="btn px-0 text-white bg-red-600 hover:bg-red-700 w-full relative flex items-center">
 												<AiOutlineGoogle className="w-5 h-5 fill-current text-white opacity-75 flex-shrink-0 mx-4" />
 												<span className="flex-auto pl-16 pr-8 -ml-16">
 													Continue with Google
@@ -328,6 +283,15 @@ function SignUp() {
 										</div>
 									</div>
 								</form>
+								<div className="text-gray-600 text-center mt-6">
+									Already using Certwise?{" "}
+									<Link
+										to="/signin"
+										className="text-blue-600 hover:underline transition duration-150 ease-in-out"
+									>
+										Sign in
+									</Link>
+								</div>
 							</div>
 						</div>
 					</div>

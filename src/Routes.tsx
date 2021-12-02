@@ -27,10 +27,15 @@ function Routes({ user }: { user: user }) {
 	const path = useLocation();
 	const [redirect, setRedirect] = useState("");
 	useEffect(() => {
-		if (user.organization === "") setRedirect("/onboard-organization");
+		if (user.uid !== "" && user.organization === "")
+			setRedirect("/onboard-organization");
+		if (user.uid === "") {
+			setRedirect("");
+			window.location.replace("https://");
+		}
 		return () => {};
 	}, [user]);
-	if (redirect && !path.pathname.includes("onboard"))
+	if (redirect !== "" && !path.pathname.includes("onboard"))
 		return <Redirect push to="/onboard-organization" />;
 	else
 		return (

@@ -26,14 +26,24 @@ function Page2() {
 							<RecipientsDropdown recipients={recipients.data?.data} />
 							{selectedRecipient && (
 								<div className="mt-3">
-									{/* <h3>Selected recipient: {selectedRecipient.name}</h3> */}
 									{(selectedTemplate as template).templateFields.length > 0 && (
 										<RecipientMapping
 											recipient={selectedRecipient}
 											templateFields={
-												(selectedTemplate as template).templateFields
+												(selectedTemplate as template)?.templateFields
 											}
 										/>
+									)}
+									{(selectedTemplate as template)?.templateFields.length <
+										1 && (
+										<button
+											onClick={() =>
+												dispatch(actions.certificate.setCreatePage(3))
+											}
+											className="btn bg-blue-500 hover:bg-blue-600 text-white mt-5"
+										>
+											Review Certificate for {selectedRecipient.name} -&gt;
+										</button>
 									)}
 								</div>
 							)}

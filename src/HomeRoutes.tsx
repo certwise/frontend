@@ -1,35 +1,31 @@
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Redirect, Route, Switch } from "react-router-dom";
+import PageNotFoundHome from "./pages/404NoUser";
 import Signin from "./pages/signin";
+import ResetPassword from "./pages/signin/ResetPassword";
 import Signup from "./pages/signup";
 import { user } from "./store/types";
 function HomeRoutes({ user }: { user: user }) {
+	if (user.uid === "" && window.location.pathname === "/")
+		window.location.replace("https://certwise.app");
 	return (
 		<>
 			{user.uid === "" && (
 				<Switch>
-					<Route exact path="/">
-						<Link
-							className="mt-2 btn bg-blue-500 hover:bg-blue-600 text-white ml-3 whitespace-nowrap"
-							to="/signin"
-						>
-							<button>Signin</button>
-						</Link>
-						<Link
-							className="mt-2 btn bg-blue-500 hover:bg-blue-600 text-white ml-3 whitespace-nowrap"
-							to="/signup"
-						>
-							<button>Signup</button>
-						</Link>
-						<h1 className="text-xl m-3">Home</h1>
-					</Route>
 					<Route path="/signin">
 						<Signin />
 					</Route>
 					<Route path="/signup">
 						<Signup />
 					</Route>
+					<Route path="/reset-password">
+						<ResetPassword />
+					</Route>
+					<Route path="*">
+						<PageNotFoundHome />
+					</Route>
 				</Switch>
 			)}
+			{user.uid !== "" && <Redirect to="/" />}
 		</>
 	);
 }

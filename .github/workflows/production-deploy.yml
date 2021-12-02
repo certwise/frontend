@@ -45,3 +45,4 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_ID: certify-4bf9a
           REACT_APP_SENTRY_ENV: production
+          REACT_APP_URL: https://api.certwise.app

@@ -22,7 +22,9 @@ module.exports = {
       colors: {
         gray: colors.blueGray,
         'light-blue': colors.sky,
-        red: colors.rose
+        red: colors.rose,
+        teal: colors.teal,
+        warmGray: colors.gray,
       },
 
       outline: {

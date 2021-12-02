@@ -5,13 +5,14 @@ import { signOut, getAuth } from "firebase/auth";
 import UserAvatar from "../../images/user-avatar-32.png";
 import { Context } from "../../store";
 import { signOut as signOutStore } from "../../store/actions/user";
+import ModalBasic from "./ModalBasic";
 function DropdownProfile({ align }: any) {
 	const { store, dispatch } = useContext(Context);
 	const [dropdownOpen, setDropdownOpen] = useState<any>(false);
 
 	const trigger = useRef<any>(null);
 	const dropdown = useRef<any>(null);
-
+	const [signOutModal, setSignOutModal] = useState(false);
 	// close on click outside
 	useEffect(() => {
 		const clickHandler = ({ target }: any) => {
@@ -102,20 +103,51 @@ function DropdownProfile({ align }: any) {
 							</Link>
 						</li>
 						<li>
-							<Link
+							<button
 								className="font-medium text-sm text-blue-500 hover:text-blue-600 flex items-center py-1 px-3"
-								to="/signin"
-								onClick={() => {
-									dispatch(signOutStore());
-									signOut(getAuth());
+								onClick={(e) => {
+									e.stopPropagation();
+									setSignOutModal(true);
 								}}
 							>
 								Sign Out
-							</Link>
+							</button>
 						</li>
 					</ul>
 				</div>
 			</Transition>
+			<ModalBasic
+				id="signoutModal"
+				modalOpen={signOutModal}
+				setModalOpen={setSignOutModal}
+				title={"Sign Out of " + store.user.email + "?"}
+			>
+				{/* Modal footer */}
+				<div className="px-5 py-4">
+					<div className="flex flex-wrap justify-end space-x-2">
+						<button
+							className="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
+							onClick={(e) => {
+								e.stopPropagation();
+								setSignOutModal(false);
+							}}
+						>
+							Cancel
+						</button>
+						<button
+							onClick={(e) => {
+								dispatch(signOutStore());
+								signOut(getAuth()).then(() => {
+									window.location.href = "https://certwise.app";
+								});
+							}}
+							className="btn-sm bg-red-500 hover:font-bold text-white"
+						>
+							Sign Out
+						</button>
+					</div>
+				</div>
+			</ModalBasic>
 		</div>
 	);
 }
