@@ -114,8 +114,8 @@ export const useGetSavedImage = (id_: string, organization: string) => {
 		{
 			refetchOnWindowFocus: false,
 			refetchOnMount: false,
-			retry: 1,
 			refetchOnReconnect: false,
+			retry: 1,
 		}
 	);
 };

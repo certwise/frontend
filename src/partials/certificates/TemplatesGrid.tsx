@@ -4,38 +4,35 @@ import DropdownTemplate from "./DropDownTemplates";
 import TemplateCard from "./TemplateCard";
 import { actions, Context } from "../../store";
 
-function TemplatesGrid({ setTemplate }: any) {
+function TemplatesGrid() {
 	const { store, dispatch } = useContext(Context);
 	const { isLoading, data } = useGetByOrganization(store.user.organization);
-	const [selectedTemplate, setselectedTemplate] = useState<any>();
-	useEffect(() => {
-		setTemplate(selectedTemplate);
-		dispatch(actions.certificate.setSelectedTemplate(selectedTemplate));
-	}, [selectedTemplate]);
-	const [togglePreview, setTogglePreview] = useState(false);
+	const [togglePreview, setTogglePreview] = useState(true);
+	const selectedTemplate =
+		store.certificates.createCertificate.selectedTemplate;
 	return (
 		<>
 			<h1 className="font-bold text-xl mb-2">Choose a template</h1>
-			<div className="max-w-lg">
+			<div className="text-sm mb-3">
+				Choose a template to use for your certificate creation
+			</div>
+			<div className="max-w-xl">
 				{isLoading && <p>Loading templates...</p>}
 				{data && (
 					<div className="flex flex-row">
-						<DropdownTemplate
-							setTemplate={setselectedTemplate}
-							templates={data?.data}
-						/>
+						<DropdownTemplate templates={data?.data} />
 					</div>
 				)}
 				{selectedTemplate && (
 					<div className="flex flex-row">
-						<div className="form-switch mt-2 pt-0.5 mx-1 text-sm flex-grow mb-3">
+						<div className="form-switch mt-2 pt-0.5 ml-1 text-sm flex-grow mb-3">
 							Selected template:{" "}
 							<span className="font-bold text-blue-600 text-lg">
 								{" "}
 								{selectedTemplate.name}
 							</span>
 						</div>
-						<div className="form-switch mt-2 ml">
+						<div className="form-switch mt-2">
 							<input
 								type="checkbox"
 								id="switch-1"
@@ -53,8 +50,8 @@ function TemplatesGrid({ setTemplate }: any) {
 			</div>
 			{selectedTemplate && togglePreview && (
 				<>
-					<div className="max-w-sm mb-6 ">
-						<TemplateCard template={selectedTemplate} />
+					<div className="max-w-xl mb-6 ">
+						<TemplateCard maxHeight={500} template={selectedTemplate} />
 					</div>
 				</>
 			)}

@@ -1,9 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import Transition from "../../utils/Transition";
-
-function DropdownFull({ users, setRecipient }: any) {
+import { Context, actions } from "../../store";
+import { recipient } from "../../store/types";
+function RecipientsDropdown({ recipients }: { recipients: recipient[] }) {
+	const { dispatch } = useContext(Context);
 	const [dropdownOpen, setDropdownOpen] = useState<any>(false);
-	const [selected, setSelected] = useState<any>(users[0] || "");
+	const [selected, setSelected] = useState<any>(recipients[0] || "");
 	const trigger = useRef<any>(null);
 	const dropdown = useRef<any>(null);
 	const [filter, setfilter] = useState("");
@@ -86,31 +88,31 @@ function DropdownFull({ users, setRecipient }: any) {
 					onFocus={() => setDropdownOpen(true)}
 					onBlur={() => setDropdownOpen(false)}
 				>
-					{users?.map((user: any) => {
-						if (user.name.toLowerCase().includes(filter.toLowerCase()))
+					{recipients?.map((recipient: any) => {
+						if (recipient.name.toLowerCase().includes(filter.toLowerCase()))
 							return (
 								<button
-									key={user.email}
+									key={recipient.email}
 									tabIndex={0}
 									className={`flex items-center justify-between w-full hover:bg-gray-50 py-2 px-3 cursor-pointer ${
-										user === selected && "text-blue-500"
+										recipient === selected && "text-blue-500"
 									}`}
 									onClick={(e) => {
 										e.preventDefault();
-										setSelected(user);
+										setSelected(recipient);
 										setDropdownOpen(false);
-										setValue(user.name);
-										setRecipient(user);
+										setValue(recipient.name);
+										dispatch(actions.certificate.setCreateRecipient(recipient));
 									}}
 								>
-									<span className="text-left w-1/2">{user.name}</span>
+									<span className="text-left w-1/2">{recipient.name}</span>
 									<span className="text-xs text-blue-500 text-right w-1/2">
-										{user.email}
+										{recipient.email}
 									</span>
 
 									<svg
 										className={`ml-3 flex-shrink-0 mr-2 fill-current text-blue-500 ${
-											user !== selected && "invisible"
+											recipient !== selected && "invisible"
 										}`}
 										width="12"
 										height="9"
@@ -128,4 +130,4 @@ function DropdownFull({ users, setRecipient }: any) {
 	);
 }
 
-export default DropdownFull;
+export default RecipientsDropdown;

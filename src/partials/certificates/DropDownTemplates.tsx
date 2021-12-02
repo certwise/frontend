@@ -1,14 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
+import { template } from "../../store/types";
 import Transition from "../../utils/Transition";
-
-function DropdownTemplate({ templates, setTemplate }: any) {
+import { actions, Context } from "../../store";
+function DropdownTemplate({ templates }: { templates: template[] }) {
+	const { dispatch } = useContext(Context);
 	const [dropdownOpen, setDropdownOpen] = useState<any>(false);
 	const [selected, setSelected] = useState<any>("");
 	const trigger = useRef<any>(null);
 	const dropdown = useRef<any>(null);
 	const [filter, setfilter] = useState("");
-	const [value, setValue] = useState("Select templates");
-	// close on click outside
+	const [value, setValue] = useState("Select template");
 	useEffect(() => {
 		const clickHandler = ({ target }: any) => {
 			if (!dropdown.current) return;
@@ -101,7 +102,7 @@ function DropdownTemplate({ templates, setTemplate }: any) {
 										setSelected(template);
 										setDropdownOpen(false);
 										setValue(template.name);
-										setTemplate(template);
+										dispatch(actions.certificate.setSelectedTemplate(template));
 									}}
 								>
 									<div className="text-left font-bold text-xs w-1/3">

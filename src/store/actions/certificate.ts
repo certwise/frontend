@@ -1,4 +1,4 @@
-import { action, CustomField, template } from "../types";
+import { action, CustomField, group, template } from "../types";
 
 export const setSelectedTemplate = (template: template): action => {
 	return {
@@ -14,9 +14,9 @@ export const setCreateType = (createType: "single" | "group"): action => {
 	};
 };
 
-export const setCreateGroup = (group: string): action => {
+export const setCreateGroup = (group: group): action => {
 	return {
-		type: "CREATE_SET_SELECTEG_GROUP",
+		type: "CREATE_SET_SELECTED_GROUP",
 		payload: group,
 	};
 };
@@ -35,16 +35,21 @@ export const setCreatePage = (page: 1 | 2 | 3): action => {
 	};
 };
 
-export const setCreateSingleTemplateFields = (
+export const setCreateSingleRecipientCertificateFields = (
 	fields: CustomField[]
 ): action => {
 	return {
-		type: "CREATE_SET_SINGLE_TEMPLATE_FIELDS",
+		type: "CREATE_SET_SINGLE_RECIPIENT_CERTIFICATE_FIELDS",
 		payload: fields,
 	};
 };
 
-export const setCreateGroupTemplateFields = (fields: CustomField[]): action => {
+export const setCreateGroupTemplateFields = (
+	fields: Array<{
+		templateField: CustomField;
+		groupField: CustomField;
+	}>
+): action => {
 	return {
 		type: "CREATE_SET_GROUP_TEMPLATE_FIELDS",
 		payload: fields,

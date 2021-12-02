@@ -23,14 +23,19 @@ export interface certificateState {
 		[key: string]: certificate[];
 	}>;
 	selected: certificate[];
-	currentCertificate: certificate | false;
+	currentCertificate: certificate | undefined;
 	createCertificate: {
 		page: 1 | 2 | 3;
-		selectedGroup: group | false;
-		selectedTemplate: template | false;
-		selectedRecipient: recipient | false;
+		selectedGroup: group | undefined;
+		selectedTemplate: template | undefined;
+		selectedRecipient: recipient | undefined;
 		type: "single" | "group";
-		singleCertificateFields: CustomField[] | false;
-		groupCertificateFields: CustomField[] | false;
+		singleCertificateFields: CustomField[];
+		groupCertificateFields:
+			| Array<{
+					templateField: CustomField;
+					groupField: CustomField;
+			  }>
+			| false;
 	};
 }

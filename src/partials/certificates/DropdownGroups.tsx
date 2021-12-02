@@ -1,7 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
+import { group } from "../../store/types";
 import Transition from "../../utils/Transition";
 
-function DropdownGroups({ groups, setGroup }: any) {
+function DropdownGroups({
+	groups,
+	setGroup,
+}: {
+	groups: group[];
+	setGroup: (group: group) => void;
+}) {
 	const [dropdownOpen, setDropdownOpen] = useState<any>(false);
 	const [selected, setSelected] = useState<any>("");
 	const trigger = useRef<any>(null);
@@ -86,11 +93,11 @@ function DropdownGroups({ groups, setGroup }: any) {
 					onFocus={() => setDropdownOpen(true)}
 					onBlur={() => setDropdownOpen(false)}
 				>
-					{groups?.map((group: any) => {
+					{groups?.map((group: group) => {
 						if (group.name.toLowerCase().includes(filter.toLowerCase()))
 							return (
 								<button
-									key={group.id}
+									key={group._id}
 									tabIndex={0}
 									className={`flex items-center justify-between w-full hover:bg-gray-50 py-2 px-3 cursor-pointer ${
 										group === selected && "text-blue-500"
@@ -105,7 +112,7 @@ function DropdownGroups({ groups, setGroup }: any) {
 								>
 									<span className="text-left w-1/2">{group.name}</span>
 									<span className="text-xs text-blue-500 text-right w-1/2">
-										{group.email}
+										{group.description.substring(0, 40) + "..."}
 									</span>
 
 									<svg

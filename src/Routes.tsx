@@ -21,7 +21,7 @@ import Plans from "./pages/settings/Plans";
 import Billing from "./pages/settings/Billing";
 import Feedback from "./pages/settings/Feedback";
 import CreateCertificate from "./pages/certificates/CreateCertificate";
-import Create from "./pages/certificates/Create";
+import Create from "./pages/certificates/create";
 
 function Routes({ user }: { user: user }) {
 	const path = useLocation();

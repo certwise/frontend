@@ -15,5 +15,6 @@ export const app = initializeApp(firebaseConfig);
 
 export const env = {
 	url: process.env.REACT_APP_URL,
+	sentryEnv: process.env.REACT_APP_SENTRY_ENV,
 	//url: "https://api.certwise.app",
 };

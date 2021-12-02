@@ -47,7 +47,7 @@ export const useCreate = () => {
 
 export const useGetByOrganization = (instituteId: string) => {
 	return useQuery("groups", () => getByOrganization(instituteId), {
-		refetchOnWindowFocus: false,
+		refetchOnWindowFocus: true,
 	});
 };
 

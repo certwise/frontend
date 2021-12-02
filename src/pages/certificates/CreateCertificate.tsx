@@ -193,7 +193,7 @@ function CreateCertificate() {
 						<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 						<div className="m-5">
 							<h1 className="font-bold text-3xl mb-5">Create Certificate</h1>
-							<TemplatesGrid setTemplate={setTemplate} />
+							<TemplatesGrid />
 							{template && (
 								<CreateCertificateForm
 									setType={setType}
@@ -212,11 +212,11 @@ function CreateCertificate() {
 												suscipit, quisquam maxime expedita aut adipisci ullam.
 												Certs
 											</p>
-											<MapFields
+											{/* <MapFields
 												recipientFields={recipient.customFields}
 												selectedTemplateFields={templateFields}
 												setmap={setMap}
-											/>
+											/> */}
 										</>
 									)}
 									{!(
@@ -266,11 +266,11 @@ function CreateCertificate() {
 												Dolore sit nulla sint fugit quo repellendus voluptatum
 												suscipit, quisquam maxime expedita aut adipisci ullam.
 											</p>
-											<MapFields
+											{/* <MapFields
 												recipientFields={groupFields}
 												selectedTemplateFields={templateFields}
 												setmap={setMap}
-											/>
+											/> */}
 										</>
 									)}
 									{!(

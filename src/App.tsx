@@ -11,7 +11,8 @@ import { actions, types } from "./store";
 import { Context } from "./store";
 import { useGet } from "./api/user";
 import Toast from "./partials/Toast";
-
+import dotenv from "dotenv";
+dotenv.config();
 function App() {
 	const { store, dispatch } = useContext(Context);
 	const location = useLocation();

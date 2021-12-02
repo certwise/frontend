@@ -38,7 +38,7 @@ const reducer = (state: certificateState, action: action): certificateState => {
 				},
 			};
 		}
-		case "CREATE_SET_SINGLE_CERTIFICATE_FIELDS": {
+		case "CREATE_SET_SINGLE_RECIPIENT_CERTIFICATE_FIELDS": {
 			return {
 				...state,
 				createCertificate: {

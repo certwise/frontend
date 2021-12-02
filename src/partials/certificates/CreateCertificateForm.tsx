@@ -62,12 +62,12 @@ function CreateCertificateForm({
 			{createType === "single" && (
 				<form className="mt-5 flex flex-row max-w-lg">
 					<Dropdownfull
-						users={
+						recipients={
 							recipients.data?.data?.map((user: any) => {
 								return { ...user };
 							}) || []
 						}
-						setRecipient={setSelectedreipient}
+						//setRecipient={setSelectedreipient}
 					/>
 				</form>
 			)}
