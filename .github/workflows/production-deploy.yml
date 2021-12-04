@@ -19,6 +19,9 @@ jobs:
         run: npm install
       - name: Build
         run: CI=false npm run build # Set CI=false to prevent treating warnings as errors
+        env:
+          REACT_APP_SENTRY_ENV: production
+          REACT_APP_URL: ${{ secrets.REACT_APP_URL }}
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -41,9 +44,6 @@ jobs:
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting:production --message \"${{ github.event.head_commit.message }}\"
-
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_ID: certify-4bf9a
-          REACT_APP_SENTRY_ENV: production
-          REACT_APP_URL: https://api.certwise.app
