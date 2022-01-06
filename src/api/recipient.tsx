@@ -60,7 +60,6 @@ export const useCreateBulk = () => {
 	return useMutation(createBulk, {
 		onSuccess: (data) => {
 			query.invalidateQueries("recipients");
-			console.log(data);
 		},
 		onError: (err: any) => {
 			dispatch(
@@ -94,7 +93,6 @@ export const useUpdate = () => {
 	const { dispatch } = useContext(Context);
 	return useMutation(update, {
 		onSuccess: (data) => {
-			console.log(data);
 			query.invalidateQueries("recipients");
 			dispatch(
 				actions.toast.makeToast({

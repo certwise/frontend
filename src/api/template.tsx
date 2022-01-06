@@ -43,10 +43,7 @@ const getDefaultImageItem = () => {
 
 export const useGetOne = (_id: string) => {
 	return useQuery(["template", _id], () => getOne(_id), {
-		refetchOnReconnect: false,
 		refetchOnWindowFocus: false,
-		refetchIntervalInBackground: false,
-		refetchInterval: false,
 	});
 };
 
@@ -61,7 +58,7 @@ export const useUpdate = () => {
 	const queryClient = useQueryClient();
 	return useMutation(update, {
 		onMutate: (data) => {
-			const template: template = Object.assign({}, data);
+			let template: template = { ...data };
 			delete template.canvas.activeItem;
 			delete template.canvas.stageRef;
 			template.canvas.items.map((item) => {
@@ -72,8 +69,9 @@ export const useUpdate = () => {
 			});
 			return template;
 		},
-		onSuccess: () => {
+		onSuccess: (data) => {
 			dispatch(actions.templates.setTemplateSaving(false));
+			dispatch(actions.templates.downloadCurrentTemplate(false));
 			dispatch(
 				actions.toast.makeToast({
 					message: "Template saved",
@@ -81,7 +79,7 @@ export const useUpdate = () => {
 					duration: "long",
 				})
 			);
-			queryClient.invalidateQueries("templates");
+			queryClient.invalidateQueries(["templates", "template", data.data._id]);
 		},
 		onError: (err: any) => {
 			dispatch(
@@ -130,16 +128,16 @@ export const useGetDefaultBaseImage = () => {
 
 export const useAddImage = () => {
 	const { store, dispatch } = useContext(Context);
-	const query = useQueryClient();
+	//const query = useQueryClient();
 	return useMutation(getDefaultImageItem, {
 		onSuccess: (url) => {
 			let im = new window.Image();
 			im.crossOrigin = "anonymous";
 			im.src = url;
-			const width = store.templates.currentTemplate.canvas.width / 3; // 900*600 w=300
-			const ratio = width / im.width;
-			const height = im.height * ratio;
 			im.onload = () => {
+				const width = store.templates.currentTemplate.canvas.width / 3;
+				const ratio = width / im.width;
+				const height = im.height * ratio;
 				const img: image = {
 					isConstant: false,
 					id: makeid(12),
@@ -163,7 +161,7 @@ export const useAddImage = () => {
 					flipY: false,
 				};
 				dispatch(actions.templates.createImageItem(img));
-				query.invalidateQueries("templateImage");
+				//query.invalidateQueries("templateImage");
 			};
 		},
 	});

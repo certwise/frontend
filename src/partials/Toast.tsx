@@ -18,7 +18,6 @@ function Toast() {
 				);
 		}
 	}, [store.toasts]);
-	console.log(toasts);
 	return (
 		<>
 			{toasts.map((toast: ToastType, index) => {

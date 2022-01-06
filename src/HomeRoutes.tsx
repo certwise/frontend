@@ -7,6 +7,7 @@ import { user } from "./store/types";
 function HomeRoutes({ user }: { user: user }) {
 	if (user.uid === "" && window.location.pathname === "/")
 		window.location.replace("https://certwise.app");
+	if (user.uid !== "") return <Redirect to="/" />;
 	return (
 		<>
 			{user.uid === "" && (

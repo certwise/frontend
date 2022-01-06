@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { AiFillLinkedin, AiOutlineGoogle } from "react-icons/ai";
+import { Link, Redirect } from "react-router-dom";
+import { AiOutlineGoogle } from "react-icons/ai";
 import {
 	getAuth,
 	GoogleAuthProvider,
@@ -12,13 +12,12 @@ import axios from "axios";
 import { env } from "../../config";
 import { actions, Context } from "../../store";
 import { useContext } from "react";
-import { signIn as storeSignIn } from "../../store/actions/user";
-import { user } from "../../store/types";
 import Header from "../../partials/LandingHeader";
 
 function SignIn() {
 	const { dispatch } = useContext(Context);
 	const auth = getAuth();
+	const [redirect, setRedirect] = useState(false);
 	const [form, setform] = useState({
 		email: "",
 		password: "",
@@ -60,7 +59,7 @@ function SignIn() {
 			const result = await signInWithPopup(auth, provider);
 			const userCheck = await axios.get(env.url + "/user/" + result.user.uid);
 			if (userCheck.data !== false || userCheck.data !== "false") {
-				window.location.href = "/";
+				setRedirect(true);
 			} else {
 				await deleteUser(result.user);
 				alert(
@@ -71,6 +70,7 @@ function SignIn() {
 			console.log(e);
 		}
 	};
+	if (redirect) return <Redirect to="/" />;
 	return (
 		<div className="flex flex-col min-h-screen overflow-hidden">
 			{/*  Site header */}
@@ -193,14 +193,14 @@ function SignIn() {
 											</button>
 										</div>
 									</div> */}
-									<div className="flex flex-wrap -mx-3">
-										<div className="w-full px-3">
+									<div className="flex flex-wrap">
+										<div className="w-full">
 											<button
 												onClick={(e) => signIn(e)}
 												className="btn px-0 text-white bg-red-600 hover:bg-red-700 w-full relative flex items-center"
 											>
-												<AiOutlineGoogle className="w-5 h-5 fill-current text-white opacity-75 flex-shrink-0 mx-4" />
-												<span className="flex-auto pl-16 pr-8 -ml-16">
+												<AiOutlineGoogle className="w-5 h-5 fill-current text-white opacity-75 flex-shrink-0 ml-8" />
+												<span className="flex-auto  pr-8 ">
 													Continue with Google
 												</span>
 											</button>

@@ -2,7 +2,7 @@ import React from "react";
 
 function DashboardCard10() {
 	return (
-		<div className="col-span-full xl:col-span-6 bg-white shadow-lg rounded-sm border border-gray-200">
+		<div className="col-span-full bg-white shadow-lg rounded-sm border border-gray-200">
 			<header className="px-5 py-4 border-b border-gray-100">
 				<h2 className="font-semibold text-gray-800">Recent Activity</h2>
 			</header>
@@ -31,13 +31,13 @@ function DashboardCard10() {
 											className="font-medium text-gray-800 hover:text-gray-900"
 											href="#0"
 										>
-											Nick Mark
+											You
 										</a>{" "}
-										mentioned{" "}
+										issued{" "}
 										<a className="font-medium text-gray-800" href="#0">
-											Sara Smith
+											5 new credentials
 										</a>{" "}
-										in a new post
+										for group 3
 									</div>
 									<div className="flex-shrink-0 self-end ml-2">
 										<a
@@ -63,16 +63,16 @@ function DashboardCard10() {
 							<div className="flex-grow flex items-center border-b border-gray-100 text-sm py-2">
 								<div className="flex-grow flex justify-between">
 									<div className="self-center">
-										The post{" "}
+										The credential{" "}
 										<a className="font-medium text-gray-800" href="#0">
-											Post Name
+											sdkjhtwrk4hjw3khr
 										</a>{" "}
-										was removed by{" "}
+										was revoked by{" "}
 										<a
 											className="font-medium text-gray-800 hover:text-gray-900"
 											href="#0"
 										>
-											Nick Mark
+											Sivaram Shabari
 										</a>
 									</div>
 									<div className="flex-shrink-0 self-end ml-2">
@@ -103,11 +103,11 @@ function DashboardCard10() {
 											className="font-medium text-gray-800 hover:text-gray-900"
 											href="#0"
 										>
-											Patrick Sullivan
+											you
 										</a>{" "}
-										published a new{" "}
+										created a new{" "}
 										<a className="font-medium text-gray-800" href="#0">
-											post
+											template
 										</a>
 									</div>
 									<div className="flex-shrink-0 self-end ml-2">
@@ -146,11 +146,11 @@ function DashboardCard10() {
 											className="font-medium text-gray-800 hover:text-gray-900"
 											href="#0"
 										>
-											240+
+											58
 										</a>{" "}
-										users have subscribed to{" "}
+										credentials have been issued to{" "}
 										<a className="font-medium text-gray-800" href="#0">
-											Newsletter #1
+											Group 4
 										</a>
 									</div>
 									<div className="flex-shrink-0 self-end ml-2">
@@ -177,16 +177,16 @@ function DashboardCard10() {
 							<div className="flex-grow flex items-center text-sm py-2">
 								<div className="flex-grow flex justify-between">
 									<div className="self-center">
-										The post{" "}
+										89{" "}
 										<a className="font-medium text-gray-800" href="#0">
-											Post Name
+											credentials
 										</a>{" "}
-										was suspended by{" "}
+										were created by{" "}
 										<a
 											className="font-medium text-gray-800 hover:text-gray-900"
 											href="#0"
 										>
-											Nick Mark
+											Sivaram Shabari foor group 4
 										</a>
 									</div>
 									<div className="flex-shrink-0 self-end ml-2">

@@ -4,7 +4,7 @@ import { GrUser, GrCertificate } from "react-icons/gr";
 import { MdOutlineGroupAdd } from "react-icons/md";
 import Tooltip from "../../partials/Tooltip";
 import ModalBlank from "../../components/ui/ModalBlank";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUpdate } from "../../api/group";
 import { group } from "../../store/types";
 import { useGetByGroup } from "../../api/recipient";
@@ -17,6 +17,9 @@ function GroupCard({ group }: { group: group }) {
 		name: group.name,
 		desc: group.description,
 	});
+	useEffect(() => {
+		editGroup.isSuccess && setGroupModalOpen(false);
+	}, [editGroup.isSuccess]);
 	const saveChanges = () => {
 		const x = {
 			...group,
@@ -25,7 +28,6 @@ function GroupCard({ group }: { group: group }) {
 			color: selectedColor,
 		};
 		editGroup.mutate(x);
-		editGroup.isSuccess && setGroupModalOpen(false);
 	};
 
 	return (

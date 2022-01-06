@@ -1,8 +1,11 @@
 import Canvas from "./canvas";
 import CanvasItems from "./canvasItems";
 import CanvasLayers from "./canvasLayers";
+import { Context, actions } from "../../../store";
+import { useContext } from "react";
 
 function BuilderContainer() {
+	const { store, dispatch } = useContext(Context);
 	return (
 		<div className="">
 			<div
@@ -26,6 +29,11 @@ function BuilderContainer() {
 						justifyContent: "space-evenly",
 						alignItems: "center",
 						height: window.innerHeight,
+					}}
+					onClick={(e) => {
+						e.stopPropagation();
+						if (store.templates.currentTemplate.canvas.activeItem !== undefined)
+							dispatch(actions.templates.setActiveItem(undefined));
 					}}
 				>
 					<Canvas />

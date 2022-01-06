@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
-import CreateSingleCertificate from "../../../partials/certificates/CreateSingleCertificate";
-import TemplateCard from "../../../partials/certificates/TemplateCard";
+import CreateSingleCertificate from "../../../partials/certificates/Create/CreateSingleCertificate";
+import TemplateCard from "../../../partials/certificates/Create/TemplateCard";
 import { actions, Context } from "../../../store";
 import { template } from "../../../store/types";
 

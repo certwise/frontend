@@ -1,10 +1,34 @@
-import React, { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { Context, actions } from "../../store";
 
-import Image from "../../images/user-avatar-80.png";
+import Image from "../../images/recipient.jpg";
+import { useGet } from "../../api/organization";
+import { user } from "../../store/types";
+import { useUpdate } from "../../api/user";
 
 function AccountPanel() {
-	const [sync, setSync] = useState<any>(false);
-
+	const { store, dispatch } = useContext(Context);
+	useGet(store.user.organization);
+	const [form, setform] = useState<user>(store.user);
+	const update = useUpdate();
+	useEffect(() => {
+		if (update.isSuccess)
+			dispatch(
+				actions.toast.makeToast({
+					message: "Account updated!",
+					type: "success",
+					duration: "short",
+				})
+			);
+		if (update.isError)
+			dispatch(
+				actions.toast.makeToast({
+					message: "There was an error please try later!",
+					type: "error",
+					duration: "short",
+				})
+			);
+	}, [update.isSuccess, update.isError]);
 	return (
 		<div className="flex-grow">
 			{/* Panel body */}
@@ -30,40 +54,43 @@ function AccountPanel() {
 				{/* Business Profile */}
 				<section>
 					<h2 className="text-xl leading-snug text-gray-800 font-bold mb-1">
-						Business Profile
+						Your Profile
 					</h2>
 					<div className="text-sm">
 						Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
 						officia deserunt mollit.
 					</div>
 					<div className="sm:flex sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-5">
-						<div className="sm:w-1/3">
+						<div className="sm:w-1/2">
 							<label className="block text-sm font-medium mb-1" htmlFor="name">
-								Business Name
-							</label>
-							<input id="name" className="form-input w-full" type="text" />
-						</div>
-						<div className="sm:w-1/3">
-							<label
-								className="block text-sm font-medium mb-1"
-								htmlFor="business-id"
-							>
-								Business ID
+								Name
 							</label>
 							<input
-								id="business-id"
+								id="name"
+								defaultValue={form.name}
 								className="form-input w-full"
 								type="text"
+								onChange={(e) => setform({ ...form, name: e.target.value })}
 							/>
 						</div>
-						<div className="sm:w-1/3">
+
+						<div className="sm:w-1/2">
 							<label
 								className="block text-sm font-medium mb-1"
 								htmlFor="location"
 							>
-								Location
+								Phone
 							</label>
-							<input id="location" className="form-input w-full" type="text" />
+							<input
+								id="location"
+								placeholder="Your phone number"
+								defaultValue={form.phoneNumber}
+								className="form-input w-full"
+								type="text"
+								onChange={(e) =>
+									setform({ ...form, phoneNumber: e.target.value })
+								}
+							/>
 						</div>
 					</div>
 				</section>
@@ -79,9 +106,16 @@ function AccountPanel() {
 					<div className="flex flex-wrap mt-5">
 						<div className="mr-2">
 							<label className="sr-only" htmlFor="email">
-								Business email
+								Email
 							</label>
-							<input id="email" className="form-input" type="email" />
+							<input
+								defaultValue={form.email}
+								id="email"
+								className="form-input"
+								type="email"
+								placeholder="email"
+								onChange={(e) => setform({ ...form, email: e.target.value })}
+							/>
 						</div>
 						<button className="btn border-gray-200 hover:border-gray-300 shadow-sm text-blue-500">
 							Change
@@ -94,8 +128,8 @@ function AccountPanel() {
 						Password
 					</h2>
 					<div className="text-sm">
-						You can set a permanent password if you don't want to use temporary
-						login codes.
+						You cannot set a password if you have signed up using Google sign
+						in.
 					</div>
 					<div className="mt-5">
 						<button className="btn border-gray-200 shadow-sm text-blue-500">
@@ -106,29 +140,18 @@ function AccountPanel() {
 				{/* Smart Sync */}
 				<section>
 					<h2 className="text-xl leading-snug text-gray-800 font-bold mb-1">
-						Smart Sync update for Mac
+						Your Organization
 					</h2>
-					<div className="text-sm">
-						With this update, online-only files will no longer appear to take up
-						hard drive space.
+					<div className="font-bold text-blue-500">
+						{store.organization.name}
 					</div>
-					<div className="flex items-center mt-5">
-						<div className="form-switch focus-within:outline-blue">
-							<input
-								type="checkbox"
-								id="toggle"
-								className="sr-only"
-								checked={sync}
-								onChange={() => setSync(!sync)}
-							/>
-							<label className="bg-gray-400" htmlFor="toggle">
-								<span className="bg-white shadow-sm" aria-hidden="true"></span>
-								<span className="sr-only">Enable smart sync</span>
-							</label>
-						</div>
-						<div className="text-sm text-gray-400 italic ml-2">
-							{sync ? "On" : "Off"}
-						</div>
+					<div className="text-sm">
+						You are the administrator of this organization.
+					</div>
+					<div className="mt-5">
+						<button className="btn border-gray-200 shadow-sm text-blue-500">
+							Organization Profile
+						</button>
 					</div>
 				</section>
 			</div>
@@ -139,7 +162,12 @@ function AccountPanel() {
 						<button className="btn border-gray-200 hover:border-gray-300 text-gray-600">
 							Cancel
 						</button>
-						<button className="btn bg-blue-500 hover:bg-blue-600 text-white ml-3">
+						<button
+							onClick={() => {
+								update.mutate(form);
+							}}
+							className="btn bg-blue-500 hover:bg-blue-600 text-white ml-3"
+						>
 							Save Changes
 						</button>
 					</div>

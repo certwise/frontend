@@ -56,7 +56,7 @@ function DoughnutChart({ data, width, height }: any) {
 							ul.firstChild.remove();
 						}
 						// Reuse the built-in legendItems generator
-						const items = c.options.plugins.legend.labels.generateLabels(c);
+						const items: any = [];
 						items.forEach((item: any) => {
 							const li = document.createElement("li");
 							li.style.margin = (tailwindConfig() as any).theme.margin[1];

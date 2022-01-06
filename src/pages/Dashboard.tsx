@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import WelcomeBanner from "../partials/dashboard/WelcomeBanner";
-import DashboardAvatars from "../partials/dashboard/DashboardAvatars";
 import FilterButton from "../components/ui/DropdownFilter";
 import Datepicker from "../components/ui/Datepicker";
 import DashboardCard01 from "../partials/dashboard/DashboardCard01";
@@ -17,10 +16,13 @@ import DashboardCard08 from "../partials/dashboard/DashboardCard08";
 import DashboardCard09 from "../partials/dashboard/DashboardCard09";
 import DashboardCard10 from "../partials/dashboard/DashboardCard10";
 import DashboardCard11 from "../partials/dashboard/DashboardCard11";
+import { useDashboard } from "../api";
+import { Context } from "../store";
 
 function Dashboard() {
+	const { store } = useContext(Context);
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
-
+	const data = useDashboard(store.user.organization);
 	return (
 		<div className="flex h-screen overflow-hidden">
 			{/* Sidebar */}
@@ -37,53 +39,49 @@ function Dashboard() {
 						<WelcomeBanner />
 
 						{/* Dashboard actions */}
-						<div className="sm:flex sm:justify-between sm:items-center mb-8">
-							{/* Left: Avatars */}
-							<DashboardAvatars />
-
-							{/* Right: Actions */}
-							<div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-								{/* Filter button */}
-								<FilterButton align="right" />
-								{/* Datepicker built with flatpickr */}
-								<Datepicker align="right" />
-								{/* Add view button */}
-								<button className="btn bg-blue-500 hover:bg-blue-600 text-white">
-									<svg
-										className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
-										viewBox="0 0 16 16"
-									>
-										<path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-									</svg>
-									<span className="hidden xs:block ml-2">Add view</span>
+						<div className="ml-1 font-bold sm:flex sm:items-center mb-8">
+							You have no new notifications.{" "}
+							<span>
+								<button className="text-sm ml-3 font-medium text-blue-500 hover:font-bold">
+									See all -&gt;
 								</button>
-							</div>
+							</span>
 						</div>
 
 						{/* Cards */}
 						<div className="grid grid-cols-12 gap-6">
 							{/* Line chart (CertWise Plus) */}
-							<DashboardCard01 />
-							{/* Line chart (CertWise Advanced) */}
-							<DashboardCard02 />
-							{/* Line chart (CertWise Professional) */}
-							<DashboardCard03 />
+							<DashboardCard01
+								total={data.data?.data.certificates.total}
+								issued={data.data?.data.certificates.issued}
+								created={data.data?.data.certificates.created}
+								revoked={data.data?.data.certificates.revoked}
+							/>
+							<DashboardCard03
+								group={data.data?.data.groups}
+								total={data.data?.data.recipients.total}
+								notIngroup={data.data?.data.recipients.notIngroup}
+							/>
+							<DashboardCard02
+								total={data.data?.data.templates.total}
+								archived={data.data?.data.templates.archived}
+							/>
 							{/* Bar chart (Direct vs Indirect) */}
-							<DashboardCard04 />
+							{/* <DashboardCard04 /> */}
 							{/* Line chart (Real Time Value) */}
-							<DashboardCard05 />
+							{/* <DashboardCard05 /> */}
 							{/* Doughnut chart (Top Countries) */}
-							<DashboardCard06 />
+							{/* <DashboardCard06 /> */}
 							{/* Table (Top Channels) */}
-							<DashboardCard07 />
+							{/* <DashboardCard07 /> */}
 							{/* Line chart (Sales Over Time) */}
-							<DashboardCard08 />
+							{/* <DashboardCard08 /> */}
 							{/* Stacked bar chart (Sales VS Refunds) */}
-							<DashboardCard09 />
+							{/* <DashboardCard09 /> */}
 							{/* Card (Recent Activity) */}
 							<DashboardCard10 />
 							{/* Card (Income/Expenses) */}
-							<DashboardCard11 />
+							{/* <DashboardCard11 /> */}
 						</div>
 					</div>
 				</main>

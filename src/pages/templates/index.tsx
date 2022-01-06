@@ -15,6 +15,7 @@ function Templates() {
 		store.user.organization
 	);
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
+	const [search, setSearch] = useState("");
 	return (
 		<div className="flex h-screen overflow-hidden">
 			{/* Sidebar */}
@@ -43,12 +44,14 @@ function Templates() {
 								</label>
 								<input
 									id="app-search"
-									className="form-input w-full pl-9 py-3 focus:border-gray-300"
+									className="form-input w-full pl-12 py-2 focus:border-gray-300"
 									type="search"
 									placeholder="Search…"
+									value={search}
+									onChange={(e) => setSearch(e.target.value)}
 								/>
 								<button
-									className="absolute inset-0 right-auto group"
+									className="absolute inset-0 right-auto group px-2"
 									type="submit"
 									aria-label="Search"
 								>
@@ -64,17 +67,15 @@ function Templates() {
 							</form>
 							<Link
 								to="/template/create"
-								className="btn bg-blue-500 p-0 hover:bg-blue-600 text-white ml-8 px-2"
+								className="btn-sm bg-blue-500 p-0  hover:bg-blue-600 text-white ml-8 px-2 pr-4"
 							>
 								<svg
-									className="w-4 h-4 fill-current opacity-50 flex-shrink-0 ml-1"
+									className="w-3 h-3 fill-current opacity-75 flex-shrink-0 ml-1"
 									viewBox="0 0 16 16"
 								>
 									<path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
 								</svg>
-								<span className="hidden xs:block ml-2 p-1">
-									Create Template
-								</span>
+								<span className="hidden xs:block ml-2">Create Template</span>
 							</Link>
 						</div>
 
@@ -107,8 +108,6 @@ function Templates() {
 
 						{/* Templates */}
 						<div>
-							{/* <AddTemplateCard /> */}
-
 							{isLoading ? (
 								<div className="items-center h-full">
 									<div className="spinner mr-4"></div>
@@ -118,9 +117,22 @@ function Templates() {
 								<>
 									{data?.data.length > 0 ? (
 										<div className="grid grid-cols-12 gap-4">
-											{data?.data.map((template: template) => (
-												<TemplateCard key={template._id} template={template} />
-											))}
+											{data?.data.map((template: template) => {
+												if (
+													template.name
+														.toLowerCase()
+														.includes(search.toLowerCase().trim())
+												) {
+													return (
+														<TemplateCard
+															key={template._id}
+															template={template}
+														/>
+													);
+												} else {
+													return null;
+												}
+											})}
 										</div>
 									) : (
 										<div className="w-full ">

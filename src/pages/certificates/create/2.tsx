@@ -2,11 +2,11 @@ import { useContext } from "react";
 import * as recipientQuery from "../../../api/recipient";
 import DropdownGroups from "../../../partials/certificates/DropdownGroups";
 import RecipientsDropdown from "../../../partials/certificates/DropdownRepients";
-import RecipientMapping from "../../../partials/certificates/RecipientMapping";
+import RecipientMapping from "../../../partials/certificates/Create/RecipientMapping";
 import { actions, Context } from "../../../store";
 import { group, template } from "../../../store/types";
 import * as groupQuery from "../../../api/group";
-import GroupMapping from "../../../partials/certificates/GroupMapping";
+import GroupMapping from "../../../partials/certificates/Create/GroupMapping";
 
 function Page2() {
 	const { store, dispatch } = useContext(Context);
@@ -60,7 +60,6 @@ function Page2() {
 							<DropdownGroups
 								groups={groups.data?.data}
 								setGroup={(group: group) => {
-									console.log(group);
 									dispatch(actions.certificate.setCreateGroup(group));
 								}}
 							/>

@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Transition from "../../utils/Transition";
 import { signOut, getAuth } from "firebase/auth";
-import UserAvatar from "../../images/user-avatar-32.png";
+import UserAvatar from "../../images/recipient.jpg";
 import { Context } from "../../store";
 import { signOut as signOutStore } from "../../store/actions/user";
 import ModalBasic from "./ModalBasic";
@@ -96,7 +96,7 @@ function DropdownProfile({ align }: any) {
 						<li>
 							<Link
 								className="font-medium text-sm text-blue-500 hover:text-blue-600 flex items-center py-1 px-3"
-								to="/settings"
+								to="/account"
 								onClick={() => setDropdownOpen(!dropdownOpen)}
 							>
 								Settings

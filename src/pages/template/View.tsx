@@ -1,9 +1,20 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router-dom";
-import { useGetDefaultBaseImage, useGetSavedImage } from "../../api/template";
+import {
+	useGetDefaultBaseImage,
+	useGetSavedImage,
+	useUpdate,
+} from "../../api/template";
 import { template } from "../../store/types";
 
-function View({ template }: { template: template }) {
+function View({
+	template,
+	refetch,
+}: {
+	template: template;
+	refetch: () => void;
+}) {
 	const image = useGetSavedImage(
 		template?._id || "",
 		template?.organization || ""
@@ -11,11 +22,24 @@ function View({ template }: { template: template }) {
 	const defaultImage = useGetDefaultBaseImage();
 	const { id } = useParams<any>();
 	const [redirect, setRedirect] = useState("");
+	const [isRenaming, setIsRenaming] = useState(false);
+	const [form, setform] = useState({
+		name: template?.name || "",
+		description: template?.description || "",
+	});
+	const [error, setError] = useState("");
+	const update = useUpdate();
 	useEffect(() => {
 		return () => {
 			setRedirect("");
 		};
 	}, []);
+	useEffect(() => {
+		if (update.isSuccess) {
+			setIsRenaming(false);
+			refetch();
+		}
+	}, [update.isSuccess]);
 	if (redirect !== "") {
 		return <Redirect push to={redirect} />;
 	} else
@@ -24,18 +48,48 @@ function View({ template }: { template: template }) {
 				{/* Page header */}
 				<div className="flex mb-6 bg-white shadow-lg p-5 py-6">
 					{/* Title */}
-					<h1 className="text-2xl md:text-3xl text-gray-800 font-bold">
-						{template?.name}
-					</h1>
-					<button className="ml-4 btn bg-white hover:bg-white border-gray-400 hover:border-gray-300 text-gray-600">
-						<svg
-							className="w-4 h-4 fill-current text-gray-500 flex-shrink-0"
-							viewBox="0 0 16 16"
-						>
-							<path d="M11.7.3c-.4-.4-1-.4-1.4 0l-10 10c-.2.2-.3.4-.3.7v4c0 .6.4 1 1 1h4c.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4l-4-4zM4.6 14H2v-2.6l6-6L10.6 8l-6 6zM12 6.6L9.4 4 11 2.4 13.6 5 12 6.6z" />
-						</svg>
-						<span className="ml-2">Rename</span>
-					</button>
+					{!isRenaming ? (
+						<>
+							<h1 className="text-2xl md:text-3xl text-gray-800 font-bold">
+								{template?.name}
+							</h1>
+							<button
+								className="ml-4 btn bg-white hover:bg-white border-gray-400 
+									hover:border-gray-300 text-gray-600"
+								onClick={() => setIsRenaming(true)}
+							>
+								<svg
+									className="w-4 h-4 fill-current text-gray-500 flex-shrink-0"
+									viewBox="0 0 16 16"
+								>
+									<path d="M11.7.3c-.4-.4-1-.4-1.4 0l-10 10c-.2.2-.3.4-.3.7v4c0 .6.4 1 1 1h4c.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4l-4-4zM4.6 14H2v-2.6l6-6L10.6 8l-6 6zM12 6.6L9.4 4 11 2.4 13.6 5 12 6.6z" />
+								</svg>
+								<span className="ml-2">Rename</span>
+							</button>
+						</>
+					) : (
+						<>
+							<input
+								className="text-lg text-gray-800 font-bold form-input"
+								defaultValue={template?.name}
+								onChange={(e) => setform({ ...form, name: e.target.value })}
+							/>
+							<button
+								onClick={() => {
+									update.mutate({ ...template, name: form.name });
+								}}
+								className="ml-4 btn bg-white hover:text-blue-600 border-blue-500 hover:border-blue-600"
+							>
+								Save
+							</button>
+							<button
+								onClick={() => setIsRenaming(false)}
+								className="ml-4 btn bg-white hover:text-red-600 border-red-500 hover:border-red-600"
+							>
+								Cancel
+							</button>
+						</>
+					)}
 					<button
 						onClick={() => {
 							setRedirect("/templates");
@@ -48,27 +102,30 @@ function View({ template }: { template: template }) {
 				{/* Page header */}
 
 				{/* Page content */}
-				<div className="bg-white  mb-5 h-full shadow-lg">
+				<div
+					style={{ borderBottom: "none" }}
+					className="border-2 border-gray-300  mb-5 h-full shadow-lg"
+				>
 					{!image.isLoading && !defaultImage.isLoading && !image.isError && (
-						<div className="p-2 flex justify-center bg-gray-100 border-2 border-gray-300">
+						<div className="p-2 flex justify-center bg-gray-100">
 							<img
 								className=""
 								src={image.data as any}
 								style={{
-									maxHeight: "500px",
+									height: "450px",
 									objectFit: "scale-down",
 								}}
-								alt="Template this"
+								alt="Template"
 							/>
 						</div>
 					)}
 					{!image.isLoading && !defaultImage.isLoading && image.isError && (
-						<div className="p-2 flex justify-center bg-gray-100 border-2 border-gray-300">
+						<div className="p-2 flex justify-center bg-gray-100">
 							<img
 								className=""
 								src={defaultImage.data as any}
 								style={{
-									maxHeight: "500px",
+									height: "450px",
 									objectFit: "scale-down",
 								}}
 								alt="Template default"
@@ -76,7 +133,7 @@ function View({ template }: { template: template }) {
 						</div>
 					)}
 					{(image.isLoading || defaultImage.isLoading) && (
-						<div style={{ height: "500px" }}>
+						<div style={{ height: "450px" }}>
 							<div className="animate-pulse w-full h-full">
 								<div className="bg-blue-300 p-5 h-full w-full flex flex-row items-center align-middle justify-center ">
 									<svg
@@ -102,7 +159,10 @@ function View({ template }: { template: template }) {
 						</div>
 					)}
 
-					<div className="flex justify-center p-3">
+					<div
+						style={{ borderTop: "none" }}
+						className="flex justify-center p-3 border-b-2 py-8 border-gray-300"
+					>
 						<button
 							onClick={() => {
 								setRedirect("/template/edit/" + id);
@@ -131,20 +191,14 @@ function View({ template }: { template: template }) {
 							onClick={() => {
 								setRedirect("/template/edit/" + id);
 							}}
-							className="btn bg-white hover:bg-white border-gray-400 hover:border-gray-300 text-red-500 ml-2 flex-grow rounded-sm"
+							className="btn bg-white hover:bg-white border-red-500 hover:font-bold text-red-500 ml-2 flex-grow rounded-sm"
 						>
 							Delete
 						</button>
 					</div>
 				</div>
-				<div>Created at</div>
-				<div>Created by</div>
-				<div>Description</div>
-				<div>Created by</div>
-				<div>Image</div>
-				<div>Go to created certificates</div>
-				<div>Accessed by</div>
-				<div>Edit template (Go to builder)</div>
+				<div>Created at: {moment(template?.createdAt).format("llll")}</div>
+				<div>Description: {template?.description}</div>
 
 				{/* Page content */}
 			</div>

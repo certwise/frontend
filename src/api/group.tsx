@@ -64,7 +64,7 @@ export const useUpdate = () => {
 	const query = useQueryClient();
 	return useMutation(update, {
 		onSuccess: (data) => {
-			query.invalidateQueries(["group", data?.data?._id, "groups"]);
+			query.invalidateQueries("groups");
 		},
 	});
 };

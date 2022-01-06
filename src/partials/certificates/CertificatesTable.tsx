@@ -1,8 +1,22 @@
 import { useState, useEffect } from "react";
-import { focusHandling } from "cruip-js-toolkit";
 import Certificates from "./CertificateTableItem";
 import { certificate } from "../../store/types";
-function CertificatesTable({ selectedItems, certificates }: any) {
+function CertificatesTable({
+	filter,
+	query,
+	selectedItems,
+	certificates,
+}: {
+	filter: "all" | "created" | "revoked" | "issued";
+	query: string;
+	selectedItems: any;
+	certificates: certificate[];
+}) {
+	certificates = certificates?.sort((a, b) => {
+		if (a.createdAt < b.createdAt) return 1;
+		if (a.createdAt > b.createdAt) return -1;
+		return 0;
+	});
 	return (
 		<div className="bg-white shadow-lg rounded-sm border border-gray-200 relative">
 			<header className="px-5 py-4">
@@ -59,6 +73,8 @@ function CertificatesTable({ selectedItems, certificates }: any) {
 							{certificates?.map((certificate: certificate) => {
 								return (
 									<Certificates
+										filter={filter}
+										query={query}
 										key={certificate._id}
 										certificate={certificate}
 									/>

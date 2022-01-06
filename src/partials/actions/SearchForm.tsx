@@ -1,4 +1,4 @@
-function SearchForm({ placeholder }: any) {
+function SearchForm({ placeholder, onChange }: any) {
 	return (
 		<form className="relative">
 			<label htmlFor="action-search" className="sr-only">
@@ -9,6 +9,7 @@ function SearchForm({ placeholder }: any) {
 				className="form-input pl-9 focus:border-gray-300"
 				type="search"
 				placeholder={placeholder}
+				onChange={onChange}
 			/>
 			<button
 				className="absolute inset-0 right-auto group"

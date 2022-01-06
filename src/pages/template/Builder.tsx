@@ -61,7 +61,7 @@ function TemplateBuilder() {
 	}, [template.data]);
 
 	useEffect(() => {
-		if (template.data) {
+		if (template.data && !store.templates.downloadCurrentTemplate) {
 			setCurrentTemplate(template.data.data).then(() => {
 				setIsLoading(false);
 			});
@@ -69,7 +69,7 @@ function TemplateBuilder() {
 		return () => {
 			dispatch(actions.templates.isEditingTemplate(false));
 		};
-	}, [store.templates.isSaving]);
+	}, [store.templates.downloadCurrentTemplate]);
 
 	const setCurrentTemplate = (srcTemplate: template) => {
 		return new Promise((resolve, reject) => {

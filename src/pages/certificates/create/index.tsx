@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import SetCreateCertificateType from "../../../partials/certificates/SetCreateCertificateType";
-import TemplatesGrid from "../../../partials/certificates/TemplatesGrid";
+import SetCreateCertificateType from "../../../partials/certificates/Create/SetCreateCertificateType";
+import TemplatesGrid from "../../../partials/certificates/Create/TemplatesGrid";
 import Header from "../../../partials/Header";
 import Sidebar from "../../../partials/Sidebar";
 import { actions, Context } from "../../../store";
@@ -23,7 +23,7 @@ function Create() {
 					{/*  Site header */}
 					<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 					{/*  Page number */}
-					<div className="px-4 mt-5 py-5 ">
+					<div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto ">
 						<div className="max-w-xl ml-5 w-full">
 							<div className="relative">
 								<div
@@ -79,7 +79,7 @@ function Create() {
 					</div>
 					{/*  Page number  end*/}
 
-					<div className="ml-4">
+					<div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 						{store.certificates.createCertificate.page === 1 && (
 							<>
 								<TemplatesGrid />

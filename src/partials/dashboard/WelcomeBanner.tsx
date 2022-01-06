@@ -1,6 +1,11 @@
-import React from "react";
+import { useContext } from "react";
+import { useGet } from "../../api/organization";
+import { Context } from "../../store";
 
 function WelcomeBanner() {
+	const { store } = useContext(Context);
+	useGet(store.user.organization);
+	const time = new Date().getHours();
 	return (
 		<div className="relative bg-blue-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-8">
 			{/* Background illustration */}
@@ -70,9 +75,17 @@ function WelcomeBanner() {
 			{/* Content */}
 			<div className="relative">
 				<h1 className="text-2xl md:text-3xl text-gray-800 font-bold mb-1">
-					Good afternoon, CertWise Inc. 👋
+					{time <= 11 && "Good morning"}
+					{time >= 12 && time < 17 && "Good afternoon"}
+					{time >= 17 && "Good evening"}, {store.user.name}. 👋
 				</h1>
-				<p>Here is what’s happening with your projects today:</p>
+				<p>
+					Here is what's happening with your credentials in{" "}
+					<span className="text-blue-600 font-bold">
+						{store.organization.name}
+					</span>{" "}
+					today:
+				</p>
 			</div>
 		</div>
 	);

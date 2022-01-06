@@ -7,6 +7,7 @@ function PlansPanel() {
 		<div className="flex-grow">
 			{/* Panel body */}
 			<div className="p-6 space-y-6">
+				{}
 				{/* Plans */}
 				<section>
 					<div className="mb-8">

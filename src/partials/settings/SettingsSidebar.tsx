@@ -42,7 +42,7 @@ function SettingsSidebar() {
 					<li className="mr-0.5 md:mr-0 md:mb-0.5">
 						<NavLink
 							exact
-							to="/account/notifications"
+							to="/account/organization"
 							className={`flex items-center px-2.5 py-2 rounded whitespace-nowrap ${
 								pathname.includes("/account/organization") && "bg-blue-50"
 							}`}
@@ -67,7 +67,7 @@ function SettingsSidebar() {
 						</NavLink>
 					</li>
 
-					<li className="mr-0.5 md:mr-0 md:mb-0.5">
+					{/*<li className="mr-0.5 md:mr-0 md:mb-0.5">
 						<NavLink
 							exact
 							to="/account/plans"
@@ -94,7 +94,7 @@ function SettingsSidebar() {
 							</span>
 						</NavLink>
 					</li>
-					<li className="mr-0.5 md:mr-0 md:mb-0.5">
+					 <li className="mr-0.5 md:mr-0 md:mb-0.5">
 						<NavLink
 							exact
 							to="/account/billing"
@@ -120,7 +120,7 @@ function SettingsSidebar() {
 								Billing & Invoices
 							</span>
 						</NavLink>
-					</li>
+					</li> */}
 				</ul>
 			</div>
 			{/* Group 2 */}

@@ -47,12 +47,12 @@ export const useGetByTemplate = (template: string) => {
 	});
 };
 
-export const useGetImage = (reff: string) => {
+export const useGetImage = (isEnabled: boolean, reff: string) => {
 	return useQuery(
 		["certificateImage", reff],
 		() => getDownloadURL(ref(getStorage(), reff)),
 		{
-			enabled: reff !== "",
+			enabled: reff !== "" && isEnabled,
 			refetchOnMount: false,
 			refetchOnReconnect: false,
 			refetchOnWindowFocus: false,

@@ -57,10 +57,6 @@ function App() {
 		}
 	}, [getUser.data]);
 
-	useEffect(() => {
-		console.log("Toasts", store.toasts);
-	}, [store.toasts]);
-
 	return (
 		<>
 			{userStatus === "loading" && <div>Loading</div>}

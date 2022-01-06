@@ -79,11 +79,17 @@ function CanvasLayers() {
 							<input
 								type="number"
 								className="w-full h-full align-middle pl-2"
-								value={canvas.width}
+								defaultValue={canvas.width}
 								onChange={(e) => {
-									let p = canvas;
-									p.width = parseInt(e.target.value);
-									dispatch(actions.templates.editWholeCanvas(p));
+									if (parseInt(e.target.value) > 10) {
+										let p = canvas;
+										p.width = parseInt(e.target.value);
+										dispatch(actions.templates.editWholeCanvas(p));
+									} else {
+										let p = canvas;
+										p.width = 10;
+										dispatch(actions.templates.editWholeCanvas(p));
+									}
 								}}
 							/>
 						</ItemProperty>
@@ -91,11 +97,17 @@ function CanvasLayers() {
 							<input
 								type="number"
 								className="w-full h-full align-middle pl-2"
-								value={canvas.height}
+								defaultValue={canvas.height}
 								onChange={(e) => {
-									let p = canvas;
-									p.height = parseInt(e.target.value);
-									dispatch(actions.templates.editWholeCanvas(p));
+									if (parseInt(e.target.value) > 10) {
+										let p = canvas;
+										p.height = parseInt(e.target.value);
+										dispatch(actions.templates.editWholeCanvas(p));
+									} else {
+										let p = canvas;
+										p.height = 10;
+										dispatch(actions.templates.editWholeCanvas(p));
+									}
 								}}
 							/>
 						</ItemProperty>

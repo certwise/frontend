@@ -108,7 +108,7 @@ function Onboarding3() {
 										/>
 									</svg>
 									<h1 className="text-3xl text-gray-800 font-bold mb-8">
-										Nice to have you, CertWise Inc. 🙌
+										Start protecting your digital assets! 🙌
 									</h1>
 									<Link
 										className="btn bg-blue-500 hover:bg-blue-600 text-white"

@@ -16,13 +16,11 @@ import Group from "./pages/group";
 import Certificates from "./pages/certificates";
 import PageNotFound from "./pages/404";
 import Account from "./pages/settings/Account";
-import Notifications from "./pages/settings/Organization";
 import Plans from "./pages/settings/Plans";
 import Billing from "./pages/settings/Billing";
 import Feedback from "./pages/settings/Feedback";
-import CreateCertificate from "./pages/certificates/CreateCertificate";
 import Create from "./pages/certificates/create";
-
+import Organization from "./pages/settings/Organization";
 function Routes({ user }: { user: user }) {
 	const path = useLocation();
 	const [redirect, setRedirect] = useState("");
@@ -62,9 +60,6 @@ function Routes({ user }: { user: user }) {
 							<Certificates />
 						</Route>
 						<Route exact path="/certificates/create">
-							<CreateCertificate />
-						</Route>
-						<Route exact path="/certificates/create2">
 							<Create />
 						</Route>
 						<Route exact path="/recipients/list">
@@ -95,16 +90,25 @@ function Routes({ user }: { user: user }) {
 							<Account />
 						</Route>
 						<Route exact path="/account/organization">
-							<Notifications />
+							<Organization />
 						</Route>
-						<Route exact path="/account/plans">
+						{/* <Route exact path="/account/plans">
 							<Plans />
-						</Route>
-						<Route exact path="/account/billing">
+						</Route> */}
+						{/* <Route exact path="/account/billing">
 							<Billing />
-						</Route>
+						</Route> */}
 						<Route exact path="/account/feedback">
 							<Feedback />
+						</Route>
+						<Route path="/signin">
+							<Redirect to="/" />
+						</Route>
+						<Route path="/signup">
+							<Redirect to="/" />
+						</Route>
+						<Route path="/reset-password">
+							<Redirect to="/" />
 						</Route>
 						<Route path="*">
 							<PageNotFound />

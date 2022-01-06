@@ -1,5 +1,5 @@
 import { useEffect, useContext, useRef, useState } from "react";
-import { Stage, Layer, Rect, Line } from "react-konva";
+import { Stage, Layer, Rect } from "react-konva";
 import { Context } from "../../../store";
 import { actions } from "../../../store";
 import DynamicImage from "./imageComponent/resizeableImage";
@@ -63,18 +63,37 @@ function Canvas() {
 				return "Nope";
 			}
 		}
-		async function asyncFunc() {
-			if (store.templates.downloadCurrentTemplate) {
-				await downloadURI();
-				dispatch(actions.templates.setTemplateSaving(false));
-			}
+
+		if (store.templates.downloadCurrentTemplate) {
+			downloadURI()
+				.then(() => {
+					dispatch(actions.templates.setTemplateSaving(false));
+				})
+				.catch(() => {
+					dispatch(
+						actions.toast.makeToast({
+							message: "Error saving template image",
+							type: "error",
+							duration: "short",
+						})
+					);
+				});
 		}
-		asyncFunc();
 	}, [store.templates.downloadCurrentTemplate]);
 
+	useEffect(() => {
+		console.log(
+			"Activeitem changed: ",
+			store.templates.currentTemplate.canvas.activeItem
+		);
+	}, [store.templates.currentTemplate.canvas.activeItem]);
 	return (
-		<div>
-			<div className="z-0 borderborder-gray-300 shadow-xl">
+		<div
+			onClick={(e) => {
+				e.stopPropagation();
+			}}
+		>
+			<div className="z-0 border border-blue-600 shadow-xl" onClick={() => {}}>
 				<Stage
 					ref={stageRef}
 					width={stageWidth}
@@ -83,7 +102,20 @@ function Canvas() {
 					scaleY={stageWidth / ratio / height}
 				>
 					<Layer>
-						<Rect x={0} y={0} width={width} height={height} fill="#fff" />
+						<Rect
+							onClick={(e) => {
+								if (
+									store.templates.currentTemplate.canvas.activeItem !==
+									undefined
+								)
+									dispatch(actions.templates.setActiveItem(undefined));
+							}}
+							x={0}
+							y={0}
+							width={width}
+							height={height}
+							fill="#fff"
+						/>
 						{items.map((item, i) => {
 							switch (item.type) {
 								case "image":

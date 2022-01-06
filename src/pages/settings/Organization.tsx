@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import SettingsSidebar from "../../partials/settings/SettingsSidebar";
-import NotificationsPanel from "../../partials/settings/NotificationsPanel";
+import OrganizationPanel from "../../partials/settings/OrganizationPanel";
 
-function Notifications() {
+function Organization() {
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 
 	return (
@@ -32,7 +32,7 @@ function Notifications() {
 						<div className="bg-white shadow-lg rounded-sm mb-8">
 							<div className="flex flex-col md:flex-row md:-mr-px">
 								<SettingsSidebar />
-								<NotificationsPanel />
+								<OrganizationPanel />
 							</div>
 						</div>
 					</div>
@@ -42,4 +42,4 @@ function Notifications() {
 	);
 }
 
-export default Notifications;
+export default Organization;

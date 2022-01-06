@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 function Template() {
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
 	const { id } = useParams<any>();
-	const { data, isLoading, isError, error } = useGetOne(id);
+	const { data, isLoading, isError, refetch } = useGetOne(id);
 	return (
 		<div className="flex h-screen overflow-hidden">
 			{/* Sidebar */}
@@ -24,7 +24,7 @@ function Template() {
 					{isLoading && isError ? (
 						<div>Loading...</div>
 					) : (
-						<View template={data?.data} />
+						<View template={data?.data} refetch={refetch} />
 					)}
 				</main>
 			</div>

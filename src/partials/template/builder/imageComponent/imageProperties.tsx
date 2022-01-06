@@ -17,7 +17,7 @@ function ImageProperties() {
 		const result = await uploadBytes(imageRef, image);
 		return result;
 	};
-	const setImage = async (src: string) => {
+	const setImage = async (src: any) => {
 		let im = new window.Image();
 		im.src = src;
 		let oldWidth = im.width;
@@ -39,8 +39,8 @@ function ImageProperties() {
 			return item;
 		});
 		dispatch(actions.templates.editCanvas(p));
-		setImageState(undefined);
-		setImageBlob(undefined);
+		//setImageState(undefined);
+		//setImageBlob(undefined);
 	};
 	const editActiveItem = (e: any, val: "img" | "check") => {
 		switch (val) {
