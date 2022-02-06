@@ -10,11 +10,15 @@ import { duration } from "moment";
 function OrganizationPanel() {
 	const { store, dispatch } = useContext(Context);
 	const organizationQuery = useGet(store.user.organization);
+	const update = useUpdate();
 	const country = Country.getCountryByCode(
 		store.organization.metaData?.country || ""
 	);
-	const update = useUpdate();
-	const state = State.getStateByCode(store.organization.metaData?.state || "");
+	const state = State.getStateByCodeAndCountry(
+		store.organization.metaData?.state || "",
+		country?.isoCode || ""
+	);
+	console.log("State", store.organization.metaData?.state, country?.isoCode);
 	const [form, setform] = useState<organization>(store.organization);
 	useEffect(() => {
 		setform(organizationQuery.data?.data);
@@ -142,7 +146,7 @@ function OrganizationPanel() {
 							<textarea
 								id="address"
 								value={form?.metaData?.address}
-								className="form-input max-w-xl"
+								className="form-input w-full h-full"
 								onChange={(e) =>
 									setform({
 										...form,

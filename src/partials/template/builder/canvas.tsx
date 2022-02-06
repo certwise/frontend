@@ -68,6 +68,7 @@ function Canvas() {
 			downloadURI()
 				.then(() => {
 					dispatch(actions.templates.setTemplateSaving(false));
+					window.location.reload(); //TODO: fix this
 				})
 				.catch(() => {
 					dispatch(

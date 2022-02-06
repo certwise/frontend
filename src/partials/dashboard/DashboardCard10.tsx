@@ -27,31 +27,33 @@ function DashboardCard10() {
 							<div className="flex-grow flex items-center border-b border-gray-100 text-sm py-2">
 								<div className="flex-grow flex justify-between">
 									<div className="self-center">
-										<a
+										Your recent activities appear here
+										{/* <a
 											className="font-medium text-gray-800 hover:text-gray-900"
 											href="#0"
 										>
+											{" "}
 											You
-										</a>{" "}
-										issued{" "}
+										</a>{" "} 
+										 issued{" "}
 										<a className="font-medium text-gray-800" href="#0">
 											5 new credentials
 										</a>{" "}
-										for group 3
+										for group 3 */}
 									</div>
-									<div className="flex-shrink-0 self-end ml-2">
+									{/* <div className="flex-shrink-0 self-end ml-2">
 										<a
 											className="font-medium text-blue-500 hover:text-blue-600"
 											href="#0"
 										>
 											View<span className="hidden sm:inline"> -&gt;</span>
 										</a>
-									</div>
+									</div> */}
 								</div>
 							</div>
 						</li>
 						{/* Item */}
-						<li className="flex px-2">
+						{/* <li className="flex px-2">
 							<div className="w-9 h-9 rounded-full flex-shrink-0 bg-red-500 my-2 mr-3">
 								<svg
 									className="w-9 h-9 fill-current text-red-50"
@@ -86,7 +88,7 @@ function DashboardCard10() {
 								</div>
 							</div>
 						</li>
-						{/* Item */}
+
 						<li className="flex px-2">
 							<div className="w-9 h-9 rounded-full flex-shrink-0 bg-green-500 my-2 mr-3">
 								<svg
@@ -123,13 +125,15 @@ function DashboardCard10() {
 						</li>
 					</ul>
 				</div>
-				{/* "Yesterday" group */}
+				
+
+
 				<div>
 					<header className="text-xs uppercase text-gray-400 bg-gray-50 rounded-sm font-semibold p-2">
 						Yesterday
 					</header>
 					<ul className="my-1">
-						{/* Item */}
+
 						<li className="flex px-2">
 							<div className="w-9 h-9 rounded-full flex-shrink-0 bg-light-blue-500 my-2 mr-3">
 								<svg
@@ -164,7 +168,7 @@ function DashboardCard10() {
 								</div>
 							</div>
 						</li>
-						{/* Item */}
+
 						<li className="flex px-2">
 							<div className="w-9 h-9 rounded-full flex-shrink-0 bg-blue-500 my-2 mr-3">
 								<svg
@@ -199,7 +203,7 @@ function DashboardCard10() {
 									</div>
 								</div>
 							</div>
-						</li>
+						</li> */}
 					</ul>
 				</div>
 			</div>

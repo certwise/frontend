@@ -314,6 +314,9 @@ function Onboarding2() {
 												}
 												className="form-input w-full"
 												type="tel"
+												onChange={(e) => {
+													setform({ ...form, phone: e.target.value });
+												}}
 											/>
 										</div>
 									</div>

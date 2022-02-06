@@ -17,6 +17,16 @@ const getDashboard = async (organizationId: string) => {
 	return axios.get(`${env.url}/dashboard/${organizationId}`);
 };
 
+export const valiateEarlyAccessInviteCode = async (
+	email: string,
+	code: string
+) => {
+	const result = await axios.get(
+		`${env.url}/earlyaccess?email=${email}&inviteCode=${code}`
+	);
+	return result.data;
+};
+
 export const useDashboard = (organizationId: string) => {
 	return useQuery("dashboard", () => getDashboard(organizationId), {});
 };

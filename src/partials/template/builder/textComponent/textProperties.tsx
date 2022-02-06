@@ -17,7 +17,8 @@ function TextProperties() {
 				let p = items;
 				p.map((item) => {
 					if (item.id === activeItem?.id && item.type === "text") {
-						item.text = e.target.value;
+						const value = e.target.value;
+						item.text = value;
 					}
 					return null;
 				});
@@ -96,7 +97,7 @@ function TextProperties() {
 								currentFields.forEach((field) => {
 									if (!fields.find((f) => f.name === field)) {
 										fields.push({
-											name: field.replace(/ /g, ""),
+											name: field,
 											type: "text",
 										});
 									}
@@ -375,9 +376,9 @@ export default TextProperties;
 
 export const getFieldsFromString = (string: string): string[] => {
 	const results = [];
-	const re = /{{([^}]+)}}/g;
+	const regex = /{{([^}]+)}}/g;
 	let text;
-	while ((text = re.exec(string))) {
+	while ((text = regex.exec(string))) {
 		results.push(text[1]);
 	}
 	const unique: string[] = [];
