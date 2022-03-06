@@ -8,12 +8,11 @@ import {
 	deleteUser,
 	signInWithEmailAndPassword,
 } from "firebase/auth";
-import axios from "axios";
 import { env } from "../../config";
 import { actions, Context } from "../../store";
 import { useContext } from "react";
 import Header from "../../partials/LandingHeader";
-
+import axios from "axios";
 function SignIn() {
 	const { dispatch } = useContext(Context);
 	const auth = getAuth();
@@ -30,7 +29,11 @@ function SignIn() {
 				form.password
 			);
 			const user = userCredential.user;
-			const userCheck = await axios.get(env.url + "/user/" + user.uid);
+			const token = await user.getIdToken();
+			const userCheck = await axios({
+				url: env.url + "/user/" + user.uid,
+				headers: { Authorization: token ? `Bearer ${token}` : "" },
+			});
 			if (userCheck.data !== false || userCheck.data !== "false") {
 				window.location.href = "/";
 			} else {
@@ -52,12 +55,17 @@ function SignIn() {
 			);
 		}
 	};
-	const signIn = async (e: any) => {
+	const signInGoogle = async (e: any) => {
 		try {
 			e.preventDefault();
 			const provider = new GoogleAuthProvider();
 			const result = await signInWithPopup(auth, provider);
-			const userCheck = await axios.get(env.url + "/user/" + result.user.uid);
+			const user = result.user;
+			const token = await user.getIdToken();
+			const userCheck = await axios({
+				url: env.url + "/user/" + user.uid,
+				headers: { Authorization: token ? `Bearer ${token}` : "" },
+			});
 			if (userCheck.data !== false || userCheck.data !== "false") {
 				setRedirect(true);
 			} else {
@@ -196,7 +204,7 @@ function SignIn() {
 									<div className="flex flex-wrap">
 										<div className="w-full">
 											<button
-												onClick={(e) => signIn(e)}
+												onClick={(e) => signInGoogle(e)}
 												className="btn px-0 text-white bg-red-600 hover:bg-red-700 w-full relative flex items-center"
 											>
 												<AiOutlineGoogle className="w-5 h-5 fill-current text-white opacity-75 flex-shrink-0 ml-8" />

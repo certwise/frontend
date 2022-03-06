@@ -12,6 +12,7 @@ import { Context } from "./store";
 import { useGet } from "./api/user";
 import Toast from "./partials/Toast";
 import dotenv from "dotenv";
+import Loader from "./partials/Loader";
 dotenv.config();
 function App() {
 	const { store, dispatch } = useContext(Context);
@@ -59,7 +60,7 @@ function App() {
 
 	return (
 		<>
-			{userStatus === "loading" && <div>Loading</div>}
+			{userStatus === "loading" && <Loader />}
 			{userStatus === "user_found" && <Routes user={store.user} />}
 			{userStatus === "no_user" && <HomeRoutes user={store.user} />}
 			<div

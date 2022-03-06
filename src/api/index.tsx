@@ -1,6 +1,23 @@
 import axios from "axios";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { env } from "../config";
+import { getAuth } from "firebase/auth";
+
+export const API = async (
+	url: string,
+	method: "get" | "post" | "put" | "delete",
+	data?: any
+) => {
+	const token = await getAuth().currentUser?.getIdToken(true);
+	return axios({
+		url: url,
+		method: method,
+		data: data,
+		headers: {
+			Authorization: token ? `Bearer ${token}` : "",
+		},
+	});
+};
 
 export const makeid = (length: number) => {
 	let result = "";
@@ -14,15 +31,16 @@ export const makeid = (length: number) => {
 };
 
 const getDashboard = async (organizationId: string) => {
-	return axios.get(`${env.url}/dashboard/${organizationId}`);
+	return API(`${env.url}/dashboard/${organizationId}`, "get");
 };
 
 export const valiateEarlyAccessInviteCode = async (
 	email: string,
 	code: string
 ) => {
-	const result = await axios.get(
-		`${env.url}/earlyaccess?email=${email}&inviteCode=${code}`
+	const result = await API(
+		`${env.url}/earlyaccess?email=${email}&inviteCode=${code}`,
+		"get"
 	);
 	return result.data;
 };

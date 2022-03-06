@@ -1,21 +1,18 @@
 import { env } from "../config";
-import axios from "axios";
 import { user } from "../store/types";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { Context } from "../store";
-import { useContext } from "react";
-import { signIn } from "../store/actions/user";
+import { API } from ".";
 
 const get = (uid: string) => {
-	return axios.get(`${env.url}/user/${uid}`);
+	return API(`${env.url}/user/${uid}`, "get");
 };
 
 const create = (user: user) => {
-	return axios.post(`${env.url}/user`, user);
+	return API(`${env.url}/user`, "post", user);
 };
 
 const update = (user: user) => {
-	return axios.put(`${env.url}/user`, user);
+	return API(`${env.url}/user`, "put", user);
 };
 
 export const useGet = (uid: string) => {
@@ -24,6 +21,7 @@ export const useGet = (uid: string) => {
 		retry: false,
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
+		onSuccess: (data) => {},
 	});
 };
 
@@ -48,7 +46,7 @@ export const useDelete = (uid: string) => {
 	const query = useQueryClient();
 	return useMutation(
 		() => {
-			return axios.delete(`${env.url}/user/${uid}`);
+			return API(`${env.url}/user/${uid}`, "delete");
 		},
 		{
 			onSuccess: () => {

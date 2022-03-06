@@ -14,7 +14,6 @@ import GroupSelector from "../../partials/recepients/DropdownClassic";
 import ModalBlank from "../../components/ui/ModalBlank";
 import * as groupQuery from "../../api/group";
 import * as recipientQuery from "../../api/recipient";
-import axios from "axios";
 import { useGet } from "../../api/organization";
 
 function Recipients() {
@@ -393,22 +392,3 @@ function Recipients() {
 }
 
 export default Recipients;
-
-function getUsers(number: number) {
-	return new Promise<Array<{ name: string; email: string }>>((resolve) => {
-		axios.get("https://randomuser.me/api?results=" + number).then((res) => {
-			const arr: Array<{ name: string; email: string }> = [];
-			res.data.results.forEach((user: any) => {
-				const {
-					name: { first, last },
-					email,
-				} = user;
-				arr.push({
-					name: `${first} ${last}`,
-					email,
-				});
-			});
-			resolve(arr);
-		});
-	});
-}

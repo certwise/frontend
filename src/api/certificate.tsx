@@ -1,30 +1,31 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { env } from "../config";
-import axios from "axios";
 import { certificate } from "../store/types";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { Context, actions } from "../store";
 import { useContext } from "react";
+import { API } from ".";
+
 const getByOrganization = (organization: string) => {
-	return axios.get(`${env.url}/certificate/organization/${organization}`);
+	return API(`${env.url}/certificate/organization/${organization}`, "get");
 };
 const getById = async (id: string) => {
-	return axios.get(`${env.url}/certificate/one/${id}`);
+	return API(`${env.url}/certificate/one/${id}`, "get");
 };
 const getByTemplate = (template: string) => {
-	return axios.get(`${env.url}/certificate/template/${template}`);
+	return API(`${env.url}/certificate/template/${template}`, "get");
 };
 const create = (body: certificate) => {
-	return axios.post(`${env.url}/certificate/one`, body);
+	return API(`${env.url}/certificate/one`, "post", body);
 };
 const createMany = (body: certificate[]) => {
-	return axios.post(`${env.url}/certificate/many`, body);
+	return API(`${env.url}/certificate/many`, "post", body);
 };
 const update = (body: certificate) => {
-	return axios.put(`${env.url}/certificate/one`, body);
+	return API(`${env.url}/certificate/one`, "put", body);
 };
 const issueOne = (certificateId: string) => {
-	return axios.post(`${env.url}/certificate/issue/one/${certificateId}`);
+	return API(`${env.url}/certificate/issue/one/${certificateId}`, "post");
 };
 
 export const useGetByOrganization = (organization: string) => {

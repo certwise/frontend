@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getAuth } from "firebase/auth";
 import { useContext, useState } from "react";
 import { env } from "../../config";
 import { actions, Context } from "../../store";
@@ -11,10 +12,12 @@ function FeedbackPanel() {
 	>(false);
 	const [feedback, setFeedback] = useState("");
 
-	const submitFeedback = () => {
+	const submitFeedback = async () => {
 		setSubmitState("loading");
-		axios
-			.post(`${env.url}/feedback`, {
+		const token = await getAuth().currentUser?.getIdToken();
+		axios({
+			url: `${env.url}/feedback`,
+			data: {
 				ratingLevel,
 				feedback,
 				user: store.user.uid,
@@ -23,7 +26,11 @@ function FeedbackPanel() {
 				organizationName: store.organization.name,
 				timestamp: new Date(),
 				time: new Date().getTime(),
-			})
+			},
+			headers: {
+				Authorization: token ? `Bearer ${token}` : "",
+			},
+		})
 			.then(() => {
 				setSubmitState(true);
 				dispatch(

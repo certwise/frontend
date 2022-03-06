@@ -1,20 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { env } from "../config";
-import axios from "axios";
 import { actions, Context } from "../store";
 import { useContext } from "react";
 import { organization } from "../store/types/organization";
+import { API } from ".";
 
 const create = (organization: organization) => {
-	return axios.post(`${env.url}/organization`, organization);
+	return API(`${env.url}/organization`, "post", organization);
 };
 
 const get = (id: string) => {
-	return axios.get(`${env.url}/organization/${id}`);
+	return API(`${env.url}/organization/${id}`, "get");
 };
 
 const update = (organization: organization) => {
-	return axios.put(`${env.url}/organization`, organization);
+	return API(`${env.url}/organization`, "put", organization);
 };
 
 export const useCreate = () => {

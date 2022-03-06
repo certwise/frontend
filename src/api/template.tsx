@@ -1,27 +1,26 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { env } from "../config";
-import axios from "axios";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { useContext } from "react";
 import { Context } from "../store";
-import { makeid } from ".";
+import { API, makeid } from ".";
 import { actions } from "../store";
 import { template } from "../store/types/template";
 import { image } from "../store/types/template/canvas";
 const getOne = (id: string) => {
-	return axios.get(`${env.url}/template/one/` + id);
+	return API(`${env.url}/template/one/` + id, "get");
 };
 
 const getByOrganization = (uid: string) => {
-	return axios.get(`${env.url}/template/organization/` + uid);
+	return API(`${env.url}/template/organization/` + uid, "get");
 };
 
 const update = (data: template) => {
-	return axios.put(`${env.url}/template/update`, data);
+	return API(`${env.url}/template/update`, "put", data);
 };
 
 const create = (data: template) => {
-	return axios.post(`${env.url}/template`, data);
+	return API(`${env.url}/template`, "post", data);
 };
 
 const getSavedImage = (_id: string, organization: string) => {

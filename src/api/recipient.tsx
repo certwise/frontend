@@ -1,31 +1,31 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { env } from "../config";
-import axios from "axios";
 import { actions, types } from "../store";
 import { Context } from "../store";
 import { useContext } from "react";
+import { API } from ".";
 
 const create = (recipient: types.recipient) => {
-	return axios.post(`${env.url}/recipient`, recipient);
+	return API(`${env.url}/recipient`, "post", recipient);
 };
 
 const createBulk = (recipients: types.recipient[]) => {
-	return axios.post(`${env.url}/recipient/bulk`, recipients);
+	return API(`${env.url}/recipient/bulk`, "post", recipients);
 };
 const getOne = (id: string) => {
-	return axios.get(`${env.url}/recipient/${id}`);
+	return API(`${env.url}/recipient/${id}`, "get");
 };
 
 const getByOrganization = (organization: string) => {
-	return axios.get(`${env.url}/recipient/organization/${organization}`);
+	return API(`${env.url}/recipient/organization/${organization}`, "get");
 };
 
 const update = (recipient: any) => {
-	return axios.put(`${env.url}/recipient`, recipient);
+	return API(`${env.url}/recipient`, "put", recipient);
 };
 
 const getByGroup = (group: string) => {
-	return axios.get(`${env.url}/recipient/group/${group}`);
+	return API(`${env.url}/recipient/group/${group}`, "get");
 };
 
 export const useCreate = () => {

@@ -1,26 +1,26 @@
-import { Link } from "react-router-dom";
-import { AiFillLinkedin, AiOutlineGoogle } from "react-icons/ai";
+// import { Link } from "react-router-dom";
+// import { AiFillLinkedin, AiOutlineGoogle } from "react-icons/ai";
 
 import {
 	getAuth,
 	createUserWithEmailAndPassword,
-	GoogleAuthProvider,
-	signInWithPopup,
+	// GoogleAuthProvider,
+	// signInWithPopup,
 	deleteUser,
 } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
-import * as userQuery from "../../api/user";
+import { useCreate as useCreateUser } from "../../api/user";
 import { user } from "../../store/types";
 import LandingHeader from "../../partials/LandingHeader";
 import { Context } from "../../store";
 import { toast } from "../../store/actions";
 import { valiateEarlyAccessInviteCode } from "../../api";
-import { id } from "monk";
+// import { id } from "monk";
 
 function SignUp() {
 	const { dispatch } = useContext(Context);
 	const [redirect, setredirect] = useState(false);
-	const create = userQuery.useCreate();
+	const create = useCreateUser();
 	const [form, setForm] = useState({
 		inviteCode: "",
 		email: "",
