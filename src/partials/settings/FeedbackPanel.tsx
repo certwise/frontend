@@ -16,6 +16,7 @@ function FeedbackPanel() {
 		setSubmitState("loading");
 		const token = await getAuth().currentUser?.getIdToken();
 		axios({
+			method: "POST",
 			url: `${env.url}/feedback`,
 			data: {
 				ratingLevel,
@@ -170,9 +171,6 @@ function FeedbackPanel() {
 			<footer>
 				<div className="flex flex-col px-6 py-5 border-t border-gray-200">
 					<div className="flex self-end">
-						<button className="btn border-gray-200 hover:border-gray-300 text-gray-600">
-							Cancel
-						</button>
 						{submitState === false && (
 							<button
 								onClick={() => submitFeedback()}

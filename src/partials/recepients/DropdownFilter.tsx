@@ -75,8 +75,8 @@ function DropdownFilter({
 						Filters
 					</div>
 					<ul className="mb-4">
-						{options.map((option: any) => (
-							<li className="py-1 px-3">
+						{options.map((option: any, i) => (
+							<li className="py-1 px-3" key={i}>
 								<label className="flex items-center">
 									<input type="checkbox" className="form-checkbox" />
 									<span className="text-sm font-medium ml-2">

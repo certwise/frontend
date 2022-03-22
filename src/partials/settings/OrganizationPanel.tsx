@@ -5,7 +5,6 @@ import Image from "../../images/org.jpg";
 import { useGet, useUpdate } from "../../api/organization";
 import { organization } from "../../store/types";
 import { Link } from "react-router-dom";
-import { duration } from "moment";
 
 function OrganizationPanel() {
 	const { store, dispatch } = useContext(Context);
@@ -18,7 +17,6 @@ function OrganizationPanel() {
 		store.organization.metaData?.state || "",
 		country?.isoCode || ""
 	);
-	console.log("State", store.organization.metaData?.state, country?.isoCode);
 	const [form, setform] = useState<organization>(store.organization);
 	useEffect(() => {
 		setform(organizationQuery.data?.data);

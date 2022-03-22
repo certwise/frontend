@@ -6,6 +6,7 @@ import ModalBlank from "../../components/ui/ModalBlank";
 import { MdOutlineCopyAll } from "react-icons/md";
 import { certificate, recipient } from "../../store/types";
 import * as certificateQuery from "../../api/certificate";
+import { ImNewTab } from "react-icons/im";
 function CertificatesTableItem({
 	filter,
 	certificate,
@@ -30,18 +31,6 @@ function CertificatesTableItem({
 	if (certificate.isRevoked) {
 		status = "Revoked";
 	}
-	const totalColor = (status: any) => {
-		switch (status) {
-			case "Paid":
-				return "text-green-500";
-			case "Due":
-				return "text-yellow-500";
-			case "Overdue":
-				return "text-red-500";
-			default:
-				return "text-gray-500";
-		}
-	};
 
 	const statusColor = (status: any) => {
 		switch (status) {
@@ -56,30 +45,6 @@ function CertificatesTableItem({
 		}
 	};
 
-	// TODO: Lolza
-
-	const typeIcon = (type: any) => {
-		switch (type) {
-			case "Subscription":
-				return (
-					<svg
-						className="w-4 h-4 fill-current text-gray-400 flex-shrink-0 mr-2"
-						viewBox="0 0 16 16"
-					>
-						<path d="M4.3 4.5c1.9-1.9 5.1-1.9 7 0 .7.7 1.2 1.7 1.4 2.7l2-.3c-.2-1.5-.9-2.8-1.9-3.8C10.1.4 5.7.4 2.9 3.1L.7.9 0 7.3l6.4-.7-2.1-2.1zM15.6 8.7l-6.4.7 2.1 2.1c-1.9 1.9-5.1 1.9-7 0-.7-.7-1.2-1.7-1.4-2.7l-2 .3c.2 1.5.9 2.8 1.9 3.8 1.4 1.4 3.1 2 4.9 2 1.8 0 3.6-.7 4.9-2l2.2 2.2.8-6.4z" />
-					</svg>
-				);
-			default:
-				return (
-					<svg
-						className="w-4 h-4 fill-current text-gray-400 flex-shrink-0 mr-2"
-						viewBox="0 0 16 16"
-					>
-						<path d="M11.4 0L10 1.4l2 2H8.4c-2.8 0-5 2.2-5 5V12l-2-2L0 11.4l3.7 3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3l3.7-3.7L7.4 10l-2 2V8.4c0-1.7 1.3-3 3-3H12l-2 2 1.4 1.4 3.7-3.7c.4-.4.4-1 0-1.4L11.4 0z" />
-					</svg>
-				);
-		}
-	};
 	// TODO copy link of certificate to clipboard on clicking copy icon
 	if (
 		(filter === "all" ||
@@ -175,9 +140,17 @@ function CertificatesTableItem({
 							<div>{template.data?.data.name || "Template"}</div>
 						</div>
 					</td>
-					<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+					<td className="px-2  py-3">
+						<a
+							rel="noreferrer"
+							href={"https://verify.certwise.app/" + certificate._id}
+							target="_blank"
+							className="btn text-gray-400 hover:text-gray-700 hover:cursor-pointer"
+						>
+							<ImNewTab size={24} />
+						</a>
 						<div className="space-x-1">
-							<button className="text-gray-400 hover:text-gray-500 rounded-full">
+							{/* <button className="text-gray-400 hover:text-gray-500 rounded-full">
 								<span className="sr-only">Edit</span>
 								<svg className="w-8 h-8 fill-current" viewBox="0 0 32 32">
 									<path d="M19.7 8.3c-.4-.4-1-.4-1.4 0l-10 10c-.2.2-.3.4-.3.7v4c0 .6.4 1 1 1h4c.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4l-4-4zM12.6 22H10v-2.6l6-6 2.6 2.6-6 6zm7.4-7.4L17.4 12l1.6-1.6 2.6 2.6-1.6 1.6z" />
@@ -195,7 +168,7 @@ function CertificatesTableItem({
 									<path d="M13 15h2v6h-2zM17 15h2v6h-2z" />
 									<path d="M20 9c0-.6-.4-1-1-1h-6c-.6 0-1 .4-1 1v2H8v2h1v10c0 .6.4 1 1 1h12c.6 0 1-.4 1-1V13h1v-2h-4V9zm-6 1h4v1h-4v-1zm7 3v9H11v-9h10z" />
 								</svg>
-							</button>
+							</button> */}
 						</div>
 						<ModalBlank
 							id="basic-modal"

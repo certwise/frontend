@@ -65,7 +65,7 @@ function Notification({ children, className, type, open, setOpen }: any) {
 								className="font-medium text-blue-500 hover:text-blue-600"
 								href="#0"
 							>
-								Action -&gt;
+								Action &gt;
 							</a>
 						</div>
 					</div>

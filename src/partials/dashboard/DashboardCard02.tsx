@@ -22,7 +22,7 @@ function DashboardCard02({
 						to="/templates"
 						className="text-blue-500 text-sm text-gray-600 hover:font-bold flex py-1 px-3"
 					>
-						All Templates -&gt;
+						All Templates &gt;
 					</Link>
 				</header>
 				<h2 className="text-lg font-semibold text-gray-800 mb-2">Templates</h2>
@@ -52,7 +52,7 @@ function DashboardCard02({
 						</div>
 						<div className="flex items-start">
 							<div className="mt-2 text-xs font-bold text-blue-500 text-gray-800 mr-2 mb-3">
-								-&gt; Template name1
+								&gt; Template name1
 							</div>
 						</div>
 					</div>

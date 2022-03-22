@@ -1,12 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { env } from "../config";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import { useContext } from "react";
 import { Context } from "../store";
 import { API, makeid } from ".";
 import { actions } from "../store";
 import { template } from "../store/types/template";
 import { image } from "../store/types/template/canvas";
+import { cloneDeep } from "lodash";
+import { useContext } from "react";
 const getOne = (id: string) => {
 	return API(`${env.url}/template/one/` + id, "get");
 };
@@ -57,7 +58,7 @@ export const useUpdate = () => {
 	const queryClient = useQueryClient();
 	return useMutation(update, {
 		onMutate: (data) => {
-			let template: template = { ...data };
+			let template: template = cloneDeep(data);
 			delete template.canvas.activeItem;
 			delete template.canvas.stageRef;
 			template.canvas.items.map((item) => {

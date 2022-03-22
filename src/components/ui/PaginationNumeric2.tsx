@@ -57,7 +57,7 @@ function PaginationNumeric2() {
 						className="btn bg-white border-gray-200 hover:border-gray-300 text-blue-500"
 						href="#0"
 					>
-						<span className="hidden sm:inline">Next&nbsp;</span>-&gt;
+						<span className="hidden sm:inline">Next&nbsp;</span>&gt;
 					</a>
 				</div>
 			</nav>

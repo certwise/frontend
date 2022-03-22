@@ -68,7 +68,7 @@ function Canvas() {
 			downloadURI()
 				.then(() => {
 					dispatch(actions.templates.setTemplateSaving(false));
-					window.location.reload(); //TODO: fix this
+					// window.location.reload(); //TODO: fix this
 				})
 				.catch(() => {
 					dispatch(
@@ -82,12 +82,6 @@ function Canvas() {
 		}
 	}, [store.templates.downloadCurrentTemplate]);
 
-	useEffect(() => {
-		console.log(
-			"Activeitem changed: ",
-			store.templates.currentTemplate.canvas.activeItem
-		);
-	}, [store.templates.currentTemplate.canvas.activeItem]);
 	return (
 		<div
 			onClick={(e) => {

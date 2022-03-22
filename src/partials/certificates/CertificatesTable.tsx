@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import Certificates from "./CertificateTableItem";
 import { certificate } from "../../store/types";
 function CertificatesTable({

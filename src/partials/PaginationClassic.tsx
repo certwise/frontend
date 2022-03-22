@@ -20,7 +20,7 @@ function PaginationClassic() {
 							className="btn bg-white border-gray-200 hover:border-gray-300 text-blue-500"
 							href="#0"
 						>
-							Next -&gt;
+							Next &gt;
 						</a>
 					</li>
 				</ul>

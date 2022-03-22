@@ -56,7 +56,7 @@ function GroupMapping({
 						onClick={() => dispatch(actions.certificate.setCreatePage(3))}
 						className="btn bg-blue-500 hover:bg-blue-600 text-white mt-5"
 					>
-						Review Certificates -&gt;
+						Review Certificates &gt;
 					</button>
 				)}
 		</div>

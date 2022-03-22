@@ -227,7 +227,7 @@ function Onboarding1() {
 											className="btn bg-blue-500 hover:bg-blue-600 text-white ml-auto"
 											to="/onboard-organization-details"
 										>
-											Next Step -&gt;
+											Next Step &gt;
 										</Link>
 									</div>
 								</form>

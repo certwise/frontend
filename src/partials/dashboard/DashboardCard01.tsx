@@ -23,7 +23,7 @@ function DashboardCard01({
 						to="/certificates/list"
 						className="text-blue-500 text-sm text-gray-600 hover:font-bold flex py-1 px-3"
 					>
-						All Credentials -&gt;
+						All Credentials &gt;
 					</Link>
 				</header>
 				<h2 className="text-lg font-semibold text-gray-800 mb-2">

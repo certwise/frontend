@@ -88,7 +88,7 @@ function LandingHeader() {
 								/>
 							</svg> */}
 							<span className="inline font-bold text-blue-500 hover:text-blue-600 ml-2 mt-1 hover:underline">
-								&lt; Back to homepage
+								&lt; Homepage
 							</span>
 						</a>
 					</div>

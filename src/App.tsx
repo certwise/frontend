@@ -60,7 +60,11 @@ function App() {
 
 	return (
 		<>
-			{userStatus === "loading" && <Loader />}
+			{userStatus === "loading" && (
+				<div className="h-screen flex  justify-center items-center">
+					<Loader />
+				</div>
+			)}
 			{userStatus === "user_found" && <Routes user={store.user} />}
 			{userStatus === "no_user" && <HomeRoutes user={store.user} />}
 			<div

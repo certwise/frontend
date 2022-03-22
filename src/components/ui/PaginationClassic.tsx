@@ -1,4 +1,12 @@
-function PaginationClassic() {
+function PaginationClassic({
+	start,
+	end,
+	total,
+}: {
+	start: number | string;
+	end: number | string;
+	total: number | string;
+}) {
 	return (
 		<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
 			<nav
@@ -17,18 +25,18 @@ function PaginationClassic() {
 					</li>
 					<li className="ml-3 first:ml-0">
 						<a
-							className="btn bg-white border-gray-200 hover:border-gray-300 text-blue-500"
+							className="btn bg-white border-gray-200 hover:border-gray-300 text-gray-300"
 							href="#0"
 						>
-							Next -&gt;
+							Next &gt;
 						</a>
 					</li>
 				</ul>
 			</nav>
 			<div className="text-sm text-gray-500 text-center sm:text-left">
-				Showing <span className="font-medium text-gray-600">1</span> to{" "}
-				<span className="font-medium text-gray-600">10</span> of{" "}
-				<span className="font-medium text-gray-600">467</span> results
+				Showing <span className="font-medium text-gray-600">{start}</span> to{" "}
+				<span className="font-medium text-gray-600">{end}</span> of{" "}
+				<span className="font-medium text-gray-600">{total}</span> results
 			</div>
 		</div>
 	);

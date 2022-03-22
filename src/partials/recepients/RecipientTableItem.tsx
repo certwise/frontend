@@ -83,7 +83,15 @@ function RecipientsTableItem({
 							alt={props.name}
 						/>
 					</div> */}
-					<div className="font-medium text-blue-600">{recipient.name}</div>
+					<button
+						onClick={(e) => {
+							e.stopPropagation();
+							setBasicModalOpen(true);
+						}}
+						className="font-medium text-blue-600 hover:text-blue-400"
+					>
+						{recipient.name}
+					</button>
 				</div>
 			</td>
 			<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">

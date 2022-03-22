@@ -71,7 +71,7 @@ function Recipients() {
 
 							{/* Pagination */}
 							<div className="mt-8">
-								<PaginationClassic />
+								<PaginationClassic start={1} end={"Last"} total="all" />
 							</div>
 						</div>
 					)}

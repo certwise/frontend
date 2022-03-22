@@ -138,7 +138,7 @@ function DropdownProfile({ align }: any) {
 							onClick={(e) => {
 								dispatch(signOutStore());
 								signOut(getAuth()).then(() => {
-									window.location.href = "https://certwise.app";
+									window.location.href = "/signin";
 								});
 							}}
 							className="btn-sm bg-red-500 hover:font-bold text-white"

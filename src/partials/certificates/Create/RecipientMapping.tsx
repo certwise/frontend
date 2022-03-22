@@ -54,7 +54,7 @@ function RecipientMapping({
 						onClick={() => dispatch(actions.certificate.setCreatePage(3))}
 						className="btn bg-blue-500 hover:bg-blue-600 text-white mt-5"
 					>
-						Review Certificate -&gt;
+						Review Certificate &gt;
 					</button>
 				)}
 		</div>

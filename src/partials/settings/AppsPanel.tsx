@@ -442,7 +442,7 @@ function AppsPanel() {
 											className="text-sm font-medium text-blue-500 hover:text-blue-600"
 											href="#0"
 										>
-											Explore -&gt;
+											Explore &gt;
 										</a>
 									</div>
 								</footer>
@@ -471,7 +471,7 @@ function AppsPanel() {
 											className="text-sm font-medium text-blue-500 hover:text-blue-600"
 											href="#0"
 										>
-											Explore -&gt;
+											Explore &gt;
 										</a>
 									</div>
 								</footer>
@@ -500,7 +500,7 @@ function AppsPanel() {
 											className="text-sm font-medium text-blue-500 hover:text-blue-600"
 											href="#0"
 										>
-											Explore -&gt;
+											Explore &gt;
 										</a>
 									</div>
 								</footer>

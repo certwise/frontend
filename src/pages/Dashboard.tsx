@@ -43,7 +43,7 @@ function Dashboard() {
 							You have no new notifications.{" "}
 							<span>
 								<button className="text-sm ml-3 font-medium text-blue-500 hover:font-bold">
-									See all -&gt;
+									See all &gt;
 								</button>
 							</span>
 						</div>

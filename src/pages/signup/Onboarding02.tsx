@@ -332,7 +332,7 @@ function Onboarding2() {
 											//to="/onboard"
 											onClick={(e) => createOrganization(e)}
 										>
-											Next Step -&gt;
+											Next Step &gt;
 										</button>
 									</div>
 								</form>

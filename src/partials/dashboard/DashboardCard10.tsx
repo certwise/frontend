@@ -46,7 +46,7 @@ function DashboardCard10() {
 											className="font-medium text-blue-500 hover:text-blue-600"
 											href="#0"
 										>
-											View<span className="hidden sm:inline"> -&gt;</span>
+											View<span className="hidden sm:inline"> &gt;</span>
 										</a>
 									</div> */}
 								</div>
@@ -82,7 +82,7 @@ function DashboardCard10() {
 											className="font-medium text-blue-500 hover:text-blue-600"
 											href="#0"
 										>
-											View<span className="hidden sm:inline"> -&gt;</span>
+											View<span className="hidden sm:inline"> &gt;</span>
 										</a>
 									</div>
 								</div>
@@ -117,7 +117,7 @@ function DashboardCard10() {
 											className="font-medium text-blue-500 hover:text-blue-600"
 											href="#0"
 										>
-											View<span className="hidden sm:inline"> -&gt;</span>
+											View<span className="hidden sm:inline"> &gt;</span>
 										</a>
 									</div>
 								</div>
@@ -162,7 +162,7 @@ function DashboardCard10() {
 											className="font-medium text-blue-500 hover:text-blue-600"
 											href="#0"
 										>
-											View<span className="hidden sm:inline"> -&gt;</span>
+											View<span className="hidden sm:inline"> &gt;</span>
 										</a>
 									</div>
 								</div>
@@ -198,7 +198,7 @@ function DashboardCard10() {
 											className="font-medium text-blue-500 hover:text-blue-600"
 											href="#0"
 										>
-											View<span className="hidden sm:inline"> -&gt;</span>
+											View<span className="hidden sm:inline"> &gt;</span>
 										</a>
 									</div>
 								</div>

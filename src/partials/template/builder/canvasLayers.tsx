@@ -118,7 +118,7 @@ function CanvasLayers() {
 							{store.templates.currentTemplate.templateFields?.map((field) => {
 								return (
 									<li key={field.name} className="font-bold text-blue-600 my-1">
-										-&gt; {field.name.trim()}
+										&gt; {field.name.trim()}
 									</li>
 								);
 							})}

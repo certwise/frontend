@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useGetByOrganization } from "../../../api/template";
 import DropdownTemplate from "../DropDownTemplates";
 import TemplateCard from "./TemplateCard";
-import { actions, Context } from "../../../store";
+import { Context } from "../../../store";
 
 function TemplatesGrid() {
-	const { store, dispatch } = useContext(Context);
+	const { store } = useContext(Context);
 	const { isLoading, data } = useGetByOrganization(store.user.organization);
 	const [togglePreview, setTogglePreview] = useState(true);
 	const selectedTemplate =

@@ -42,7 +42,7 @@ function Page2() {
 											}
 											className="btn bg-blue-500 hover:bg-blue-600 text-white mt-5"
 										>
-											Review Certificate for {selectedRecipient.name} -&gt;
+											Review Certificate for {selectedRecipient.name} &gt;
 										</button>
 									)}
 								</div>

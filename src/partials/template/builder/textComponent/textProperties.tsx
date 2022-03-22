@@ -313,7 +313,10 @@ function TextProperties() {
 							close={() => {
 								setIsFontsOpen(false);
 							}}
-							styles={{ width: "450px", height: window.innerHeight }}
+							styles={{
+								width: Math.max(window.innerWidth / 4, 250),
+								height: window.innerHeight,
+							}}
 							loadMoreFonts={() => {
 								dispatch(
 									actions.templates.setNumberOfFonts(
