@@ -2,3 +2,4 @@ node_modules
 build
 .firebase/*
 .env
+package-lock.json

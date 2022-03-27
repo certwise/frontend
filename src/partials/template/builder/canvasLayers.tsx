@@ -12,6 +12,7 @@ import { ItemProperty } from "./canvasItems";
 import { FaUndo, FaRedo } from "react-icons/fa";
 import { useAddImage } from "../../../api/template";
 import { useUpdate } from "../../../api/template";
+import { cloneDeep } from "lodash";
 
 function CanvasLayers() {
 	const addImage = useAddImage();
@@ -34,7 +35,7 @@ function CanvasLayers() {
 			dispatch(actions.templates.setActiveItem(undefined));
 			dispatch(actions.templates.downloadCurrentTemplate(true));
 			dispatch(actions.templates.setTemplateSaving(true));
-			saveTemplate.mutate(store.templates.currentTemplate);
+			saveTemplate.mutate({...cloneDeep(store.templates.currentTemplate)});
 		}
 	};
 

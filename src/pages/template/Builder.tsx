@@ -50,7 +50,7 @@ function TemplateBuilder() {
 
 	useEffect(() => {
 		dispatch(actions.templates.isEditingTemplate(true));
-		setIsLoading(true);
+		if (!template.data?.data) setIsLoading(true);
 		if (template.data) {
 			setCurrentTemplate(template.data.data).then(() => {
 				setIsLoading(false);
@@ -59,7 +59,7 @@ function TemplateBuilder() {
 		return () => {
 			dispatch(actions.templates.isEditingTemplate(false));
 		};
-	}, [template.data]);
+	}, [template.isFetching]);
 
 	useEffect(() => {
 		if (template.data && !store.templates.downloadCurrentTemplate) {

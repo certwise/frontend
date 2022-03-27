@@ -56,7 +56,7 @@ function ModalBlank({ children, id, modalOpen, setModalOpen }: any) {
 			>
 				<div
 					ref={modalContent}
-					className="bg-white rounded shadow-lg overflow-auto  max-h-full"
+					className="bg-white rounded shadow-lg overflow-auto h-min max-h-full"
 				>
 					{children}
 				</div>

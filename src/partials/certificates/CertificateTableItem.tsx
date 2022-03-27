@@ -175,7 +175,7 @@ function CertificatesTableItem({
 							modalOpen={basicModalOpen}
 							setModalOpen={setBasicModalOpen}
 							title="View Certificate"
-							className="w-full max-w-lg"
+							className="w-full max-w-lg h-min"
 						>
 							<div
 								style={{
