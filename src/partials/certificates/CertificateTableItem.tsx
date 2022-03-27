@@ -140,7 +140,7 @@ function CertificatesTableItem({
 							<div>{template.data?.data.name || "Template"}</div>
 						</div>
 					</td>
-					<td className="px-2  py-3">
+					<td className="px-2 1 py-3">
 						<a
 							rel="noreferrer"
 							href={"https://verify.certwise.app/" + certificate._id}

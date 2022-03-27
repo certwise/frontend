@@ -10,6 +10,7 @@ import {
 } from "../../partials/template/builder/textComponent/fontLoader";
 import { template } from "../../store/types";
 import { useGetOne } from "../../api/template";
+import Loader from "../../partials/Loader";
 function TemplateBuilder() {
 	const { store, dispatch } = useContext(Context);
 	const { id }: any = useParams();
@@ -97,7 +98,9 @@ function TemplateBuilder() {
 	return (
 		<>
 			{isLoading && (
-				<div className="w-screen h-screen loading">Loading template...</div>
+				<div className="h-screen flex  justify-center items-center">
+					<Loader />
+				</div>
 			)}
 			{!isLoading && isValidUrl && <CanvasContainer />}
 		</>

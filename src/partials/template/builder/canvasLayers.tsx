@@ -46,7 +46,7 @@ function CanvasLayers() {
 	else
 		return (
 			!exit && (
-				<div className="p-2 px-3 h-screen text-xs scrollbar-hidden ">
+				<div className="p-2 px-3 h-screen text-xs  scrollbar-hidden ">
 					<div>
 						<button
 							disabled={store.templates.isSaving && saveTemplate.isLoading}

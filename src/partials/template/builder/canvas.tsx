@@ -70,7 +70,8 @@ function Canvas() {
 					dispatch(actions.templates.setTemplateSaving(false));
 					// window.location.reload(); //TODO: fix this
 				})
-				.catch(() => {
+				.catch((e) => {
+					console.log(e);
 					dispatch(
 						actions.toast.makeToast({
 							message: "Error saving template image",
@@ -88,7 +89,10 @@ function Canvas() {
 				e.stopPropagation();
 			}}
 		>
-			<div className="z-0 border border-blue-600 shadow-xl" onClick={() => {}}>
+			<div
+				className="z-0 border border-blue-600 shadow-xl"
+				onClick={(e) => e.stopPropagation()}
+			>
 				<Stage
 					ref={stageRef}
 					width={stageWidth}

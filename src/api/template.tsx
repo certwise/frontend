@@ -16,7 +16,9 @@ const getByOrganization = (uid: string) => {
 	return API(`${env.url}/template/organization/` + uid, "get");
 };
 
-const update = (data: template) => {
+const update = (data: any) => {
+	if (data.canvas.activeItem) delete data.canvas.activeItem;
+	console.log("update", data);
 	return API(`${env.url}/template/update`, "put", data);
 };
 
@@ -67,6 +69,7 @@ export const useUpdate = () => {
 					return item;
 				} else return item;
 			});
+			console.log("template", template);
 			return template;
 		},
 		onSuccess: (data) => {
@@ -79,7 +82,8 @@ export const useUpdate = () => {
 					duration: "long",
 				})
 			);
-			queryClient.invalidateQueries(["templates", "template", data.data._id]);
+			console.log("data", data.data._id);
+			queryClient.invalidateQueries(["template", data.data._id]);
 		},
 		onError: (err: any) => {
 			dispatch(

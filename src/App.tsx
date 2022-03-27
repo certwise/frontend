@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./css/style.scss";
 import { focusHandling } from "cruip-js-toolkit";
-import "./charts/ChartjsConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
 import Routes from "./Routes";
