@@ -25,10 +25,10 @@ function Datepicker({ align }: any) {
 	return (
 		<>
 			<div className="relative">
-				{/* <Flatpickr
+				<Flatpickr
 					className="form-input pl-9 text-gray-500 hover:text-gray-600 font-medium focus:border-gray-300 w-60"
 					options={options as any}
-				/> */}
+				/>
 				<div className="absolute inset-0 right-auto flex items-center pointer-events-none">
 					<svg
 						className="w-4 h-4 fill-current text-gray-500 ml-3"
