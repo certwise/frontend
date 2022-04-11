@@ -20,7 +20,7 @@ const getCurrentTemplateImageItems = (items_: items) => {
 
 const getImageItemWithSourceUrl = (item: image): Promise<image> => {
 	let im = new Image();
-	im.crossOrigin = "anonymous";
+	im.crossOrigin = "Anonymous";
 	let storageRef = item.storageRef;
 	return new Promise((resolve, reject) => {
 		if (storageRef) {

@@ -1,3 +1,4 @@
+import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import dotenv from "dotenv";
 dotenv.config();
@@ -12,6 +13,7 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+getAnalytics(app);
 
 export const env = {
 	url: process.env.REACT_APP_URL,

@@ -12,6 +12,8 @@ import { useGet } from "./api/user";
 import Toast from "./partials/Toast";
 import dotenv from "dotenv";
 import Loader from "./partials/Loader";
+import { getAnalytics, logEvent } from "firebase/analytics";
+
 dotenv.config();
 function App() {
 	const { store, dispatch } = useContext(Context);
@@ -21,6 +23,7 @@ function App() {
 	const [userStatus, setUserStatus] = useState<
 		"loading" | "no_user" | "user_found"
 	>("loading");
+	const analytics = getAnalytics();
 	const getUser = useGet(user.uid);
 	useEffect(() => {
 		(document.querySelector("html") as any).style.scrollBehavior = "auto";
@@ -37,6 +40,7 @@ function App() {
 				setUserStatus("no_user");
 			}
 		});
+		logEvent(analytics, "Log");
 	});
 	useEffect(() => {
 		if (user.uid !== "") {
