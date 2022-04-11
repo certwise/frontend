@@ -1,11 +1,6 @@
-// import { Link } from "react-router-dom";
-// import { AiFillLinkedin, AiOutlineGoogle } from "react-icons/ai";
-
 import {
 	getAuth,
 	createUserWithEmailAndPassword,
-	// GoogleAuthProvider,
-	// signInWithPopup,
 	deleteUser,
 } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
@@ -15,11 +10,9 @@ import LandingHeader from "../../partials/LandingHeader";
 import { Context } from "../../store";
 import { toast } from "../../store/actions";
 import { valiateEarlyAccessInviteCode } from "../../api";
-// import { id } from "monk";
 
 function SignUp() {
 	const { dispatch } = useContext(Context);
-	const [redirect, setredirect] = useState(false);
 	const create = useCreateUser();
 	const [form, setForm] = useState({
 		inviteCode: "",
@@ -77,9 +70,9 @@ function SignUp() {
 							numberOfCerificatesCreated: 0,
 							phoneNumber: form.phone,
 						};
-						create.mutate(x);
-						setredirect(true);
+						create.mutateAsync(x);
 					})
+					.then(() => {})
 					.catch((error) => {
 						const errorCode = error.code;
 						if (errorCode === "auth/email-already-in-use") {
@@ -107,34 +100,6 @@ function SignUp() {
 			alert("Please enter valid details");
 		}
 	};
-	// const signUpGoogle = async (e: any) => {
-	// 	let result;
-	// 	e.preventDefault();
-	// 	try {
-	// 		const provider = new GoogleAuthProvider();
-	// 		const result_ = await signInWithPopup(auth, provider);
-	// 		result = result_;
-	// 		const user = result.user;
-	// 		let x: user = {
-	// 			uid: user.uid,
-	// 			name: user.displayName || "CertwiseDefaultUser",
-	// 			isVerified: false,
-	// 			createdAt: new Date(),
-	// 			email: user.email || "",
-	// 			organization: "",
-	// 			updatedAt: new Date(),
-	// 			numberOfTemplatesCreated: 0,
-	// 			numberOfCerificatesCreated: 0,
-	// 		};
-	// 		create.mutate(x);
-	// 		setredirect(true);
-	// 	} catch (e) {
-	// 		console.log(e);
-	// 		if (result) {
-	// 			await deleteUser(result.user);
-	// 		}
-	// 	}
-	// };
 	return (
 		<div className="flex flex-col min-h-screen overflow-hidden">
 			{/*  Site header */}
@@ -329,31 +294,7 @@ function SignUp() {
 										aria-hidden="true"
 									></div>
 								</div>
-								<form>
-									{/* <div className="flex flex-wrap -mx-3 mb-3">
-										<div className="w-full px-3">
-											<button className="btn px-0 text-white bg-blue-800 hover:bg-blue-700 w-full relative flex items-center">
-												<AiFillLinkedin className="w-5 h-5 fill-current text-white opacity-75 flex-shrink-0 mx-4" />
-												<span className="flex-auto pl-16 pr-8 -ml-16">
-													Continue with LinkedIn
-												</span>
-											</button>
-										</div>
-									</div> 
-									<div className="flex flex-wrap -mx-3">
-										<div className="w-full px-3">
-											<button
-												onClick={(e) => signUpGoogle(e)}
-												className="btn px-0 text-white bg-red-600 hover:bg-red-700 w-full relative flex items-center"
-											>
-												<AiOutlineGoogle className="w-5 h-5 fill-current text-white opacity-75 flex-shrink-0 mx-4" />
-												<span className="flex-auto pl-16 pr-8 -ml-16">
-													Continue with Google
-												</span>
-											</button>
-										</div>
-									</div> */}
-								</form>
+								<form></form>
 							</div>
 						</div>
 					</div>

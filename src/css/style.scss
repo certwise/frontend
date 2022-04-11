@@ -1,8 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=fallback");
 
-//@import url("https://fonts.googleapis.com/css2?family=Skranji&display=swap");
-//@import url("https://fonts.googleapis.com/css2?family=Parisienne&display=swap");
-
 // Additional styles
 @import "additional-styles/utility-patterns.scss";
 @import "additional-styles/range-slider.scss";
@@ -32,4 +29,8 @@
 .scrollbar-hidden {
 	-ms-overflow-style: none;
 	scrollbar-width: none; /* Firefox */
+}
+
+body {
+	font-family: "Inter", sans-serif;
 }
