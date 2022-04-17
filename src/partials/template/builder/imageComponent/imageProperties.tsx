@@ -90,7 +90,7 @@ function ImageProperties() {
 					onChange={(e) => editActiveItem(e, "img")}
 				/>
 			</ItemProperty>
-			<ItemProperty name="Variable Field ">
+			{/* <ItemProperty name="Variable Field ">
 				{activeItem?.id !== "none" && (
 					<select
 						className="w-full h-full"
@@ -103,7 +103,7 @@ function ImageProperties() {
 						<option value="false">Variable</option>
 					</select>
 				)}
-			</ItemProperty>
+			</ItemProperty> */}
 			<ItemProperty name="x">
 				<input
 					type="number"

@@ -114,7 +114,7 @@ function TextProperties() {
 						/>
 					</ItemProperty>
 
-					<ItemProperty name="Variable Field ">
+					{/* <ItemProperty name="Variable Field ">
 						{activeItem.id !== "none" && (
 							<select
 								style={{ background: "#fff" }}
@@ -150,7 +150,7 @@ function TextProperties() {
 								</option>
 							</select>
 						)}
-					</ItemProperty>
+					</ItemProperty> */}
 
 					<ItemProperty name="x">
 						<input

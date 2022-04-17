@@ -35,7 +35,7 @@ function CanvasLayers() {
 			dispatch(actions.templates.setActiveItem(undefined));
 			dispatch(actions.templates.downloadCurrentTemplate(true));
 			dispatch(actions.templates.setTemplateSaving(true));
-			saveTemplate.mutate({...cloneDeep(store.templates.currentTemplate)});
+			saveTemplate.mutate({ ...cloneDeep(store.templates.currentTemplate) });
 		}
 	};
 
@@ -138,13 +138,13 @@ function CanvasLayers() {
 								placeholderClassName="hidden"
 								options={[
 									{
-										value: "text",
+										value: "Text",
 										label: "",
 										className:
 											"btn m-2 btn text-white bg-blue-500 hover:bg-blue-600 block w-48 z-10",
 									},
 									{
-										value: "image",
+										value: "Image",
 										label: "",
 										className:
 											"btn m-2 btn text-white bg-blue-500 hover:bg-blue-600 block w-48 z-10",
