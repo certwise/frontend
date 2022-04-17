@@ -165,8 +165,8 @@ function CanvasLayers() {
 								placeholder={addLayerDummyValue}
 								value={addLayerDummyValue}
 								onChange={(e) => {
-									if (e.value === "text") addText();
-									else if (e.value === "image") addImage.mutate();
+									if (e.value === "Text") addText();
+									else if (e.value === "Image") addImage.mutate();
 								}}
 							/>
 						</div>

@@ -29,7 +29,6 @@ function Routes({ user }: { user: user }) {
 			setRedirect("/onboard-organization");
 		if (user.uid === "") {
 			setRedirect("");
-			window.location.replace("https://");
 		}
 		return () => {};
 	}, [user]);
