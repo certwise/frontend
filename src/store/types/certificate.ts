@@ -1,4 +1,4 @@
-import { CustomField, group, organization, recipient, template } from ".";
+import { CustomField, group, recipient, template } from ".";
 
 export type certificate = {
 	_id?: string;

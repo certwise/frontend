@@ -10,7 +10,7 @@ function SetCreateCertificateType() {
 					dispatch(actions.certificate.setCreateType("single"));
 					dispatch(actions.certificate.setCreatePage(2));
 				}}
-				className="btn bg-blue-500 hover:bg-blue-600 text-white w-1/4 mr-2"
+				className="btn bg-blue-500 hover:bg-blue-600 text-white  mr-2"
 			>
 				<svg
 					className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
@@ -27,7 +27,7 @@ function SetCreateCertificateType() {
 					dispatch(actions.certificate.setCreateType("group"));
 					dispatch(actions.certificate.setCreatePage(2));
 				}}
-				className="btn bg-blue-500 hover:bg-blue-600 text-white w-1/4 ml-2"
+				className="btn bg-blue-500 hover:bg-blue-600 text-white ml-2"
 			>
 				<svg
 					className="w-4 h-4 fill-current opacity-50 flex-shrink-0"

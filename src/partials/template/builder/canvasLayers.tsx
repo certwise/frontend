@@ -24,7 +24,7 @@ function CanvasLayers() {
 		return () => {
 			dispatch(actions.templates.isEditingTemplate(false));
 		};
-	}, []);
+	}, [dispatch]);
 	const canvas = store.templates.currentTemplate.canvas;
 	const saveCanvas = (e: any) => {
 		e.preventDefault();

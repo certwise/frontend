@@ -78,6 +78,10 @@
 		"@types/react-flatpickr": "^3.8.4",
 		"@types/react-modal": "^3.13.1",
 		"@types/react-transition-group": "^4.4.4",
-		"@types/tailwindcss": "^2.2.3"
+		"@types/tailwindcss": "^2.2.3",
+		"react-error-overlay": "^6.0.9"
+	},
+	"resolutions": {
+		"react-error-overlay": "6.0.9"
 	}
 }

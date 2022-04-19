@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { CustomField } from "../../store/types";
 import * as recipientQuery from "../../api/recipient";
-import ModalBasic from "../../components/ui/ModalBasic";
+import ModalBasic from "../ui/ModalBasic";
 import { recipient } from "../../store/types";
 import { actions, Context } from "../../store";
 

@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import { useUpdate, useGetOne } from "../../api/recipient";
-import ModalBasic from "../../components/ui/ModalBasic";
-import { Context } from "../../store";
+import { useEffect, useState } from "react";
+import { useUpdate } from "../../api/recipient";
+import ModalBasic from "../ui/ModalBasic";
 import { CustomField, group, recipient } from "../../store/types";
 
 type RecipientItemProps = {
@@ -26,7 +25,6 @@ function GroupTableItem({
 	recipient: recipient;
 	customFields: CustomField[];
 }) {
-	const { store, dispatch } = useContext(Context);
 	const props: RecipientItemProps = {
 		id: "",
 		name: recipient.name,

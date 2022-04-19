@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SetCreateCertificateType from "../../../partials/certificates/Create/SetCreateCertificateType";
 import TemplatesGrid from "../../../partials/certificates/Create/TemplatesGrid";
 import Header from "../../../partials/Header";
@@ -20,18 +20,17 @@ function Create() {
 	const templates = useGetTemplates(store.user.organization);
 	const recipients = useGetRecipients(store.user.organization);
 	const history = useHistory();
-
+	const [page, setPage] = useState<number>(1);
+	useEffect(() => {
+		setPage((p) => Math.max(store.certificates.createCertificate.page, p));
+	}, [store.certificates.createCertificate.page]);
 	return (
 		<div>
 			<div className="flex h-screen overflow-hidden">
-				{/* Sidebar */}
 				<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-				{/* Content area */}
 
 				<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-					{/*  Site header */}
 					<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-					{/*  Page number */}
 					{(templates.isLoading || recipients.isLoading) && (
 						<div className="my-auto">
 							<Loader />
@@ -94,9 +93,10 @@ function Create() {
 											<ul className="relative flex justify-between w-full">
 												<li>
 													<button
-														onClick={() =>
-															dispatch(actions.certificate.setCreatePage(1))
-														}
+														onClick={() => {
+															if (page > 0)
+																dispatch(actions.certificate.setCreatePage(1));
+														}}
 														className={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold ${
 															activePage === 1
 																? activePageClassName
@@ -108,9 +108,12 @@ function Create() {
 												</li>
 												<li>
 													<button
-														onClick={() =>
-															dispatch(actions.certificate.setCreatePage(2))
-														}
+														onClick={() => {
+															if (page > 1) {
+																if (page < 3) setPage(2);
+																dispatch(actions.certificate.setCreatePage(2));
+															}
+														}}
 														className={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold ${
 															activePage === 2
 																? activePageClassName
@@ -122,9 +125,10 @@ function Create() {
 												</li>
 												<li>
 													<button
-														onClick={() =>
-															dispatch(actions.certificate.setCreatePage(3))
-														}
+														onClick={() => {
+															if (page > 2)
+																dispatch(actions.certificate.setCreatePage(3));
+														}}
 														className={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold ${
 															activePage === 3
 																? activePageClassName

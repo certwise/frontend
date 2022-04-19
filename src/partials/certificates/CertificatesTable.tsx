@@ -1,4 +1,4 @@
-import Certificates from "./CertificateTableItem";
+import CertificateTableItem from "./CertificateTableItem";
 import { certificate } from "../../store/types";
 function CertificatesTable({
 	filter,
@@ -11,6 +11,20 @@ function CertificatesTable({
 	selectedItems: any;
 	certificates: certificate[];
 }) {
+	const emptyStateCertificate: certificate = {
+		issuer: "-",
+		organization: "-",
+		isIssued: false,
+		templateId: "-",
+		createdAt: new Date(),
+		lastUpdated: new Date(),
+		issueDate: false,
+		recipient: "-",
+		fields: [],
+		group: "-",
+		validTill: false,
+		isRevoked: false,
+	};
 	certificates = certificates?.sort((a, b) => {
 		if (a.createdAt < b.createdAt) return 1;
 		if (a.createdAt > b.createdAt) return -1;
@@ -20,7 +34,10 @@ function CertificatesTable({
 		<div className="bg-white shadow-lg rounded-sm border border-gray-200 relative">
 			<header className="px-5 py-4">
 				<h2 className="font-semibold text-gray-800">
-					Certificates <span className="text-gray-400 font-medium">67</span>
+					Certificates{" "}
+					<span className="text-gray-400 font-medium">
+						{certificates.length}
+					</span>
 				</h2>
 			</header>
 			<div>
@@ -69,16 +86,51 @@ function CertificatesTable({
 						</thead>
 						{/* Table body */}
 						<tbody className="text-sm divide-y divide-gray-200">
-							{certificates?.map((certificate: certificate) => {
-								return (
-									<Certificates
-										filter={filter}
-										query={query}
-										key={certificate._id}
-										certificate={certificate}
-									/>
-								);
-							})}
+							{certificates.filter(
+								(certificate) =>
+									filter === "all" ||
+									(filter === "created" &&
+										!certificate.isIssued &&
+										!certificate.isRevoked) ||
+									(filter === "issued" &&
+										certificate.isIssued &&
+										!certificate.isRevoked) ||
+									(filter === "revoked" && certificate.isRevoked)
+							).length > 0 ? (
+								<>
+									{certificates?.map((certificate) => {
+										if (
+											filter === "all" ||
+											(filter === "created" &&
+												!certificate.isIssued &&
+												!certificate.isRevoked) ||
+											(filter === "issued" &&
+												certificate.isIssued &&
+												!certificate.isRevoked) ||
+											(filter === "revoked" && certificate.isRevoked)
+										)
+											return (
+												<CertificateTableItem
+													query={query}
+													key={certificate._id}
+													certificate={certificate}
+												/>
+											);
+										return null;
+									})}
+								</>
+							) : (
+								<>
+									<td className="py-3 pl-5 whitespace-nowrap">-</td>
+									<td className="py-3 whitespace-nowrap">-</td>
+									<td className="py-3 whitespace-nowrap">-</td>
+									<td className="py-3 whitespace-nowrap">-</td>
+									<td className="py-3 whitespace-nowrap">-</td>
+									<td className="py-3 whitespace-nowrap">-</td>
+									<td className="py-3 whitespace-nowrap">-</td>
+									<td className="py-3 whitespace-nowrap">-</td>
+								</>
+							)}
 						</tbody>
 					</table>
 				</div>

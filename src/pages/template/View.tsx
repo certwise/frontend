@@ -2,44 +2,66 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import {
+	useArchive,
+	useDelete,
 	useGetDefaultBaseImage,
+	useGetNumberOfCertificateInTemplate,
+	useGetOne,
 	useGetSavedImage,
+	useUnarchive,
 	useUpdate,
 } from "../../api/template";
+import { useGet as useGetUser } from "../../api/user";
 import { template } from "../../store/types";
 
-function View({
-	template,
-	refetch,
-}: {
-	template: template;
-	refetch: () => void;
-}) {
-	const image = useGetSavedImage(
-		template?._id || "",
-		template?.organization || ""
-	);
+function View({ templateId }: { templateId: string }) {
 	const defaultImage = useGetDefaultBaseImage();
 	const { id } = useParams<any>();
 	const [redirect, setRedirect] = useState("");
 	const [isRenaming, setIsRenaming] = useState(false);
+	const [isEditingDescription, setIsEditingDescription] = useState(false);
+	const update = useUpdate();
+	const archive = useArchive();
+	const unarchive = useUnarchive();
+	const deleteTemplate = useDelete();
+	const templateQuery = useGetOne(templateId);
+	const template: template = templateQuery.data?.data;
+	const user = useGetUser(template?.createdBy);
+	const numberOfCertificates = useGetNumberOfCertificateInTemplate(id);
 	const [form, setform] = useState({
 		name: template?.name || "",
 		description: template?.description || "",
 	});
-	const [error, setError] = useState("");
-	const update = useUpdate();
+	const image = useGetSavedImage(
+		template?._id || "",
+		template?.organization || ""
+	);
+
 	useEffect(() => {
 		return () => {
 			setRedirect("");
 		};
 	}, []);
+
 	useEffect(() => {
 		if (update.isSuccess) {
 			setIsRenaming(false);
-			refetch();
+			setIsEditingDescription(false);
+			templateQuery.refetch();
+			update.reset();
 		}
-	}, [update.isSuccess]);
+	}, [
+		update.isSuccess,
+		archive.isSuccess,
+		unarchive.isSuccess,
+		templateQuery,
+		update,
+	]);
+
+	useEffect(() => {
+		if (deleteTemplate.isSuccess) setRedirect("/templates");
+	}, [deleteTemplate.isSuccess]);
+
 	if (redirect !== "") {
 		return <Redirect push to={redirect} />;
 	} else
@@ -99,17 +121,14 @@ function View({
 						Back to all templates
 					</button>
 				</div>
-				{/* Page header */}
 
-				{/* Page content */}
 				<div
-					style={{ borderBottom: "none" }}
-					className="border-2 border-gray-300  mb-5 h-full shadow-lg"
+					// style={{ borderBottom: "none" }}
+					className="border-2 border-gray-100  mb-5 h-full shadow-lg"
 				>
 					{!image.isLoading && !defaultImage.isLoading && !image.isError && (
-						<div className="p-2 flex justify-center bg-gray-100">
+						<div className="p-2 flex justify-center bg-gray-50">
 							<img
-								className=""
 								src={image.data as any}
 								style={{
 									height: "450px",
@@ -120,9 +139,8 @@ function View({
 						</div>
 					)}
 					{!image.isLoading && !defaultImage.isLoading && image.isError && (
-						<div className="p-2 flex justify-center bg-gray-100">
+						<div className="p-2 flex justify-center bg-gray-50">
 							<img
-								className=""
 								src={defaultImage.data as any}
 								style={{
 									height: "450px",
@@ -133,9 +151,9 @@ function View({
 						</div>
 					)}
 					{(image.isLoading || defaultImage.isLoading) && (
-						<div style={{ height: "450px" }}>
+						<div style={{ height: "470px" }}>
 							<div className="animate-pulse w-full h-full">
-								<div className="bg-blue-300 p-5 h-full w-full flex flex-row items-center align-middle justify-center ">
+								<div className="bg-gray-100 p-5 h-full w-full flex flex-row items-center align-middle justify-center ">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										className="icon icon-tabler icon-tabler-photo "
@@ -158,49 +176,150 @@ function View({
 							</div>
 						</div>
 					)}
-
-					<div
-						style={{ borderTop: "none" }}
-						className="flex justify-center p-3 border-b-2 py-8 border-gray-300"
+				</div>
+				<div className="flex justify-center py-3 ">
+					<button
+						onClick={() => {
+							setRedirect("/template/edit/" + id);
+						}}
+						className="btn btn-sm bg-blue-500 hover:bg-blue-600 text-white flex-grow rounded"
 					>
+						Edit template
+					</button>
+					<button
+						onClick={() => {
+							setRedirect("/template/edit/" + id);
+						}}
+						className="btn btn-sm bg-blue-500 hover:bg-blue-600 text-white ml-2 flex-grow rounded"
+					>
+						Go to certificates
+					</button>
+					{template?.isArchived && (
 						<button
 							onClick={() => {
-								setRedirect("/template/edit/" + id);
+								unarchive.mutate(id);
 							}}
-							className="btn bg-blue-500 hover:bg-blue-600 text-white flex-grow rounded-sm"
+							className="btn btn-sm bg-white border-green-500 hover:bg-green-500 hover:text-white text-green-600 ml-2 flex-grow rounded"
 						>
-							Edit template
+							Unarchive Template
 						</button>
+					)}
+					{!template?.isArchived && (
 						<button
 							onClick={() => {
-								setRedirect("/template/edit/" + id);
+								archive.mutate(id);
 							}}
-							className="btn bg-blue-500 hover:bg-blue-600 text-white ml-2 flex-grow rounded-sm"
-						>
-							Go to certificates
-						</button>
-						<button
-							onClick={() => {
-								setRedirect("/template/edit/" + id);
-							}}
-							className="btn bg-blue-500 hover:bg-blue-600 text-white ml-2 flex-grow rounded-sm"
+							className="btn btn-sm bg-white border-yellow-500 hover:bg-yellow-500 hover:text-white text-yellow-600 ml-2 flex-grow rounded"
 						>
 							Archive Template
 						</button>
-						<button
-							onClick={() => {
-								setRedirect("/template/edit/" + id);
-							}}
-							className="btn bg-white hover:bg-white border-red-500 hover:font-bold text-red-500 ml-2 flex-grow rounded-sm"
-						>
-							Delete
-						</button>
+					)}
+					<button
+						onClick={() => {
+							deleteTemplate.mutate(id);
+						}}
+						className="btn btn-sm bg-white border-red-500 hover:bg-red-500 hover:text-white  text-red-500 ml-2 flex-grow rounded"
+					>
+						Delete
+					</button>
+				</div>
+				<div className="mt-5 space-y-5 flex flex-col">
+					<div className="pb-5">
+						<div className="pb-3">
+							<b className="pt-2">Description:</b>
+							{!isEditingDescription && (
+								<button
+									className="ml-4 btn btn-xs bg-white hover:bg-white border-gray-400 
+									hover:border-gray-300 text-gray-600"
+									onClick={() => setIsEditingDescription(true)}
+								>
+									<svg
+										className="w-4 h-4 fill-current text-gray-500 flex-shrink-0"
+										viewBox="0 0 16 16"
+									>
+										<path d="M11.7.3c-.4-.4-1-.4-1.4 0l-10 10c-.2.2-.3.4-.3.7v4c0 .6.4 1 1 1h4c.3 0 .5-.1.7-.3l10-10c.4-.4.4-1 0-1.4l-4-4zM4.6 14H2v-2.6l6-6L10.6 8l-6 6zM12 6.6L9.4 4 11 2.4 13.6 5 12 6.6z" />
+									</svg>
+									<span className="ml-2">Edit</span>
+								</button>
+							)}{" "}
+						</div>
+						{isEditingDescription ? (
+							<>
+								<textarea
+									className="mt-4 text-lg border border-gray-400 form-input w-full h-48"
+									defaultValue={template?.description}
+									onChange={(e) =>
+										setform({ ...form, description: e.target.value })
+									}
+								/>
+								<button
+									onClick={() => {
+										update.mutate({
+											...template,
+											description: form.description,
+										});
+									}}
+									className="mt-4 btn bg-white hover:text-blue-600 border-blue-500 hover:border-blue-600"
+								>
+									Save
+								</button>
+								<button
+									onClick={() => setIsEditingDescription(false)}
+									className="ml-4 btn bg-white hover:text-red-600 border-red-500 hover:border-red-600"
+								>
+									Cancel
+								</button>
+							</>
+						) : (
+							<div className="">{template?.description}</div>
+						)}
+					</div>
+					<div className="grid grid-cols-12 gap-5 w-full mb-4 pb-5">
+						<div className="col-span-4">
+							<b>Created by: </b>
+							<span className="text-blue-500 font-bold">
+								{user.data?.data.name}{" "}
+								<i className="text-xs font-light">{template?.createdBy}</i>
+							</span>
+						</div>
+						<div className="col-span-4">
+							<b>Created at: </b>
+							<span className="text-blue-500 font-bold">
+								{moment(template?.createdAt).format("llll")}
+							</span>
+						</div>
+						<div className="col-span-4">
+							<b>Updated at: </b>
+							<span className="text-blue-500 font-bold">
+								{moment(template?.updatedAt).format("llll")}
+							</span>
+						</div>
+						<div className="col-span-4">
+							<b>Variables: </b>
+							<span className="text-blue-500 font-bold">
+								{template?.templateFields
+									.map((field) => field.name.trim())
+									.join(", ") || "None"}
+							</span>
+						</div>
+						<div className="col-span-6">
+							<b>Number of certificates: </b>
+							<span className="text-blue-500 font-bold">
+								{numberOfCertificates.data?.data.created || 0} created,{" "}
+								<span className="text-green-500">
+									{numberOfCertificates.data?.data.issued || 0} issued,{" "}
+								</span>
+								<span className="text-yellow-500">
+									{numberOfCertificates.data?.data.revoked || 0} revoked
+								</span>
+							</span>
+						</div>
+					</div>
+					<div className="col-span-12 mt-5 pb-12">
+						<b className="align-top">Mail template: </b>
+						<textarea className="mt-2 rounded border border-gray-400 w-full" />
 					</div>
 				</div>
-				<div>Created at: {moment(template?.createdAt).format("llll")}</div>
-				<div>Description: {template?.description}</div>
-
-				{/* Page content */}
 			</div>
 		);
 }

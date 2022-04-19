@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import EditMenu from "../../components/ui/DropdownEditMenu";
+import EditMenu from "../ui/DropdownEditMenu";
 import { GrUser, GrCertificate } from "react-icons/gr";
 import { MdOutlineGroupAdd } from "react-icons/md";
 import Tooltip from "../../partials/Tooltip";
-import ModalBlank from "../../components/ui/ModalBlank";
+import ModalBlank from "../ui/ModalBlank";
 import { useEffect, useState } from "react";
 import { useUpdate } from "../../api/group";
 import { group } from "../../store/types";

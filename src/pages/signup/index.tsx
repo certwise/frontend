@@ -29,7 +29,7 @@ function SignUp() {
 			const user = getAuth().currentUser;
 			if (user) deleteUser(user);
 		}
-	}, [create.isError]);
+	}, [create.isError, create.error]);
 	const signUp = async (e: any) => {
 		let user: any;
 		e.preventDefault();
@@ -102,7 +102,6 @@ function SignUp() {
 	};
 	return (
 		<div className="flex flex-col min-h-screen overflow-hidden">
-			{/*  Site header */}
 			<LandingHeader />
 
 			{/*  Page content */}

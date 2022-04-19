@@ -28,7 +28,7 @@ function AccountPanel() {
 					duration: "short",
 				})
 			);
-	}, [update.isSuccess, update.isError]);
+	}, [update.isSuccess, update.isError, dispatch]);
 	return (
 		<div className="flex-grow">
 			{/* Panel body */}

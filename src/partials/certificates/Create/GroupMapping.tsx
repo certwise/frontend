@@ -29,7 +29,7 @@ function GroupMapping({
 			});
 			dispatch(actions.certificate.setCreateGroupTemplateFields(fields));
 		}
-	}, [map]);
+	}, [map, dispatch, templateFields]);
 	return (
 		<div>
 			{!organization.isLoading && (

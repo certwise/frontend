@@ -1,6 +1,8 @@
+//FIXME
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../store";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import CanvasContainer from "../../partials/template/builder/canvasContainer";
 import { actions } from "../../store";
 import getCurrentTemplateItems from "../../partials/template/getCurrentTemplate";
@@ -11,12 +13,13 @@ import {
 import { template } from "../../store/types";
 import { useGetOne } from "../../api/template";
 import Loader from "../../partials/Loader";
+import EmptyState from "../../partials/EmptyState";
 function TemplateBuilder() {
 	const { store, dispatch } = useContext(Context);
 	const { id }: any = useParams();
+	const history = useHistory();
 	const template = useGetOne(id);
 	const [isLoading, setIsLoading] = useState(true);
-	const [isValidUrl, setIsValidUrl] = useState(true);
 	const numberOfFonts = store.templates.numberOfFonts;
 
 	useEffect(() => {
@@ -102,7 +105,15 @@ function TemplateBuilder() {
 					<Loader />
 				</div>
 			)}
-			{!isLoading && isValidUrl && <CanvasContainer />}
+			{!isLoading && !template.data?.data.isArchived && <CanvasContainer />}
+			{template.data?.data.isArchived && (
+				<EmptyState
+					title="This template is archived"
+					description="This template has been archived."
+					button="Back to template"
+					onClick={() => history.push("/template/view/" + id)}
+				/>
+			)}
 		</>
 	);
 }

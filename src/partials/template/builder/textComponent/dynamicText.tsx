@@ -1,3 +1,5 @@
+// FIXME
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useRef } from "react";
 import { Rect, Text, Transformer } from "react-konva";
 import { grid, snapPoints, text } from "../../../../store/types";
@@ -139,7 +141,6 @@ const DynamicText = ({
 					setCanvas({ rotation: 0 });
 				}}
 				onDragMove={(e) => {
-					onDragMove_(e, snapPoints);
 					setdraggingPos({ x: e.target.x(), y: e.target.y() });
 					setisDragging(true);
 				}}
@@ -173,8 +174,3 @@ const DynamicText = ({
 	);
 };
 export default DynamicText;
-
-const onDragMove_ = (e: any, snapPoints: snapPoints) => {
-	const x = e.target.x();
-	const y = e.target.y();
-};

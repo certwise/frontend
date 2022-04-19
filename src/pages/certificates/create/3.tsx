@@ -1,12 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import CreateSingleCertificate from "../../../partials/certificates/Create/CreateSingleCertificate";
 import TemplateCard from "../../../partials/certificates/Create/TemplateCard";
-import { actions, Context } from "../../../store";
+import { Context } from "../../../store";
 import { template } from "../../../store/types";
 
 function Page3() {
-	const { store, dispatch } = useContext(Context);
-	useEffect(() => {}, []);
+	const { store } = useContext(Context);
 	return (
 		<div className="ml-2 max-w-xl">
 			{store.certificates.createCertificate.type === "single" && (

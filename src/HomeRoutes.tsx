@@ -1,4 +1,4 @@
-import { Link, Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import PageNotFoundHome from "./pages/404NoUser";
 import Signin from "./pages/signin";
 import ResetPassword from "./pages/signin/ResetPassword";

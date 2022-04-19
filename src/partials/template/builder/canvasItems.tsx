@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Context } from "../../../store";
 import { actions } from "../../../store";
 import TextProperties from "./textComponent/textProperties";
@@ -72,16 +72,4 @@ export const ItemProperty = (props: {
 			<div className="flex-grow bg-white pr-2">{props.children}</div>
 		</div>
 	);
-};
-
-const makeid = () => {
-	let length = 12;
-	let result = "";
-	let characters =
-		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-	let charactersLength = characters.length;
-	for (let i = 0; i < length; i++) {
-		result += characters.charAt(Math.floor(Math.random() * charactersLength));
-	}
-	return result;
 };

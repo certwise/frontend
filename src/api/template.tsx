@@ -8,6 +8,7 @@ import { template } from "../store/types/template";
 import { image } from "../store/types/template/canvas";
 import { cloneDeep } from "lodash";
 import { useContext } from "react";
+
 const getOne = (id: string) => {
 	return API(`${env.url}/template/one/` + id, "get");
 };
@@ -43,6 +44,22 @@ const getDefaultImageItem = () => {
 	return getDownloadURL(ref(getStorage(), `default_template_images/image.jpg`));
 };
 
+const archive = (id: string) => {
+	return API(`${env.url}/template/archive/` + id, "put");
+};
+
+const unarchive = (id: string) => {
+	return API(`${env.url}/template/unarchive/` + id, "put");
+};
+
+const deleteTemplate = (id: string) => {
+	return API(`${env.url}/template/` + id, "delete");
+};
+
+const getNumberOfCertificateInTemplate = (id: string) => {
+	return API(`${env.url}/template/numberOfCertificates/` + id, "get");
+};
+
 export const useGetOne = (_id: string) => {
 	return useQuery(["template", _id], () => getOne(_id), {
 		refetchOnWindowFocus: false,
@@ -51,6 +68,9 @@ export const useGetOne = (_id: string) => {
 
 export const useGetByOrganization = (uid: string) => {
 	return useQuery("templates", () => getByOrganization(uid), {
+		retryOnMount: true,
+		refetchOnMount: true,
+		refetchOnReconnect: true,
 		retry: 1,
 	});
 };
@@ -118,6 +138,7 @@ export const useGetSavedImage = (id_: string, organization: string) => {
 			refetchOnMount: false,
 			refetchOnReconnect: false,
 			retry: 1,
+			onError: (err: any) => console.log(err),
 		}
 	);
 };
@@ -169,4 +190,93 @@ export const useAddImage = () => {
 			};
 		},
 	});
+};
+
+export const useArchive = () => {
+	const { dispatch } = useContext(Context);
+	const query = useQueryClient();
+	return useMutation(archive, {
+		onSuccess: (data) => {
+			query.invalidateQueries(["templates", "template"]);
+			dispatch(
+				actions.toast.makeToast({
+					message: "Template archived",
+					type: "success",
+					duration: "long",
+				})
+			);
+		},
+		onError: (err: any) => {
+			dispatch(
+				actions.toast.makeToast({
+					message: "Error archiving template!",
+					type: "error",
+					duration: "long",
+				})
+			);
+		},
+	});
+};
+
+export const useUnarchive = () => {
+	const { dispatch } = useContext(Context);
+	const query = useQueryClient();
+	return useMutation(unarchive, {
+		onSuccess: (data) => {
+			query.invalidateQueries(["template"]);
+			dispatch(
+				actions.toast.makeToast({
+					message: "Template unarchived",
+					type: "success",
+					duration: "long",
+				})
+			);
+		},
+		onError: (err: any) => {
+			dispatch(
+				actions.toast.makeToast({
+					message: "Error archiving template!",
+					type: "error",
+					duration: "long",
+				})
+			);
+		},
+	});
+};
+
+export const useDelete = () => {
+	const { dispatch } = useContext(Context);
+	const query = useQueryClient();
+	return useMutation(deleteTemplate, {
+		onSuccess: (data) => {
+			query.invalidateQueries(["templates", "template"]);
+			dispatch(
+				actions.toast.makeToast({
+					message: "Template has been deleted!",
+					type: "success",
+					duration: "long",
+				})
+			);
+		},
+		onError: (err: any) => {
+			dispatch(
+				actions.toast.makeToast({
+					message: err.response.data,
+					type: "error",
+					duration: "long",
+				})
+			);
+		},
+	});
+};
+
+export const useGetNumberOfCertificateInTemplate = (id: string) => {
+	return useQuery(
+		["templateCertificateCount", id],
+		() => getNumberOfCertificateInTemplate(id),
+		{
+			refetchOnWindowFocus: false,
+			onError: (err: any) => console.log(err),
+		}
+	);
 };

@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
-import { useGetDefaultBaseImage, useGetSavedImage } from "../../api/template";
+import {
+	useGetDefaultBaseImage,
+	useGetNumberOfCertificateInTemplate,
+	useGetSavedImage,
+} from "../../api/template";
 import Tooltip from "../Tooltip";
 import { template } from "../../store/types";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
-
+import { MdOutlineDescription } from "react-icons/md";
+import { GrCertificate } from "react-icons/gr";
 type templateCardProps = {
 	template: template;
 };
@@ -13,7 +18,9 @@ function TemplateCard({ template }: templateCardProps) {
 		template.organization
 	);
 	const defaultImage = useGetDefaultBaseImage();
-
+	const numberOfCertificates = useGetNumberOfCertificateInTemplate(
+		template._id || ""
+	);
 	return (
 		<>
 			{/* Card 1 */}
@@ -24,9 +31,9 @@ function TemplateCard({ template }: templateCardProps) {
 				<div className="flex flex-col h-full">
 					{/* Image */}
 					{(defaultImage.isLoading || isLoading) && (
-						<div style={{ height: "200px" }}>
+						<div style={{ height: "210px" }}>
 							<div className="animate-pulse w-full h-full">
-								<div className="bg-blue-300 p-5 h-full w-full flex justify-center">
+								<div className="bg-blue-100 p-6 h-full w-full flex justify-center">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										className="icon icon-tabler icon-tabler-photo  mt-6"
@@ -49,7 +56,7 @@ function TemplateCard({ template }: templateCardProps) {
 							</div>
 						</div>
 					)}
-					{data && (
+					{!isLoading && !defaultImage.isLoading && data && (
 						<div className="border-b-2 border-gray-300 p-1 bg-blue-100 flex justify-center">
 							<img
 								className=""
@@ -62,7 +69,7 @@ function TemplateCard({ template }: templateCardProps) {
 							/>
 						</div>
 					)}
-					{isError && (
+					{!isLoading && !defaultImage.isLoading && isError && (
 						<div className="border-b-2 border-gray-300 p-1 bg-blue-100 flex justify-center">
 							<img
 								className=""
@@ -76,99 +83,113 @@ function TemplateCard({ template }: templateCardProps) {
 						</div>
 					)}
 
-					{/* Title */}
-					{/* Card Content */}
 					<div className="flex-grow flex flex-col p-5">
-						{/* Card body */}
 						<div className="flex-grow">
-							{/* Header */}
 							<div className="flex flex-row  text-sm text-gray-900">
-								<header className="mb-1 flex flex-row">
+								<header className="mb-1">
 									<h3 className="text-lg  text-gray-800 font-semibold">
 										{template.name}{" "}
 									</h3>
-									<span className="mt-0.5">
-										<Tooltip
-											position="bottom"
-											bg="dark"
-											size="sm"
-											name={
-												<div className="ml-3 font-bold inline-flex text-xs bg-blue-100 text-blue-600 rounded-full text-center mr-4 px-3 py-0.5">
-													{template.numberOfCertificates}
+									<div className="mt-3 flex">
+										<span className="flex">
+											<Tooltip
+												position="right"
+												bg="dark"
+												size="sm"
+												name={
+													<div
+														className="font-bold inline-flex text-xs bg-blue-100 text-blue-600 rounded-full
+													 text-center mr-4 px-3 py-1 "
+													>
+														<GrCertificate className="text-blue-500 mr-2 w-4 h-4" />{" "}
+														{numberOfCertificates.data?.data.created}
+													</div>
+												}
+											>
+												<div className="text-white text-xs">
+													There are {numberOfCertificates.data?.data.created}{" "}
+													certificates created with this template.
 												</div>
-											}
-										>
-											<div className="text-white text-xs">
-												There are {template.numberOfCertificates} certificates
-												created with this template.
-											</div>
-										</Tooltip>
-									</span>
+											</Tooltip>
+										</span>
+										<span className="flex">
+											<Tooltip
+												position="bottom"
+												bg="dark"
+												size="sm"
+												name={
+													<div
+														className="ml-3 font-bold inline-flex text-xs bg-green-100 text-green-600
+													 rounded-full text-center mr-4 px-3 py-1 "
+													>
+														<GrCertificate className="text-green-500 w-4 h-4 mr-2" />{" "}
+														{numberOfCertificates.data?.data.issued}
+													</div>
+												}
+											>
+												<div className="text-white text-xs">
+													There are {numberOfCertificates.data?.data.issued}{" "}
+													certificates issued with this template.
+												</div>
+											</Tooltip>
+										</span>
+										<span className="flex">
+											<Tooltip
+												position="bottom"
+												bg="dark"
+												size="sm"
+												name={
+													<div
+														className="ml-3 font-bold inline-flex text-xs bg-yellow-100 text-yellow-600
+													 rounded-full text-center mr-4 px-3 py-1 "
+													>
+														<GrCertificate className="text-yellow-500 w-4 h-4 mr-2" />{" "}
+														{numberOfCertificates.data?.data.revoked}
+													</div>
+												}
+											>
+												<div className="text-white text-xs">
+													There are {numberOfCertificates.data?.data.issued}{" "}
+													certificates revoked with this template.
+												</div>
+											</Tooltip>
+										</span>
+									</div>
 								</header>
 							</div>
 
-							{/* Features list */}
 							<ul className="text-sm space-y-3 mb-2">
-								{/* <li className="flex">
-									<svg
-									className="w-4 h-4 fill-current text-gray-400 flex-shrink-0 mr-3 mt-1"
-									viewBox="0 0 16 16"
+								<li className="flex pt-5">
+									<Tooltip
+										position="right"
+										bg="dark"
+										size="sm"
+										name={
+											<MdOutlineDescription className="w-5 h-5 fill-current text-gray-500 flex-shrink-0 mr-3 mt-1" />
+										}
 									>
-									<path d="M15.686 5.695L10.291.3c-.4-.4-.999-.4-1.399 0s-.4.999 0 1.399l.6.599-6.794 3.697-1-1c-.4-.399-.999-.399-1.398 0-.4.4-.4 1 0 1.4l1.498 1.498 2.398 2.398L.6 13.988 2 15.387l3.696-3.697 3.997 3.996c.5.5 1.199.2 1.398 0 .4-.4.4-.999 0-1.398l-.999-1 3.697-6.694.6.6c.599.6 1.199.2 1.398 0 .3-.4.3-1.1-.1-1.499zM8.493 11.79L4.196 7.494l6.695-3.697 1.298 1.299-3.696 6.694z" />
-									</svg>
+										<span className="text-white text-xs">
+											Description of this template
+										</span>
+									</Tooltip>
 									<div>
-									<div className="mr-6 font-bold text-xs">Created at:</div>
-									<div className="text-xs  text-blue-600">
-									{moment(template.createdAt).format("LLL")}
-									</div>
-									</div>
-								</li>
-								<li className="flex ">
-								<svg
-								className="w-4 h-4 fill-current text-gray-400 flex-shrink-0 mr-3 mt-1"
-								viewBox="0 0 16 16"
-									>
-									<path d="M15 15V5l-5-5H2c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h12c.6 0 1-.4 1-1zM3 2h6v4h4v8H3V2z" />
-									</svg>
-									<div>
-									<div className="mr-5 font-bold text-xs">Last edited:</div>
-
-									<div className="text-right text-xs text-blue-600">
-											{moment(template.updatedAt).format("LLL")}
-											</div>
-											</div>
-								</li> */}
-
-								{/* Description*/}
-								<div className="ml-2">
-									<div className="flex flex-row mr-1"></div>
-								</div>
-								<li className="flex ">
-									<svg
-										className="w-4 h-4 fill-current text-gray-400 flex-shrink-0 mr-3 mt-1"
-										viewBox="0 0 16 16"
-									>
-										<path d="M7.3 8.7c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0zm0 6c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0zm-7-5c-.4-.4-.4-1 0-1.4l7-7c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-7 7c-.4.4-1 .4-1.4 0z" />
-									</svg>
-									<div>
-										{/* <div className="text-xs font-bold">Description :</div> */}
 										<div className="text-xs font mt-1">
-											{template.description}
+											{truncate(template.description, 120)}
 										</div>
 									</div>
 								</li>
 							</ul>
 						</div>
-						{/* Card footer */}
+
 						<div>
 							<Link
-								className="btn btn-xs mt-2 px-3 bg-blue-500 hover:bg-blue-600 text-xs font-bold text-white"
+								className="btn btn-xs mt-2 px-3 bg-blue-500 hover:bg-blue-600 text-xs text-white"
 								to={"/template/view/" + template._id}
 							>
 								Go to template{" "}
 								<HiOutlineArrowNarrowRight
-									size={16}
-									className="mt-1 mx-1 text-white"
+									size={20}
+									className="mt-0.5 ml-1 text-white font-bold"
 								/>
 							</Link>
 						</div>
@@ -180,3 +201,6 @@ function TemplateCard({ template }: templateCardProps) {
 }
 
 export default TemplateCard;
+
+export const truncate = (input: string, length: number) =>
+	input.length > length ? `${input.substring(0, length)}...` : input;

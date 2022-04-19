@@ -1,11 +1,10 @@
-import { useState, useEffect, useContext } from "react";
-import { focusHandling } from "cruip-js-toolkit";
+import { useState, useContext } from "react";
 import GroupTableItem from "./GroupTableItem";
 import { useGet } from "../../api/organization";
 import { Context } from "../../store";
 import { useUpdate } from "../../api/group";
 import { group, recipient } from "../../store/types";
-import ModalBasic from "../../components/ui/ModalBasic";
+import ModalBasic from "../ui/ModalBasic";
 import { useGetByGroup } from "../../api/recipient";
 
 function GroupTable({ group }: { group: group }) {

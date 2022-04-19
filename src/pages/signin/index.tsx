@@ -81,7 +81,6 @@ function SignIn() {
 	if (redirect) return <Redirect to="/" />;
 	return (
 		<div className="flex flex-col min-h-screen overflow-hidden">
-			{/*  Site header */}
 			<Header />
 
 			{/*  Page content */}

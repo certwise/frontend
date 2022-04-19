@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
-import Tooltip from "../../components/ui/Tooltip";
+import Tooltip from "../../partials/ui/Tooltip";
 import { useCreate } from "../../api/template";
 import { createTemplate } from "../../partials/template/createTemplate";
 import { Redirect } from "react-router-dom";
-
+import { actions, Context } from "../../store";
+import { duration } from "moment";
 function CreateTemplate({
 	uid,
 	organization,
@@ -14,8 +15,9 @@ function CreateTemplate({
 	uid: string;
 	organization: string;
 }) {
+	const { dispatch } = useContext(Context);
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
-	const { mutate, isLoading, isError, isSuccess } = useCreate();
+	const { mutate, isLoading, isSuccess } = useCreate();
 	const [form, setForm] = useState({
 		name: "",
 		description: "",
@@ -25,27 +27,34 @@ function CreateTemplate({
 	});
 	const createTemplateMutation = (e: any) => {
 		e.preventDefault();
-		const template = createTemplate({
-			name: form.name,
-			description: form.description,
-			uid,
-			organization,
-			height: form.height,
-			width: form.width,
-		});
-		delete template.canvas.activeItem;
-		delete template.canvas.stageRef;
-		mutate(template);
+		if (form.height > 3000 || form.width > 3000) {
+			dispatch(
+				actions.toast.makeToast({
+					message: "Template size cannot be greater than 3000px",
+					type: "error",
+					duration: "long",
+				})
+			);
+		} else {
+			const template = createTemplate({
+				name: form.name,
+				description: form.description,
+				uid,
+				organization,
+				height: form.height,
+				width: form.width,
+			});
+			delete template.canvas.activeItem;
+			delete template.canvas.stageRef;
+			mutate(template);
+		}
 	};
 	if (isSuccess) return <Redirect push to="/templates" />;
 	return (
 		<div className="flex h-screen overflow-hidden">
-			{/* Sidebar */}
 			<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-			{/* Content area */}
 			<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-				{/*  Site header */}
 				<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
 				<main>

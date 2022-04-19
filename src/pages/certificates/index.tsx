@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useState, useContext } from "react";
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import SearchForm from "../../partials/actions/SearchForm";
 import DeleteButton from "../../partials/actions/DeleteButton";
-import DateSelect from "../../components/ui/DateSelect";
-import FilterButton from "../../components/ui/DropdownFilter";
-import PaginationClassic from "../../components/ui/PaginationClassic";
 import CertificatesTable from "../../partials/certificates/CertificatesTable";
 import { Context } from "../../store";
 import { useGetByOrganization } from "../../api/certificate";
 import { Link, useHistory } from "react-router-dom";
 import { certificate } from "../../store/types";
-import { MdAllOut } from "react-icons/md";
 import EmptyState from "../../partials/EmptyState";
 import Loader from "../../partials/Loader";
+import PaginationClassic from "../../partials/ui/PaginationClassic";
 
 function Certificates() {
-	const { store } = React.useContext(Context);
+	const { store } = useContext(Context);
 	const [query, setQuery] = useState("");
 	const [filter, setFilter] = useState<
 		"all" | "created" | "revoked" | "issued"
@@ -31,12 +28,9 @@ function Certificates() {
 
 	return (
 		<div className="flex h-screen overflow-hidden">
-			{/* Sidebar */}
 			<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-			{/* Content area */}
 			<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-				{/*  Site header */}
 				<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
 				<main>

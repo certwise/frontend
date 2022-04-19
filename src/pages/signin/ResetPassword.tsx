@@ -3,7 +3,6 @@ import Header from "../../partials/LandingHeader";
 function ResetPassword() {
 	return (
 		<div className="flex flex-col min-h-screen overflow-hidden">
-			{/*  Site header */}
 			<Header />
 
 			{/*  Page content */}

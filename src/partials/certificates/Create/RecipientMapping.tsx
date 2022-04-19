@@ -34,6 +34,8 @@ function RecipientMapping({
 				actions.certificate.setCreateSingleRecipientCertificateFields(fields)
 			);
 		}
+		//FIXME
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [map]);
 	return (
 		<div>

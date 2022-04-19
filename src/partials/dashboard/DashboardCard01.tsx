@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Icon from "../../images/icon-01.svg";
-import EditMenu from "../../components/ui/DropdownEditMenu";
 
 function DashboardCard01({
 	total,

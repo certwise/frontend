@@ -8,7 +8,7 @@ import { useCreate, useGetByOrganization } from "../../api/group";
 import { group } from "../../store/types";
 import { Context } from "../../store";
 import { useContext } from "react";
-import ModalBasic from "../../components/ui/ModalBasic";
+import ModalBasic from "../../partials/ui/ModalBasic";
 import EmptyState from "../../partials/EmptyState";
 import Loader from "../../partials/Loader";
 function Groups() {
@@ -45,12 +45,9 @@ function Groups() {
 	};
 	return (
 		<div className="flex h-screen overflow-hidden">
-			{/* Sidebar */}
 			<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-			{/* Content area */}
 			<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-				{/*  Site header */}
 				<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
 				<main>

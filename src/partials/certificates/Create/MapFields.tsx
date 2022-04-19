@@ -16,7 +16,7 @@ function MapFields({
 		mapInit[field] = "";
 	});
 	const [map, setMap] = useState<any>();
-	useEffect(() => setmap(map), [map]);
+	useEffect(() => setmap(() => map), [map, setmap]);
 	return (
 		<div>
 			<div className="flex flex-row">

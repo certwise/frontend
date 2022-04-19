@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { env } from "../config";
 import { group } from "../store/types/group";
-import { actions, types } from "../store";
+import { actions } from "../store";
 import { Context } from "../store";
 import { useContext } from "react";
 import { API } from ".";

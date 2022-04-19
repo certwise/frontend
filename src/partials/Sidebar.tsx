@@ -61,7 +61,6 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: any) {
 				aria-hidden="true"
 			></div>
 
-			{/* Sidebar */}
 			<div
 				id="sidebar"
 				ref={sidebar}

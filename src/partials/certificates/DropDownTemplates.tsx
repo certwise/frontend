@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { template } from "../../store/types";
 import Transition from "../../utils/Transition";
 import { actions, Context } from "../../store";
+import { truncate } from "../templates/TemplateCard";
 function DropdownTemplate({ templates }: { templates: template[] }) {
 	const { dispatch } = useContext(Context);
 	const [dropdownOpen, setDropdownOpen] = useState<any>(false);
@@ -109,7 +110,7 @@ function DropdownTemplate({ templates }: { templates: template[] }) {
 										{template.name}
 									</div>
 									<div className="text-xs text-blue-500 text-left w-2/3 flex flex-row">
-										{template.description}{" "}
+										{truncate(template.description, 50)}{" "}
 										<svg
 											className={`ml-2 mt-1  flex-shrink-0 mr-2 fill-current text-blue-500 ${
 												template !== selected && "invisible"

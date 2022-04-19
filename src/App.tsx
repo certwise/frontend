@@ -49,7 +49,7 @@ function App() {
 				setUserStatus("user_found");
 			}
 		}
-	}, [user]);
+	}, [dispatch, getUser.data, user]);
 
 	useEffect(() => {
 		if (getUser.data?.data._id) {
@@ -59,7 +59,7 @@ function App() {
 		if (user.uid !== "" && getUser.isError) {
 			setUserStatus("no_user");
 		}
-	}, [getUser.data]);
+	}, [dispatch, getUser.data, getUser.isError, user.uid]);
 
 	return (
 		<>

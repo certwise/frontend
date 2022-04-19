@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import TemplateCard from "../../partials/templates/TemplateCard";
@@ -9,23 +8,20 @@ import { template } from "../../store/types";
 import { Link, useHistory } from "react-router-dom";
 import EmptyState from "../../partials/EmptyState";
 import Loader from "../../partials/Loader";
-// TODO add empty state
 function Templates() {
 	const { store } = useContext(Context);
 	const { isLoading, data } = useGetByOrganization(store.user.organization);
 	const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 	const [search, setSearch] = useState("");
+	const [filter, setFilter] = useState<{
+		state: "All" | "Archived" | "Active";
+	}>({ state: "Active" });
 	const history = useHistory();
 	return (
 		<div className="flex h-screen overflow-hidden">
-			{/* Sidebar */}
 			<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-			{/* Content area */}
 			<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-				{/*  Site header */}
 				<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
 				<main>
 					{isLoading && (
 						<div className="my-auto">
@@ -56,9 +52,6 @@ function Templates() {
 							{/* Search form */}
 							<div className="w-full mb-5 flex flex-row">
 								<form className="w-1/3 relative">
-									<label htmlFor="app-search" className="sr-only">
-										Search
-									</label>
 									<input
 										id="app-search"
 										className="form-input w-full pl-12 py-2 focus:border-gray-300"
@@ -71,6 +64,7 @@ function Templates() {
 										className="absolute inset-0 right-auto group px-2"
 										type="submit"
 										aria-label="Search"
+										onClick={(e) => e.preventDefault()}
 									>
 										<svg
 											className="w-4 h-4 flex-shrink-0 fill-current text-gray-400 group-hover:text-gray-500 ml-3 mr-2"
@@ -92,7 +86,7 @@ function Templates() {
 									>
 										<path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
 									</svg>
-									<span className="hidden xs:block ml-2">Create Template</span>
+									<span className="hidden xs:block ml-2">New Template</span>
 								</Link>
 							</div>
 
@@ -100,25 +94,65 @@ function Templates() {
 							<div className="mb-4 border-b border-gray-200">
 								<ul className="text-sm font-medium flex flex-nowrap -mx-4 sm:-mx-6 lg:-mx-8 overflow-x-scroll no-scrollbar">
 									<li className="pb-3 mr-6 last:mr-0 first:pl-4 sm:first:pl-6 lg:first:pl-8 last:pr-4 sm:last:pr-6 lg:last:pr-8">
-										<a
-											className="text-blue-500 hover:text-gray-600 whitespace-nowrap"
-											href="#0"
+										<button
+											className={`${
+												filter.state === "Active"
+													? "text-blue-500 font-bold"
+													: "text-gray-500"
+											} hover:text-gray-600 whitespace-nowrap border-none`}
+											onClick={() =>
+												setFilter((f) => {
+													return { ...f, state: "Active" };
+												})
+											}
 										>
-											Active
-										</a>
+											Active{" "}
+											<span className="ml-1">
+												{
+													data?.data.filter((t: template) => !t.isArchived)
+														.length
+												}
+											</span>
+										</button>
 									</li>
 									<li className="pb-3 mr-6 last:mr-0 first:pl-4 sm:first:pl-6 lg:first:pl-8 last:pr-4 sm:last:pr-6 lg:last:pr-8">
-										<a className="text-gray-500  whitespace-nowrap" href="#0">
+										<button
+											onClick={() =>
+												setFilter((f) => {
+													return { ...f, state: "All" };
+												})
+											}
+											className={`${
+												filter.state === "All"
+													? "text-blue-500 font-bold"
+													: "text-gray-500"
+											} hover:text-gray-600 whitespace-nowrap border-none`}
+										>
 											All
-										</a>
+											<span className="ml-1">{data?.data.length}</span>
+										</button>
 									</li>
 									<li className="pb-3 mr-6 last:mr-0 first:pl-4 sm:first:pl-6 lg:first:pl-8 last:pr-4 sm:last:pr-6 lg:last:pr-8">
-										<a
-											className="text-gray-500 hover:text-gray-600 whitespace-nowrap"
-											href="#0"
+										<button
+											className={`${
+												filter.state === "Archived"
+													? "text-blue-500 font-bold"
+													: "text-gray-500"
+											} hover:text-gray-600 whitespace-nowrap border-none `}
+											onClick={() =>
+												setFilter((f) => {
+													return { ...f, state: "Archived" };
+												})
+											}
 										>
 											Archived
-										</a>
+											<span className="ml-1">
+												{
+													data?.data.filter((t: template) => t.isArchived)
+														.length
+												}
+											</span>
+										</button>
 									</li>
 								</ul>
 							</div>
@@ -128,7 +162,10 @@ function Templates() {
 									if (
 										template.name
 											.toLowerCase()
-											.includes(search.toLowerCase().trim())
+											.includes(search.toLowerCase().trim()) &&
+										(filter.state === "All" ||
+											(filter.state === "Active" && !template.isArchived) ||
+											(filter.state === "Archived" && template.isArchived))
 									) {
 										return (
 											<TemplateCard key={template._id} template={template} />

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { focusHandling } from "cruip-js-toolkit";
 import RecipientTableItem from "./RecipientTableItem";
-import ModalBasic from "../../components/ui/ModalBasic";
+import ModalBasic from "../ui/ModalBasic";
 import * as organizationQuery from "../../api/organization";
 import { actions, Context } from "../../store";
 import { organization } from "../../store/types";

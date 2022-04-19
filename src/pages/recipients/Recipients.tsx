@@ -2,16 +2,15 @@ import { useEffect, useState } from "react";
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import DeleteButton from "../../partials/actions/DeleteButton";
-import DateSelect from "../../components/ui/DateSelect";
 import FilterButton from "../../partials/recepients/DropdownFilter";
 import RecipientsTable from "../../partials/recepients/RecipientsTable";
-import PaginationClassic from "../../components/ui/PaginationClassic";
-import ModalBasic from "../../components/ui/ModalBasic";
+import PaginationClassic from "../../partials/ui/PaginationClassic";
+import ModalBasic from "../../partials/ui/ModalBasic";
 import { CustomField, group, recipient } from "../../store/types";
 import { actions, Context } from "../../store";
 import { useContext } from "react";
 import GroupSelector from "../../partials/recepients/DropdownClassic";
-import ModalBlank from "../../components/ui/ModalBlank";
+import ModalBlank from "../../partials/ui/ModalBlank";
 import * as groupQuery from "../../api/group";
 import * as recipientQuery from "../../api/recipient";
 import { useGet } from "../../api/organization";
@@ -43,8 +42,7 @@ function Recipients() {
 	const recipients = recipientQuery.useGetByOrganization(
 		store.user.organization
 	);
-	const [filterOption, setFilterOption] =
-		useState<{ name: string; option?: any }>();
+
 	const addSelectedRecipientsToGroup = () => {
 		if (
 			selectedGroup !== null &&
@@ -85,7 +83,7 @@ function Recipients() {
 			setBasicModalOpen(false);
 			createRecipient.reset();
 		}
-	}, [createRecipient.isSuccess]);
+	}, [createRecipient, createRecipient.isSuccess]);
 
 	useEffect(() => {
 		if (updateRecipient.isSuccess) {
@@ -96,7 +94,12 @@ function Recipients() {
 			setGroupModalOpen(false);
 			bulkCreate.reset();
 		}
-	}, [updateRecipient.isSuccess, bulkCreate.isSuccess]);
+	}, [
+		updateRecipient.isSuccess,
+		bulkCreate.isSuccess,
+		updateRecipient,
+		bulkCreate,
+	]);
 
 	const createNewRecipient = async () => {
 		const recipient: recipient = {
@@ -119,12 +122,9 @@ function Recipients() {
 
 	return (
 		<div className="flex h-screen overflow-hidden">
-			{/* Sidebar */}
 			<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-			{/* Content area */}
 			<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-				{/*  Site header */}
 				<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
 				<main>
@@ -173,7 +173,7 @@ function Recipients() {
 											{ name: "Email" },
 											...organizationCustomFields,
 										]}
-										setOption={setFilterOption}
+										setOption={() => null}
 									/>
 									{/* Add customer button */}
 									<button

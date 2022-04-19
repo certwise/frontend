@@ -15,6 +15,7 @@ function SearchForm({ placeholder, onChange }: any) {
 				className="absolute inset-0 right-auto group"
 				type="submit"
 				aria-label="Search"
+				onClick={(e) => e.preventDefault()}
 			>
 				<svg
 					className="w-4 h-4 flex-shrink-0 fill-current text-gray-400 group-hover:text-gray-500 ml-3 mr-2"

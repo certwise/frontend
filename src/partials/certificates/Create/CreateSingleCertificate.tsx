@@ -1,11 +1,11 @@
 import { useContext, useEffect } from "react";
 import { useCreate, useCreateMany } from "../../../api/certificate";
 import TemplateCard from "./TemplateCard";
-import { actions, Context } from "../../../store";
+import { Context } from "../../../store";
 import { certificate, template } from "../../../store/types";
 
 function CreateSingleCertificate() {
-	const { store, dispatch } = useContext(Context);
+	const { store } = useContext(Context);
 	useEffect(() => {}, []);
 	const create = useCreate();
 	const createMany = useCreateMany();
@@ -30,7 +30,6 @@ function CreateSingleCertificate() {
 		};
 		create.mutate(certificate);
 	};
-	const onCreateMany = () => {};
 	return (
 		<div className="ml-2 max-w-xl">
 			<div className="mt-5 text-lg font-bold">
@@ -111,7 +110,7 @@ function CreateSingleCertificate() {
 					</button>
 				)}
 			</div>
-			<div>
+			{/* <div>
 				{!create.isLoading && !createMany.isLoading && (
 					<button
 						onClick={onCreateMany}
@@ -143,7 +142,7 @@ function CreateSingleCertificate() {
 						</span>
 					</button>
 				)}
-			</div>
+			</div> */}
 		</div>
 	);
 }

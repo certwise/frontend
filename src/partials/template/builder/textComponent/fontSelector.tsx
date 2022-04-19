@@ -3,7 +3,6 @@ import { Context } from "../../../../store";
 import { actions } from "../../../../store";
 import Modal from "react-modal";
 import { items } from "../../../../store/types";
-import { AiFillCloseCircle } from "react-icons/ai";
 function FontSelector({ isOpen, close, styles, loadMoreFonts }: any) {
 	const { store, dispatch } = useContext(Context);
 	const items = store.templates.currentTemplate.canvas.items;

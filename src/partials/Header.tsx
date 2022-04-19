@@ -1,6 +1,5 @@
-import { useState } from "react";
-import Help from "../components/ui/DropdownHelp";
-import UserMenu from "../components/ui/DropdownProfile";
+import Help from "./ui/DropdownHelp";
+import UserMenu from "./ui/DropdownProfile";
 
 function Header({ sidebarOpen, setSidebarOpen }: any) {
 	return (

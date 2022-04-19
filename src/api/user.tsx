@@ -43,7 +43,6 @@ export const useUpdate = () => {
 };
 
 export const useDelete = (uid: string) => {
-	const query = useQueryClient();
 	return useMutation(
 		() => {
 			return API(`${env.url}/user/${uid}`, "delete");

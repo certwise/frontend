@@ -32,7 +32,7 @@ function Canvas() {
 			dispatch(actions.templates.isEditingTemplate(false));
 			window.removeEventListener("resize", handleResize);
 		};
-	}, []);
+	}, [dispatch]);
 	let stageWidth = dimensions.width * 0.5;
 	if (ratio < 1) {
 		stageWidth *= ratio * 0.8;
@@ -81,6 +81,8 @@ function Canvas() {
 					);
 				});
 		}
+		// FIXME: dispatch, store.user.organization, store.templates.currentTemplate._id;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [store.templates.downloadCurrentTemplate]);
 
 	return (

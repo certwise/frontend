@@ -25,6 +25,8 @@ export const Container = () => {
 				)
 			);
 		},
+		// FIXME: dispatch
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[store.templates.currentTemplate.canvas.items]
 	);
 	const renderCard = (item: item, index: any) => {

@@ -3,14 +3,14 @@ import { useState } from "react";
 import Sidebar from "../../partials/Sidebar";
 import Header from "../../partials/Header";
 import DeleteButton from "../../partials/group/DeleteButton";
-import DateSelect from "../../components/ui/DateSelect";
-import FilterButton from "../../components/ui/DropdownFilter";
-import PaginationClassic from "../../components/ui/PaginationClassic";
+import DateSelect from "../../partials/ui/DateSelect";
+import FilterButton from "../../partials/ui/DropdownFilter";
+import PaginationClassic from "../../partials/ui/PaginationClassic";
 import GroupTable from "../../partials/group/GroupTable";
 import { useGetGroup } from "../../api/group";
 import { group } from "../../store/types";
 import { Link, useParams } from "react-router-dom";
-import ModalBasic from "../../components/ui/ModalBasic";
+import ModalBasic from "../../partials/ui/ModalBasic";
 
 function Recipients() {
 	const { id }: any = useParams();
@@ -19,12 +19,9 @@ function Recipients() {
 	const group: group = groupQuery?.data?.data;
 	return (
 		<div className="flex h-screen overflow-hidden">
-			{/* Sidebar */}
 			<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-			{/* Content area */}
 			<div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-				{/*  Site header */}
 				<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
 				<main>

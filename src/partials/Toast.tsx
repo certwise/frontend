@@ -5,10 +5,9 @@ import { Toast as ToastType } from "../store/types/toast";
 
 function Toast() {
 	const { store, dispatch } = useContext(Context);
-	const toasts = store.toasts;
 	useEffect(() => {
-		if (toasts.length > 0) {
-			const toast = toasts[0];
+		if (store.toasts.length > 0) {
+			const toast = store.toasts[0];
 			if (toast.duration !== "eternal")
 				setTimeout(
 					() => {
@@ -17,10 +16,10 @@ function Toast() {
 					toast.duration === "long" ? 5000 : 3000
 				);
 		}
-	}, [store.toasts]);
+	}, [store.toasts, dispatch]);
 	return (
 		<>
-			{toasts.map((toast: ToastType, index) => {
+			{store.toasts.map((toast: ToastType, index) => {
 				if (index < 6)
 					return (
 						<ToastUI
