@@ -20,7 +20,7 @@ function DashboardCard01({
 					<img src={Icon} width="32" height="32" alt="Icon 01" />
 					<Link
 						to="/certificates/list"
-						className="text-blue-500 text-sm text-gray-600 hover:font-bold flex py-1 px-3"
+						className="text-blue-500 text-sm  hover:font-bold flex py-1 px-3"
 					>
 						All Credentials &gt;
 					</Link>
@@ -34,7 +34,7 @@ function DashboardCard01({
 							Total
 						</div>
 						<div className="flex items-start">
-							<div className="text-3xl font-bold text-gray-800 mr-2 text-blue-500">
+							<div className="text-3xl font-bold mr-2 text-blue-500">
 								{total || 0}{" "}
 								<span className="text-xs font-medium text-blue-500">
 									total credentials
@@ -53,7 +53,7 @@ function DashboardCard01({
 							Revoked
 						</div>
 						<div className="flex items-start mb-2">
-							<div className="text-3xl font-bold text-gray-800 mr-2 text-yellow-600">
+							<div className="text-3xl font-bold  mr-2 text-yellow-600">
 								{revoked || 0}{" "}
 							</div>
 						</div>

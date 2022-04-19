@@ -11,20 +11,6 @@ function CertificatesTable({
 	selectedItems: any;
 	certificates: certificate[];
 }) {
-	const emptyStateCertificate: certificate = {
-		issuer: "-",
-		organization: "-",
-		isIssued: false,
-		templateId: "-",
-		createdAt: new Date(),
-		lastUpdated: new Date(),
-		issueDate: false,
-		recipient: "-",
-		fields: [],
-		group: "-",
-		validTill: false,
-		isRevoked: false,
-	};
 	certificates = certificates?.sort((a, b) => {
 		if (a.createdAt < b.createdAt) return 1;
 		if (a.createdAt > b.createdAt) return -1;

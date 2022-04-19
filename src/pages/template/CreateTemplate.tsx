@@ -7,7 +7,6 @@ import { useCreate } from "../../api/template";
 import { createTemplate } from "../../partials/template/createTemplate";
 import { Redirect } from "react-router-dom";
 import { actions, Context } from "../../store";
-import { duration } from "moment";
 function CreateTemplate({
 	uid,
 	organization,

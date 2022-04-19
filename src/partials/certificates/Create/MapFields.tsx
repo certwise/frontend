@@ -43,7 +43,7 @@ function MapFields({
 												...recipientFields,
 												{ name: "name" },
 												{ name: "email" },
-												{ name: "Custom value", type: "custom" },
+												{ name: "| Custom value |", type: "custom" },
 											]}
 											setSelectedField={(value: string) => {
 												setMap({ ...map, [field.name]: value });

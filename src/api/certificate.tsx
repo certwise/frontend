@@ -74,6 +74,7 @@ export const useCreate = () => {
 					duration: "short",
 				})
 			);
+			dispatch(actions.certificate.resetCreateCertificate());
 		},
 		onError: (err: any) => {
 			dispatch(
@@ -112,6 +113,7 @@ export const useCreateMany = () => {
 					duration: "short",
 				})
 			);
+			dispatch(actions.certificate.resetCreateCertificate());
 		},
 		onError: (err: any) => {
 			dispatch(

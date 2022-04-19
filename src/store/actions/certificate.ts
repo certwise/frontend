@@ -55,3 +55,18 @@ export const setCreateGroupTemplateFields = (
 		payload: fields,
 	};
 };
+
+export const resetCreateCertificate = (): action => {
+	return {
+		type: "CREATE_CERTIFICATE_RESET",
+		payload: {
+			page: 1,
+			selectedGroup: undefined,
+			selectedTemplate: undefined,
+			selectedRecipient: undefined,
+			type: "single",
+			singleCertificateFields: [],
+			groupCertificateFields: [],
+		},
+	};
+};

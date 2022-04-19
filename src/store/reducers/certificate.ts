@@ -75,6 +75,21 @@ const reducer = (state: certificateState, action: action): certificateState => {
 			};
 		}
 
+		case "CREATE_SET_GROUP_TEMPLATE_FIELDS": {
+			return {
+				...state,
+				createCertificate: {
+					...state.createCertificate,
+					groupCertificateFields: action.payload,
+				},
+			};
+		}
+		case "CREATE_CERTIFICATE_RESET":
+			return {
+				...state,
+				createCertificate: action.payload,
+			};
+
 		default:
 			return state;
 	}

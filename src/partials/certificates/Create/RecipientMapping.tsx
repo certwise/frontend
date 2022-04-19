@@ -24,6 +24,11 @@ function RecipientMapping({
 						name: key,
 						value: recipient?.email,
 					};
+				if (map[key] === "| Custom value |")
+					return {
+						name: key,
+						value: "| Custom value |",
+					};
 				return {
 					name: key,
 					value: recipient?.customFields.find((f) => f.name === map[key])

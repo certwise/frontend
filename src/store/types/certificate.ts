@@ -31,11 +31,9 @@ export interface certificateState {
 		selectedRecipient: recipient | undefined;
 		type: "single" | "group";
 		singleCertificateFields: CustomField[];
-		groupCertificateFields:
-			| Array<{
-					templateField: CustomField;
-					groupField: CustomField;
-			  }>
-			| false;
+		groupCertificateFields: Array<{
+			templateField: CustomField;
+			groupField: string;
+		}>;
 	};
 }
