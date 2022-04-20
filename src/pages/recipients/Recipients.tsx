@@ -16,6 +16,7 @@ import * as recipientQuery from "../../api/recipient";
 import { useGet } from "../../api/organization";
 import EmptyState from "../../partials/EmptyState";
 import Loader from "../../partials/Loader";
+import { useHistory } from "react-router-dom";
 
 function Recipients() {
 	const { store, dispatch } = useContext(Context);
@@ -42,7 +43,7 @@ function Recipients() {
 	const recipients = recipientQuery.useGetByOrganization(
 		store.user.organization
 	);
-
+	const history = useHistory();
 	const addSelectedRecipientsToGroup = () => {
 		if (
 			selectedGroup !== null &&
@@ -176,6 +177,23 @@ function Recipients() {
 										setOption={() => null}
 									/>
 									{/* Add customer button */}
+									<button
+										onClick={(e) => {
+											e.stopPropagation();
+											history.push("/recipients/import-csv");
+										}}
+										className="btn bg-blue-500 hover:bg-blue-600 text-white"
+									>
+										<svg
+											className="w-4 h-4 fill-current opacity-50 flex-shrink-0"
+											viewBox="0 0 16 16"
+										>
+											<path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
+										</svg>
+										<span className="hidden xs:block ml-2">
+											Import from CSV
+										</span>
+									</button>
 									<button
 										onClick={(e) => {
 											e.stopPropagation();
@@ -339,7 +357,13 @@ function Recipients() {
 						<div className="px-5 py-4">
 							<div className="flex flex-wrap justify-end space-x-2">
 								<button
-									className="btn-sm border-gray-200 hover:border-gray-300 text-gray-600"
+									onClick={() => history.push("/recipients/import-csv")}
+									className="btn-sm bg-blue-500 hover:bg-blue-600 text-white"
+								>
+									Import from CSV
+								</button>
+								<button
+									className="btn-sm border-gray-200 hover:border-gray-300 text-red-600"
 									onClick={(e) => {
 										e.stopPropagation();
 										setBasicModalOpen(false);
@@ -351,7 +375,7 @@ function Recipients() {
 									onClick={() => createNewRecipient()}
 									className="btn-sm bg-blue-500 hover:bg-blue-600 text-white"
 								>
-									Create New Recipient
+									Create Recipient
 								</button>
 							</div>
 						</div>

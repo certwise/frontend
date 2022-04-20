@@ -5,8 +5,9 @@ import ModalBasic from "../ui/ModalBasic";
 import * as organizationQuery from "../../api/organization";
 import { actions, Context } from "../../store";
 import { organization } from "../../store/types";
-
 import { recipient } from "../../store/types";
+import EditMenu from "../ui/DropdownEditMenu";
+
 function RecipientsTable({ recipients }: { recipients: recipient[] }) {
 	const { store, dispatch } = useContext(Context);
 	const [basicModalOpen, setBasicModalOpen] = useState<any>(false);
@@ -59,7 +60,7 @@ function RecipientsTable({ recipients }: { recipients: recipient[] }) {
 						{/* Table header */}
 						<thead className="text-xs font-semibold uppercase text-gray-500 bg-gray-50 border-t border-b border-gray-200">
 							<tr>
-								<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+								<td className="px-5 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
 									<div className="flex items-center">
 										<label className="inline-flex">
 											<span className="sr-only">Select all</span>
@@ -86,9 +87,6 @@ function RecipientsTable({ recipients }: { recipients: recipient[] }) {
 										</label>
 									</div>
 								</td>
-								<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-									<span className="sr-only">Favourite</span>
-								</td>
 								<td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Name</div>
 								</td>
@@ -102,7 +100,27 @@ function RecipientsTable({ recipients }: { recipients: recipient[] }) {
 											key={field.name}
 										>
 											<div className="font-semibold text-left">
-												{field.name}
+												{field.name}{" "}
+												<span>
+													<EditMenu
+														align="right"
+														className="relative inline-flex flex-shrink-0 align-middle"
+													>
+														<li>
+															<button className="font-medium text-sm text-blue-500 hover:text-blue-600 flex py-1 px-3 w-48 border-none">
+																Rename Field
+															</button>
+														</li>
+														<li>
+															<button
+																className="font-medium text-sm text-red-500 hover:text-red-600 flex py-1 px-3 border-none"
+																onClick={() => {}}
+															>
+																Remove Field
+															</button>
+														</li>
+													</EditMenu>
+												</span>
 											</div>
 										</td>
 									))}

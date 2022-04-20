@@ -21,6 +21,7 @@ import Account from "./pages/settings/Account";
 import Feedback from "./pages/settings/Feedback";
 import Create from "./pages/certificates/create";
 import Organization from "./pages/settings/Organization";
+import CSVRecipients from "./pages/recipients/CSV";
 function Routes({ user }: { user: user }) {
 	const path = useLocation();
 	const [redirect, setRedirect] = useState("");
@@ -66,6 +67,9 @@ function Routes({ user }: { user: user }) {
 						</Route>
 						<Route exact path="/recipients/groups">
 							<Groups />
+						</Route>
+						<Route exact path="/recipients/import-csv">
+							<CSVRecipients />
 						</Route>
 						<Route exact path="/group/:id">
 							<Group />

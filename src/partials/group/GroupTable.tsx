@@ -6,6 +6,7 @@ import { useUpdate } from "../../api/group";
 import { group, recipient } from "../../store/types";
 import ModalBasic from "../ui/ModalBasic";
 import { useGetByGroup } from "../../api/recipient";
+import DropdownEditMenu from "../ui/DropdownEditMenu";
 
 function GroupTable({ group }: { group: group }) {
 	const { store } = useContext(Context);
@@ -68,9 +69,9 @@ function GroupTable({ group }: { group: group }) {
 										</label>
 									</div>
 								</th>
-								<th className="py-3 whitespace-nowrap ">
+								{/* <th className="py-3 whitespace-nowrap ">
 									<span className="sr-only">Favourite</span>
-								</th>
+								</th> */}
 								<th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
 									<div className="font-semibold text-left">Name</div>
 								</th>
@@ -97,6 +98,26 @@ function GroupTable({ group }: { group: group }) {
 										>
 											<div className="font-semibold text-left">
 												{field.name || "null"}
+												<span>
+													<DropdownEditMenu
+														align="right"
+														className="relative inline-flex flex-shrink-0 align-middle"
+													>
+														<li>
+															<button className="font-medium text-sm text-blue-500 hover:text-blue-600 flex py-1 px-3 w-48 border-none">
+																Rename Field
+															</button>
+														</li>
+														<li>
+															<button
+																className="font-medium text-sm text-red-500 hover:text-red-600 flex py-1 px-3 border-none"
+																onClick={() => {}}
+															>
+																Remove Field
+															</button>
+														</li>
+													</DropdownEditMenu>
+												</span>
 											</div>
 										</th>
 									))}

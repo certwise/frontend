@@ -7,7 +7,7 @@ function ModalBasic({ children, id, title, modalOpen, setModalOpen }: any) {
 	// close on click outside
 	useEffect(() => {
 		const clickHandler = ({ target }: any) => {
-			if (!modalOpen || modalContent.current.contains(target)) return;
+			if (!modalOpen || modalContent?.current?.contains(target)) return;
 			setModalOpen(false);
 		};
 		document.addEventListener("click", clickHandler);
