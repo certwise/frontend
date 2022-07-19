@@ -154,7 +154,7 @@ function CSVRecipients() {
 										{recipients.length > 0 && (
 											<>
 												<RecipientsTableCSV
-													recipients={recipients.slice(0, 10)}
+													recipients={recipients.slice(0, 5)}
 												/>
 												<button
 													onClick={() => {

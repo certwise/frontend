@@ -38,7 +38,7 @@ function RecipientsDropdown({ recipients }: { recipients: recipient[] }) {
 
 	return (
 		<div className="relative inline-flex w-full">
-			<div className="relative w-full">
+			<div className="relative w-full overflow-x-auto">
 				<input
 					placeholder="Search recipient"
 					ref={trigger}
@@ -84,7 +84,8 @@ function RecipientsDropdown({ recipients }: { recipients: recipient[] }) {
 			>
 				<div
 					ref={dropdown}
-					className="font-medium text-sm text-gray-600 divide-y divide-gray-200"
+					style={{ height: "400px" }}
+					className="font-medium text-sm text-gray-600 divide-y divide-gray-200 overflow-y-auto"
 					onFocus={() => setDropdownOpen(true)}
 					onBlur={() => setDropdownOpen(false)}
 				>
