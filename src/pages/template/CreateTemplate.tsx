@@ -26,10 +26,19 @@ function CreateTemplate({
 	});
 	const createTemplateMutation = (e: any) => {
 		e.preventDefault();
-		if (form.height > 3000 || form.width > 3000) {
+		if (form.height > 8000 || form.width > 8000) {
 			dispatch(
 				actions.toast.makeToast({
-					message: "Template size cannot be greater than 3000px",
+					message: "Template size cannot be greater than 8000px",
+					type: "error",
+					duration: "long",
+				})
+			);
+		}
+		if (form.height < 800 || form.width < 800) {
+			dispatch(
+				actions.toast.makeToast({
+					message: "Template size cannot be lesser than 800px",
 					type: "error",
 					duration: "long",
 				})
