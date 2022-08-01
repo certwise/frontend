@@ -4,6 +4,7 @@ import { actions, types } from "../store";
 import { Context } from "../store";
 import { useContext } from "react";
 import { API } from ".";
+import { recipient } from "../store/types";
 
 const create = (recipient: types.recipient) => {
 	return API(`${env.url}/recipient`, "post", recipient);
@@ -12,6 +13,7 @@ const create = (recipient: types.recipient) => {
 const createBulk = (recipients: types.recipient[]) => {
 	return API(`${env.url}/recipient/bulk`, "post", recipients);
 };
+
 const getOne = (id: string) => {
 	return API(`${env.url}/recipient/${id}`, "get");
 };
@@ -20,8 +22,12 @@ const getByOrganization = (organization: string) => {
 	return API(`${env.url}/recipient/organization/${organization}`, "get");
 };
 
-const update = (recipient: any) => {
+const update = (recipient: recipient) => {
 	return API(`${env.url}/recipient`, "put", recipient);
+};
+
+const updateBulk = (recipient: recipient[]) => {
+	return API(`${env.url}/recipient/bulk`, "put", recipient);
 };
 
 const getByGroup = (group: string) => {
@@ -92,6 +98,32 @@ export const useUpdate = () => {
 	const query = useQueryClient();
 	const { dispatch } = useContext(Context);
 	return useMutation(update, {
+		onSuccess: (data) => {
+			query.invalidateQueries("recipients");
+			dispatch(
+				actions.toast.makeToast({
+					message: "Updated recipient",
+					type: "success",
+					duration: "long",
+				})
+			);
+		},
+		onError: (err: any) => {
+			dispatch(
+				actions.toast.makeToast({
+					message: err.response.data,
+					type: "error",
+					duration: "long",
+				})
+			);
+		},
+	});
+};
+
+export const useUpdateBulk = () => {
+	const query = useQueryClient();
+	const { dispatch } = useContext(Context);
+	return useMutation(updateBulk, {
 		onSuccess: (data) => {
 			query.invalidateQueries("recipients");
 			dispatch(

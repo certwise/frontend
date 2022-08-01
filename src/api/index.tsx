@@ -8,7 +8,7 @@ export const API = async (
 	method: "get" | "post" | "put" | "delete",
 	data?: any
 ) => {
-	const token = await getAuth().currentUser?.getIdToken(true);
+	const token = await getAuth().currentUser?.getIdToken(false);
 	return axios({
 		url: url,
 		method: method,

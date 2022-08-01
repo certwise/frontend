@@ -1,6 +1,6 @@
 import moment from "moment";
 import { useState } from "react";
-import { useGetOne } from "../../api/recipient";
+import { useGetByOrganization as useGetRecipientsByOrganization } from "../../api/recipient";
 import { useGetOne as useGetOneTemplate } from "../../api/template";
 import ModalBlank from "../ui/ModalBlank";
 import { MdOutlineCopyAll } from "react-icons/md";
@@ -20,8 +20,12 @@ function CertificatesTableItem({
 		enabled,
 		`${certificate.organization}/certificates/${certificate._id}.jpg` as string
 	);
-	const recipientQuery = useGetOne(certificate.recipient);
-	const recipient: recipient = recipientQuery.data?.data;
+	const recipientQuery = useGetRecipientsByOrganization(
+		certificate.organization
+	);
+	const recipient: recipient = recipientQuery.data?.data.find(
+		(r: recipient) => r._id === certificate.recipient
+	);
 	const template = useGetOneTemplate(certificate.templateId);
 	const editCertificate = certificateQuery.useUpdate();
 	const issue = certificateQuery.useIssueOne();

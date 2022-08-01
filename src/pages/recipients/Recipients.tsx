@@ -17,7 +17,7 @@ import { useGet } from "../../api/organization";
 import EmptyState from "../../partials/EmptyState";
 import Loader from "../../partials/Loader";
 import { useHistory } from "react-router-dom";
-
+// TODO: User updated notification
 function Recipients() {
 	const { store, dispatch } = useContext(Context);
 	const [sidebarOpen, setSidebarOpen] = useState<any>(false);
@@ -29,6 +29,7 @@ function Recipients() {
 		organizationQuery.data?.data.customFields || [];
 	const createRecipient = recipientQuery.useCreate();
 	const updateRecipient = recipientQuery.useUpdate();
+	const updateRecipientBulk = recipientQuery.useUpdateBulk();
 	const bulkCreate = recipientQuery.useCreateBulk();
 	const groups = groupQuery.useGetByOrganization(store.user.organization);
 	const [recipientDetails, setRecipientDetails] = useState<{
@@ -44,14 +45,15 @@ function Recipients() {
 		store.user.organization
 	);
 	const history = useHistory();
-	const addSelectedRecipientsToGroup = () => {
+	const addSelectedRecipientsToGroup = async () => {
 		if (
 			selectedGroup !== null &&
 			store.recipients.selected.recipients.length > 0
 		) {
+			const updatedRecipients: recipient[] = [];
 			for (const recipient of store.recipients.selected.recipients) {
 				if (!recipient.groups) {
-					updateRecipient.mutate({
+					updatedRecipients.push({
 						...recipient,
 						groups: [selectedGroup?._id as string],
 					});
@@ -59,7 +61,7 @@ function Recipients() {
 					recipient.groups &&
 					!recipient.groups.includes(selectedGroup?._id as string)
 				) {
-					updateRecipient.mutate({
+					updatedRecipients.push({
 						...recipient,
 						groups: [...recipient.groups, selectedGroup?._id as string],
 					});
@@ -76,6 +78,7 @@ function Recipients() {
 					);
 				}
 			}
+			updateRecipientBulk.mutate(updatedRecipients);
 			setGroupModalOpen(false);
 		}
 	};
@@ -95,11 +98,17 @@ function Recipients() {
 			setGroupModalOpen(false);
 			bulkCreate.reset();
 		}
+		if (updateRecipientBulk.isSuccess) {
+			setGroupModalOpen(false);
+			updateRecipientBulk.reset();
+		}
 	}, [
-		updateRecipient.isSuccess,
+		bulkCreate,
 		bulkCreate.isSuccess,
 		updateRecipient,
-		bulkCreate,
+		updateRecipient.isSuccess,
+		updateRecipientBulk,
+		updateRecipientBulk.isSuccess,
 	]);
 
 	const createNewRecipient = async () => {
